@@ -1,0 +1,79 @@
+
+<center>
+    <div class="searsh-date" id="BarraBuscador" style='display:none;'>
+
+        <!--    <input style="text-align: center" class="mdl-cell mdl-cell--3-col mdl-cell--12-col-phone mdl-textfield__input" placeholder="BUSCAR POR EVENTO"
+                     type="text" id="sample3"  ng-keyup="filterEventsByText()" ng-model="filterNameInput">
+-->
+        <button id="verTodosLosEventos" style="display: none"
+                class="btn btn-sm btn-info"
+                ng-click="seeAllEvents()">
+            VER TODOS
+        </button>
+
+        <md-datepicker   id="buscarPorFecha" class="searsh-date" ng-model="filterDateInput"
+                        ng-change="filterEventsByDate()"></md-datepicker>
+
+
+    </div>
+    <!--
+                <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+
+                -->
+
+
+    <button id="BarraCargando" class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"></i> CARGANDO EVENTOS</button>
+
+
+
+
+    <div class="row">
+        <div class="col-md-4"
+             ng-repeat="event in events | orderBy:'date' "
+             ng-click="goToEventDetails(event)"
+             ng-show="event.visible"
+        >
+            <div class="card1">
+
+                <div class="card1-header card1-chart" data-background-color="green" style="background: url('{{event.image}}') center center">
+                    <!--  <i class="material-icons " style="vertical-align: middle;">event</i>   -->
+                    <center>    <a class="btn btn-sm" style="background-color: #FE0072 ; margin-top: -10px">{{event.date | date:"EEEE d', 'MMMM " }}</a>
+                    </center>
+                </div>
+                <div class="card1-content ">
+                    <h6 style="margin-top: -10px" class="title text-center"> <strong>{{event.name}}</strong></h6>
+                    <p class="category">
+                            <span class="">
+                                     <i class="material-icons">music_note</i>
+                                 </span> {{event.musicGenres}}
+                    </p>
+                    <p class="category">
+                            <span class="">
+                                     <i class="material-icons">layers</i>
+                                 </span>{{event.eventEnvironment}}
+                    </p>
+                    <p class="category">
+                            <span class="">
+                                     <i class="material-icons">store</i>
+                                 </span> {{getClub(event.clubs)}}
+                    </p>
+
+
+
+
+                </div>
+                <div class="card1-footer" style="margin-top: -10px; ">
+                    <div class="stats text-center">
+                        <p class="btn btn-sm text-center btn-info" ng-show="event.freemiumHour == event.date"> CPL ${{event.entryValue }}</p>
+                        <p class="btn btn-sm text-center btn-info" ng-show="event.freemiumHour != event.date">  GRATIS</p>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</center>

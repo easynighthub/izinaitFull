@@ -1,0 +1,173 @@
+<!--<a class="mdl-cell mdl-cell&#45;&#45;3-col mdl-cell&#45;&#45;3-col-phone
+      mdl-button mdl-js-button mdl-button&#45;&#45;raised mdl-js-ripple-effect mdl-button&#45;&#45;accent" href="#!/eventos">
+  <i  class="material-icons " style="vertical-align: middle;">keyboard_backspace</i> VOLVER
+</a>
+</center>-->
+
+    <button id="BarraCargando" class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"></i> CARGANDO EVENTO</button>
+
+<div id="detalleEvento" style="display: none">
+    <center>
+    <div class="carousel-inner">
+    <div class="item active ">
+        <img class="text-center" src="{{event.image}}"  >
+        <div class="carousel-caption">
+            <h6 style="margin-bottom: -70px" class="btn btn-sm btn-info ">{{event.name}}</h6>
+        </div>
+    </div>
+</div>
+    <div class="row">
+        <p class="btn btn-round" style="background-color: #fe0072;"><strong>
+           {{event.date | date : 'fullDate'}}
+            <br>
+            <!-- <i class="material-icons mdl-color-text--grey" style="vertical-align: middle;">alarm</i> -->
+            {{event.fromHour | date : 'shortTime'}} A {{event.toHour | date :
+                'shortTime'}}
+        </strong>
+        </p>
+        <br>
+        <p class="btn btn-sm " style="margin-top: -5px">
+            <i class="material-icons">store</i> {{getClub(event.clubs)}}
+        </p>
+    </div>
+         <hr>
+        <div class="valoresBotones">
+            <div ng-show="event.freemiumHour != event.date"
+                 class="btn btn-sm " style="background-color: #fe0072">
+                <i class="material-icons">money_off</i>
+                Gratis hasta las: {{event.freemiumHour | date : 'shortTime'}}
+            </div>
+
+
+            <div ng-show="event.freemiumHour != event.date"
+                 class="btn btn-sm" style="background-color: #fe0072">
+               <i class="material-icons">monetization_on</i>
+                Despues de Hr Gratis: CPL {{event.entryValue}}
+            </div>
+
+            <div ng-show="event.freemiumHour == event.date"
+                 class="btn btn-sm" style="background-color: #fe0072">
+                <i class="material-icons" style="vertical-align: middle;">monetization_on</i>
+                Entrada en Puerta: CPL {{event.entryValue}}
+            </div>
+        </div>
+        <hr>
+
+        <div class="listaGratis">
+
+            <div id="selectLista" ng-show="event.freemiumHour != event.date" layout="row"
+                 layout-align="space-between center">
+                <span class="title">LISTA GRATIS  :   </span>
+                <md-select  ng-model="totalReserva" placeholder="Selecionar" class="md-no-underline">
+                    <md-option ng-value="1">+1 Amigos</md-option>
+                    <md-option ng-value="2">+2 Amigos</md-option>
+                    <md-option ng-value="3">+3 Amigos</md-option>
+                    <md-option ng-value="4">+4 Amigos</md-option>
+                    <md-option ng-value="5">+5 Amigos</md-option>
+                    <md-option ng-value="6">+6 Amigos</md-option>
+                    <md-option ng-value="7">+7 Amigos</md-option>
+                    <md-option ng-value="8">+8 Amigos</md-option>
+                    <md-option ng-value="9">+9 Amigos</md-option>
+                    <md-option ng-value="10">+10 Amigos</md-option>
+                </md-select>
+            </div>
+
+            <button id="botonAsistir" ng-click="guardarListaGratis()" scope="public_profile email user_birthday"
+                    ng-show="totalReserva != null"
+                    class="btn btn-info">
+                <i class="material-icons"></i> Guardar Lista
+            </button>
+
+            <button id="botonLista" ng-click="editarListaGratis()" style="display: none" class="btn btn-info">
+                <i class="material-icons mdl-color-text--black" style="vertical-align: middle;">edit</i> Ya Estas en Lista +
+                {{datosAsistire.totalList}}
+            </button>
+
+        </div>
+
+    <div class="features ">
+        <center>
+        <div class="text-center col-md-10 row col-md-offset-1 col-xs-12">
+            <div class="col-md-3 col-xs-6">
+                <div class="info">
+                    <div class="icon "style="color: #fe0072">
+                        <i class="material-icons">music_note</i>
+                    </div>
+                    <h4 class="info-title"> Estilo Musical</h4>
+                    <p>
+                        {{event.musicGenres}}
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-6">
+                <div class="info">
+                    <div class="icon "style="color: #fe0072">
+                        <i class="material-icons">layers</i>
+                    </div>
+                    <h4 class="info-title">Ambientes</h4>
+                    <p>
+                        {{event.eventEnvironment}}
+
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-6">
+                <div class="info">
+                    <div class="icon " style="color: #fe0072">
+                        <i class="material-icons ">accessibility</i>
+                    </div>
+                    <h4 class="info-title">Vestimienta</h4>
+                    <p>
+                        {{event.clothing}}
+                     </p>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-6">
+                <div class="info">
+                    <div class="icon " style="color: #fe0072">
+                        <i class="material-icons">people</i>
+                    </div>
+                    <h4 class="info-title">
+                        Restricciones</h4>
+                    <p>
+                        {{event.ageRange}}
+                    </p>
+                </div>
+            </div>
+        </div>
+        </center>
+    </div>
+    <div style="height: 250px"></div>
+    <div class="row  col-xs-16 text-center">
+        <ng-map zoom="14"
+                disable-default-u-i="true"
+                scrollwheel="false"
+                default-style="true"
+                center="[{{event.lat}}, {{event.lng}}]">
+            <marker
+                    id="foo"
+                    centered="true"
+                    animation="Animation.BOUNCE"
+                    title="{{getClub(event.clubs)}}"
+                    on-click="map.showInfoWindow('bar')"
+                    position="{{event.lat}},{{event.lng}}">
+            </marker>
+            <info-window id="bar" visible-on-marker="foo">
+                <a href="https://www.google.com/maps/place/{{event.lat}},{{event.lng}}" target="_blank">
+                    <h6>{{getDireccionClub(event.clubs)}}<br>{{getClub(event.clubs)}}</h6>
+                </a>
+            </info-window>
+        </ng-map>
+
+    </div>
+
+    </center>
+
+</div>
+
+
+
+
+
+
+

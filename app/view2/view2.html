@@ -1,0 +1,49 @@
+<center>
+<button id="BarraCargando" class="btn btn-info btn-lg">
+  <i class="fa fa-circle-o-notch fa-spin"></i>
+  CARGANDO CLUBS
+</button>
+</center>
+
+<div class="row">
+  <div class="col-md-4"
+       ng-repeat="club in clubs "
+       ng-click="goToClubDetails(club)"
+       ng-show="club.activo"
+  >
+    <div class="card1">
+
+      <div class="card1-header card1-chart" data-background-color="green" style="background: url('{{club.clubLogo}}') center center; ">
+        <!--  <i class="material-icons " style="vertical-align: middle;">event</i>   -->
+        <center>    <a class="btn btn-sm" style="background-color: #FE0072 ; margin-top: -10px">{{club.name}}</a>
+        </center>
+      </div>
+      <div class="card1-content ">
+        <h6 style="margin-top: -10px" class="title text-center"> <strong><p class="btn btn-sm text-center btn-info">VER EVENTOS</p></strong></h6>
+        <p class="category">
+                            <span class="">
+                                     <i class="material-icons">location_on</i>
+                                 </span> {{club.address}}
+        </p>
+        <p class="category">
+                            <span class="">
+                                     <i class="material-icons">music_note</i>
+                                 </span>{{club.clubMusic}}
+        </p>
+        <p class="category">
+                            <span class="">
+                                     <i class="material-icons">layers</i>
+                                 </span> {{club.clubEnvironment}}
+        </p>
+
+
+
+
+      </div>
+    
+    </div>
+  </div>
+
+
+</div>
+
