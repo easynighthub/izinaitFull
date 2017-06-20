@@ -15,6 +15,7 @@ angular.module('myApp.view2', ['ngRoute'])
             var user = window.currentApp;
             $scope.usuarioLogeado = "";
 
+
             if (user != "") {
                 var ref = firebase.database().ref('/users/').child(user.uid);
                 var usersLocal = $firebaseObject(ref);
@@ -23,18 +24,14 @@ angular.module('myApp.view2', ['ngRoute'])
                     console.log( $scope.usuarioLogeado);
                     $('.nombreUsuario').text( $scope.usuarioLogeado.displayName);
                     //  $('.user-header .imagen').text(usersLocal.picture);
-                    $('.modulo').text("Clubs");
-                    $('.codigoVisible').text("Tú Codigo");
+                    $('.codigoAcceder').text("Tú Codigo");
                     console.log(window.currentApp + " ENTRE");
-
                 });
             } else {
                 $('.nombreUsuario').text("BIENVENIDO");
-                $('.codigoVisible').text("Obten Codigo");
-                $('.modulo').text("Clubs");
+                $('.codigoAcceder').text("acceder");
                 console.log(window.currentApp + " NO ENTRE");
-            }
-
+            };
 
 
 

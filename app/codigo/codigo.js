@@ -38,16 +38,12 @@ angular.module('myApp.codigo', ['ngRoute'])
                     $scope.email = $scope.usuarioLogeado.email;
 
                     document.getElementById('codigoVisibile').style.display = 'block';
-
                     $('.nombreUsuario').text( $scope.usuarioLogeado.displayName);
-                    $('.modulo').text("Tú Codigo");
-                    $('.codigoVisible').text("Tú Codigo");
+                    $('.codigoAcceder').text("Tú Codigo");
                 });
             }
             else {
-                $('.nombreUsuario').text("BIENVENIDO");
-                $('.codigoVisible').text("Obten Codigo");
-                $('.modulo').text("Obten Codigo");
+                $('.codigoAcceder').text("Acceder");
                 document.getElementById('pedirCodigo').style.display = 'block';
             }
 
@@ -160,9 +156,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                             document.getElementById('codigoVisibile').style.display = 'block';
                             document.getElementById('pedirCodigo').style.display = 'none';
                             $('.nombreUsuario').text( $scope.usuarioLogeado.displayName);
-                            $('.modulo').text("Tú Codigo");
-                            $('.codigoVisible').text("Tú Codigo");
-
+                            $('.codigoAcceder').text("Tú Codigo");
                             console.log("obvtuve la foto y el correo");
 
 
@@ -173,7 +167,6 @@ angular.module('myApp.codigo', ['ngRoute'])
                     } else {
                         writeUserData(response);
                         console.log(firebase.auth().currentUser);
-                        console.log("obtuve el codigo");
                         update_qrcode();    // obtengo codigo
 
                         $scope.nombre = firebase.auth().currentUser.displayName;
@@ -192,9 +185,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                             document.getElementById('codigoVisibile').style.display = 'block';
                             document.getElementById('pedirCodigo').style.display = 'none';
                             $('.nombreUsuario').text( $scope.usuarioLogeado.displayName);
-                            $('.modulo').text("Tú Codigo");
-                            $('.codigoVisible').text("Tú Codigo");
-
+                            $('.codigoAcceder').text("Tú Codigo");
                             console.log("obvtuve la foto y el correo");
 
 

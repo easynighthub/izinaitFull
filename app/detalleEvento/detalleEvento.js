@@ -20,15 +20,12 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     console.log( $scope.usuarioLogeado);
                     $('.nombreUsuario').text( $scope.usuarioLogeado.displayName);
                     //  $('.user-header .imagen').text(usersLocal.picture);
-                    $('.modulo').text("Eventos");
-                    $('.codigoVisible').text("Tú Codigo");
+                    $('.codigoAcceder').text("Tú Codigo");
                     console.log(window.currentApp + " ENTRE");
-
                 });
             } else {
                 $('.nombreUsuario').text("BIENVENIDO");
-                $('.codigoVisible').text("Obten Codigo");
-                $('.modulo').text("Eventos");
+                $('.codigoAcceder').text("acceder");
                 console.log(window.currentApp + " NO ENTRE");
             };
 
@@ -130,7 +127,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     guardarListaGratisFuncion(totalAsistenciaVisible);
                 }else
                     {
-                        //pedir iniciar sesion
+                        alert("DEBES INICIAR SESION");
                     }
 
 
@@ -145,6 +142,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 $scope.datosAsistire.totalList = total;
 
             }
+
+
 
 
         }]);

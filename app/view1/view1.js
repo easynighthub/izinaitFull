@@ -35,14 +35,12 @@ angular.module('myApp.view1', ['ngRoute'])
                     console.log( $scope.usuarioLogeado);
                     $('.nombreUsuario').text( $scope.usuarioLogeado.displayName);
                     //  $('.user-header .imagen').text(usersLocal.picture);
-                    $('.modulo').text("Eventos");
-                    $('.codigoVisible').text("Tú Codigo");
+                    $('.codigoAcceder').text("Tú Codigo");
                     console.log(window.currentApp + " ENTRE");
                 });
             } else {
                 $('.nombreUsuario').text("BIENVENIDO");
-                $('.codigoVisible').text("Obten Codigo");
-                $('.modulo').text("Eventos");
+                $('.codigoAcceder').text("acceder");
                 console.log(window.currentApp + " NO ENTRE");
             };
 

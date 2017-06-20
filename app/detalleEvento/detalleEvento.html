@@ -17,48 +17,49 @@
     </div>
 </div>
     <div class="row">
-        <p class="btn btn-round" style="background-color: #fe0072;"><strong>
+        <p class="btn btn-round btn-sm" style="background-color: #fe0072;"><strong>
            {{event.date | date : 'fullDate'}}
             <br>
             <!-- <i class="material-icons mdl-color-text--grey" style="vertical-align: middle;">alarm</i> -->
             {{event.fromHour | date : 'shortTime'}} A {{event.toHour | date :
                 'shortTime'}}
         </strong>
+<br>
+            <i class="material-icons">store</i> {{getClub(event.clubs)}}
+
         </p>
         <br>
-        <p class="btn btn-sm " style="margin-top: -5px">
-            <i class="material-icons">store</i> {{getClub(event.clubs)}}
-        </p>
+
     </div>
-         <hr>
-        <div class="valoresBotones">
+        <div class="valoresBotones col-md-offset-3">
             <div ng-show="event.freemiumHour != event.date"
-                 class="btn btn-sm " style="background-color: #fe0072">
+                 class="btn btn-sm col-xs-12  col-md-4" >
                 <i class="material-icons">money_off</i>
-                Gratis hasta las: {{event.freemiumHour | date : 'shortTime'}}
+                Gratis hasta las: <br> {{event.freemiumHour | date : 'shortTime'}}
             </div>
 
 
             <div ng-show="event.freemiumHour != event.date"
-                 class="btn btn-sm" style="background-color: #fe0072">
+                 class="btn btn-sm col-xs-12 col-md-4" >
                <i class="material-icons">monetization_on</i>
-                Despues de Hr Gratis: CPL {{event.entryValue}}
+                Despues de Hr Gratis: <br> CPL $ {{event.entryValue}}
             </div>
 
             <div ng-show="event.freemiumHour == event.date"
-                 class="btn btn-sm" style="background-color: #fe0072">
+                 class="btn btn-sm col-xs-12 col-md-4 " >
                 <i class="material-icons" style="vertical-align: middle;">monetization_on</i>
-                Entrada en Puerta: CPL {{event.entryValue}}
+                Entrada en Puerta: CPL <br> {{event.entryValue}}
             </div>
         </div>
-        <hr>
 
-        <div class="listaGratis">
+        <hr class="col-md-12">
 
-            <div id="selectLista" ng-show="event.freemiumHour != event.date" layout="row"
-                 layout-align="space-between center">
-                <span class="title">LISTA GRATIS  :   </span>
-                <md-select  ng-model="totalReserva" placeholder="Selecionar" class="md-no-underline">
+        <div class="listaGratis row  col-md-4 col-md-offset-4 " >
+
+        <h4 class="info-title">LISTA GRATIS + TUS AMIGOS</h4>
+            <div id="selectLista" ng-show="event.freemiumHour != event.date">
+                <span style="margin-top: 25px" class="title  col-xs-6">LISTA GRATIS  :   </span>
+                <md-select  ng-model="totalReserva" placeholder="Selecionar" class=" col-xs-6 ">
                     <md-option ng-value="1">+1 Amigos</md-option>
                     <md-option ng-value="2">+2 Amigos</md-option>
                     <md-option ng-value="3">+3 Amigos</md-option>
@@ -74,18 +75,28 @@
 
             <button id="botonAsistir" ng-click="guardarListaGratis()" scope="public_profile email user_birthday"
                     ng-show="totalReserva != null"
-                    class="btn btn-info">
+                    class="btn btn-info btn-sm col-xs-12">
                 <i class="material-icons"></i> Guardar Lista
             </button>
 
-            <button id="botonLista" ng-click="editarListaGratis()" style="display: none" class="btn btn-info">
+            <button id="botonLista" ng-click="editarListaGratis()" style="display: none"
+                    class="btn btn-info btn-sm col-xs-12">
                 <i class="material-icons mdl-color-text--black" style="vertical-align: middle;">edit</i> Ya Estas en Lista +
                 {{datosAsistire.totalList}}
             </button>
 
         </div>
 
+        <hr class="col-md-12">
+
+        <div class="serviciosEvent col-md-12">
+            <h4 class="info-title">SERVICIOS</h4>
+
+        </div>
+
+        <hr class="col-md-12">
     <div class="features ">
+
         <center>
         <div class="text-center col-md-10 row col-md-offset-1 col-xs-12">
             <div class="col-md-3 col-xs-6">
@@ -113,7 +124,7 @@
             </div>
             <div class="col-md-3 col-xs-6">
                 <div class="info">
-                    <div class="icon " style="color: #fe0072">
+                    <div class="icon" style="color: #fe0072">
                         <i class="material-icons ">accessibility</i>
                     </div>
                     <h4 class="info-title">Vestimienta</h4>
@@ -137,8 +148,8 @@
         </div>
         </center>
     </div>
-    <div style="height: 250px"></div>
-    <div class="row  col-xs-16 text-center">
+    <div style="height: 550px"></div>
+    <div class="row  col-xs-14 text-center">
         <ng-map zoom="14"
                 disable-default-u-i="true"
                 scrollwheel="false"
