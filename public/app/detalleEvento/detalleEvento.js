@@ -174,6 +174,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             function DialogControllerAceptarReserva($scope, $mdDialog,$timeout, $q, $log, eventsService) {
                 var eventsService = eventsService;
                     console.log(usuarioLogeado);
+                    $scope.usuarioLogeado =usuarioLogeado;
 
 
                 $scope.Adquirir = function (descripcionAnular) {

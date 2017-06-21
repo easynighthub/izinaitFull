@@ -16,8 +16,8 @@
         </div>
     </div>
 </div>
-    <div class="row">
-        <p class="btn btn-round btn-sm" style="background-color: #fe0072;"><strong>
+    <div class="row col-md-offset-4">
+        <p class="btn col-xs-12  col-md-6   " ><strong>
            {{event.date | date : 'fullDate'}}
             <br>
             <!-- <i class="material-icons mdl-color-text--grey" style="vertical-align: middle;">alarm</i> -->
@@ -212,9 +212,29 @@
 
 
 
-<script type="text/ng-template" id="dialogAceptarReserva">
+<script type="text/ng-template" id="dialogAceptarReserva" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <p class="description" id="myModalLabel">Bienvenido {{usuarioLogeado.displayName}}</p>
+            </div>
+            <div class="modal-body">
+                <h4 class="title">Chile
 
-         hooola
+                </h4>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" style="background-color: #fe0072" class="btn btn-info btn-sm">
+                    ¿Eres el administrador de un club?  Agrega Tus Eventos </button>
+
+                <!--        <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Cerrar</button> -->
+                <button type="button" class="btn btn-info btn-simple">VIVE IZINAIT</button>
+            </div>
+        </div>
+    </div>
 </script>
 
 
