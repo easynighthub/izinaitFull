@@ -25,7 +25,7 @@ angular.module('myApp.codigo', ['ngRoute'])
             document.getElementById('pedirCodigo').style.display = 'none';
 
             if (user != "") {
-                var ref = firebase.database().ref('/users/').child(user.uid);
+                var ref = firebase.database().ref('/users/').child(user.$id || user.uid);
                 var usersLocal = $firebaseObject(ref);
                 usersLocal.$loaded().then(function () {
                     $scope.usuarioLogeado = usersLocal;
@@ -38,7 +38,6 @@ angular.module('myApp.codigo', ['ngRoute'])
                     $scope.email = $scope.usuarioLogeado.email;
 
                     document.getElementById('codigoVisibile').style.display = 'block';
-                    $('.nombreUsuario').text( $scope.usuarioLogeado.displayName);
                     $('.codigoAcceder').text("Tú Codigo");
                 });
             }
@@ -98,7 +97,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                     var credential = error.credential;
                 });
 
-                function writeUserData(response) {
+                function    writeUserData(response) {
                     database
                         .ref(USERS_LOCATION + user.uid)
                         .update({
@@ -204,56 +203,6 @@ angular.module('myApp.codigo', ['ngRoute'])
                 }
             });
 
-
-            $scope.makeShort = function ()             {
-                var longUrl= 'www.izinait.com/app/#!/detalleEvento?id=MD18DcCzYMXPhOQb8U61bWfgzRg21491366962404';
-                var request = gapi.client.urlshortener.url.insert({
-                    'resource': {
-                        'longUrl': longUrl
-                    }
-                });
-                request.execute(function(response)
-                {
-
-                    if(response.id != null)
-                    {
-                        console.log(response.id);
-
-                    }
-                    else
-                    {
-                        alert("error: creating short url");
-                    }
-
-                });
-            }
-            $scope.getShortInfo = function ()
-            {
-                var str;
-                var shortUrl=document.getElementById("shorturl").value;
-
-                var request = gapi.client.urlshortener.url.get({
-                    'shortUrl': shortUrl,
-                    'projection':'FULL'
-                });
-                request.execute(function(response)
-                {
-
-                    if(response.longUrl!= null)
-                    {
-
-                        str ="<b>Long URL:</b>"+response.longUrl+"<br>";
-                        str +="<b>Create On:</b>"+response.created+"<br>";
-                        document.getElementById("output").innerHTML = str;
-                    }
-                    else
-                    {
-                        alert("error: unable to get URL information");
-                    }
-
-                });
-
-            }
 
             var signOutButton = document.getElementById('salir');
             signOutButton.addEventListener('click', function () {

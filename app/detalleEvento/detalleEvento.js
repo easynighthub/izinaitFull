@@ -6,22 +6,55 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             controller: 'viewdetalleEvento'
         });
     }])
-    .controller('viewdetalleEvento', ['$scope', '$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
-        function ($scope, $routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope) {
+    .controller('viewdetalleEvento', ['$scope', '$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope','$mdDialog',
+        function ($scope, $routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope,$mdDialog) {
 
             var user = window.currentApp;
-            $scope.usuarioLogeado = "";
+            var usuarioLogeado = "";
+
+            var eventId = $routeParams.id; // id del evento entregador por url
+            var friendId = $routeParams.friend; // id del rrpp o amigo que compartio el evento
+            var Rrpp = friendId || 'MD18DcCzYMXPhOQb8U61bWfgzRg2'; //rrpp selecionado
 
             if (user != "") {
-                var ref = firebase.database().ref('/users/').child(user.uid);
+                var ref = firebase.database().ref('/users/').child( user.$id || user.uid);
                 var usersLocal = $firebaseObject(ref);
+                var buscarme = firebase.database().ref('/asist/' + eventId);
+                var buscarmeRequest = $firebaseArray(buscarme);
+
                 usersLocal.$loaded().then(function () {
-                    $scope.usuarioLogeado = usersLocal;
-                    console.log( $scope.usuarioLogeado);
-                    $('.nombreUsuario').text( $scope.usuarioLogeado.displayName);
+                    usuarioLogeado = usersLocal;
+                    console.log(usuarioLogeado);
+                    $('.nombreUsuario').text( usuarioLogeado.displayName);
                     //  $('.user-header .imagen').text(usersLocal.picture);
                     $('.codigoAcceder').text("Tú Codigo");
                     console.log(window.currentApp + " ENTRE");
+
+                    buscarmeRequest.$loaded().then(function () {
+                        $scope.todosLosDatos = buscarmeRequest;
+                        $scope.rrpps = $scope.todosLosDatos;
+                        console.log($scope.rrpps);
+                            buscarme.once("value").then(function (snapshot) {
+                                $scope.rrpps.forEach(function (data) {
+                                    var c = snapshot.child(data.$id + '/' + usuarioLogeado.$id).exists(); // true
+                                    if (c === true) {
+                                        var Rrpp = data.$id;
+                                        var totalAsist = firebase.database().ref('/asist/' + eventId + '/' + Rrpp + '/' + usuarioLogeado.$id);
+                                        var totalAsistRrequest = $firebaseObject(totalAsist);
+                                        totalAsistRrequest.$loaded().then(function () {
+                                            $scope.datosAsistire = totalAsistRrequest;
+                                            $scope.siExisto = +1
+                                            if ($scope.siExisto > 0) {
+                                                document.getElementById('botonAsistir').style.display = 'none';
+                                                document.getElementById('selectLista').style.display = 'none';
+                                                document.getElementById('botonLista').style.display = 'block';
+                                            }
+                                        });
+                                    };
+                                });
+                            });
+
+                    });
                 });
             } else {
                 $('.nombreUsuario').text("BIENVENIDO");
@@ -29,9 +62,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 console.log(window.currentApp + " NO ENTRE");
             };
 
-            var eventId = $routeParams.id; // id del evento entregador por url
-            var friendId = $routeParams.friend; // id del rrpp o amigo que compartio el evento
-            var Rrpp = friendId || 'MD18DcCzYMXPhOQb8U61bWfgzRg2'; //rrpp selecionado
+
 
             // capturar datos de firebase
             var clubsER = $firebaseArray(firebase.database().ref().child('clubs'));
@@ -78,37 +109,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             });
 
 
-            var buscarme = firebase.database().ref('/asist/' + eventId);
-            var buscarmeRequest = $firebaseArray(buscarme);
-            buscarmeRequest.$loaded().then(function () {
-                $scope.todosLosDatos = buscarmeRequest;
-                $scope.rrpps = $scope.todosLosDatos;
-                console.log($scope.rrpps);
-                if (user != "") {
-                    buscarme.once("value").then(function (snapshot) {
-                        $scope.rrpps.forEach(function (data) {
-                            var c = snapshot.child(data.$id + '/' + user.uid).exists(); // true
-                            if (c === true) {
-                                var Rrpp = data.$id;
-                                var totalAsist = firebase.database().ref('/asist/' + eventId + '/' + Rrpp + '/' + user.uid);
-                                var totalAsistRrequest = $firebaseObject(totalAsist);
-                                totalAsistRrequest.$loaded().then(function () {
-                                    $scope.datosAsistire = totalAsistRrequest;
-                                    $scope.siExisto = +1
-                                    if ($scope.siExisto > 0) {
-                                       document.getElementById('botonAsistir').style.display = 'none';
-                                        document.getElementById('selectLista').style.display = 'none';
-                                        document.getElementById('botonLista').style.display = 'block';
 
-
-
-                                    }
-                                });
-                            };
-                        });
-                    });
-                }
-            });
 
 
             $scope.editarListaGratis = function () {
@@ -134,12 +135,60 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             };
 
             function guardarListaGratisFuncion(total) {
-                firebase.database().ref('asist/' + eventId + '/' + Rrpp + '/' + user.uid).update($scope.nuevaAsistencia);
+                firebase.database().ref('asist/' + eventId + '/' + Rrpp + '/' + usuarioLogeado.$id).update($scope.nuevaAsistencia);
                 document.getElementById('botonAsistir').style.display = 'none';
                 document.getElementById('selectLista').style.display = 'none';
                 document.getElementById('botonLista').style.display = 'block';
                 $scope.datosAsistire = {};
                 $scope.datosAsistire.totalList = total;
+
+            }
+
+            var serviciosCapturados = firebase.database().ref('/eventServices/').child(eventId);
+            var objDeServicios = $firebaseObject(serviciosCapturados);
+            objDeServicios.$loaded().then(function () {
+                var eventServices = [];
+                angular.forEach(objDeServicios, function (value, key) {
+                    console.log(key);
+                    value.id = key;
+                    eventServices.push(value);
+                });
+
+                $scope.allEventsService = eventServices; //obj;
+                console.log($scope.allEventsService);
+            });
+
+
+            $scope.dialogAdquirirServicio = function (eventsService) {
+                $mdDialog.show({
+                    controller: DialogControllerAceptarReserva,
+                    templateUrl: 'dialogAceptarReserva',
+                    parent: angular.element(document.body),
+                    clickOutsideToClose:true,
+                    locals : {
+                        eventsService : eventsService,
+                    }
+                })
+
+            };
+            function DialogControllerAceptarReserva($scope, $mdDialog,$timeout, $q, $log, eventsService) {
+                var eventsService = eventsService;
+                    console.log(usuarioLogeado);
+
+
+                $scope.Adquirir = function (descripcionAnular) {
+
+                    $mdDialog.hide();
+                }
+
+                $scope.hide = function() {
+                    $mdDialog.hide();
+                };
+
+                $scope.cancel = function() {
+                    $mdDialog.cancel();
+
+                };
 
             }
 

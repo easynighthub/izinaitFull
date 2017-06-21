@@ -6,11 +6,11 @@ angular.module('myApp', [
     'ngRoute',
     'ngMap',
     'ngMaterial',
-  'myApp.view1',
-  'myApp.view2',
+    'myApp.view1',
+    'myApp.view2',
     'myApp.detalleEvento',
     'myApp.codigo',
-  'myApp.version'
+    'myApp.version'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');

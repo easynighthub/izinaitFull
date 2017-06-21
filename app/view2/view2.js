@@ -13,22 +13,20 @@ angular.module('myApp.view2', ['ngRoute'])
         function($scope, $firebaseObject, $firebaseArray, $filter, $rootScope) {
 
             var user = window.currentApp;
-            $scope.usuarioLogeado = "";
+            var usuarioLogeado = "";
 
 
             if (user != "") {
-                var ref = firebase.database().ref('/users/').child(user.uid);
+                var ref = firebase.database().ref('/users/').child(user.$id || user.uid);
                 var usersLocal = $firebaseObject(ref);
                 usersLocal.$loaded().then(function () {
-                    $scope.usuarioLogeado = usersLocal;
-                    console.log( $scope.usuarioLogeado);
-                    $('.nombreUsuario').text( $scope.usuarioLogeado.displayName);
+                    usuarioLogeado = usersLocal;
+                    console.log( usuarioLogeado);
                     //  $('.user-header .imagen').text(usersLocal.picture);
                     $('.codigoAcceder').text("Tú Codigo");
                     console.log(window.currentApp + " ENTRE");
                 });
             } else {
-                $('.nombreUsuario').text("BIENVENIDO");
                 $('.codigoAcceder').text("acceder");
                 console.log(window.currentApp + " NO ENTRE");
             };
