@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-md-4"
+         ng-repeat="event in events | orderBy:'date' "
+         ng-show="event.visible"
+    >
+        <div class="card">
+
+            <div class="card-header card-chart" data-background-color="green" style="background: url('{{event.image}}') center center">
+                <!--  <i class="material-icons " style="vertical-align: middle;">event</i>   -->
+                <center>    <a class="btn btn-sm" style="background-color: #FE0072 ; margin-top: -10px">{{event.date | date:"EEEE d', 'MMMM " }}</a>
+                </center>
+            </div>
+            <div class="card-content ">
+                <h6 style="margin-top: -10px" class="title text-center"> <strong>{{event.name}}</strong></h6>
+
+
+
+
+            </div>
+            <div class="card-footer text-right" style="margin-top: -10px; ">
+                <div class="stats text-center">
+                    <p class="btn  text-center btn-info" ng-click="administrar(event)"> ADMINISTRAR</p>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>

@@ -212,29 +212,82 @@
 
 
 
-<script type="text/ng-template" id="dialogAceptarReserva" >
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <p class="description" id="myModalLabel">Bienvenido {{usuarioLogeado.displayName}}</p>
-            </div>
-            <div class="modal-body">
-                <h4 class="title">Chile
+<script type="text/ng-template" id="dialogAccederConFacebook" class="col-xs-12" >
 
-                </h4>
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" style="background-color: #fe0072" class="btn btn-info btn-sm">
-                    ¿Eres el administrador de un club?  Agrega Tus Eventos </button>
-
-                <!--        <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Cerrar</button> -->
-                <button type="button" class="btn btn-info btn-simple">VIVE IZINAIT</button>
-            </div>
+        <div class="col-md-10 col-lg-offset-1">
+            <center>
+        <button ng-click="IngresarConFacebook()"  scope="public_profile email user_birthday"
+                class=" btn btn-info">
+            <i class="material-icons"></i> OBTENEN TU CODIGO
+        </button>
+        <br>
+        <font class="nombreEvento"> Con este codigo tendras acceso a tus eventos preferidos, tus reservas, tus compras de entradas y mas.
+        </font>
+            </center>
         </div>
+
+
+
+</script>
+
+<script id="dialogAdquirirServicio" type="text/ng-template" >
+<div class="col-xs-12">
+
+    <h6> Bienvenido {{usuarioLogeado.displayName}}</h6>
+<div class="text-center">
+    <p class="description">
+     {{eventsService.desc}}
+    </p>
+    <p class="btn btn-sm btn-info">
+        $ {{eventsService.precio}}
+
+    </p>
+    <p class="description">
+             {{ eventsService.fechaFin |date : 'hh:mm / dd MMMM yyyy '}}
+    </p>
+    <p class="description">
+            Entradas Maximas {{eventsService.maxEntradas}}
+    </p>
+
+</div>
+    <br>
+    <p class="description">¿Cantidad que deseas adquirir?</p>
+    <md-select name="ticketQty" ng-model="cantidadDeCompra"
+               placeholder=" - ">
+        <md-option
+                   ng-repeat="entrada in maxEntradas track by entrada.id"
+                   ng-value="entrada.id">
+            {{entrada.name}}
+        </md-option>
+    </md-select>
+<center>
+    <table class="text-center">
+        <tr>
+            <th>
+             <p class="description"> <i class="material-icons" style="vertical-align: middle;">call</i> +569</p>
+            </th>
+            <th>
+&nbsp;&nbsp;
+            </th>
+            <th>
+                <div style="margin-top: 1px" class="form-group label-floating " id="agregarCorrecto">
+                    <input type="number"  class="form-control" placeholder="Ingresa Celular"   ng-model="celular"/>
+                    <span class="form-control-feedback">
+			<i class="material-icons">done</i>
+		</span>
+                </div>
+            </th>
+        </tr>
+    </table>
+</center>
+
+    <div class="text-right">
+    <button ng-click="hide()" class="btn  btn-sm"> Cancelar</button>
+    <button ng-click="adquirir(cantidadDeCompra,celular)" class="btn btn-info btn-sm "> Adquirir</button>
     </div>
+</div>
+
+
 </script>
 
 
