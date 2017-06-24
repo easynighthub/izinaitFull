@@ -16,8 +16,8 @@
                     <tr ng-repeat="rrpp in rrpps">
                         <td>{{rrpp.name}}</td>
                         <td class="text-primary">
-                        <p class="btn btn-sm btn-info">
-                            <i class="material-icons">add </i>
+                        <p ng-click="AgregarPersonas(rrpp)" class="btn btn-sm btn-info">
+                            <i class="material-icons">add</i>
                         </p>
                         </td>
                         <td>
@@ -37,3 +37,87 @@
 
 <p class="btn  text-center btn-info" ng-click="abrirLectorQr()">  ABRIR LECTOR QR</p>
 
+<script id="dialogAgregarPersonas" type="text/ng-template"   >
+    <md-dialog   aria-label="Confirmar Check In">
+<center>
+        <table class="table text-center">
+            <thead class="text-primary text-center">
+            <th>Tipo</th>
+            <th>Valor </th>
+            <th>Cantidad</th>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="text-primary">Gratis H.</td>
+                <td>
+                    $ 0
+                </td>
+                <td>
+                    <i ng-click="disminuir(product)" class="text-primary material-icons"  style="vertical-align: middle;">remove</i>
+                    <font >&nbsp;&nbsp;0&nbsp;&nbsp;</font>
+                    <i ng-click="aumentar(product)" class="text-primary material-icons"  style="vertical-align: middle;">add</i>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-primary">Gratis  M.</td>
+                <td>
+                    $ 0
+                </td>
+                <td>
+                    <i ng-click="disminuir(product)" class="text-primary material-icons"  style="vertical-align: middle;">remove</i>
+                    <font >&nbsp;&nbsp;0&nbsp;&nbsp;</font>
+                    <i ng-click="aumentar(product)" class="text-primary material-icons"  style="vertical-align: middle;">add</i>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-primary">extra H. </td>
+                <td>
+                    $ 0
+                </td>
+                <td>
+                    <i ng-click="disminuir(product)" class="text-primary material-icons"  style="vertical-align: middle;">remove</i>
+                    <font >&nbsp;&nbsp;0&nbsp;&nbsp;</font>
+                    <i ng-click="aumentar(product)" class="text-primary material-icons"  style="vertical-align: middle;">add</i>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-primary">extra M. </td>
+                <td>
+                    $ 0
+                </td>
+                <td>
+                    <i ng-click="disminuir(product)" class="text-primary material-icons"  style="vertical-align: middle;">remove</i>
+                    <font >&nbsp;&nbsp;0&nbsp;&nbsp;</font>
+                    <i ng-click="aumentar(product)" class="text-primary material-icons"  style="vertical-align: middle;">add</i>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-primary">VIP H. </td>
+                <td>
+                    $ 0
+                </td>
+                <td>
+                    <i ng-click="disminuir(product)" class="text-primary material-icons"  style="vertical-align: middle;">remove</i>
+                    <font >&nbsp;&nbsp;0&nbsp;&nbsp;</font>
+                    <i ng-click="aumentar(product)" class="text-primary material-icons"  style="vertical-align: middle;">add</i>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-primary">VIP M.</td>
+                <td>
+                    $ 0
+                </td>
+                <td>
+                    <i ng-click="disminuir(product)" class="text-primary material-icons"  style="vertical-align: middle;">remove</i>
+                    <font >&nbsp;&nbsp;0&nbsp;&nbsp;</font>
+                    <i ng-click="aumentar(product)" class="text-primary material-icons"  style="vertical-align: middle;">add</i>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    <button class="btn  "> X </button>
+    <button class="btn btn-info "> GUARDAR </button>
+</center>
+    </md-dialog>
+
+</script>

@@ -63,7 +63,74 @@ angular.module('myApp.event', ['ngRoute'])
             });
 
 
+            $scope.AgregarPersonas = function (rrppSelect) {
+                    $mdDialog.show({
+                        controller: ControllerdialogAgregarPersonas,
+                        templateUrl: 'dialogAgregarPersonas',
+                        parent: angular.element(document.body),
+                        clickOutsideToClose:true,
+                        locals : {
+                            rrppSelect : rrppSelect,
+                        }
+                    });
 
+
+            };
+            function ControllerdialogAgregarPersonas($scope, $mdDialog,$timeout, $q, $log, rrppSelect) {
+                $scope.rrppSelect = rrppSelect;
+                console.log($scope.rrppSelect);
+
+
+
+
+
+                $scope.adquirir = function (cantidadDeCompra,celular) {
+                    console.log(celular);
+                    $scope.newTicket.email =  $scope.usuarioLogeado.email;
+                    $scope.newTicket.ideventservices =  $scope.eventsService.id; // !!!!!! falta rescatar el id de la fila selecionada "del servicio a comprar"
+                    $scope.newTicket.lastName =  $scope.usuarioLogeado.lastName; //$scope.datosTicket.lastName;
+                    $scope.newTicket.firstName =  $scope.usuarioLogeado.firstName; //$scope.datosTicket.firstName;
+                    $scope.newTicket.celular =  celular;
+                    $scope.newTicket.date = new Date().getTime();
+                    $scope.newTicket.paidOut = false; //devolver pago
+                    $scope.newTicket.rrppid = Rrpp;
+                    $scope.newTicket.totalAPagar = $scope.eventsService.precio *  cantidadDeCompra;
+                    $scope.newTicket.eventId = eventId;
+                    $scope.newTicket.userId = $scope.usuarioLogeado.$id;
+                    $scope.newTicket.ticketId = firebase.database().ref().child('ticketsCreate/').push().key;
+
+
+                    firebase.database().ref('tickets/' + eventId + '/' + $scope.usuarioLogeado.$id + '/' + $scope.newTicket.ticketId).set($scope.newTicket).then(
+                        function (s) {
+                            console.log('se guardaron bien el tickets ');
+                            firebase.database().ref('ticketsCreate/' + $scope.newTicket.ticketId).set(true);
+
+                            firebase.database().ref('users/' + $scope.usuarioLogeado.$id + '/events/' + eventId).set(true);
+                            firebase.database().ref('users/' + $scope.usuarioLogeado.$id).update(
+                                {celular: $scope.newTicket.celular});
+                            $mdDialog.hide();
+                        }, function (e) {
+                            alert('Error, intente de nuevo');
+                            // console.log('se guardo mal ', e);
+                        }
+                    );
+
+
+                };
+
+
+
+                $scope.hide = function() {
+                    $mdDialog.hide();
+                };
+
+                $scope.cancel = function() {
+                    $mdDialog.cancel();
+
+                };
+
+
+            };
 
 
 
