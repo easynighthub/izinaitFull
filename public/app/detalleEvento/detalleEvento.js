@@ -16,24 +16,27 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             var friendId = $routeParams.friend; // id del rrpp o amigo que compartio el evento
             var Rrpp = friendId || 'MD18DcCzYMXPhOQb8U61bWfgzRg2'; //rrpp selecionado
 
-            if (user != "") {
-                var ref = firebase.database().ref('/users/').child( user.$id || user.uid);
-                var usersLocal = $firebaseObject(ref);
-                var buscarme = firebase.database().ref('/asist/' + eventId);
-                var buscarmeRequest = $firebaseArray(buscarme);
+            firebase.database().ref('users/').child(user.$id || user.uid).once('value', function(snapshot) {
+                var exists = (snapshot.val() !== null);
+                console.log(exists);
+                if (exists == true) {
+                    var ref = firebase.database().ref('/users/').child( user.$id || user.uid);
+                    var usersLocal = $firebaseObject(ref);
+                    var buscarme = firebase.database().ref('/asist/' + eventId);
+                    var buscarmeRequest = $firebaseArray(buscarme);
 
-                usersLocal.$loaded().then(function () {
-                    usuarioLogeado = usersLocal;
-                    console.log(usuarioLogeado);
-                    $('.nombreUsuario').text( usuarioLogeado.displayName);
-                    //  $('.user-header .imagen').text(usersLocal.picture);
-                    $('.codigoAcceder').text("Tú Codigo");
-                    console.log(window.currentApp + " ENTRE");
+                    usersLocal.$loaded().then(function () {
+                        usuarioLogeado = usersLocal;
+                        console.log(usuarioLogeado);
+                        $('.nombreUsuario').text( usuarioLogeado.displayName);
+                        //  $('.user-header .imagen').text(usersLocal.picture);
+                        $('.codigoAcceder').text("Tú Codigo");
+                        console.log(window.currentApp + " ENTRE");
 
-                    buscarmeRequest.$loaded().then(function () {
-                        $scope.todosLosDatos = buscarmeRequest;
-                        $scope.rrpps = $scope.todosLosDatos;
-                        console.log($scope.rrpps);
+                        buscarmeRequest.$loaded().then(function () {
+                            $scope.todosLosDatos = buscarmeRequest;
+                            $scope.rrpps = $scope.todosLosDatos;
+                            console.log($scope.rrpps);
                             buscarme.once("value").then(function (snapshot) {
                                 $scope.rrpps.forEach(function (data) {
                                     var c = snapshot.child(data.$id + '/' + usuarioLogeado.$id).exists(); // true
@@ -54,13 +57,18 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 });
                             });
 
+                        });
                     });
-                });
-            } else {
-                $('.nombreUsuario').text("BIENVENIDO");
-                $('.codigoAcceder').text("acceder");
-                console.log(window.currentApp + " NO ENTRE");
-            };
+                } else {
+                    window.currentApp = "";
+                    $scope.usuarioLogeado = "";
+                    $('.nombreUsuario').text("BIENVENIDO");
+                    $('.codigoAcceder').text("acceder");
+                    console.log(window.currentApp + " NO ENTRE");
+                };
+            });
+
+
 
 
 

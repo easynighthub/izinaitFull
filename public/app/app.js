@@ -2,6 +2,7 @@
 
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
+    'ngMeta',
     'firebase',
     'ngRoute',
     'ngMap',
@@ -12,10 +13,9 @@ angular.module('myApp', [
     'myApp.codigo',
     'myApp.version'
 ]).
-config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
+config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider,ngMetaProvider) {
   $locationProvider.hashPrefix('!');
 
-;
 
     var validateUser = function() {
         var data;
@@ -41,4 +41,8 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     }
 
 
+}])
+.run(['ngMeta', function(ngMeta) {
+    ngMeta.init();
 }]);
+;

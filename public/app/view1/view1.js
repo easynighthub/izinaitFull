@@ -2,46 +2,50 @@
 
 angular.module('myApp.view1', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/view1', {
+
+                $routeProvider.when('/view1', {
                 templateUrl: 'view1/view1.html',
                 controller: 'View1Ctrl',
                 data: {
                     meta: {
-                        'title': 'Home page',
+                        'title': 'hola',
                         'description': 'Home page description'
                     }
                 }
             }
-
-
         );
     }])
-
-
-
     .controller('View1Ctrl', ['$scope', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
-        function ($scope, $firebaseObject, $firebaseArray, $filter, $rootScope) {
-
+        function ($scope, $firebaseObject, $firebaseArray, $filter, $rootScope, $routeProvider) {
 
 
             var user = window.currentApp;
             var usuarioLogeado = "";
+            firebase.database().ref('users/').child(user.$id || user.uid).once('value', function(snapshot) {
+                var exists = (snapshot.val() !== null);
+                console.log(exists);
+
+                if (exists == true) {
+                    var ref = firebase.database().ref('/users/').child(user.$id || user.uid);
+                    var usersLocal = $firebaseObject(ref);
+                    usersLocal.$loaded().then(function () {
+                        usuarioLogeado = usersLocal;
+                        console.log(usuarioLogeado);
+                        //  $('.user-header .imagen').text(usersLocal.picture);
+                        $('.codigoAcceder').text("Tú Codigo");
+                        console.log(window.currentApp + " ENTRE");
+                    });
+                } else {
+                    window.currentApp = "";
+                    $scope.usuarioLogeado = "";
+                    $('.codigoAcceder').text("acceder");
+                    console.log(window.currentApp + " NO ENTRE");
+                };
+
+            });
 
 
-            if (user != "") {
-                var ref = firebase.database().ref('/users/').child(user.$id || user.uid);
-                var usersLocal = $firebaseObject(ref);
-                usersLocal.$loaded().then(function () {
-                    usuarioLogeado = usersLocal;
-                    console.log(usuarioLogeado);
-                    //  $('.user-header .imagen').text(usersLocal.picture);
-                    $('.codigoAcceder').text("Tú Codigo");
-                    console.log(window.currentApp + " ENTRE");
-                });
-            } else {
-                $('.codigoAcceder').text("acceder");
-                console.log(window.currentApp + " NO ENTRE");
-            };
+
 
 
             $scope.filterDateInput = new Date();

@@ -24,6 +24,9 @@ angular.module('myApp.view1', ['ngRoute'])
 
 
 
+
+
+
             var doorman = window.currentDoorman;
             var doormanLogeado = "";
             $scope.allEvents = [];

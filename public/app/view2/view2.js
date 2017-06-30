@@ -15,21 +15,28 @@ angular.module('myApp.view2', ['ngRoute'])
             var user = window.currentApp;
             var usuarioLogeado = "";
 
+            firebase.database().ref('users/').child(user.$id || user.uid).once('value', function(snapshot) {
+                var exists = (snapshot.val() !== null);
+                console.log(exists);
+                if (exists == true) {
+                    var ref = firebase.database().ref('/users/').child(user.$id || user.uid);
+                    var usersLocal = $firebaseObject(ref);
+                    usersLocal.$loaded().then(function () {
+                        usuarioLogeado = usersLocal;
+                        console.log( usuarioLogeado);
+                        //  $('.user-header .imagen').text(usersLocal.picture);
+                        $('.codigoAcceder').text("Tú Codigo");
+                        console.log(window.currentApp + " ENTRE");
+                    });
+                } else {
+                    window.currentApp = "";
+                    $scope.usuarioLogeado = "";
+                    $('.codigoAcceder').text("acceder");
+                    console.log(window.currentApp + " NO ENTRE");
+                };
 
-            if (user != "") {
-                var ref = firebase.database().ref('/users/').child(user.$id || user.uid);
-                var usersLocal = $firebaseObject(ref);
-                usersLocal.$loaded().then(function () {
-                    usuarioLogeado = usersLocal;
-                    console.log( usuarioLogeado);
-                    //  $('.user-header .imagen').text(usersLocal.picture);
-                    $('.codigoAcceder').text("Tú Codigo");
-                    console.log(window.currentApp + " ENTRE");
-                });
-            } else {
-                $('.codigoAcceder').text("acceder");
-                console.log(window.currentApp + " NO ENTRE");
-            };
+            });
+
 
 
 

@@ -24,27 +24,37 @@ angular.module('myApp.codigo', ['ngRoute'])
             document.getElementById('codigoVisibile').style.display = 'none';
             document.getElementById('pedirCodigo').style.display = 'none';
 
-            if (user != "") {
-                var ref = firebase.database().ref('/users/').child(user.$id || user.uid);
-                var usersLocal = $firebaseObject(ref);
-                usersLocal.$loaded().then(function () {
-                    $scope.usuarioLogeado = usersLocal;
-                    window.currentApp = usersLocal;
-                    console.log( $scope.usuarioLogeado);
-                    update_qrcode();
-                    $scope.nombre = $scope.usuarioLogeado.displayName;
-                    $scope.email = $scope.usuarioLogeado.email;
-                    $scope.foto = $scope.usuarioLogeado.picture;
-                    $scope.email = $scope.usuarioLogeado.email;
+            firebase.database().ref('users/').child(user.$id || user.uid).once('value', function(snapshot) {
+                var exists = (snapshot.val() !== null);
+                console.log(exists);
+                if (exists == true) {
+                    var ref = firebase.database().ref('/users/').child(user.$id || user.uid);
+                    var usersLocal = $firebaseObject(ref);
+                    usersLocal.$loaded().then(function () {
+                        $scope.usuarioLogeado = usersLocal;
+                        window.currentApp = usersLocal;
+                        console.log( $scope.usuarioLogeado);
+                        update_qrcode();
+                        $scope.nombre = $scope.usuarioLogeado.displayName;
+                        $scope.email = $scope.usuarioLogeado.email;
+                        $scope.foto = $scope.usuarioLogeado.picture;
+                        $scope.email = $scope.usuarioLogeado.email;
 
-                    document.getElementById('codigoVisibile').style.display = 'block';
-                    $('.codigoAcceder').text("Tú Codigo");
-                });
-            }
-            else {
-                $('.codigoAcceder').text("Acceder");
-                document.getElementById('pedirCodigo').style.display = 'block';
-            }
+                        document.getElementById('codigoVisibile').style.display = 'block';
+                        $('.codigoAcceder').text("Tú Codigo");
+                    });
+                }
+                else {
+                    window.currentApp = "";
+                    $scope.usuarioLogeado = "";
+                    $('.codigoAcceder').text("Acceder");
+                    document.getElementById('pedirCodigo').style.display = 'block';
+                }
+
+            });
+
+
+
 
             var signInButtonFacebook = document.getElementById('sign-in-facebook');
 

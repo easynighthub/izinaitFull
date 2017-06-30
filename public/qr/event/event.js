@@ -76,6 +76,10 @@ angular.module('myApp.event', ['ngRoute'])
 
 
             };
+
+           // var element = document.querySelector('meta[property="og:image"]');
+           // var content = element && element.getAttribute("content");
+
             function ControllerdialogAgregarPersonas($scope, $mdDialog,$timeout, $q, $log, rrppSelect) {
                 $scope.rrppSelect = rrppSelect;
                 console.log($scope.rrppSelect);
