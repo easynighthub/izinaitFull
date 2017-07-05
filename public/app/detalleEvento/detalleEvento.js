@@ -16,13 +16,13 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             var friendId = $routeParams.friend; // id del rrpp o amigo que compartio el evento
             var Rrpp = friendId || 'MD18DcCzYMXPhOQb8U61bWfgzRg2'; //rrpp selecionado
 
-            firebase.database().ref('users/').child(user.$id || user.uid).once('value', function(snapshot) {
+            firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
                 console.log(exists);
                 if (exists == true) {
                     var ref = firebase.database().ref('/users/').child( user.$id || user.uid);
                     var usersLocal = $firebaseObject(ref);
-                    var buscarme = firebase.database().ref('/asist/' + eventId);
+                    var buscarme = firebase.database().ref('/events/' + eventId + '/asist');
                     var buscarmeRequest = $firebaseArray(buscarme);
 
                     usersLocal.$loaded().then(function () {
@@ -42,7 +42,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                     var c = snapshot.child(data.$id + '/' + usuarioLogeado.$id).exists(); // true
                                     if (c === true) {
                                         var Rrpp = data.$id;
-                                        var totalAsist = firebase.database().ref('/asist/' + eventId + '/' + Rrpp + '/' + usuarioLogeado.$id);
+                                        var totalAsist = firebase.database().ref('/events/' + eventId + '/asist/' + Rrpp + '/' + usuarioLogeado.$id);
                                         var totalAsistRrequest = $firebaseObject(totalAsist);
                                         totalAsistRrequest.$loaded().then(function () {
                                             $scope.datosAsistire = totalAsistRrequest;
@@ -60,6 +60,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                         });
                     });
                 } else {
+                    firebase.auth().signOut();
                     window.currentApp = "";
                     $scope.usuarioLogeado = "";
                     $('.nombreUsuario').text("BIENVENIDO");
@@ -85,7 +86,10 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             });
 
 
+            //funciones
+            var obtenerUsuario = function (user) {
 
+            };
 
             //funciones
             $scope.getClub = function (club) {
@@ -131,6 +135,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 $scope.nuevaAsistencia.asistencia = false;
                 $scope.nuevaAsistencia.fechaClick = Date.now();
                 $scope.nuevaAsistencia.totalList = $scope.totalReserva;
+                $scope.nuevaAsistencia.displayName = usuarioLogeado.displayName;
                 var totalAsistenciaVisible = $scope.totalReserva;
                 if(user != ""){
                     guardarListaGratisFuncion(totalAsistenciaVisible);
@@ -143,7 +148,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             };
 
             function guardarListaGratisFuncion(total) {
-                firebase.database().ref('asist/' + eventId + '/' + Rrpp + '/' + usuarioLogeado.$id).update($scope.nuevaAsistencia);
+                firebase.database().ref('events/' + eventId + '/asist/' + Rrpp + '/' + usuarioLogeado.$id).update($scope.nuevaAsistencia);
                 document.getElementById('botonAsistir').style.display = 'none';
                 document.getElementById('selectLista').style.display = 'none';
                 document.getElementById('botonLista').style.display = 'block';
@@ -280,7 +285,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                             usersLocal.$loaded().then(function(){
                                 window.currentApp = usersLocal;
                                 $scope.usuarioLogeado = usersLocal;
-
+                                usuarioLogeado = usersLocal;
                                 $scope.nombre = $scope.usuarioLogeado.displayName;
                                 $scope.email = $scope.usuarioLogeado.email;
                                 $scope.foto = $scope.usuarioLogeado.picture;
@@ -308,6 +313,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                             usersLocal.$loaded().then(function(){
                                 window.currentApp = usersLocal;
                                 $scope.usuarioLogeado = usersLocal;
+                                usuarioLogeado = usersLocal;
                                 $scope.nombre = $scope.usuarioLogeado.displayName;
                                 $scope.email = $scope.usuarioLogeado.email;
                                 $scope.foto = $scope.usuarioLogeado.picture;

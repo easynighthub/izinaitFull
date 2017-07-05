@@ -15,7 +15,7 @@ angular.module('myApp.view2', ['ngRoute'])
             var user = window.currentApp;
             var usuarioLogeado = "";
 
-            firebase.database().ref('users/').child(user.$id || user.uid).once('value', function(snapshot) {
+            firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
                 console.log(exists);
                 if (exists == true) {
@@ -29,6 +29,7 @@ angular.module('myApp.view2', ['ngRoute'])
                         console.log(window.currentApp + " ENTRE");
                     });
                 } else {
+                    firebase.auth().signOut();
                     window.currentApp = "";
                     $scope.usuarioLogeado = "";
                     $('.codigoAcceder').text("acceder");

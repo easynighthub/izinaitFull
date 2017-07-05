@@ -16,7 +16,8 @@
         </div>
     </div>
 </div>
-    <div class="row col-md-offset-4">
+
+    <div class=" col-md-offset-4">
         <p class="btn col-xs-12  col-md-6   " ><strong>
            {{event.date | date : 'fullDate'}}
             <br>
@@ -31,22 +32,23 @@
         <br>
 
     </div>
-        <div class="valoresBotones col-md-offset-3">
+        <div class="valoresBotones col-md-offset-4">
+
             <div ng-show="event.freemiumHour != event.date"
-                 class="btn btn-sm col-xs-12  col-md-4" >
+                 class="btn  col-xs-12  col-md-6" >
                 <i class="material-icons">money_off</i>
                 Gratis hasta las: <br> {{event.freemiumHour | date : 'shortTime'}}
             </div>
 
 
             <div ng-show="event.freemiumHour != event.date"
-                 class="btn btn-sm col-xs-12 col-md-4" >
+                 class="btn  col-xs-12 col-md-6" >
                <i class="material-icons">monetization_on</i>
                 Despues de Hr Gratis: <br> CPL $ {{event.entryValue}}
             </div>
 
             <div ng-show="event.freemiumHour == event.date"
-                 class="btn btn-sm col-xs-12 col-md-4 " >
+                 class="btn  col-xs-12 col-md-6 " >
                 <i class="material-icons" style="vertical-align: middle;">monetization_on</i>
                 Entrada en Puerta: CPL <br> {{event.entryValue}}
             </div>

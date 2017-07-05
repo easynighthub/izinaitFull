@@ -24,7 +24,7 @@ angular.module('myApp.codigo', ['ngRoute'])
             document.getElementById('codigoVisibile').style.display = 'none';
             document.getElementById('pedirCodigo').style.display = 'none';
 
-            firebase.database().ref('users/').child(user.$id || user.uid).once('value', function(snapshot) {
+            firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
                 console.log(exists);
                 if (exists == true) {
@@ -45,6 +45,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                     });
                 }
                 else {
+                    firebase.auth().signOut();
                     window.currentApp = "";
                     $scope.usuarioLogeado = "";
                     $('.codigoAcceder').text("Acceder");

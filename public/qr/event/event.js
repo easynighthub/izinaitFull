@@ -34,8 +34,7 @@ angular.module('myApp.event', ['ngRoute'])
                 });
             } else {
                 console.log(window.currentDoorman + " NO ENTRE");
-            }
-            ;
+            };
 
         $scope.abrirLectorQr = function () {
             location.href = $scope.url;

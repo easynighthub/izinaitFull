@@ -19,9 +19,10 @@ angular.module('myApp.view1', ['ngRoute'])
         function ($scope, $firebaseObject, $firebaseArray, $filter, $rootScope, $routeProvider) {
 
 
-            var user = window.currentApp;
+            var user = window.currentApp ;
             var usuarioLogeado = "";
-            firebase.database().ref('users/').child(user.$id || user.uid).once('value', function(snapshot) {
+
+            firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
                 console.log(exists);
 
