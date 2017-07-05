@@ -42,6 +42,7 @@ angular.module('myApp.codigo', ['ngRoute'])
 
                         document.getElementById('codigoVisibile').style.display = 'block';
                         $('.codigoAcceder').text("Tú Codigo");
+                        $(navigationexample).removeClass( "in" );
                     });
                 }
                 else {
@@ -50,6 +51,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                     $scope.usuarioLogeado = "";
                     $('.codigoAcceder').text("Acceder");
                     document.getElementById('pedirCodigo').style.display = 'block';
+                    $(navigationexample).removeClass( "in" );
                 }
 
             });

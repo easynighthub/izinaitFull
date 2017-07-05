@@ -27,6 +27,7 @@ angular.module('myApp.view2', ['ngRoute'])
                         //  $('.user-header .imagen').text(usersLocal.picture);
                         $('.codigoAcceder').text("Tú Codigo");
                         console.log(window.currentApp + " ENTRE");
+                        $(navigationexample).removeClass( "in" );
                     });
                 } else {
                     firebase.auth().signOut();
@@ -34,6 +35,7 @@ angular.module('myApp.view2', ['ngRoute'])
                     $scope.usuarioLogeado = "";
                     $('.codigoAcceder').text("acceder");
                     console.log(window.currentApp + " NO ENTRE");
+                    $(navigationexample).removeClass( "in" );
                 };
 
             });
