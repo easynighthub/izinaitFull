@@ -3649,7 +3649,7 @@ h2.title {
 }
 
 .landing-page .header {
-  height: 50vh;
+  height: 30vh;
 }
 .landing-page .header .container {
   padding-top: 26vh;
@@ -3716,7 +3716,7 @@ h2.title {
 @media (max-width: 991px) {
   .landing-page .header {
     height: 70px;
-    min-height: 50vh;
+    min-height: 30vh;
     /*height: auto;
     min-height: 100vh; */
   }

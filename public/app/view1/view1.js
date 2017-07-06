@@ -35,7 +35,7 @@ angular.module('myApp.view1', ['ngRoute'])
                         //  $('.user-header .imagen').text(usersLocal.picture);
                         $('.codigoAcceder').text("Tú Codigo");
                         console.log(window.currentApp + " ENTRE");
-                        $(navigation-example).removeClass("in");
+                        $(navigationexample).removeClass("in");
                     });
                 } else {
                     window.currentApp = "";

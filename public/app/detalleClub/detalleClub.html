@@ -1,0 +1,279 @@
+<button id="BarraCargando" class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"></i> CARGANDO CLUB</button>
+
+<div id="detalleClub" style="display: none" class="text-center">
+<center>
+    <div class="carousel-inner">
+        <div class="item active ">
+            <img class="text-center" src="{{club.clubLogo}}"  >
+            <div class="carousel-caption">
+                <h6 style="margin-bottom: -50px" class="btn  btn-info ">{{club.name}}</h6>
+            </div>
+        </div>
+    </div>
+</center>
+    <button style="background:#1b001b"
+            class=" btn btn-sm">
+        <i class="material-icons mdl-color-text--white" style="vertical-align: middle;">location_on</i>
+        {{club.address}}
+    </button>
+<hr>
+    <div class="row">
+
+        <i class="material-icons mdl-color-text--grey" style="vertical-align: middle;">location_city</i>
+        {{club.city}}
+        <br>
+        <i class="material-icons mdl-color-text--grey" style="vertical-align: middle;">web</i> <a
+            href="{{club.webUrl}}" target="blank">{{club.webUrl}}</a>
+        <br>
+        <i class="material-icons mdl-color-text--grey" style="vertical-align: middle;">music_note</i>
+        {{club.clubMusic}}
+
+        <br>
+        <i class="material-icons mdl-color-text--grey" style="vertical-align: middle;">layers</i>
+        {{club.clubEnvironment}}
+
+
+        <br>
+        <div>
+         <strong>{{club.description}}</strong>
+        </div>
+    </div>
+    <hr>
+
+    <div ng-show="eventsItems" class="row">
+        <h4 class="info-title">EVENTOS</h4>
+        <div class="col-md-4"
+             ng-repeat="event in events | orderBy:'date' "
+             ng-click="goToEventDetails(event)"
+             ng-show="event.visible"
+        >
+            <div class="card1">
+
+                <div class="card1-header card1-chart" data-background-color="green" style="background: url('{{event.image}}') center center">
+                    <!--  <i class="material-icons " style="vertical-align: middle;">event</i>   -->
+                    <center>    <a class="btn btn-sm" style="background-color: #FE0072 ; margin-top: -10px">{{event.date | date:"EEEE d', 'MMMM " }}</a>
+                    </center>
+                </div>
+                <div class="card1-content ">
+                    <h6 style="margin-top: -10px" class="title text-center"> <strong>{{event.name}}</strong></h6>
+                    <p class="category">
+                            <span class="">
+                                     <i class="material-icons">music_note</i>
+                                 </span> {{event.musicGenres}}
+                    </p>
+                    <p class="category">
+                            <span class="">
+                                     <i class="material-icons">layers</i>
+                                 </span>{{event.eventEnvironment}}
+                    </p>
+                    <p class="category">
+                            <span class="">
+                                     <i class="material-icons">alarm</i>
+                                 </span> {{event.date | date:"HH:MM" }}
+                        hasta
+                        {{event.toHour | date:"HH:MM" }}
+                    </p>
+                    <p class="category">
+                            <span class="">
+                                       {{event.djs}}
+                                 </span>
+
+
+
+
+
+                </div>
+                <div class="card1-footer" style="margin-top: -10px; ">
+                    <div class="stats text-center">
+                        <p class="btn btn-sm text-center btn-info" ng-show="event.freemiumHour == event.date"> CPL ${{event.entryValue }}</p>
+                        <p class="btn btn-sm text-center btn-info" ng-show="event.freemiumHour != event.date">  GRATIS</p>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <hr>
+    <div ng-show="instaItems" >
+        <h4 class="info-title">GALERIA INSTAGRAM {{ instagramIdTitle }}</h4>
+        <div class="row1">
+        <div class="row__inner1">
+
+            <div class="tile" ng-repeat="item in instagramItems">
+                <a ng-href="{{item.link}}" target="_blank">
+                    <div class="tile__media">
+                        <img class="tile__img" data-ng-src="{{ item.images.standard_resolution.url }}"
+                             alt=""/>
+                    </div>
+                    <div class="tile__details">
+                        <div class="tile__title truncate">
+                            {{ item.caption.text }}
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <h4 href="https://www.google.com/maps/place/{{event.lat}},{{event.lng}}" target="_blank" class="info-title btn btn-info">COMO LLEGAR</h4>
+        <ng-map
+                center="[{{club.latitude}}, {{club.longitude}}]"
+                zoom="14"
+                disable-default-u-i="true"
+                scrollwheel="false"
+                default-style="true"
+                center="[{{event.lat}}, {{event.lng}}]">
+            <marker
+                    id="foo"
+                    centered="true"
+                    animation="Animation.BOUNCE"
+                    title="{{getClub(event.clubs)}}"
+                    on-click="map.showInfoWindow('bar')"
+                    position="{{club.latitude}}, {{club.longitude}}">
+            </marker>
+            <info-window class="date111" id="bar" visible-on-marker="foo">
+                <a href="https://www.google.com/maps/place/{{event.lat}},{{event.lng}}" target="_blank">
+                    <h6>{{club.address}}</h6>
+                </a>
+            </info-window>
+        </ng-map>
+    </div>
+
+
+
+
+
+</div>
+<style>
+    h1,
+    p {
+        text-align: center;
+    }
+
+    p {
+        width: 100%;
+        max-width: 500px;
+        margin: auto;
+    }
+
+    a:link,
+    a:hover,
+    a:active,
+    a:visited {
+        -webkit-transition: color 150ms;
+        transition: color 150ms;
+        color: #95a5a6;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #7f8c8d;
+        text-decoration: underline;
+    }
+
+    .contain {
+        width: 100%;
+    }
+
+    .row1 {
+        overflow: scroll;
+        width: 100%;
+    }
+
+    .row__inner1 {
+        -webkit-transition: 450ms -webkit-transform;
+        transition: 450ms -webkit-transform;
+        transition: 450ms transform;
+        transition: 450ms transform, 450ms -webkit-transform;
+        font-size: 0;
+        white-space: nowrap;
+        margin: 40px 0;
+        padding-bottom: 10px;
+    }
+
+    .tile {
+        position: relative;
+        display: inline-block;
+        width: 250px;
+        /* height: 140.625px; */
+        margin-right: 5px;
+        /* font-size: 20px; */
+        cursor: auto;
+        -webkit-transition: 500ms all;
+        transition: 500ms all;
+        -webkit-transform-origin: center left;
+        transform-origin: center left;
+    }
+
+    .tile__img {
+        width: 250px;
+        height: 140.625px;
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+
+    .tile__details {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        font-size: 10px;
+        opacity: 0;
+        background: -webkit-linear-gradient(bottom, rgba(250, 250, 250, 0.9) 0%, rgba(250, 250, 250, 0) 100%);
+        background: linear-gradient(to top, rgba(250, 250, 250, 0.9) 0%, rgba(250, 250, 250, 0) 100%);
+        -webkit-transition: 450ms opacity;
+        transition: 450ms opacity;
+    }
+
+    .tile:hover .tile__details {
+        opacity: 1;
+    }
+
+    .truncate {
+        width: 220px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -moz-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        -moz-box-orient: vertical;
+        line-clamp: 3;
+        box-orientation: vertial;
+    }
+
+    .tile__title {
+        position: absolute;
+        bottom: 0;
+        padding: 10px;
+        color: #1b001b;
+    }
+
+    .row__inner:hover {
+        -webkit-transform: translate3d(-62.5px, 0, 0);
+        transform: translate3d(-62.5px, 0, 0);
+    }
+
+    .row__inner:hover .tile {
+        opacity: 0.3;
+    }
+
+    .row__inner:hover .tile:hover {
+        -webkit-transform: scale(1.5);
+        transform: scale(1.5);
+        opacity: 1;
+    }
+
+    .tile:hover ~ .tile {
+        -webkit-transform: translate3d(125px, 0, 0);
+        transform: translate3d(125px, 0, 0);
+    }
+</style>
