@@ -1,206 +1,208 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>
+<html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
 <head>
-  <meta charset="utf-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="logo.png">
-  <link rel="icon" type="image/png" href="logo.png">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <link rel="apple-touch-icon" sizes="76x76" href="logo.png">
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title ng-bind="ngMeta.title"></title>
-  <meta name="description" content="{{ngMeta.description}}" />
+    <title ng-bind="ngMeta.title"></title>
+    <meta name="description" content="{{ngMeta.description}}"/>
 
 
-  <meta property="og:url"               content="{{ngMeta.description}}" />
-  <meta property="og:type"               content="article" />
-  <meta property="og:title"             content="{{ngMeta.description}}" />
-  <meta property="og:description"        content="{{ngMeta.description}}"/>
-  <meta property="og:image"              content="{{ngMeta.description}}" />
+    <meta property="og:url" content="{{ngMeta.description}}"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="{{ngMeta.description}}"/>
+    <meta property="og:description" content="{{ngMeta.description}}"/>
+    <meta property="og:image" content="{{ngMeta.description}}"/>
 
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-<!--
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--
 
-  <meta property="og:locale" content="es_ES" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="izinait - Listas Gratis y Reservas para las mejores Fiestas en la Ciudad" />
-  <meta property="og:description" content="Descubre los mejores eventos y los clubes mas exclusivos en tu ciudad. Disfruta de noches épicas, acceso a Listas, reserva Mesas y Botellas VIP." />
-  <meta property="og:url" content="https://izinait.com/app" />
-  <meta property="og:site_name" content="izinait.com" />
-  <meta property="og:image" content="https://izinait.com/wp-content/uploads/2015/12/11111-compressor.jpg" />
-  <meta property="fb:app_id" content="1138664439526562"/>
+      <meta property="og:locale" content="es_ES" />
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="izinait - Listas Gratis y Reservas para las mejores Fiestas en la Ciudad" />
+      <meta property="og:description" content="Descubre los mejores eventos y los clubes mas exclusivos en tu ciudad. Disfruta de noches épicas, acceso a Listas, reserva Mesas y Botellas VIP." />
+      <meta property="og:url" content="https://izinait.com/app" />
+      <meta property="og:site_name" content="izinait.com" />
+      <meta property="og:image" content="https://izinait.com/wp-content/uploads/2015/12/11111-compressor.jpg" />
+      <meta property="fb:app_id" content="1138664439526562"/>
 
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="izinait - Descubre los mejores eventos y clubes en tu ciudad desde la palma de tu mano." />
-  <meta name="twitter:image" content="https://izinait.com/wp-content/uploads/2015/12/11111-compressor.jpg" />
-  <meta name="google-play-app" content="app-id=com.easynight" />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:title" content="izinait - Descubre los mejores eventos y clubes en tu ciudad desde la palma de tu mano." />
+      <meta name="twitter:image" content="https://izinait.com/wp-content/uploads/2015/12/11111-compressor.jpg" />
+      <meta name="google-play-app" content="app-id=com.easynight" />
 
--->
-  <!--     Fonts and icons     -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    -->
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
 
-  <!-- CSS Files -->
-  <link href="assentIndex/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="assentIndex/css/material-kit.css" rel="stylesheet"/>
-  <link href="assentIndex/css/index.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="assentIndex/css/event.css">
+    <!-- CSS Files -->
+    <link href="assentIndex/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="assentIndex/css/material-kit.css" rel="stylesheet"/>
+    <link href="assentIndex/css/index.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="assentIndex/css/event.css">
 
 
 </head>
 
 <body class="landing-page">
 <nav class="navbar navbar-transparent  navbar-fixed-top navbar-color-on-scroll">
-  <div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigationexample">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#view1">
-      <div class="logo ">
-        <img style="width: 35px;" src="logo.png" alt="izinait">
-        izinait
-      </div>
-    </a>
-    </div>
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigationexample">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#view1">
+                <div class="logo ">
+                    <img style="width: 35px;" src="logo.png" alt="izinait">
+                    izinait
+                </div>
+            </a>
+        </div>
 
-    <div class="collapse navbar-collapse " id="navigationexample">
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          <a   href="#!/view1" >
-           Eventos
-          </a>
-        </li>
-        <li>
-          <a   href="#!/view2" >
-            Selecionar Club
-          </a>
-        </li>
-        <li>
-          <a href="" >
-            Crear evento
-          </a>
-        </li>
-        <li>
-          <a href="#!/codigo"  class="btn btn-sm codigoAcceder" style="background-color: #fe0072; margin-top: 8px">
-            Acceder
-          </a>
-        </li>
-        <li style="float: right">
-          <a  href="https://www.facebook.com/Izinait/"  class="navbar-absolute btn btn-simple btn-white btn-just-icon">
-            <i class="fa fa-facebook-square"></i>
-          </a>
-        </li>
-        <li style="float: right" >
-          <a  href="https://www.instagram.com/Izinait/"  class="navbar-absolute btn btn-simple btn-white btn-just-icon">
-            <i class="fa fa-instagram"></i>
-          </a>
-        </li>
+        <div class="collapse navbar-collapse " id="navigationexample">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#!/view1">
+                        Eventos
+                    </a>
+                </li>
+                <li>
+                    <a href="#!/view2">
+                        Selecionar Club
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        Crear evento
+                    </a>
+                </li>
+                <li>
+                    <a href="#!/codigo" class="btn btn-sm codigoAcceder"
+                       style="background-color: #fe0072; margin-top: 8px">
+                        Acceder
+                    </a>
+                </li>
+                <li style="float: right">
+                    <a href="https://www.facebook.com/Izinait/"
+                       class="navbar-absolute btn btn-simple btn-white btn-just-icon">
+                        <i class="fa fa-facebook-square"></i>
+                    </a>
+                </li>
+                <li style="float: right">
+                    <a href="https://www.instagram.com/Izinait/"
+                       class="navbar-absolute btn btn-simple btn-white btn-just-icon">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+                </li>
 
-      </ul>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>
 <div class="wrapper">
 
-  <div id="fondoheader" class="header header-filter" style="background-image: url('image/fondo.jpg');"  >
-
-  </div>
-
-  <div class="main main-raised">
-    <div class="container">
-      <div class="section text-center section-landing">
-        <div  ng-view>
-
-    </div>
-  </div>
-
-</div>
-  </div>
-  <footer class="footer-distributed">
-
-
-    <div class="footer-right">
-
-
-      <a target="_blank" href="https://www.facebook.com/izinait"><i class="fa fa-facebook"></i></a>
-      <a target="_blank" href="https://instagram/izinait"><i class="fa fa-instagram"></i></a>
-      <a target="_blank" href="https://www.linkedin.com/company-beta/15259030/"><i class="fa fa-linkedin"></i></a>
+    <div id="fondoheader" class="header header-filter" style="background-image: url('image/fondo.jpg');">
 
     </div>
 
+    <div class="main main-raised">
+        <div class="container">
+            <div class="section text-center section-landing">
+                <div ng-view>
 
-    <div class="footer-left">
+                </div>
+            </div>
 
-
-      <p class="footer-links">
-        <a href="http://izinait.com">Inicio</a>
-        ·
-        <a href="#!/view1">Eventos</a>
-        ·
-        <a href="#!/view2">Clubs</a>
-        ·
-        <a href="#!/codigo">Tu Codigo</a>
-        ·
-        <a href="#!/sobrenosotros">Nosotros</a>
-        ·
-        <a target="_blank" href="http://izinait.com/terms">Terminos</a>
-      </p>
-
-
-      <p class="footer-company-name">
-
-        <img src="logo.png" style="height: 50px;">
-        <br>
-        izinait &copy; 2017
-
-      </p>
-
+        </div>
     </div>
+    <footer class="footer-distributed">
 
-  </footer>
+
+        <div class="footer-right">
+
+
+            <a target="_blank" href="https://www.facebook.com/izinait"><i class="fa fa-facebook"></i></a>
+            <a target="_blank" href="https://instagram/izinait"><i class="fa fa-instagram"></i></a>
+            <a target="_blank" href="https://www.linkedin.com/company-beta/15259030/"><i class="fa fa-linkedin"></i></a>
+
+        </div>
+
+
+        <div class="footer-left">
+
+
+            <p class="footer-links">
+                <a href="http://izinait.com">Inicio</a>
+                ·
+                <a href="#!/view1">Eventos</a>
+                ·
+                <a href="#!/view2">Clubs</a>
+                ·
+                <a href="#!/codigo">Tu Codigo</a>
+                ·
+                <a href="#!/sobrenosotros">Nosotros</a>
+                ·
+                <a target="_blank" href="http://izinait.com/terms">Terminos</a>
+            </p>
+
+
+            <p class="footer-company-name">
+
+                <img src="logo.png" style="height: 50px;">
+                <br>
+                izinait &copy; 2017
+
+            </p>
+
+        </div>
+
+    </footer>
 
 
 </div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">SELECIONAR CLUB</h4>
-      </div>
-      <div class="modal-body">
-        lista de clubs  </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-info btn-simple">VIVE IZINAIT</button>
-      </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">SELECIONAR CLUB</h4>
+            </div>
+            <div class="modal-body">
+                lista de clubs
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-info btn-simple">VIVE IZINAIT</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 
 </body>
 
 
-
-
-
-
-
-
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
+<!-- In production use:
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+-->
 
 
 <script src="js/jquery-3.1.1.js"></script>
@@ -232,7 +234,7 @@
 <script src="detalleEvento/detalleEvento.js"></script>
 <script src="detalleClub/detalleClub.js"></script>
 
- <!--<script src="eventos/eventos.js"></script>
+<!--<script src="eventos/eventos.js"></script>
 <script src="clubs/clubs.js"></script>
 
 
@@ -245,8 +247,7 @@
 <script src="https://apis.google.com/js/client.js"></script>
 <script src="https://cdn.firebase.com/libs/angularfire/2.0.2/angularfire.min.js"></script>
 
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTsty5DQnaOuEdGnCbvlhuuyPb0U3tGP0">
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTsty5DQnaOuEdGnCbvlhuuyPb0U3tGP0">
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
@@ -284,6 +285,8 @@
     }
 </script>
 
+<script src="https://apis.google.com/js/client.js?onload=googleOnLoadCallback"></script>
+
 <!--   Core JS Files   -->
 <script src="assentIndex/js/jquery.min.js" type="text/javascript"></script>
 <script src="assentIndex/js/bootstrap.min.js" type="text/javascript"></script>
@@ -298,7 +301,7 @@
 <!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
 <script src="assentIndex/js/material-kit.js" type="text/javascript"></script>
 
-<script src="ngMeta.js" ></script>
+<script src="ngMeta.js"></script>
 
 
 </html>

@@ -13,17 +13,16 @@ angular.module('myApp', [
     'myApp.detalleClub',
     'myApp.codigo',
     'myApp.version'
-]).
-config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider,ngMetaProvider) {
-  $locationProvider.hashPrefix('!');
+]).config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider, ngMetaProvider) {
+    $locationProvider.hashPrefix('!');
 
 
-    var validateUser = function() {
+    var validateUser = function () {
         var data;
-        for ( var i = 0, len = localStorage.length; i < len; ++i ) {
+        for (var i = 0, len = localStorage.length; i < len; ++i) {
             var str = localStorage.key(i);
             var patt = new RegExp('firebase:authUser:');
-            if(patt.test(str)){
+            if (patt.test(str)) {
                 window.currentApp = JSON.parse(localStorage.getItem(str));
                 console.log(window.currentApp);
                 return true;
@@ -32,18 +31,27 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
         return false;
     }
 
-    if(validateUser()) {
+    if (validateUser()) {
         $routeProvider.otherwise({redirectTo: '/view1'});
         console.log(window.currentApp);
     } else {
         $routeProvider.otherwise({redirectTo: '/view1'});
-        window.currentApp ="";
+        window.currentApp = "";
         console.log(window.currentApp);
     }
 
+    function load() {
+        gapi.client.setApiKey('AIzaSyDBVb3ISIrzhcxTUHnZwKmOjOIqsJ2077M'); //get your ownn Browser API KEY
+        gapi.client.load('urlshortener', 'v1', function () {
+        });
+
+    }
+
+
+
 
 }])
-.run(['ngMeta', function(ngMeta) {
-    ngMeta.init();
-}]);
+    .run(['ngMeta', function (ngMeta) {
+        ngMeta.init();
+    }]);
 ;
