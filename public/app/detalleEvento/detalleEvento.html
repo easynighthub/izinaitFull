@@ -4,51 +4,75 @@
 </a>
 </center>-->
 
-    <button id="BarraCargando" class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"></i> CARGANDO EVENTO</button>
+<img height="auto"  style="   display: block;    width: 100% !important;" class="height-auto full-width"
+     src="{{event.image}}">
 
-<div id="detalleEvento" style="display: none">
-    <center>
-    <div class="carousel-inner">
-    <div class="item active ">
-        <img class="text-center" src="{{event.image}}"  >
-        <div class="carousel-caption">
-            <h6 style="margin-bottom: -70px" class="btn btn-sm btn-info ">{{event.name}}</h6>
-        </div>
-    </div>
+
+<button id="BarraCargando" class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"></i> CARGANDO EVENTO
+</button>
+
+<div id="contact-buttons-bar" class="contact-buttons-bar.slide-on-scroll" data-top="120px" style="left: 0px;">
+
+
+    <a href="" ng-click="shareButtonFacebook()"
+       class="contact-button-link cb-ancor facebook" title="comparte en Facebook" target="_blank">
+                <span class="fa fa-facebook">
+                </span>
+    </a>
+
+    <a href="" ng-click="shareButtonTw()"
+       class="contact-button-link cb-ancor twitter" title="Comparte en Twitter" target="_blank">
+        <span class="fa fa-twitter"></span>
+    </a>
+
+    <a href="" ng-show="onCellphone == true" ng-click="shareButtonWhatsapp()" data-action="share/whatsapp/share"
+       class="contact-button-link cb-ancor whatsapp" title="Comparte con WhatsApp">
+                <span class="fa fa-whatsapp">
+                </span>
+    </a>
 </div>
 
-    <div class=" col-md-offset-4">
-        <p class="btn col-xs-12  col-md-6   " ><strong>
-           {{event.date | date : 'fullDate'}}
-            <br>
-            <!-- <i class="material-icons mdl-color-text--grey" style="vertical-align: middle;">alarm</i> -->
-            {{event.fromHour | date : 'shortTime'}} A {{event.toHour | date :
+
+
+<div id="detalleEvento" style="display: none">
+
+
+
+    <center>
+
+
+        <div class=" col-md-offset-4">
+            <p class="btn col-xs-12  col-md-6   "><strong>
+                {{event.date | date : 'fullDate'}}
+                <br>
+                <!-- <i class="material-icons mdl-color-text--grey" style="vertical-align: middle;">alarm</i> -->
+                {{event.fromHour | date : 'shortTime'}} A {{event.toHour | date :
                 'shortTime'}}
-        </strong>
-<br>
-            <i class="material-icons">store</i> {{getClub(event.clubs)}}
+            </strong>
+                <br>
+                <i class="material-icons">store</i> {{getClub(event.clubs)}}
 
-        </p>
-        <br>
+            </p>
+            <br>
 
-    </div>
+        </div>
         <div class="valoresBotones col-md-offset-4">
 
             <div ng-show="event.freemiumHour != event.date"
-                 class="btn  col-xs-12  col-md-6" >
+                 class="btn  col-xs-12  col-md-6">
                 <i class="material-icons">money_off</i>
                 Gratis hasta las: <br> {{event.freemiumHour | date : 'shortTime'}}
             </div>
 
 
             <div ng-show="event.freemiumHour != event.date"
-                 class="btn  col-xs-12 col-md-6" >
-               <i class="material-icons">monetization_on</i>
+                 class="btn  col-xs-12 col-md-6">
+                <i class="material-icons">monetization_on</i>
                 Despues de Hr Gratis: <br> CPL $ {{event.entryValue}}
             </div>
 
             <div ng-show="event.freemiumHour == event.date"
-                 class="btn  col-xs-12 col-md-6 " >
+                 class="btn  col-xs-12 col-md-6 ">
                 <i class="material-icons" style="   vertical-align: middle;">monetization_on</i>
                 Entrada en Puerta: CPL <br> {{event.entryValue}}
             </div>
@@ -56,12 +80,12 @@
 
         <hr class="col-md-12">
 
-        <div class="listaGratis row  col-md-4 col-md-offset-4 " >
+        <div class="listaGratis row  col-md-4 col-md-offset-4 ">
 
-        <h4 class="info-title">LISTA GRATIS + TUS AMIGOS</h4>
+            <h4 class="info-title">LISTA GRATIS + TUS AMIGOS</h4>
             <div id="selectLista" ng-show="event.freemiumHour != event.date">
                 <span style="margin-top: 25px" class="title  col-xs-6">LISTA GRATIS  :   </span>
-                <md-select  ng-model="totalReserva" placeholder="Selecionar" class=" col-xs-6 ">
+                <md-select ng-model="totalReserva" placeholder="Selecionar" class=" col-xs-6 ">
                     <md-option ng-value="1">+1 Amigos</md-option>
                     <md-option ng-value="2">+2 Amigos</md-option>
                     <md-option ng-value="3">+3 Amigos</md-option>
@@ -83,7 +107,8 @@
 
             <button id="botonLista" ng-click="editarListaGratis()" style="display: none"
                     class="btn btn-info btn-sm col-xs-12">
-                <i class="material-icons mdl-color-text--black" style="vertical-align: middle;">edit</i> Ya Estas en Lista +
+                <i class="material-icons mdl-color-text--black" style="vertical-align: middle;">edit</i> Ya Estas en
+                Lista +
                 {{datosAsistire.totalList}}
             </button>
 
@@ -95,31 +120,33 @@
             <h4 class="info-title">SERVICIOS</h4>
 
 
-
-            <div class="row" >
-                           <div class="col-lg-3 col-md-6 col-sm-6" ng-repeat="eventsService in allEventsService">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6" ng-repeat="eventsService in allEventsService">
                     <div class="card1 card1-stats">
                         <div class="card1-header" data-background-color="gray">
-                            <i  ng-show="eventsService.tipo == 'MESA'"
+                            <i ng-show="eventsService.tipo == 'MESA'"
                                class=" material-icons">local_play</i>
-                            <i  ng-show="eventsService.tipo == 'PREVENTA'"
+                            <i ng-show="eventsService.tipo == 'PREVENTA'"
                                class=" material-icons ">assistant</i>
-                            <i  ng-show="eventsService.tipo == 'VIP'"
+                            <i ng-show="eventsService.tipo == 'VIP'"
                                class=" material-icons ">star_half</i>
-                            <i  ng-show="eventsService.tipo == 'ESPECIAL'"
+                            <i ng-show="eventsService.tipo == 'ESPECIAL'"
                                class=" material-icons ">stars</i>
-                            <i  ng-show="eventsService.tipo == 'BOTELLAS'"
+                            <i ng-show="eventsService.tipo == 'BOTELLAS'"
                                class=" material-icons ">battery_std</i>
                         </div>
 
                         <div class="card1-content">
                             <p class="category"> {{eventsService.tipo}} </p>
-                            <h3 class="title"> <small> $</small> {{eventsService.precio}}</h3>
+                            <h3 class="title">
+                                <small> $</small>
+                                {{eventsService.precio}}
+                            </h3>
                             <p class="category">{{ eventsService.fechaFin |date : 'hh:mm / dd MMMM yyyy '}}</p>
                         </div>
                         <div class="card1-footer">
                             <div class="stats">
-                                <a class="btn btn-info" ng-click="dialogAdquirirServicio(eventsService)">  Adquirir</a>
+                                <a class="btn btn-info" ng-click="dialogAdquirirServicio(eventsService)"> Adquirir</a>
                             </div>
                         </div>
                     </div>
@@ -131,163 +158,168 @@
         </div>
 
         <hr class="col-md-12 col-xs-12 ">
-    <div class="features ">
+        <div class="features ">
 
-        <center>
-        <div class="text-center col-md-10 row col-md-offset-1 col-xs-12">
-            <div class="col-md-3 col-xs-6">
-                <div class="info">
-                    <div class="icon "style="color: #fe0072">
-                        <i class="material-icons">music_note</i>
+            <center>
+                <div class="text-center col-md-10 row col-md-offset-1 col-xs-12">
+                    <div class="col-md-3 col-xs-6">
+                        <div class="info">
+                            <div class="icon " style="color: #fe0072">
+                                <i class="material-icons">music_note</i>
+                            </div>
+                            <h4 class="info-title"> Estilo Musical</h4>
+                            <p>
+                                {{event.musicGenres}}
+                            </p>
+                        </div>
                     </div>
-                    <h4 class="info-title"> Estilo Musical</h4>
-                    <p>
-                        {{event.musicGenres}}
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-3 col-xs-6">
-                <div class="info">
-                    <div class="icon "style="color: #fe0072">
-                        <i class="material-icons">layers</i>
-                    </div>
-                    <h4 class="info-title">Ambientes</h4>
-                    <p>
-                        {{event.eventEnvironment}}
+                    <div class="col-md-3 col-xs-6">
+                        <div class="info">
+                            <div class="icon " style="color: #fe0072">
+                                <i class="material-icons">layers</i>
+                            </div>
+                            <h4 class="info-title">Ambientes</h4>
+                            <p>
+                                {{event.eventEnvironment}}
 
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-3 col-xs-6">
-                <div class="info">
-                    <div class="icon" style="color: #fe0072">
-                        <i class="material-icons ">accessibility</i>
+                            </p>
+                        </div>
                     </div>
-                    <h4 class="info-title">Vestimienta</h4>
-                    <p>
-                        {{event.clothing}}
-                     </p>
-                </div>
-            </div>
-            <div class="col-md-3 col-xs-6">
-                <div class="info">
-                    <div class="icon " style="color: #fe0072">
-                        <i class="material-icons">people</i>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="info">
+                            <div class="icon" style="color: #fe0072">
+                                <i class="material-icons ">accessibility</i>
+                            </div>
+                            <h4 class="info-title">Vestimienta</h4>
+                            <p>
+                                {{event.clothing}}
+                            </p>
+                        </div>
                     </div>
-                    <h4 class="info-title">
-                        Restricciones</h4>
-                    <p>
-                        {{event.ageRange}}
-                    </p>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="info">
+                            <div class="icon " style="color: #fe0072">
+                                <i class="material-icons">people</i>
+                            </div>
+                            <h4 class="info-title">
+                                Restricciones</h4>
+                            <p>
+                                {{event.ageRange}}
+                            </p>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </center>
         </div>
-        </center>
-    </div>
-    <div style="height: 550px"></div>
-    <div class="row  col-xs-14 text-center">
-        <ng-map zoom="14"
-                disable-default-u-i="true"
-                scrollwheel="false"
-                default-style="true"
-                center="[{{event.lat}}, {{event.lng}}]">
-            <marker
-                    id="foo"
-                    centered="true"
-                    animation="Animation.BOUNCE"
-                    title="{{getClub(event.clubs)}}"
-                    on-click="map.showInfoWindow('bar')"
-                    position="{{event.lat}},{{event.lng}}">
-            </marker>
-            <info-window id="bar" visible-on-marker="foo">
-                <a href="https://www.google.com/maps/place/{{event.lat}},{{event.lng}}" target="_blank">
-                    <h6>{{getDireccionClub(event.clubs)}}<br>{{getClub(event.clubs)}}</h6>
-                </a>
-            </info-window>
-        </ng-map>
+        <div style="height: 550px"></div>
+        <div class="row  col-xs-14 text-center">
+            <ng-map zoom="14"
+                    disable-default-u-i="true"
+                    scrollwheel="false"
+                    default-style="true"
+                    center="[{{event.lat}}, {{event.lng}}]">
+                <marker
+                        id="foo"
+                        centered="true"
+                        animation="Animation.BOUNCE"
+                        title="{{getClub(event.clubs)}}"
+                        on-click="map.showInfoWindow('bar')"
+                        position="{{event.lat}},{{event.lng}}">
+                </marker>
+                <info-window id="bar" visible-on-marker="foo">
+                    <a href="https://www.google.com/maps/place/{{event.lat}},{{event.lng}}" target="_blank">
+                        <h6>{{getDireccionClub(event.clubs)}}<br>{{getClub(event.clubs)}}</h6>
+                    </a>
+                </info-window>
+            </ng-map>
 
-    </div>
+        </div>
 
     </center>
 
 </div>
 
 
+<script type="text/ng-template" id="dialogAccederConFacebook" class="col-xs-12">
 
-<script type="text/ng-template" id="dialogAccederConFacebook" class="col-xs-12" >
-
-        <div class="col-md-10 col-lg-offset-1">
-            <center>
-        <button ng-click="IngresarConFacebook()"  scope="public_profile email user_birthday"
-                class=" btn btn-info">
-            <i class="material-icons"></i> OBTENEN TU CODIGO
-        </button>
-        <br>
-        <font class="nombreEvento"> Con este codigo tendras acceso a tus eventos preferidos, tus reservas, tus compras de entradas y mas.
-        </font>
-            </center>
-        </div>
-
+    <div class="col-md-10 col-lg-offset-1">
+        <center>
+            <button ng-click="IngresarConFacebook()" scope="public_profile email user_birthday"
+                    class=" btn btn-info">
+                <i class="material-icons"></i> OBTENEN TU CODIGO
+            </button>
+            <br>
+            <font class="nombreEvento"> Con este codigo tendras acceso a tus eventos preferidos, tus reservas, tus
+                compras de entradas y mas.
+            </font>
+        </center>
+    </div>
 
 
 </script>
+<script>
+    function myFunction() {
+        document.getElementById("fondoheader").setAttribute('background-image_src', "'{{event.image}}'");
+    }
+</script>
 
-<script id="dialogAdquirirServicio" type="text/ng-template" >
-<div class="col-xs-12">
+<script id="dialogAdquirirServicio" type="text/ng-template">
+    <div class="col-xs-12">
 
-    <h6> Bienvenido {{usuarioLogeado.displayName}}</h6>
-<div class="text-center">
-    <p class="description">
-     {{eventsService.desc}}
-    </p>
-    <p class="btn btn-sm btn-info">
-        $ {{eventsService.precio}}
+        <h6> Bienvenido {{usuarioLogeado.displayName}}</h6>
+        <div class="text-center">
+            <p class="description">
+                {{eventsService.desc}}
+            </p>
+            <p class="btn btn-sm btn-info">
+                $ {{eventsService.precio}}
 
-    </p>
-    <p class="description">
-             {{ eventsService.fechaFin |date : 'hh:mm / dd MMMM yyyy '}}
-    </p>
-    <p class="description">
-            Entradas Maximas {{eventsService.maxEntradas}}
-    </p>
+            </p>
+            <p class="description">
+                {{ eventsService.fechaFin |date : 'hh:mm / dd MMMM yyyy '}}
+            </p>
+            <p class="description">
+                Entradas Maximas {{eventsService.maxEntradas}}
+            </p>
 
-</div>
-    <br>
-    <p class="description">¿Cantidad que deseas adquirir?</p>
-    <md-select name="ticketQty" ng-model="cantidadDeCompra"
-               placeholder=" - ">
-        <md-option
-                   ng-repeat="entrada in maxEntradas track by entrada.id"
-                   ng-value="entrada.id">
-            {{entrada.name}}
-        </md-option>
-    </md-select>
-<center>
-    <table class="text-center">
-        <tr>
-            <th>
-             <p class="description"> <i class="material-icons" style="vertical-align: middle;">call</i> +569</p>
-            </th>
-            <th>
-&nbsp;&nbsp;
-            </th>
-            <th>
-                <div style="margin-top: 1px" class="form-group label-floating " id="agregarCorrecto">
-                    <input type="number"  class="form-control" placeholder="Ingresa Celular"   ng-model="celular"/>
-                    <span class="form-control-feedback">
+        </div>
+        <br>
+        <p class="description">¿Cantidad que deseas adquirir?</p>
+        <md-select name="ticketQty" ng-model="cantidadDeCompra"
+                   placeholder=" - ">
+            <md-option
+                    ng-repeat="entrada in maxEntradas track by entrada.id"
+                    ng-value="entrada.id">
+                {{entrada.name}}
+            </md-option>
+        </md-select>
+        <center>
+            <table class="text-center">
+                <tr>
+                    <th>
+                        <p class="description"><i class="material-icons" style="vertical-align: middle;">call</i> +569
+                        </p>
+                    </th>
+                    <th>
+                        &nbsp;&nbsp;
+                    </th>
+                    <th>
+                        <div style="margin-top: 1px" class="form-group label-floating " id="agregarCorrecto">
+                            <input type="number" class="form-control" placeholder="Ingresa Celular" ng-model="celular"/>
+                            <span class="form-control-feedback">
 			<i class="material-icons">done</i>
 		</span>
-                </div>
-            </th>
-        </tr>
-    </table>
-</center>
+                        </div>
+                    </th>
+                </tr>
+            </table>
+        </center>
 
-    <div class="text-right">
-    <button ng-click="hide()" class="btn  btn-sm"> Cancelar</button>
-    <button ng-click="adquirir(cantidadDeCompra,celular)" class="btn btn-info btn-sm "> Adquirir</button>
+        <div class="text-right">
+            <button ng-click="hide()" class="btn  btn-sm"> Cancelar</button>
+            <button ng-click="adquirir(cantidadDeCompra,celular)" class="btn btn-info btn-sm "> Adquirir</button>
+        </div>
     </div>
-</div>
 
 
 </script>
