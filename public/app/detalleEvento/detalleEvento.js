@@ -6,8 +6,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             controller: 'viewdetalleEvento'
         });
     }])
-    .controller('viewdetalleEvento', ['$scope', '$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope','$mdDialog',
-        function ($scope, $routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope,$mdDialog) {
+    .controller('viewdetalleEvento', ['$scope', '$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope', '$mdDialog',
+        function ($scope, $routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope, $mdDialog) {
 
             var user = window.currentApp;
             var usuarioLogeado = "";
@@ -22,11 +22,11 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             var friendId = $routeParams.friend; // id del rrpp o amigo que compartio el evento
             var Rrpp = friendId || 'MD18DcCzYMXPhOQb8U61bWfgzRg2'; //rrpp selecionado
 
-            firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function(snapshot) {
+            firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
                 console.log(exists);
                 if (exists == true) {
-                    var ref = firebase.database().ref('/users/').child( user.$id || user.uid);
+                    var ref = firebase.database().ref('/users/').child(user.$id || user.uid);
                     var usersLocal = $firebaseObject(ref);
                     var buscarme = firebase.database().ref('/events/' + eventId + '/asist');
                     var buscarmeRequest = $firebaseArray(buscarme);
@@ -34,7 +34,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     usersLocal.$loaded().then(function () {
                         usuarioLogeado = usersLocal;
                         console.log(usuarioLogeado);
-                        $('.nombreUsuario').text( usuarioLogeado.displayName);
+                        $('.nombreUsuario').text(usuarioLogeado.displayName);
                         //  $('.user-header .imagen').text(usersLocal.picture);
                         $('.codigoAcceder').text("Tú Codigo");
                         console.log(window.currentApp + " ENTRE");
@@ -59,7 +59,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                                 document.getElementById('botonLista').style.display = 'block';
                                             }
                                         });
-                                    };
+                                    }
+                                    ;
                                 });
                             });
 
@@ -72,7 +73,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     $('.nombreUsuario').text("BIENVENIDO");
                     $('.codigoAcceder').text("acceder");
                     console.log(window.currentApp + " NO ENTRE");
-                };
+                }
+                ;
             });
 
             /////
@@ -166,9 +168,6 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             /////
 
 
-
-
-
             // capturar datos de firebase
             var clubsER = $firebaseArray(firebase.database().ref().child('clubs'));
 
@@ -194,12 +193,12 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             var oContainer = $("#contact-buttons-bar");
 
             // Make the buttons visible
-            setTimeout(function(){
-                oContainer.animate({ left : 0 });
+            setTimeout(function () {
+                oContainer.animate({left: 0});
             }, 200);
 
             // Show/hide buttons
-            $('body').on('click', '.show-hide-contact-bar', function(e){
+            $('body').on('click', '.show-hide-contact-bar', function (e) {
                 e.preventDefault();
                 e.stopImmediatePropagation();
                 $('.show-hide-contact-bar').find('.fa').toggleClass('fa-angle-right fa-angle-left');
@@ -238,9 +237,6 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             });
 
 
-
-
-
             $scope.editarListaGratis = function () {
                 document.getElementById('botonAsistir').style.display = 'block';
                 document.getElementById('selectLista').style.display = 'block';
@@ -248,18 +244,17 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             };
 
             $scope.guardarListaGratis = function () {
-                $scope.nuevaAsistencia ={};
+                $scope.nuevaAsistencia = {};
                 $scope.nuevaAsistencia.asistencia = false;
                 $scope.nuevaAsistencia.fechaClick = Date.now();
                 $scope.nuevaAsistencia.totalList = $scope.totalReserva;
                 $scope.nuevaAsistencia.displayName = usuarioLogeado.displayName;
                 var totalAsistenciaVisible = $scope.totalReserva;
-                if(user != ""){
+                if (user != "") {
                     guardarListaGratisFuncion(totalAsistenciaVisible);
-                }else
-                    {
-                        alert("DEBES INICIAR SESION");
-                    }
+                } else {
+                    alert("DEBES INICIAR SESION");
+                }
 
 
             };
@@ -290,25 +285,24 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
 
             $scope.dialogAdquirirServicio = function (eventsService) {
-                if(usuarioLogeado == ""){
+                if (usuarioLogeado == "") {
                     $mdDialog.show({
                         controller: dialogControllerAccederConFacebook,
                         templateUrl: 'dialogAccederConFacebook',
                         parent: angular.element(document.body),
-                        clickOutsideToClose:true,
-                        locals : {
-                            eventsService : eventsService,
+                        clickOutsideToClose: true,
+                        locals: {
+                            eventsService: eventsService,
                         }
                     });
-                }else
-                {
+                } else {
                     $mdDialog.show({
                         controller: dialogControllerAdquirirServicio,
                         templateUrl: 'dialogAdquirirServicio',
                         parent: angular.element(document.body),
-                        clickOutsideToClose:true,
-                        locals : {
-                            eventsService : eventsService,
+                        clickOutsideToClose: true,
+                        locals: {
+                            eventsService: eventsService,
                         }
                     });
 
@@ -316,12 +310,12 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
 
             };
-            function dialogControllerAccederConFacebook($scope, $mdDialog,$timeout, $q, $log, eventsService) {
+            function dialogControllerAccederConFacebook($scope, $mdDialog, $timeout, $q, $log, eventsService) {
                 var eventsService = eventsService;
                 var token;
-                    $scope.usuarioLogeado =usuarioLogeado;
+                $scope.usuarioLogeado = usuarioLogeado;
 
-                $scope.IngresarConFacebook =  function() {
+                $scope.IngresarConFacebook = function () {
 
                     var USERS_LOCATION = 'users/';
                     var database = firebase.database();
@@ -334,7 +328,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     provider.addScope('public_profile');
 
 
-                    firebase.auth().signInWithPopup(provider).then(function(result) {
+                    firebase.auth().signInWithPopup(provider).then(function (result) {
 
                         // This gives you a Google Access Token. You can use it to access the Google API.
                         token = result.credential.accessToken;
@@ -343,7 +337,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                         console.log(token);
                         console.log(user);
                         firebase.auth().onAuthStateChanged(onAuthStateChanged);
-                    }).catch(function(error) {
+                    }).catch(function (error) {
                         // Handle Errors here.
                         var errorCode = error.code;
                         var errorMessage = error.message;
@@ -353,7 +347,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                         var credential = error.credential;
                     });
 
-                    function    writeUserData(response) {
+                    function writeUserData(response) {
                         database
                             .ref(USERS_LOCATION + user.uid)
                             .update({
@@ -367,7 +361,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 firstName: response.first_name,
                                 facebookId: response.id,
                                 lastName: response.last_name,
-                                gender : response.gender
+                                gender: response.gender
                             });
                     }
 
@@ -379,7 +373,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                     access_token: token,
                                     fields: 'id, name, email, first_name, last_name, age_range{min}, picture.type(large), birthday, gender'
                                 },
-                                function(response) {
+                                function (response) {
                                     checkIfUserExists(user.uid, response);
                                 });
                         } else {
@@ -399,7 +393,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
                             var ref = firebase.database().ref('/users/').child(user.uid);
                             var usersLocal = $firebaseObject(ref);
-                            usersLocal.$loaded().then(function(){
+                            usersLocal.$loaded().then(function () {
                                 window.currentApp = usersLocal;
                                 $scope.usuarioLogeado = usersLocal;
                                 usuarioLogeado = usersLocal;
@@ -408,7 +402,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 $scope.foto = $scope.usuarioLogeado.picture;
                                 $scope.email = $scope.usuarioLogeado.email;
 
-                                $('.nombreUsuario').text( $scope.usuarioLogeado.displayName);
+                                $('.nombreUsuario').text($scope.usuarioLogeado.displayName);
                                 $('.codigoAcceder').text("Tú Codigo");
                                 console.log("obvtuve la foto y el correo");
                                 $mdDialog.hide();
@@ -417,17 +411,16 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                             });
 
 
-
                         } else {
                             writeUserData(response);
                             console.log(firebase.auth().currentUser);
-                             // obtengo codigo
+                            // obtengo codigo
 
                             $scope.nombre = firebase.auth().currentUser.displayName;
 
                             var ref = firebase.database().ref('/users/').child(user.uid);
                             var usersLocal = $firebaseObject(ref);
-                            usersLocal.$loaded().then(function(){
+                            usersLocal.$loaded().then(function () {
                                 window.currentApp = usersLocal;
                                 $scope.usuarioLogeado = usersLocal;
                                 usuarioLogeado = usersLocal;
@@ -435,7 +428,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 $scope.email = $scope.usuarioLogeado.email;
                                 $scope.foto = $scope.usuarioLogeado.picture;
                                 $scope.email = $scope.usuarioLogeado.email;
-                                $('.nombreUsuario').text( $scope.usuarioLogeado.displayName);
+                                $('.nombreUsuario').text($scope.usuarioLogeado.displayName);
                                 $('.codigoAcceder').text("Tú Codigo");
                                 console.log("obvtuve la foto y el correo");
                                 $mdDialog.hide();
@@ -448,7 +441,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     // Tests to see if /users/<userId> has any data.
                     function checkIfUserExists(userId, response) {
                         var usersRef = database.ref(USERS_LOCATION);
-                        usersRef.child(userId).once('value', function(snapshot) {
+                        usersRef.child(userId).once('value', function (snapshot) {
                             var exists = (snapshot.val() !== null);
                             console.log(exists);
                             userExistsCallback(exists, response);
@@ -457,49 +450,51 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 };
 
 
-                $scope.hide = function() {
+                $scope.hide = function () {
                     $mdDialog.hide();
                 };
 
-                $scope.cancel = function() {
+                $scope.cancel = function () {
                     $mdDialog.cancel();
 
-            };
+                };
 
 
-                window.fbAsyncInit = function() {
+                window.fbAsyncInit = function () {
                     FB.init({
-                        appId      : '1138664439526562',
-                        xfbml      : true,
-                        version    : 'v2.8'
+                        appId: '1138664439526562',
+                        xfbml: true,
+                        version: 'v2.8'
                     });
                     FB.AppEvents.logPageView();
                 };
 
-                (function(d, s, id){
+                (function (d, s, id) {
                     var js, fjs = d.getElementsByTagName(s)[0];
-                    if (d.getElementById(id)) {return;}
-                    js = d.createElement(s); js.id = id;
+                    if (d.getElementById(id)) {
+                        return;
+                    }
+                    js = d.createElement(s);
+                    js.id = id;
                     js.src = "//connect.facebook.net/es_LA/sdk.js";
                     fjs.parentNode.insertBefore(js, fjs);
                 }(document, 'script', 'facebook-jssdk'));
 
 
-
             };
 
-            function dialogControllerAdquirirServicio($scope, $mdDialog,$timeout, $q, $log, eventsService) {
+            function dialogControllerAdquirirServicio($scope, $mdDialog, $timeout, $q, $log, eventsService) {
                 $scope.eventsService = eventsService;
                 console.log(eventsService);
-                $scope.usuarioLogeado =usuarioLogeado;
-                 console.log($scope.usuarioLogeado);
+                $scope.usuarioLogeado = usuarioLogeado;
+                console.log($scope.usuarioLogeado);
                 $scope.maxEntradas = [];
                 $scope.newTicket = [];
                 $scope.cantidadDeCompra;
                 $scope.celular;
 
 
-                if($scope.usuarioLogeado.celular){
+                if ($scope.usuarioLogeado.celular) {
                     $scope.celular = $scope.usuarioLogeado.celular;
                 }
 
@@ -510,19 +505,20 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     };
                     $scope.maxEntradas.push(entradas);
                     //console.log("Entradas", $scope.maxEntradas)
-                };
+                }
+                ;
 
-                $scope.adquirir = function (cantidadDeCompra,celular) {
+                $scope.adquirir = function (cantidadDeCompra, celular) {
                     console.log(celular);
-                    $scope.newTicket.email =  $scope.usuarioLogeado.email;
-                    $scope.newTicket.ideventservices =  $scope.eventsService.id; // !!!!!! falta rescatar el id de la fila selecionada "del servicio a comprar"
-                    $scope.newTicket.lastName =  $scope.usuarioLogeado.lastName; //$scope.datosTicket.lastName;
-                    $scope.newTicket.firstName =  $scope.usuarioLogeado.firstName; //$scope.datosTicket.firstName;
-                    $scope.newTicket.celular =  celular;
+                    $scope.newTicket.email = $scope.usuarioLogeado.email;
+                    $scope.newTicket.ideventservices = $scope.eventsService.id; // !!!!!! falta rescatar el id de la fila selecionada "del servicio a comprar"
+                    $scope.newTicket.lastName = $scope.usuarioLogeado.lastName; //$scope.datosTicket.lastName;
+                    $scope.newTicket.firstName = $scope.usuarioLogeado.firstName; //$scope.datosTicket.firstName;
+                    $scope.newTicket.celular = celular;
                     $scope.newTicket.date = new Date().getTime();
                     $scope.newTicket.paidOut = false; //devolver pago
                     $scope.newTicket.rrppid = Rrpp;
-                    $scope.newTicket.totalAPagar = $scope.eventsService.precio *  cantidadDeCompra;
+                    $scope.newTicket.totalAPagar = $scope.eventsService.precio * cantidadDeCompra;
                     $scope.newTicket.eventId = eventId;
                     $scope.newTicket.userId = $scope.usuarioLogeado.$id;
                     $scope.newTicket.ticketId = firebase.database().ref().child('ticketsCreate/').push().key;
@@ -534,8 +530,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                             firebase.database().ref('ticketsCreate/' + $scope.newTicket.ticketId).set(true);
 
                             firebase.database().ref('users/' + $scope.usuarioLogeado.$id + '/events/' + eventId).set(true);
-                               firebase.database().ref('users/' + $scope.usuarioLogeado.$id).update(
-                                   {celular: $scope.newTicket.celular});
+                            firebase.database().ref('users/' + $scope.usuarioLogeado.$id).update(
+                                {celular: $scope.newTicket.celular});
                             $mdDialog.hide();
                         }, function (e) {
                             alert('Error, intente de nuevo');
@@ -547,12 +543,11 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 };
 
 
-
-                $scope.hide = function() {
+                $scope.hide = function () {
                     $mdDialog.hide();
                 };
 
-                $scope.cancel = function() {
+                $scope.cancel = function () {
                     $mdDialog.cancel();
 
                 };
@@ -564,11 +559,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 //////////////////////////////////////////////
 
 
-
-
-
-
-    }]);
+        }]);
 
 
 

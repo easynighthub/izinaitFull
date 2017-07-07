@@ -4,15 +4,13 @@
 </a>
 </center>-->
 
-<img height="auto"  style="   display: block;    width: 100% !important;" class="height-auto full-width"
+<img height="auto" style=" box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);   display: block;    width: 100% !important;"
+     class="height-auto full-width"
      src="{{event.image}}">
 
 
 <button id="BarraCargando" class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"></i> CARGANDO EVENTO
 </button>
-
-
-
 
 
 <div id="detalleEvento" style="display: none">
@@ -39,54 +37,53 @@
     </div>
 
 
-
     <center>
 
+        <div class="date111  mdl-color-text--white mdl-cell "
+             style="color: white; margin-top: -25px; z-index: auto!important;">
 
-        <div class=" col-md-offset-4">
-            <p class="btn col-xs-12  col-md-6   "><strong>
-                {{event.date | date : 'fullDate'}}
-                <br>
-                <!-- <i class="material-icons mdl-color-text--grey" style="vertical-align: middle;">alarm</i> -->
-                {{event.fromHour | date : 'shortTime'}} A {{event.toHour | date :
-                'shortTime'}}
-            </strong>
-                <br>
-                <i class="material-icons">store</i> {{getClub(event.clubs)}}
 
-            </p>
+            <font size="4" class="nombreEvento "> {{event.date | date : 'fullDate'}} </font>
+            <br>
+            <!-- <i class="material-icons mdl-color-text--grey" style="vertical-align: middle;">alarm</i> -->
+            <font size="2" class="nombreEvento "> {{event.fromHour | date : 'shortTime'}} A {{event.toHour | date :
+                'shortTime'}} </font>
+
+
+        </div>
+
+        <br>
+        <br>
+
+        <div style="color: #340034">
+            <font size="5"><strong>{{event.name}} </strong></font>
+            <br>
+            <p style="font-size: 20px;" class="teststyle"><i class="material-icons testico">location_on</i>
+                {{getClub(event.clubs)}}</p>
             <br>
 
-        </div>
-        <div class="valoresBotones col-md-offset-4">
-
-            <div ng-show="event.freemiumHour != event.date"
-                 class="btn  col-xs-12  col-md-6">
-                <i class="material-icons">money_off</i>
-                Gratis hasta las: <br> {{event.freemiumHour | date : 'shortTime'}}
-            </div>
+            <br>
+            <p style="font-size: 20px;" class="teststyle"><i class="material-icons testico">monetization_on</i>
+                Valor en Puerta:CPL <strong>{{event.entryValue}}</strong>
+            </p>
 
 
-            <div ng-show="event.freemiumHour != event.date"
-                 class="btn  col-xs-12 col-md-6">
-                <i class="material-icons">monetization_on</i>
-                Despues de Hr Gratis: <br> CPL $ {{event.entryValue}}
-            </div>
-
-            <div ng-show="event.freemiumHour == event.date"
-                 class="btn  col-xs-12 col-md-6 ">
-                <i class="material-icons" style="   vertical-align: middle;">monetization_on</i>
-                Entrada en Puerta: CPL <br> {{event.entryValue}}
-            </div>
         </div>
 
-        <hr class="col-md-12">
+        <br>
+        <hr class="hrStyle col-md-12">
+        <br>
 
-        <div class="listaGratis row  col-md-4 col-md-offset-4 ">
 
-            <h4 class="info-title">LISTA GRATIS + TUS AMIGOS</h4>
+        <div ng-show="event.freemiumHour != event.date"
+             style="color: #340034"
+             class=" teststyle">
+            <p style="font-size: 15px;" class="teststyle">
+                <i class="material-icons testico">money_off</i>
+                Gratis hasta : <strong>{{event.freemiumHour | date : 'shortTime'}}</strong>
+            </p>
             <div id="selectLista" ng-show="event.freemiumHour != event.date">
-                <span style="margin-top: 25px" class="title  col-xs-6">LISTA GRATIS  :   </span>
+                <span style="margin-top: 25px" class="title  col-xs-6">Ingresar lista + Amigos  :   </span>
                 <md-select ng-model="totalReserva" placeholder="Selecionar" class=" col-xs-6 ">
                     <md-option ng-value="1">+1 Amigos</md-option>
                     <md-option ng-value="2">+2 Amigos</md-option>
@@ -100,34 +97,40 @@
                     <md-option ng-value="10">+10 Amigos</md-option>
                 </md-select>
             </div>
+            <div>
+                <button id="botonAsistir" ng-click="guardarListaGratis()"
+                        scope="public_profile email user_birthday"
+                        ng-show="totalReserva != null"
+                        class="btn btn-info btn-sm">
+                    Enviar Lista
+                </button>
 
-            <button id="botonAsistir" ng-click="guardarListaGratis()" scope="public_profile email user_birthday"
-                    ng-show="totalReserva != null"
-                    class="btn btn-info btn-sm col-xs-12">
-                <i class="material-icons"></i> Guardar Lista
-            </button>
+                <button id="botonLista" ng-click="editarListaGratis()"
+                        class="btn btn-info btn-sm">
+                    <i class="material-icons testico">edit</i>
+                    Ya Estas en Lista + {{datosAsistire.totalList}}
+                </button>
 
-            <button id="botonLista" ng-click="editarListaGratis()" style="display: none"
-                    class="btn btn-info btn-sm col-xs-12">
-                <i class="material-icons mdl-color-text--black" style="vertical-align: middle;">edit</i> Ya Estas en
-                Lista +
-                {{datosAsistire.totalList}}
-            </button>
+
+            </div>
 
         </div>
 
-        <hr class="col-md-12">
+
+        <br>
+        <hr class="hrStyle col-md-12">
+        <br>
+
 
         <div class="serviciosEvent row col-md-12">
-            <h4 class="info-title">SERVICIOS</h4>
-
-
+            <h3 class="info-title" style="color: #340034">Precio Antecipado</h3>
+            <br>
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6" ng-repeat="eventsService in allEventsService">
                     <div class="card1 card1-stats">
                         <div class="card1-header" data-background-color="gray">
                             <i ng-show="eventsService.tipo == 'MESA'"
-                               class=" material-icons">local_play</i>
+                               class=" material-icons testico">local_play</i>
                             <i ng-show="eventsService.tipo == 'PREVENTA'"
                                class=" material-icons ">assistant</i>
                             <i ng-show="eventsService.tipo == 'VIP'"
@@ -144,7 +147,10 @@
                                 <small> $</small>
                                 {{eventsService.precio}}
                             </h3>
-                            <p class="category">{{ eventsService.fechaFin |date : 'hh:mm / dd MMMM yyyy '}}</p>
+                            <p class="category">Fin de Venta : {{ eventsService.fechaFin |date : 'dd MMM'}}
+                                <br>
+                            <p class="category">{{ eventsService.fechaFin |date : 'HH:mm a'}}
+                            </p>
                         </div>
                         <div class="card1-footer">
                             <div class="stats">
@@ -159,7 +165,16 @@
 
         </div>
 
-        <hr class="col-md-12 col-xs-12 ">
+        <br>
+        <hr class="hrStyle col-md-12">
+        <br>
+
+        <div>
+            <h3 class="info-title" style="color: #340034">Line Up</h3>
+            <br>
+            <h5>{{event.djs}}</h5>
+        </div>
+        <br>
         <div class="features ">
 
             <center>
@@ -169,10 +184,10 @@
                             <div class="icon " style="color: #fe0072">
                                 <i class="material-icons">music_note</i>
                             </div>
-                            <h4 class="info-title"> Estilo Musical</h4>
-                            <p>
+                            <p> Estilo Musical</p>
+                            <h5>
                                 {{event.musicGenres}}
-                            </p>
+                            </h5>
                         </div>
                     </div>
                     <div class="col-md-3 col-xs-6">
@@ -180,22 +195,22 @@
                             <div class="icon " style="color: #fe0072">
                                 <i class="material-icons">layers</i>
                             </div>
-                            <h4 class="info-title">Ambientes</h4>
-                            <p>
+                            <p>Ambientes</p>
+                            <h5>
                                 {{event.eventEnvironment}}
 
-                            </p>
+                            </h5>
                         </div>
                     </div>
                     <div class="col-md-3 col-xs-6">
                         <div class="info">
-                            <div class="icon" style="color: #fe0072">
-                                <i class="material-icons ">accessibility</i>
+                            <div class="icon" style="color: #fe0072 ">
+                                <i class="material-icons " style="text-shadow: 1px 1px 5px 0 #fe0072;">accessibility</i>
                             </div>
-                            <h4 class="info-title">Vestimienta</h4>
-                            <p>
+                            <p >Vestimenta</p>
+                            <h5>
                                 {{event.clothing}}
-                            </p>
+                            </h5>
                         </div>
                     </div>
                     <div class="col-md-3 col-xs-6">
@@ -203,18 +218,31 @@
                             <div class="icon " style="color: #fe0072">
                                 <i class="material-icons">people</i>
                             </div>
-                            <h4 class="info-title">
-                                Restricciones</h4>
                             <p>
-                                {{event.ageRange}}
+                                Restricciones
                             </p>
+                            <h5>
+                                {{event.ageRange}}
+                            </h5>
                         </div>
                     </div>
                 </div>
+
             </center>
+
         </div>
-        <div style="height: 550px"></div>
-        <div class="row  col-xs-14 text-center">
+        <br>
+        <hr class="hrStyle col-md-12">
+        <br>
+        <div class="col-md-12">
+
+            <h3 class="info-title" style="color: #340034">Descripción</h3>
+            <br>
+            <p style="font-size: 15px;" class="teststyle">
+                {{event.eventDetails}}
+            </p>
+            <br>
+
             <ng-map zoom="14"
                     disable-default-u-i="true"
                     scrollwheel="false"
@@ -230,17 +258,28 @@
                 </marker>
                 <info-window id="bar" visible-on-marker="foo">
                     <a href="https://www.google.com/maps/place/{{event.lat}},{{event.lng}}" target="_blank">
-                        <h6>{{getDireccionClub(event.clubs)}}<br>{{getClub(event.clubs)}}</h6>
+                        <h6 style="color: #340034">{{getDireccionClub(event.clubs)}}<br>{{getClub(event.clubs)}}</h6>
                     </a>
                 </info-window>
             </ng-map>
 
+
+
         </div>
+
+
+
+
+
+
+
+
 
     </center>
 
-</div>
 
+</div>
+<hr class="hrStyle col-md-12">
 
 <script type="text/ng-template" id="dialogAccederConFacebook" class="col-xs-12">
 
