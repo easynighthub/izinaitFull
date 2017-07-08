@@ -15,6 +15,10 @@
 
         <img class="fotoPerfilCodigo" src="{{foto}}">
         <br>
+        <i ng-show="usuarioLogeado.gender == 'male'"
+           class="fa fa-mars"></i>
+        <i ng-show="usuarioLogeado.female == 'female'"
+           class="fa fa-venus"></i>
         <br>
         <div style="color: #340034">
             <font size="5"><strong>{{nombre}}</strong></font>
