@@ -69,7 +69,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 } else {
                     firebase.auth().signOut();
                     window.currentApp = "";
-                    $scope.usuarioLogeado = "";
+                    usuarioLogeado = "";
                     $('.nombreUsuario').text("BIENVENIDO");
                     $('.codigoAcceder').text("acceder");
                     console.log(window.currentApp + " NO ENTRE");
@@ -282,7 +282,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 $scope.nuevaAsistencia.totalList = $scope.totalReserva;
                 $scope.nuevaAsistencia.displayName = usuarioLogeado.displayName;
                 var totalAsistenciaVisible = $scope.totalReserva;
-                if (user != "") {
+                if (usuarioLogeado != "") {
+                    console.log(user);
                     guardarListaGratisFuncion(totalAsistenciaVisible);
                 } else {
                     alert("DEBES INICIAR SESION");

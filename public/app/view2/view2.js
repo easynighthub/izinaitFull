@@ -32,7 +32,7 @@ angular.module('myApp.view2', ['ngRoute'])
                 } else {
                     firebase.auth().signOut();
                     window.currentApp = "";
-                    $scope.usuarioLogeado = "";
+                    usuarioLogeado = "";
                     $('.codigoAcceder').text("acceder");
                     console.log(window.currentApp + " NO ENTRE");
                     $(navigationexample).removeClass( "in" );

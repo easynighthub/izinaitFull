@@ -220,6 +220,8 @@ angular.module('myApp.codigo', ['ngRoute'])
             var signOutButton = document.getElementById('salir');
             signOutButton.addEventListener('click', function () {
                 firebase.auth().signOut();
+                window.currentApp ="";
+                var usuarioLogeado = "";
                 window.location.href = '/';
 
 
