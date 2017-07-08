@@ -46,6 +46,7 @@ angular.module('myApp', [
         });
 
     }
+    window.onload = load;
 
 
 

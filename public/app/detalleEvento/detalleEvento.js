@@ -176,6 +176,38 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             getEvent.$loaded().then(function () {
                 console.log(getEvent);
                 $scope.event = getEvent;
+
+
+                window.fbAsyncInit = function() {
+                    FB.init({
+                        appId      : '1138664439526562',
+                        xfbml      : true,
+                        version    : 'v2.8'
+                    });
+                    FB.AppEvents.logPageView();
+                    FB.api(
+                        "/id_from_create_call",
+                        "POST",
+                        {
+                            "object": "{\"fb:app_id\":\"1138664439526562\",\"og:type\":\"article\",\"og:url\":\"https://izinait.com\",\"og:title\":\"Sample Article\",\"og:image\":\"https:\\\/\\\/s-static.ak.fbcdn.net\\\/images\\\/devsite\\\/attachment_blank.png\"}"
+                        },
+                        function (response) {
+                            if (response && !response.error) {
+                                /* handle the result */
+                            }
+                        }
+                    );
+                };
+
+                (function(d, s, id){
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) {return;}
+                    js = d.createElement(s); js.id = id;
+                    js.src = "//connect.facebook.net/es_LA/sdk.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+
+
                 document.getElementById('BarraCargando').style.display = 'none';
                 document.getElementById('detalleEvento').style.display = 'block';
             });

@@ -11,6 +11,11 @@ var irApp2 = document.getElementById('irApp2');
 irApp2.addEventListener('click', function () {
     window.location.href = 'app';
 
+});
+
+var irApp3 = document.getElementById('irApp3');
+irApp3.addEventListener('click', function () {
+    window.location.href = 'app/#!/view2';
 
 });
 
