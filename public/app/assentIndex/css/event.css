@@ -91,6 +91,7 @@
     border-radius: 6px;
     display: block;
     cursor: auto;
+    margin-bottom: 10px;
 }
 
 
@@ -504,6 +505,7 @@
     border: 0;
     height: 1px;
     margin: 50px 0;
+    width: 100%; !important;
     background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
     background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
     background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);

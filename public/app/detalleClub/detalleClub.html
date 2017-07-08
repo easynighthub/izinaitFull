@@ -24,8 +24,12 @@
         </div>
 
         <br>
-        <hr class="hrStyle col-md-12">
+        <hr class="hrStyle">
         <br>
+        <div ng-show="eventsItems == 0" style="color: #340034" class="col-md-12">
+            <font size="5">Este club no tiene eventos actualmente.</font>
+
+        </div>
 
         <div ng-show="eventsItems" class="col-md-12">
             <font style="color: #340034" size="5"><strong>Eventos</strong></font>
@@ -71,20 +75,19 @@
 
 
         <br>
-        <hr class="hrStyle col-md-12">
+        <hr class="hrStyle ">
         <br>
 
         <div class="features col-md-12">
 
-            <div class="col-md-10 row col-md-offset-1 col-xs-12">
+            <div class="col-md-12 col-xs-12">
                 <p style="font-size: 15px; color: #340034" class="teststyle">
                     {{club.description}}
                 </p>
             </div>
 
-
             <center>
-                <div class="text-center col-md-10 row col-md-offset-1 col-xs-12">
+                <div class="text-center col-md-12 col-xs-12">
                     <div class="col-md-6 col-xs-6">
                         <div class="info">
                             <div class="icon " style="color: #fe0072">
@@ -111,11 +114,10 @@
                 </div>
 
             </center>
-
         </div>
 
         <br>
-        <hr class="hrStyle col-md-12">
+        <hr class="hrStyle ">
         <br>
 
         <!--<div ng-show="instaItems">
