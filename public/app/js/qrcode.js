@@ -1611,6 +1611,7 @@ var qrcode = function() {
 		img += 'data:image/gif;base64,';
 		img += base64;
 		img += '"';
+        img += '\u0020class="testQR"';
 		img += '\u0020width="';
 		img += width;
 		img += '"';

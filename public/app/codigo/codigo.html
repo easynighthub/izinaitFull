@@ -10,23 +10,26 @@
         background-size: 100% auto;
     }
 </style>
-<div id="codigoVisibile" style='display:none;' >
+<div id="codigoVisibile" style='display:none;'>
     <center>
+
+        <img class="fotoPerfilCodigo" src="{{foto}}">
         <br>
-        <b> <strong> TU CODIGO </strong> </b>
         <br>
+        <div style="color: #340034">
+            <font size="5"><strong>{{nombre}}</strong></font>
+        </div>
 
-
-
-        <h5 class="j2">{{nombre}}</h5>
-        <div id="qr"></div>
+        <h5 class="j2">Tu Código</h5>
+        <div id="qr">
+        </div>
+        <br>
         <button id="salir"
                 class=" btn btn-sm" style="background-color: #fe0072">
-            <i class="material-icons"></i> SALIR DE IZINAIT
+            <i class="material-icons"></i> SALIR
         </button>
-      <!--  <img class="imagenRedonda" src="{{foto}}"/>-->
+        <!--  <img class="imagenRedonda" src="{{foto}}"/>-->
 
-        <br><br><br><br>
     </center>
 </div>
 
@@ -37,12 +40,14 @@
 <div id="pedirCodigo" style='display:none;'>
     <br><br><br>
     <center>
-        <button id="sign-in-facebook"  target="popup"  scope="public_profile email user_birthday"
+        <button id="sign-in-facebook" onclick="" scope="public_profile email user_birthday"
                 class=" btn btn-info">
-            <i class="material-icons"></i> OBTENEN TU CODIGO
+            <i class="material-icons"></i> Obten tu código
         </button>
         <br>
-        <font class="nombreEvento"> Con este codigo tendras acceso a tus eventos preferidos, tus reservas, tus compras de entradas y mas.
+        <font class="nombreEvento"> Con este codigo tendras acceso a los mejores eventos de la ciudad, tus reservas, tus
+            compras
+            de entradas y mucho mas.
         </font>
 
     </center>

@@ -4,16 +4,19 @@
 </a>
 </center>-->
 
-<img height="auto" style=" box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);   display: block;    width: 100% !important;"
-     class="height-auto full-width"
-     src="{{event.image}}">
-
 
 <button id="BarraCargando" class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"></i> CARGANDO EVENTO
 </button>
 
 
 <div id="detalleEvento" style="display: none">
+
+
+    <img height="auto"
+         style=" box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);   display: block;    width: 100% !important;"
+         class="height-auto full-width"
+         src="{{event.image}}">
+
 
     <div id="contact-buttons-bar" class="contact-buttons-bar.slide-on-scroll" data-top="120px" style="left: 0px;">
 
@@ -39,7 +42,7 @@
 
     <center>
 
-        <div class="date111  mdl-color-text--white mdl-cell "
+        <div class="mdl-color-text--white mdl-cell "
              style="color: white; margin-top: -25px; z-index: auto!important;">
 
 
@@ -185,9 +188,9 @@
                                 <i class="material-icons">music_note</i>
                             </div>
                             <p> Estilo Musical</p>
-                            <h5>
+                            <p style="font-size: 18px; color: #340034" class="teststyle">
                                 {{event.musicGenres}}
-                            </h5>
+                            </p>
                         </div>
                     </div>
                     <div class="col-md-3 col-xs-6">
@@ -196,10 +199,10 @@
                                 <i class="material-icons">layers</i>
                             </div>
                             <p>Ambientes</p>
-                            <h5>
+                            <p style="font-size: 18px; color: #340034" class="teststyle">
                                 {{event.eventEnvironment}}
 
-                            </h5>
+                            </p>
                         </div>
                     </div>
                     <div class="col-md-3 col-xs-6">
@@ -207,10 +210,10 @@
                             <div class="icon" style="color: #fe0072 ">
                                 <i class="material-icons " style="text-shadow: 1px 1px 5px 0 #fe0072;">accessibility</i>
                             </div>
-                            <p >Vestimenta</p>
-                            <h5>
+                            <p>Vestimenta</p>
+                            <p style="font-size: 18px; color: #340034" class="teststyle">
                                 {{event.clothing}}
-                            </h5>
+                            </p>
                         </div>
                     </div>
                     <div class="col-md-3 col-xs-6">
@@ -221,9 +224,9 @@
                             <p>
                                 Restricciones
                             </p>
-                            <h5>
+                            <p style="font-size: 18px; color: #340034" class="teststyle">
                                 {{event.ageRange}}
-                            </h5>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -268,13 +271,6 @@
 
 
         </div>
-
-
-
-
-
-
-
 
 
     </center>
