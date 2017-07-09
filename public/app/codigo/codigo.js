@@ -222,7 +222,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                 firebase.auth().signOut();
                 window.currentApp ="";
                 var usuarioLogeado = "";
-                window.location.href = '/';
+                window.location.href = '#view1';
 
 
             });

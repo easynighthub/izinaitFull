@@ -54,6 +54,24 @@
 
 }
 
+.testCirculo{
+    position: absolute;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 64px;
+    height: 64px;
+    top:0;
+    left:0;
+    right:0;
+    bottom:-120px;
+    margin:auto;
+    z-index: 2;
+    border: 22px!important;
+
+}
+
 .fotoPerfilCodigo{
     width: 90px;
     height: 90px;
