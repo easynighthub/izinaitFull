@@ -10,8 +10,13 @@
             VER TODOS
         </button>
 
-        <md-datepicker id="buscarPorFecha" class="searsh-date" ng-model="filterDateInput"
-                       ng-change="filterEventsByDate()"></md-datepicker>
+        <md-datepicker  id="buscarPorFecha"
+                       ng-model="filterDateInput"
+                       ng-change="filterEventsByDate()">
+
+        </md-datepicker>
+        <br>
+        <br>
 
 
     </div>
@@ -104,7 +109,7 @@
 
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-4 padd-0-xs inline-block float-fix"
-             ng-repeat="event in events | orderBy:'date' "
+             ng-repeat="event in events | orderBy:'date' | filter: event.musicGenres "
              ng-click="goToEventDetails(event)"
              ng-show="event.visible">
             <div class="testcard">
@@ -118,7 +123,7 @@
 
                 <div class="testcontenido">
                     <p class=testh2"><strong>{{event.name}}</strong></p>
-                    <p class="teststyle"><i class="material-icons testico">location_on</i> {{getClub(event.clubs)}}</p>
+                    <p class="teststyle"><i class="material-icons testico">store</i> {{getClub(event.clubs)}}</p>
 
                     <p class="teststyle"><i class="material-icons testico">music_note</i> {{event.musicGenres}}</p>
                     <p class="teststyle"><i class="material-icons testico">layers</i> {{event.eventEnvironment}}</p>

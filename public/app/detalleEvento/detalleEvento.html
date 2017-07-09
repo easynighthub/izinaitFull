@@ -67,7 +67,7 @@
 
             <br>
             <p style="font-size: 20px;" class="teststyle"><i class="material-icons testico">monetization_on</i>
-                Valor en Puerta:CPL <strong>{{event.entryValue}}</strong>
+                Valor en Puerta: CPL <strong>{{event.entryValue}}</strong>
             </p>
 
 
@@ -82,8 +82,10 @@
              style="color: #340034"
              class=" teststyle">
             <p style="font-size: 15px;" class="teststyle">
-                <i class="material-icons testico">money_off</i>
-                Gratis hasta : <strong>{{event.freemiumHour | date : 'shortTime'}}</strong>
+                <img src="image/guest-list.png"/>
+                <br>
+                <br>
+                Lista gratis hasta : <strong>{{event.freemiumHour | date : 'shortTime'}}</strong>
             </p>
             <div id="selectLista" ng-show="event.freemiumHour != event.date">
                 <span style="margin-top: 25px" class="title  col-xs-6">Ingresar lista + Amigos  :   </span>
@@ -137,20 +139,20 @@
                             <i ng-show="eventsService.tipo == 'PREVENTA'"
                                class="fa fa-ticket "></i>
                             <i ng-show="eventsService.tipo == 'VIP'"
-                               class=" material-icons ">star_half</i>
+                               class="fa fa-diamond"></i>
                             <i ng-show="eventsService.tipo == 'ESPECIAL'"
                                class=" material-icons ">stars</i>
                             <i ng-show="eventsService.tipo == 'BOTELLAS'"
                                class="fa fa-glass"></i>
                         </div>
 
-                        <div class="card1-content">
-                            <p class="category"> {{eventsService.tipo}} </p>
+                        <div class="card1-content" >
+                            <p class="category" style="color: #340034!important;"> {{eventsService.tipo}} </p>
                             <h3 class="title">
                                 <small> $</small>
                                 {{eventsService.precio}}
                             </h3>
-                            <p class="category">Fin de Venta : {{ eventsService.fechaFin |date : 'dd MMM'}}
+                            <p class="category">Fin de Venta: {{ eventsService.fechaFin |date : 'dd MMM'}}
                                 <br>
                             <p class="category">{{ eventsService.fechaFin |date : 'HH:mm a'}}
                             </p>
