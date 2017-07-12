@@ -92,10 +92,10 @@ signInButtonFacebook.addEventListener('click', function() {
         });
 
         database.ref('rrpps/'+user.uid).update({
-            uid:'MD18DcCzYMXPhOQb8U61bWfgzRg2',
+            uid:user.uid,
             email:response.email || "null@izinait.com", //editable si no existe el correo
             name :response.name,
-            nickName:'MD18DcCzYMXPhOQb8U61bWfgzRg2' // editable al momonento de ingresar
+            nickName:user.uid // editable al momonento de ingresar
         });
 
 

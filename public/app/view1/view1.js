@@ -39,7 +39,7 @@ angular.module('myApp.view1', ['ngRoute'])
                     });
                 } else {
                     window.currentApp = "";
-                    $scope.usuarioLogeado = "";
+                    usuarioLogeado = "";
                     $('.codigoAcceder').text("acceder");
                     console.log(window.currentApp + " NO ENTRE");
                     $(navigationexample).removeClass( "in" );
