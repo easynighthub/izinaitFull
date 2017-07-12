@@ -444,7 +444,7 @@ h2.title {
   position: relative;
   height: calc(100vh - 75px);
   overflow: auto;
-  width: 200px;
+  width: 210px;
   z-index: 4;
 }
 .sidebar .logo-tim,
