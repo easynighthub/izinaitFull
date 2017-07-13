@@ -83,12 +83,14 @@ signInButtonFacebook.addEventListener('click', function() {
         database.ref(USERS_LOCATION+user.uid+'/rrpps/'+adminId).update({
             uid:adminId,
             bloqueado:true,
-            visible:true
+            visible:true,
+            email:response.email
         });
         database.ref(USERS_LOCATION+user.uid+'/rrpps/MD18DcCzYMXPhOQb8U61bWfgzRg2').update({
             uid:'MD18DcCzYMXPhOQb8U61bWfgzRg2',
             bloqueado:true,
-            visible:true
+            visible:true,
+            email:'admin@izinait.com'
         });
 
         database.ref('rrpps/'+user.uid).update({
@@ -98,6 +100,18 @@ signInButtonFacebook.addEventListener('click', function() {
             nickName:user.uid // editable al momonento de ingresar
         });
 
+        database.ref(USERS_LOCATION+user.uid+'/doormans/'+adminId).update({
+            uid:adminId,
+            bloqueado:true,
+            visible:true,
+            email:response.email || "null@izinait.com", //editable si no existe el correo
+            name :response.name
+        });
+        database.ref('doormans/'+user.uid).update({
+            uid:user.uid,
+            email:response.email || "null@izinait.com", //editable si no existe el correo
+            name :response.name
+        });
 
 
 

@@ -1,0 +1,60 @@
+<center>
+    <button id="BarraCargando" class="btn btn-primary btn-lg "><i class="fa fa-circle-o-notch fa-spin"></i>
+        CARGANDO RRPPS
+    </button>
+</center>
+<div id="panelPrincipal" style="display: none">
+    <center>
+
+        <a class="btn btn-primary" ng-click="agregarRRPP()">
+            AGREGAR RRPP
+        </a>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" data-background-color="purple">
+                    <h4 class="title">RRPPS HABILITADOS</h4>
+                    <p class="category">Acá podras agregar las personas habilitadas para compartir tus eventos</p>
+                </div>
+
+                <div class="card-content table-responsive">
+                    <table class="table">
+                        <thead class="text-primary">
+                        <th>Correo</th>
+                        <th>nickName</th>
+                        <th>Accion</th>
+                        <th>Habilitado</th>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="rrpp in rrpps">
+                            <td>{{rrpp.email}}</td>
+                            <td>{{rrpp.nickName}}<br>
+                                <a href="http://izinait.com/app/#!/rrpp#{{rrpp.nickName}}">http://izinait.com/app/#!/rrpp#{{rrpp.nickName}}</a>
+                            </td>
+                            <td>
+                                <i ng-show="!rrpp.bloqueado" class="fa fa-edit"> </i>
+                                <i ng-show="!rrpp.bloqueado" class="fa fa-close"> </i>
+                                <p ng-show="rrpp.bloqueado"></p>
+                            </td>
+                            <td>
+
+                                <md-checkbox
+                                        ng-disabled="rrpp.bloqueado"
+                                        ng-model="rrpp.visible"
+                                        aria-label="Checkbox 1"
+                                        ng-click="accionVisibleDoorman(rrpp)">
+
+                                </md-checkbox>
+
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </center>
+</div>
+
+

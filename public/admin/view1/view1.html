@@ -5,7 +5,7 @@
 
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-4 padd-0-xs inline-block float-fix"
-         ng-repeat="event in Allvents | orderBy:'date'"
+         ng-repeat="event in eventsWithServices | orderBy:'date'"
          ng-click="goToEventDetails(event)"
          ng-show="event.toHour > eventosFuturoFecha">
         <div class="testcard">
@@ -17,11 +17,33 @@
                     </span>
 
             <div class="testcontenido">
-                <p class=testh2"><strong>{{event.name}}</strong></p>
-                <p class="teststyle"><i class="material-icons testico">store</i> {{getClub(event.clubs)}}</p>
+                <p class="testh2 text-center" ><strong>{{event.name}}</strong></p>
 
-                <p class="teststyle"><i class="material-icons testico">music_note</i> {{event.musicGenres}}</p>
-                <p class="teststyle"><i class="material-icons testico">layers</i> {{event.eventEnvironment}}</p>
+                <div ng-repeat="reserva in event.reservas" ng-show="event.ReservaCanidad > 1">
+                    <tr>
+
+                        <td>
+                            <i ng-show="reserva.tipo == 'MESA'" class="fa fa-star"></i>
+                            <i ng-show="reserva.tipo == 'PREVENTA'" class="fa fa-ticket "></i>
+                            <i ng-show="reserva.tipo == 'VIP'" class="fa fa-diamond"></i>
+                            <i ng-show="reserva.tipo == 'ESPECIAL'" class="fa fa-certificate"></i>
+                            <i ng-show="reserva.tipo == 'BOTELLAS'" class="fa fa-glass"></i><td>
+
+                    </td></td>
+                        <td>{{reserva.tipo	}}</td>
+                        <td>{{reserva.utilizados}} </td>
+
+
+
+                    </tr>
+
+                </div>
+                <div  ng-show="event.ReservaCantidad < 1">
+
+                    <p class="testh2 text-center" ><strong>NO HAY SERVICIOS</strong></p>
+                </div>
+
+
             </div>
 
             <div class="testfooter">
