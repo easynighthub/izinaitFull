@@ -24,6 +24,7 @@ window.fbAsyncInit = function () {
 
 
 var signInButtonFacebook = document.getElementById('sign-in-facebook');
+var ingresarAdmin = document.getElementById('signIn');
 var token = "";
 var user = "";
 
@@ -152,4 +153,32 @@ signInButtonFacebook.addEventListener('click', function() {
             userExistsCallback(exists, response);
         });
     }
+});
+
+ingresarAdmin.addEventListener('click', function() {
+
+
+
+    var email = document.getElementById('correo').value;
+    var password = document.getElementById('password').value;
+
+    firebase.auth().signInWithEmailAndPassword(email, password).then(
+        function(s){
+            console.log(s);
+            firebase.database().ref('/admins/' + s.uid).once('value').then(function(snapshot) {
+                if (snapshot.val() != null)
+                    window.location.href = 'admin';
+                else {
+                    alert('Este usuario no es Admin');
+                    firebase.auth().signOut();
+                }
+            });
+        },
+        function(e) {
+            console.log(e);
+            alert('ESTE USUARIO NO EXISTE EN NUESTRA BASE DE DATOS, PONGA SE ENCONTACTO CON IZINAIT');
+            document.getElementById('BarraCargando').style.display = 'none';
+            document.getElementById('signIn').style.display = 'block';
+        }
+    );
 });
