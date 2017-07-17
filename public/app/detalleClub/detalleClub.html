@@ -1,6 +1,8 @@
 <button id="BarraCargando" class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"></i> CARGANDO CLUB
 </button>
 
+
+
 <div id="detalleClub" style="display: none">
     <center>
 
@@ -157,21 +159,23 @@
 
             <br>
 
-            <ng-map zoom="14"
+            <ng-map center="[{{club.latitude}},{{club.longitude}}]"
+                    zoom="14"
                     disable-default-u-i="true"
                     scrollwheel="false"
                     default-style="true"
-                    center="map.center">
+
+            >
                 <marker
                         id="foo"
                         centered="true"
-                        animation="Animation.BOUNCE"
+
                         title="{{getClub(event.clubs)}}"
                         on-click="map.showInfoWindow('bar')"
-                        position="{{event.lat}},{{event.lng}}">
+                        position="{{club.latitude}},{{club.longitude}}">
                 </marker>
                 <info-window id="bar" visible-on-marker="foo">
-                    <a href="https://www.google.com/maps/place/{{event.lat}},{{event.lng}}" target="_blank">
+                    <a href="https://www.google.com/maps/place/{{club.latitude}},{{club.longitude}}" target="_blank">
                         <h6 style="color: #340034">{{club.address}}</h6>
                     </a>
                 </info-window>
