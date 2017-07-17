@@ -24,6 +24,7 @@
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="../qr/assets/css/demo.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <link rel="stylesheet" href="css/event.css">
     <!--     Fonts and icons     -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
@@ -41,36 +42,36 @@
         -->
 
         <div class="logo">
-            <a href="http://www.creative-tim.com" class="simple-text">
+            <a href="" class="simple-text">
                 iziboss
             </a>
         </div>
 
         <div class="sidebar-wrapper">
             <ul class="nav">
-                <li class="active dropdown">
-                    <a href="#!/view1" class="dropdown-toggle" data-toggle="dropdown">
+                <li id="eventos" class="dropdown">
+                    <a  class="dropdown-toggle" data-toggle="dropdown">
                         <i class="material-icons ">event</i>
                         <p>Eventos <b class="caret"></b></p>
 
                     </a>
                     <ul class="dropdown-menu nav text-center col-md-12 ">
-                        <li><a href="#!/view1"style="color: white" >Futuros</a></li>
-                        <li><a href="#!/view1"style="color: white" >Pasados</a></li>
-                        <li><a href="#!/view1"style="color: white" >Crear evento</a></li>
+                        <li><a href="#!/view1"style="color: white;background-color: #9c27b0" >Futuros</a></li>
+                        <li><a href="#!/view1"style="color: white;background-color: #9c27b0" >Pasados</a></li>
+                        <li><a href="#!/crearEvento"style="color: white;background-color: #9c27b0" >Crear evento</a></li>
                      <!--   <li class="divider"></li> -->
 
                     </ul>
                 </li>
-                <li class="active dropdown">
-                    <a href="#!/view2"  class="dropdown-toggle" data-toggle="dropdown">
+                <li  id="configuracion" class="dropdown">
+                    <a href=""  class="dropdown-toggle" data-toggle="dropdown">
                         <i class="material-icons ">settings</i>
                         <p style="margin-left: -10px">Configuración <b class="caret"></b></p>
 
                     </a>
                     <ul class="dropdown-menu nav text-center col-md-12 ">
-                        <li><a href="#!/view1"style="color: white" >Relaciones Públicas</a></li>
-                        <li><a href="#!/view1"style="color: white" >Doorman</a></li>
+                        <li><a class="active" href="#!/rrpps"style="color: white;background-color: #9c27b0"  >Relaciones Públicas</a></li>
+                        <li><a class="active" href="#!/doorman"style="color: white;background-color: #9c27b0" >Doorman</a></li>
                         <!--   <li class="divider"></li> -->
 
                     </ul>
@@ -90,7 +91,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">IZIBOSS</a>
+                    <a class="navbar-brand tituloIziboss"> IZIBOSS</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -189,7 +190,9 @@
 <script src="../app/js/angular-route.js"></script>
 <script src="app.js"></script>
 <script src="view1/view1.js"></script>
-
+<script src="doorman/doorman.js"></script>
+<script src="rrpps/rrpps.js"></script>
+<script src="crearEvento/crearEvento.js"></script>
 <script src="https://apis.google.com/js/client.js"></script>
 <script src="https://cdn.firebase.com/libs/angularfire/2.0.2/angularfire.min.js"></script>
 

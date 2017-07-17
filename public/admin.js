@@ -24,6 +24,7 @@ window.fbAsyncInit = function () {
 
 
 var signInButtonFacebook = document.getElementById('sign-in-facebook');
+var ingresarAdmin = document.getElementById('signIn');
 var token = "";
 var user = "";
 
@@ -83,21 +84,35 @@ signInButtonFacebook.addEventListener('click', function() {
         database.ref(USERS_LOCATION+user.uid+'/rrpps/'+adminId).update({
             uid:adminId,
             bloqueado:true,
-            visible:true
+            visible:true,
+            email:response.email
         });
         database.ref(USERS_LOCATION+user.uid+'/rrpps/MD18DcCzYMXPhOQb8U61bWfgzRg2').update({
             uid:'MD18DcCzYMXPhOQb8U61bWfgzRg2',
             bloqueado:true,
-            visible:true
+            visible:true,
+            email:'admin@izinait.com'
         });
 
         database.ref('rrpps/'+user.uid).update({
-            uid:'MD18DcCzYMXPhOQb8U61bWfgzRg2',
+            uid:user.uid,
             email:response.email || "null@izinait.com", //editable si no existe el correo
             name :response.name,
-            nickName:'MD18DcCzYMXPhOQb8U61bWfgzRg2' // editable al momonento de ingresar
+            nickName:user.uid // editable al momonento de ingresar
         });
 
+        database.ref(USERS_LOCATION+user.uid+'/doormans/'+adminId).update({
+            uid:adminId,
+            bloqueado:true,
+            visible:true,
+            email:response.email || "null@izinait.com", //editable si no existe el correo
+            name :response.name
+        });
+        database.ref('doormans/'+user.uid).update({
+            uid:user.uid,
+            email:response.email || "null@izinait.com", //editable si no existe el correo
+            name :response.name
+        });
 
 
 
@@ -138,4 +153,32 @@ signInButtonFacebook.addEventListener('click', function() {
             userExistsCallback(exists, response);
         });
     }
+});
+
+ingresarAdmin.addEventListener('click', function() {
+
+
+
+    var email = document.getElementById('correo').value;
+    var password = document.getElementById('password').value;
+
+    firebase.auth().signInWithEmailAndPassword(email, password).then(
+        function(s){
+            console.log(s);
+            firebase.database().ref('/admins/' + s.uid).once('value').then(function(snapshot) {
+                if (snapshot.val() != null)
+                    window.location.href = 'admin';
+                else {
+                    alert('Este usuario no es Admin');
+                    firebase.auth().signOut();
+                }
+            });
+        },
+        function(e) {
+            console.log(e);
+            alert('ESTE USUARIO NO EXISTE EN NUESTRA BASE DE DATOS, PONGA SE ENCONTACTO CON IZINAIT');
+            document.getElementById('BarraCargando').style.display = 'none';
+            document.getElementById('signIn').style.display = 'block';
+        }
+    );
 });

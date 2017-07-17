@@ -1,0 +1,56 @@
+<center>
+	<button id="BarraCargando" class="btn btn-primary btn-lg "><i class="fa fa-circle-o-notch fa-spin"></i>
+		CARGANDO DOORMANS
+	</button>
+</center>
+
+
+<div id="panelPrincipal" style="display: none">
+<center>
+	<a class="btn btn-primary" ng-click="agregarDoorman()">
+		AGREGAR DOORMAN
+	</a>
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header" data-background-color="purple">
+				<h4 class="title">DOORMAN HABILITADOS</h4>
+				<p class="category">Acá podras agregar las personas habilitadas para administrar tus eventos</p>
+			</div>
+
+			<div class="card-content table-responsive">
+				<table class="table">
+					<thead class="text-primary">
+					<th>Nombre</th>
+					<th>Correo</th>
+					<th>Accion</th>
+					<th>Habilitado</th>
+					</thead>
+					<tbody>
+					<tr ng-repeat="doorman in doormans">
+						<td>{{doorman.name}}</td>
+						<td>{{doorman.email}}</td>
+						<td>
+							<i ng-show="!doorman.bloqueado" class="fa fa-edit"> </i>
+							<i ng-show="!doorman.bloqueado" class="fa fa-close"> </i>
+							<p ng-show="doorman.bloqueado"></p>
+						</td>
+						<td>
+							<md-checkbox
+									ng-disabled="doorman.bloqueado"
+									ng-model="doorman.visible"
+									aria-label="Checkbox 1"
+									ng-click="accionVisibleDoorman(doorman)">
+
+							</md-checkbox>
+						</td>
+					</tr>
+
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+
+</center>
+</div>

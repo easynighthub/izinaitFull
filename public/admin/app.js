@@ -14,6 +14,9 @@ angular.module('myApp', [
     'ngMap',
     'ngMaterial',
     'myApp.view1',
+    'myApp.doorman',
+    'myApp.rrpps',
+    'myApp.crearEvento',
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
     $locationProvider.hashPrefix('!');
