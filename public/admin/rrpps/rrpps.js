@@ -18,6 +18,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
         function($scope, $rootScope, $firebaseArray, $firebaseObject,$mdDialog) {
 
 
+            console.log(window.clubSeleccionado);
 
             $(configuracion).addClass( "active" );
             $(eventos).removeClass( "active" );

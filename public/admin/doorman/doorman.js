@@ -61,7 +61,7 @@ var traerDoorman = function () {
              .cancel('Cancelar');
 
          $mdDialog.show(confirm).then(function(result) {
-             //exitoso
+             //exitoso result
 
          }, function() {
              //si no !
