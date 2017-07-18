@@ -7,17 +7,17 @@ angular.module('myApp.crearEvento', ['ngRoute'])
         });
     }])
 
-    .controller('crearEventoCtrl', ['$scope', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
-        function ($scope, $firebaseObject, $firebaseArray, $filter, $rootScope) {
-
+    .controller('crearEventoCtrl', ['$scope', '$routeParams','$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
+        function ($scope,$routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope) {
 
 
 
             $(eventos).addClass( "active" );
             $(configuracion).removeClass( "active" );
 
-            var admin = window.currentAdmin ;
+            var admin = window.currentAdmin;
             var adminLogeado = "";
+
 
 
 
@@ -30,7 +30,27 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
                         console.log(adminLogeado);
+
+
+                            var clubNombreMostrar = [];
+                            var clubNombre = firebase.database().ref().child('clubs');
+                            $scope.clubNombre = $firebaseArray(clubNombre);
+                            $scope.clubNombre.$loaded().then(function() {
+
+                                clubNombreMostrar = $scope.clubNombre;
+                                clubNombreMostrar.forEach(function (x) {
+
+                                    if(x.$id == adminLogeado.idClubWork){
+                                        $scope.clubName = x.name;
+                                        console.log($scope.clubName);
+                                    }
+                                });
+                            });
+
+
+
                         $('.tituloIziboss').text("Crear evento");
+
                     });
                 } else {
                     window.currentAdmin = "";

@@ -28,9 +28,7 @@ angular.module('myApp.view1', ['ngRoute'])
             var adminLogeado = "";
             $scope.eventosFuturoFecha = new Date().getTime();
             $scope.eventsWithServices = [];
-            window.clubSeleccionado = "";
-             var idClubWork = $routeParams.club || false; // id del evento entregador por url
-            window.clubSeleccionado = idClubWork;
+
 
 
             $(eventos).addClass( "active" );
@@ -45,7 +43,7 @@ angular.module('myApp.view1', ['ngRoute'])
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
                         console.log(adminLogeado);
-                        if(idClubWork == false){
+                        if(adminLogeado.idClubWork == false){
                             ObtenerClub (adminLogeado);
                         }else{
                             var clubNombreMostrar = [];
@@ -55,7 +53,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
                                 clubNombreMostrar = $scope.clubNombre;
                                 clubNombreMostrar.forEach(function (x) {
-                                    if(x.$id == idClubWork){
+                                    if(x.$id == adminLogeado.idClubWork){
                                         $('.clubSelecionado').text(x.name);
                                     }
                                 });
@@ -104,7 +102,7 @@ angular.module('myApp.view1', ['ngRoute'])
                 var date = new Date().getTime();
                 // if (currentDay < value.toHour){
                 if ($scope.eventosFuturoFecha < value.toHour) {
-                    if(Object.keys(value.clubs) == idClubWork){
+                    if(Object.keys(value.clubs) == adminLogeado.idClubWork){
                         return true;
                     }
                 }
@@ -206,8 +204,10 @@ angular.module('myApp.view1', ['ngRoute'])
 
                      $scope.administrarClub = function (club) {
                          console.log(club);
-                         location.href = "#!/view1?club=" + club.uid;
-                         $('.clubSelecionado').text( club.nombre);
+
+                         firebase.database().ref('admins/' + adminLogeadoRecibido.$id).update(
+                             {idClubWork:club.uid});
+                         $('.clubSelecionado').text(club.nombre);
                          $mdDialog.hide();
 
                 };

@@ -43,7 +43,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     } else {
         $routeProvider.otherwise({redirectTo: '/view1'});
         window.currentAdmin ="";
-        console.log(  window.currentAdmin);
+        console.log( window.currentAdmin);
     }
 
 
