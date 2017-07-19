@@ -35,8 +35,26 @@ angular.module('myApp.rrpps', ['ngRoute'])
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
+                        if(adminLogeado.idClubWork == false){
+                            ObtenerClub (adminLogeado);
+                        }else{
+                            var clubNombreMostrar = [];
+                            var clubNombre = firebase.database().ref().child('clubs');
+                            $scope.clubNombre = $firebaseArray(clubNombre);
+                            $scope.clubNombre.$loaded().then(function() {
+
+                                clubNombreMostrar = $scope.clubNombre;
+                                clubNombreMostrar.forEach(function (x) {
+                                    if(x.$id == adminLogeado.idClubWork){
+                                        $('.clubSelecionado').text(x.name);
+                                    }
+                                });
+                                traerRRPPS(adminLogeado.idClubWork);
+                            });
+
+                        };
                         console.log(adminLogeado);
-                        traerRRPPS();
+
                         document.getElementById('BarraCargando').style.display = 'none';
                         document.getElementById('panelPrincipal').style.display = 'block';
                         $('.tituloIziboss').text("Relaciones Publicas");
@@ -49,19 +67,23 @@ angular.module('myApp.rrpps', ['ngRoute'])
 
             });
 
-            var traerRRPPS = function () {
+            var traerRRPPS = function (clubId) {
                 var rrpps = $firebaseArray(firebase.database().ref('admins/'+adminLogeado.$id+'/rrpps'));
 
                 rrpps.$loaded().then(function(){
                     console.log(rrpps);
                     $scope.Allrrpps = rrpps;
+
                     $scope.Allrrpps.forEach(function (x) {
-                        var buscarNick = $firebaseObject(firebase.database().ref('rrpps/'+x.$id));
-                        buscarNick.$loaded().then(function () {
-                            console.log(buscarNick.nickName);
-                            x.nickName = buscarNick.nickName;
-                            $scope.rrpps.push(x);
-                        });
+                        console.log(x.clubs);
+                        if(Object.keys(x.clubs).indexOf(clubId) >= 0){
+                            var buscarNick = $firebaseObject(firebase.database().ref('rrpps/'+x.$id));
+                            buscarNick.$loaded().then(function () {
+                                x.nickName = buscarNick.nickName;
+                                $scope.rrpps.push(x);
+                            });
+                        }
+
 
 
 

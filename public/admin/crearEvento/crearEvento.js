@@ -61,22 +61,6 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             });
 
 
-          $scope.enviarEmail =  function () {
-
-                var para       = "androstoic@gmail.com";
-                var cc         = "androstoic@gmail.com"
-                var cco        = "androstoic@gmail.com"
-                var asunto     = "androstoic@gmail.com"
-                var cuerpo     = "androstoic@gmail.com"
-
-                var mensaje = "mailto:" + para +
-                    "?cc=" + cc +
-                    "&bcc=" + cco +
-                    "&subject=" + escape(asunto) +
-                    "&body=" + escape(cuerpo);
-
-                window.location = mensaje;
-            }
 
 
 
