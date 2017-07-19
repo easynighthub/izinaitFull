@@ -91,26 +91,62 @@ angular.module('myApp.rrpps', ['ngRoute'])
                 });
             };
 
-            $scope.agregarDoorman = function() {
+            $scope.agregarRRPP = function() {
                 // Appending dialog to document.body to cover sidenav in docs app
                 var confirm = $mdDialog.prompt()
-                    .title('Cual es el correo de doorman que deseas agregar?')
-                    .textContent('Si el correo existe se asignara automaticamente, si no, se creeara y se le notificara con correo al doormans ingresado.')
+                    .title('Cual es el correo del RRPP que deseas agregar?')
+                    .textContent('Si el correo existe se asignara automaticamente, si no, se creeara y se le notificara con correo al RRPP ingresado.')
                     .placeholder('Correo Electronico')
                     .ariaLabel('Correo Electronico')
                     .initialValue('')
                     .ok('Asignar!')
                     .cancel('Cancelar');
 
-                $mdDialog.show(confirm).then(function(result) {
-                    //exitoso
+                $mdDialog.show(confirm).then(
+                    function(result) {
 
-                }, function() {
-                    //si no !
-                });
+                    if(validateEmail(result)){
+                        var existe = false;
+                        console.log($scope.rrpps);
+                        $scope.rrpps.forEach(function (rrpp) {  //rrpps del clubs
+                            if(rrpp.email == result){
+                                existe = true;
+                            };
+                        });
+                        if(existe){
+                            alert('ESTE CORREO YA EXISTE');
+
+                        }else
+                        {
+                            var todosLosRRPPs = $firebaseObject(firebase.database().ref('rrpps'));
+                            todosLosRRPPs.$loaded().then(function () {
+                                todosLosRRPPs.forEach(function (x) {
+                                    if(x.email == result){
+                                        console.log(x);
+                                        firebase.database().ref('admins/'+adminLogeado.$id+'/rrpps/'+x.uid).update({
+                                            uid:x.uid,
+                                            bloqueado:false,
+                                            visible:true,
+                                            email:x.email
+                                        });
+                                        firebase.database().ref('admins/'+adminLogeado.$id+'/rrpps/'+x.uid +'/clubs/'+adminLogeado.idClubWork).update(true);
+
+
+                                    }
+                                });
+                            });
+                        }
+
+                    };
+                    //exitoso
+                    }
+                    );
             };
 
-
+            function validateEmail(email) {
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
+            }
 
 
 
