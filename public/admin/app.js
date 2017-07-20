@@ -19,6 +19,7 @@ angular.module('myApp', [
     'myApp.doorman',
     'myApp.rrpps',
     'myApp.crearEvento',
+    'myApp.selectClub'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
     $locationProvider.hashPrefix('!');

@@ -37,7 +37,8 @@ angular.module('myApp.doorman', ['ngRoute'])
                          clubNombreMostrar = $scope.clubNombre;
                          clubNombreMostrar.forEach(function (x) {
                              if(x.$id == adminLogeado.idClubWork){
-                                 $('.clubSelecionado').text(x.name);
+                                 $('.clubSelecionado').text(x.name +" ");
+                                 $( ".clubSelecionado" ).append( "<b class='caret'> </b>" );
                              }
                          });
                          traerDoorman(adminLogeado.idClubWork);

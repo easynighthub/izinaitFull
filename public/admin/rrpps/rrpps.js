@@ -46,7 +46,8 @@ angular.module('myApp.rrpps', ['ngRoute'])
                                 clubNombreMostrar = $scope.clubNombre;
                                 clubNombreMostrar.forEach(function (x) {
                                     if(x.$id == adminLogeado.idClubWork){
-                                        $('.clubSelecionado').text(x.name);
+                                        $('.clubSelecionado').text(x.name +" ");
+                                        $( ".clubSelecionado" ).append( "<b class='caret'> </b>" );
                                     }
                                 });
                                 traerRRPPS(adminLogeado.idClubWork);
@@ -68,12 +69,14 @@ angular.module('myApp.rrpps', ['ngRoute'])
             });
 
             var traerRRPPS = function (clubId) {
+                $scope.rrpps = [];
+                $scope.Allrrpps = [];
+
                 var rrpps = $firebaseArray(firebase.database().ref('admins/'+adminLogeado.$id+'/rrpps'));
 
                 rrpps.$loaded().then(function(){
                     console.log(rrpps);
                     $scope.Allrrpps = rrpps;
-
                     $scope.Allrrpps.forEach(function (x) {
                         console.log(x.clubs);
                         if(Object.keys(x.clubs).indexOf(clubId) >= 0){
@@ -106,11 +109,11 @@ angular.module('myApp.rrpps', ['ngRoute'])
                     function(result) {
 
                     if(validateEmail(result)){
-                        var existe = false;
+                        var existeEnAdmin = false;
                         console.log($scope.rrpps);
                         $scope.rrpps.forEach(function (rrpp) {  //rrpps del clubs
                             if(rrpp.email == result){
-                                existe = true;
+                                existeEnAdmin = true;
                             };
                         });
                         if(existe){
@@ -120,6 +123,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
                         {
                             var todosLosRRPPs = $firebaseObject(firebase.database().ref('rrpps'));
                             todosLosRRPPs.$loaded().then(function () {
+                                var existeEnBaseDeDatos = false;
                                 todosLosRRPPs.forEach(function (x) {
                                     if(x.email == result){
                                         console.log(x);
@@ -129,11 +133,23 @@ angular.module('myApp.rrpps', ['ngRoute'])
                                             visible:true,
                                             email:x.email
                                         });
-                                        firebase.database().ref('admins/'+adminLogeado.$id+'/rrpps/'+x.uid +'/clubs/'+adminLogeado.idClubWork).update(true);
-
-
-                                    }
+                                        firebase.database().ref('admins/'
+                                            +adminLogeado.$id
+                                            +'/rrpps/'
+                                            +x.uid
+                                            +'/clubs/'
+                                            +adminLogeado.idClubWork).set(true);
+                                        traerRRPPS(adminLogeado.idClubWork);
+                                        existeEnBaseDeDatos = true;
+                                    };
                                 });
+                                if(existeEnBaseDeDatos){
+                                    alert('AGREGADO CON EXITO');
+
+                                }else  // CREAR RELACIONADOR PUBLICO Y ENVIAR CORREO
+                                {
+
+                                }
                             });
                         }
 

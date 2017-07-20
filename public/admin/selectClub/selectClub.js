@@ -1,10 +1,14 @@
+/**
+ * Created by andro on 19-07-2017.
+ */
+
 'use strict';
 
-angular.module('myApp.view1', ['ngRoute'])
+angular.module('myApp.selectClub', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/view1', {
-                templateUrl: 'view1/view1.html',
-                controller: 'View1Ctrl',
+        $routeProvider.when('/selectClub', {
+                templateUrl: 'selectClub/selectClub.html',
+                controller: 'selectClubCtrl',
                 data: {
                     meta: {
                         'title': 'Home page',
@@ -19,19 +23,15 @@ angular.module('myApp.view1', ['ngRoute'])
 
 
 
-    .controller('View1Ctrl', ['$scope','$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope','$mdDialog',
+    .controller('selectClubCtrl', ['$scope','$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope','$mdDialog',
         function ($scope, $routeParams,$firebaseObject, $firebaseArray, $filter, $rootScope,$mdDialog) {
 
 
 
             var admin = window.currentAdmin ;
             var adminLogeado = "";
-            $scope.eventosFuturoFecha = new Date().getTime();
-            $scope.eventsWithServices = [];
 
-
-
-            $(eventos).addClass( "active" );
+            $(eventos).removeClass( "active" );
             $(configuracion).removeClass( "active" );
 
             firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function(snapshot) {
@@ -44,7 +44,6 @@ angular.module('myApp.view1', ['ngRoute'])
                         adminLogeado = adminLocal;
                         console.log(adminLogeado);
                         if(adminLogeado.idClubWork == false){
-                            console.log("entreeeeeeeeeeeeeeeeeeeeeeeee")
                             ObtenerClub (adminLogeado);
                         }else{
                             var clubNombreMostrar = [];
@@ -55,40 +54,14 @@ angular.module('myApp.view1', ['ngRoute'])
                                 clubNombreMostrar = $scope.clubNombre;
                                 clubNombreMostrar.forEach(function (x) {
                                     if(x.$id == adminLogeado.idClubWork){
-                                        $('.clubSelecionado').text(x.name + " ");
+                                        $('.clubSelecionado').text(x.name +" ");
                                         $( ".clubSelecionado" ).append( "<b class='caret'> </b>" );
-                                    };
+                                    }
                                 });
                             });
+                            ObtenerClub (adminLogeado);
 
                         };
-                        var eventosAdmin = firebase.database().ref('/events').orderByChild('admin').equalTo(adminLogeado.$id);
-                        var eventsAdminRequest = $firebaseArray(eventosAdmin);
-                        eventsAdminRequest.$loaded().then(function() {
-                            $scope.Allvents = $filter('filter')(eventsAdminRequest, getFuturesEvents);
-                            console.log(eventsAdminRequest)
-                            if(eventsAdminRequest == undefined){
-                                console.log("no cargo nada");
-                                document.getElementById('noHayEventos').style.display = 'block';
-                                $('.tituloIziboss').text("Eventos Futuros");
-                            }else
-                            {
-                                $scope.Allvents.forEach(function (x) {
-                                    var eventServices = firebase.database().ref('/eventServices/'+x.$id);
-                                    var eventServicesRQ = $firebaseArray(eventServices);
-                                    eventServicesRQ.$loaded().then(function(){
-                                        x.reservas = eventServicesRQ;
-                                        x.ReservaCantidad = eventServicesRQ.length;
-                                        $scope.eventsWithServices.push(x);
-                                        console.log($scope.eventsWithServices);
-                                    });
-                                });
-                                document.getElementById('BarraCargando').style.display = 'none';
-                                $('.tituloIziboss').text("Eventos Futuros");
-                            }
-
-
-                        });
                     });
                 } else {
                     window.currentAdmin = "";
@@ -97,21 +70,6 @@ angular.module('myApp.view1', ['ngRoute'])
                 };
 
             });
-
-
-            var getFuturesEvents = function (value, index, array) {
-                // var currentDay = new Date().getTime();
-                var date = new Date().getTime();
-                // if (currentDay < value.toHour){
-                if ($scope.eventosFuturoFecha < value.toHour) {
-                    if(Object.keys(value.clubs) == adminLogeado.idClubWork){
-                        return true;
-                    }
-                }
-                //}
-                else
-                    return false;
-            };
 
 
             function dialogControllerSelecionarClub($scope, $mdDialog, $timeout, $q, $log,adminLogeadoRecibido ,clubsCargados) {
@@ -185,7 +143,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
 
                 }else{
-                   var clubsParaAdministrar = adminLogeadoRecibido.clubs;
+                    var clubsParaAdministrar = adminLogeadoRecibido.clubs;
                     $mdDialog.show({
                         controller: dialogControllerAdministrarClub,
                         templateUrl: 'dialogAdministrarClub',
@@ -204,13 +162,15 @@ angular.module('myApp.view1', ['ngRoute'])
                 console.log(adminLogeadoRecibido);
                 $scope.clubs = clubsParaAdministrar;
 
-                     $scope.administrarClub = function (club) {
-                         console.log(club);
+                $scope.administrarClub = function (club) {
+                    console.log(club);
 
-                         firebase.database().ref('admins/' + adminLogeadoRecibido.$id).update(
-                             {idClubWork:club.uid});
-                         $('.clubSelecionado').text(club.nombre);
-                         $mdDialog.hide();
+                    firebase.database().ref('admins/' + adminLogeadoRecibido.$id).update(
+                        {idClubWork:club.uid});
+                    $('.clubSelecionado').text(club.nombre);
+
+                    $mdDialog.hide();
+                    location.href = "#!/view1";
 
                 };
 
