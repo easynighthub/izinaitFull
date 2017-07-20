@@ -79,7 +79,8 @@ signInButtonFacebook.addEventListener('click', function() {
                 firstName: response.first_name,
                 facebookId: response.id,
                 lastName: response.last_name,
-                gender : response.gender
+                gender : response.gender,
+                idClubWork:false
             });
         database.ref(USERS_LOCATION+user.uid+'/rrpps/'+adminId).update({
             uid:adminId,

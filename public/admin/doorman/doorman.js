@@ -26,8 +26,27 @@ angular.module('myApp.doorman', ['ngRoute'])
              var adminLocal = $firebaseObject(ref);
              adminLocal.$loaded().then(function () {
                  adminLogeado = adminLocal;
+                 if(adminLogeado.idClubWork == false){
+                     ObtenerClub (adminLogeado);
+                 }else{
+                     var clubNombreMostrar = [];
+                     var clubNombre = firebase.database().ref().child('clubs');
+                     $scope.clubNombre = $firebaseArray(clubNombre);
+                     $scope.clubNombre.$loaded().then(function() {
+
+                         clubNombreMostrar = $scope.clubNombre;
+                         clubNombreMostrar.forEach(function (x) {
+                             if(x.$id == adminLogeado.idClubWork){
+                                 $('.clubSelecionado').text(x.name +" ");
+                                 $( ".clubSelecionado" ).append( "<b class='caret'> </b>" );
+                             }
+                         });
+                         traerDoorman(adminLogeado.idClubWork);
+                     });
+
+                 };
                  console.log(adminLogeado);
-                 traerDoorman();
+
                  document.getElementById('BarraCargando').style.display = 'none';
                  document.getElementById('panelPrincipal').style.display = 'block';
 
@@ -41,11 +60,17 @@ angular.module('myApp.doorman', ['ngRoute'])
 
      });
 
-var traerDoorman = function () {
+var traerDoorman = function (clubId) {
     var doorman = $firebaseArray(firebase.database().ref('admins/'+adminLogeado.$id+'/doormans'));
     doorman.$loaded().then(function(){
         console.log(doorman);
-        $scope.doormans = doorman;
+        $scope.allDoormans = doorman;
+        $scope.allDoormans.forEach(function (x) {
+            if(Object.keys(x.clubs).indexOf(clubId) >= 0){
+                $scope.doormans.push(x);
+            }
+        })
+
     });
 };
 
@@ -61,7 +86,7 @@ var traerDoorman = function () {
              .cancel('Cancelar');
 
          $mdDialog.show(confirm).then(function(result) {
-             //exitoso
+             //exitoso result
 
          }, function() {
              //si no !

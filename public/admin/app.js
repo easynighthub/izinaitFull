@@ -5,6 +5,8 @@
  * Created by andro on 22-06-2017.
  */
 
+
+
 'use strict';
 
 // Declare app level module which depends on views, and components
@@ -17,6 +19,7 @@ angular.module('myApp', [
     'myApp.doorman',
     'myApp.rrpps',
     'myApp.crearEvento',
+    'myApp.selectClub'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
     $locationProvider.hashPrefix('!');
@@ -43,7 +46,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     } else {
         $routeProvider.otherwise({redirectTo: '/view1'});
         window.currentAdmin ="";
-        console.log(  window.currentAdmin);
+        console.log( window.currentAdmin);
     }
 
 

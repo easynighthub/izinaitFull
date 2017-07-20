@@ -1,0 +1,16 @@
+<script id="dialogAdministrarClub" type="text/ng-template">
+    <div class="col-md-12">
+        <center>
+            <h6> QUE CLUB DESEAS ADMINISTRAR ?</h6>
+
+            <div ng-repeat="club in clubs" ng-show="club.activoParaCrearEventos">
+                <button class="btn btn-sm btn-success" ng-click="administrarClub(club)"   aria-label="Checkbox 1">
+                    {{club.nombre}}
+                </button>
+
+            </div>
+        </center>
+    </div>
+
+
+</script>

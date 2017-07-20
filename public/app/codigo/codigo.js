@@ -163,7 +163,24 @@ angular.module('myApp.codigo', ['ngRoute'])
                             $scope.nombre = $scope.usuarioLogeado.displayName;
                             $scope.email = $scope.usuarioLogeado.email;
                             $scope.foto = $scope.usuarioLogeado.picture;
-                            $scope.email = $scope.usuarioLogeado.email;
+
+                            $.ajax({
+                                url: 'http://www.abcs.cl/correo/contact_me.php',
+                                type: "POST",
+                                data: {
+                                    name: $scope.nombre,
+                                    phone: '11111',
+                                    email: 'androstoic@gmail.com',
+                                    message: "111"
+                                },
+                                cache: false,
+                                success: function() {
+                                    console.log("siiiiiiiiiiiiiiiiiiiiiii");
+                                },
+                                error: function() {
+                                    console.log("noooooooooooooooooooooo");
+                                },
+                            });
 
                             document.getElementById('codigoVisibile').style.display = 'block';
                             document.getElementById('pedirCodigo').style.display = 'none';
@@ -192,7 +209,24 @@ angular.module('myApp.codigo', ['ngRoute'])
                             $scope.nombre = $scope.usuarioLogeado.displayName;
                             $scope.email = $scope.usuarioLogeado.email;
                             $scope.foto = $scope.usuarioLogeado.picture;
-                            $scope.email = $scope.usuarioLogeado.email;
+
+                            $.ajax({
+                                url: 'http://www.abcs.cl/correo/contact_me.php',
+                                type: "POST",
+                                data: {
+                                    name: $scope.nombre,
+                                    phone: '11111',
+                                    email: 'androstoic@gmail.com',
+                                    message: "11"
+                                },
+                                cache: false,
+                                success: function() {
+                                    console.log("siiiiiiiiiiiiiiiiiiiiiii");
+                                },
+                                error: function() {
+                                    console.log("noooooooooooooooooooooo");
+                                },
+                            });
 
                             document.getElementById('codigoVisibile').style.display = 'block';
                             document.getElementById('pedirCodigo').style.display = 'none';

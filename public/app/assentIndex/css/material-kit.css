@@ -3429,7 +3429,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 }
 .datepicker span.primary,
 .datepicker span.primary:hover {
-  background-color: #000000000000;
+  background-color: #000000;
 }
 .datepicker span.info,
 .datepicker span.info:hover {

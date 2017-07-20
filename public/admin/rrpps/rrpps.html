@@ -31,18 +31,17 @@
                                 <a href="http://izinait.com/app/#!/rrpp#{{rrpp.nickName}}">http://izinait.com/app/#!/rrpp#{{rrpp.nickName}}</a>
                             </td>
                             <td>
-                                <i ng-show="!rrpp.bloqueado" class="fa fa-edit"> </i>
-                                <i ng-show="!rrpp.bloqueado" class="fa fa-close"> </i>
+                                <i ng-click="borrarRRPPdelClub(rrpp)" ng-show="!rrpp.bloqueado" class="fa fa-close"> </i>
                                 <p ng-show="rrpp.bloqueado"></p>
                             </td>
                             <td>
 
                                 <md-checkbox
+                                        style="margin-top: 15px"
                                         ng-disabled="rrpp.bloqueado"
                                         ng-model="rrpp.visible"
                                         aria-label="Checkbox 1"
                                         ng-click="accionVisibleDoorman(rrpp)">
-
                                 </md-checkbox>
 
                             </td>
