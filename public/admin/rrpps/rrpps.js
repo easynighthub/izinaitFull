@@ -79,13 +79,22 @@ angular.module('myApp.rrpps', ['ngRoute'])
                     $scope.Allrrpps = rrpps;
                     $scope.Allrrpps.forEach(function (x) {
                         console.log(x.clubs);
-                        if(Object.keys(x.clubs).indexOf(clubId) >= 0){
+                        if(x.bloqueado == true){
                             var buscarNick = $firebaseObject(firebase.database().ref('rrpps/'+x.$id));
                             buscarNick.$loaded().then(function () {
                                 x.nickName = buscarNick.nickName;
                                 $scope.rrpps.push(x);
                             });
+                        }else{
+                            if(Object.keys(x.clubs).indexOf(clubId) >= 0){
+                                var buscarNick = $firebaseObject(firebase.database().ref('rrpps/'+x.$id));
+                                buscarNick.$loaded().then(function () {
+                                    x.nickName = buscarNick.nickName;
+                                    $scope.rrpps.push(x);
+                                });
+                            }
                         }
+
 
 
 
@@ -199,10 +208,10 @@ angular.module('myApp.rrpps', ['ngRoute'])
                             },
                             cache: false,
                             success: function() {
-console.log("siiiiiiiiiiiiiiiiiiiiiii");
+                console.log("siiiiiiiiiiiiiiiiiiiiiii");
                             },
                             error: function() {
-console.log("noooooooooooooooooooooo");
+                    console.log("noooooooooooooooooooooo");
                             },
                         });
 

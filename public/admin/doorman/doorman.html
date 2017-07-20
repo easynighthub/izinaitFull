@@ -30,8 +30,7 @@
 						<td>{{doorman.name}}</td>
 						<td>{{doorman.email}}</td>
 						<td>
-							<i ng-show="!doorman.bloqueado" class="fa fa-edit"> </i>
-							<i ng-show="!doorman.bloqueado" class="fa fa-close"> </i>
+							<i ng-click="borrarDoormandelClub(doorman)" ng-show="!doorman.bloqueado" class="fa fa-close"> </i>
 							<p ng-show="doorman.bloqueado"></p>
 						</td>
 						<td>

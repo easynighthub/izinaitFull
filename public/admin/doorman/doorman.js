@@ -18,6 +18,7 @@ angular.module('myApp.doorman', ['ngRoute'])
      var adminLogeado = "";
      $scope.doormans = [];
 
+
      firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function(snapshot) {
          var exists = (snapshot.val() !== null);
          console.log(exists);
@@ -61,14 +62,23 @@ angular.module('myApp.doorman', ['ngRoute'])
      });
 
 var traerDoorman = function (clubId) {
-    var doorman = $firebaseArray(firebase.database().ref('admins/'+adminLogeado.$id+'/doormans'));
-    doorman.$loaded().then(function(){
-        console.log(doorman);
-        $scope.allDoormans = doorman;
+    $scope.allDoormans = [];
+    $scope.doormans = [];
+    var doormans = $firebaseArray(firebase.database().ref('admins/'+adminLogeado.$id+'/doormans'));
+    doormans.$loaded().then(function(){
+        console.log(doormans);
+        $scope.allDoormans = doormans;
         $scope.allDoormans.forEach(function (x) {
-            if(Object.keys(x.clubs).indexOf(clubId) >= 0){
-                $scope.doormans.push(x);
+            if(x.bloqueado == true){
+                    $scope.doormans.push(x);
+                
+            }else
+            {
+                if(Object.keys(x.clubs).indexOf(clubId) >= 0){
+                    $scope.doormans.push(x);
+                }
             }
+
         })
 
     });
@@ -85,7 +95,55 @@ var traerDoorman = function (clubId) {
              .ok('Asignar!')
              .cancel('Cancelar');
 
-         $mdDialog.show(confirm).then(function(result) {
+         $mdDialog.show(confirm).then(
+             function(result) {
+                 if(validateEmail(result)){
+                     var existeEnAdmin = false;
+                     console.log($scope.doormans);
+                     $scope.doormans.forEach(function (doorman) {
+                         if(doorman.email == result){
+                             existeEnAdmin = true;
+                         };
+                     });
+                     if(existeEnAdmin){
+                         alert('ESTE CORREO YA EXISTE');
+
+                     }else
+                         {
+                             var todosLosDoormans = $firebaseObject(firebase.database().ref('doormans'));
+                             todosLosDoormans.$loaded().then(function () {
+                                 var existeEnBaseDeDatos = false;
+                                 todosLosDoormans.forEach(function (x) {
+                                     if(x.email == result){
+                                         console.log(x);
+                                         firebase.database().ref('admins/'+adminLogeado.$id+'/doormans/'+x.uid).update({
+                                             bloqueado:false,
+                                             email:x.email,
+                                             name :x.name,
+                                             uid:x.uid,
+                                             visible:true,
+                                         });
+                                         firebase.database().ref('admins/'
+                                             +adminLogeado.$id
+                                             +'/doormans/'
+                                             +x.uid
+                                             +'/clubs/'
+                                             +adminLogeado.idClubWork).set(true);
+                                         traerDoorman(adminLogeado.idClubWork);
+                                         existeEnBaseDeDatos = true;
+                                     };
+                                 });
+                                 if(existeEnBaseDeDatos){
+                                     alert('AGREGADO CON EXITO');
+
+                                 }else  // CREAR RELACIONADOR PUBLICO Y ENVIAR CORREO
+                                 {
+
+                                 }
+                             });
+
+                     }
+                 };
              //exitoso result
 
          }, function() {
@@ -107,6 +165,68 @@ var traerDoorman = function (clubId) {
 		});
 	}; */
 
+         function validateEmail(email) {
+             var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+             return re.test(email);
+         };
 
 
-}]);
+         $scope.borrarDoormandelClub = function (doormanSelect) {
+
+             var confirm = $mdDialog.confirm()
+                 .title('Desea eliminar este Doorman de este club?')
+                 .textContent('')
+                 .ariaLabel('Lucky day')
+                 .targetEvent(doormanSelect)
+                 .ok('ELIMINAR')
+                 .cancel('CANCELAR');
+
+             $mdDialog.show(confirm).then(function() {
+                 console.log((Object.keys(confirm._options.targetEvent.clubs).length));
+                 console.log(confirm._options.targetEvent);
+                 if(Object.keys(confirm._options.targetEvent.clubs).length >1){
+                     firebase.database().ref(
+                         'admins/'
+                         +adminLogeado.$id
+                         +'/doormans/'
+                         +confirm._options.targetEvent.$id
+                         +'/clubs/'
+                         +adminLogeado.idClubWork).set(null);
+                     traerDoorman(adminLogeado.idClubWork);
+
+                     $.ajax({
+                         url: 'http://www.abcs.cl/correo/contact_me.php',
+                         type: "POST",
+                         data: {
+                             name: '1111',
+                             phone: '11111',
+                             email: confirm._options.targetEvent.email,
+                             message: "fuiste eliminado de rrpp"
+                         },
+                         cache: false,
+                         success: function() {
+                             console.log("siiiiiiiiiiiiiiiiiiiiiii");
+                         },
+                         error: function() {
+                             console.log("noooooooooooooooooooooo");
+                         },
+                     });
+
+                 }else
+                 {
+                     firebase.database().ref(
+                         'admins/'
+                         +adminLogeado.$id+
+                         '/doormans/'
+                         +confirm._options.targetEvent.$id
+                     ).set(null);
+                     traerDoorman(adminLogeado.idClubWork);
+                 }
+             }, function() {
+
+             });
+
+         };
+
+
+     }]);

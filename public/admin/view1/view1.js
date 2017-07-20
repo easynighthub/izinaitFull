@@ -137,7 +137,7 @@ angular.module('myApp.view1', ['ngRoute'])
                                     nombre: x.name
                                 });
 
-                        }
+                        };
                     });
                     $mdDialog.hide();
                     location.reload();
