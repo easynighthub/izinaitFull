@@ -116,7 +116,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
                                 existeEnAdmin = true;
                             };
                         });
-                        if(existe){
+                        if(existeEnAdmin){
                             alert('ESTE CORREO YA EXISTE');
 
                         }else
@@ -162,7 +162,65 @@ angular.module('myApp.rrpps', ['ngRoute'])
             function validateEmail(email) {
                 var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 return re.test(email);
-            }
+            };
+
+            $scope.borrarRRPPdelClub = function (rrppSelect) {
+
+                var confirm = $mdDialog.confirm()
+                    .title('Desea eliminar este relacionador publico del este club?')
+                    .textContent('')
+                    .ariaLabel('Lucky day')
+                    .targetEvent(rrppSelect)
+                    .ok('ELIMINAR')
+                    .cancel('CANCELAR');
+
+                $mdDialog.show(confirm).then(function() {
+                    console.log((Object.keys(confirm._options.targetEvent.clubs).length));
+                    console.log(confirm._options.targetEvent);
+                    if(Object.keys(confirm._options.targetEvent.clubs).length >1){
+                        firebase.database().ref(
+                            'admins/'
+                            +adminLogeado.$id
+                            +'/rrpps/'
+                            +confirm._options.targetEvent.$id
+                            +'/clubs/'
+                            +adminLogeado.idClubWork).set(null);
+                        traerRRPPS(adminLogeado.idClubWork);
+
+
+                        $.ajax({
+                            url: 'http://www.abcs.cl/correo/contact_me.php',
+                            type: "POST",
+                            data: {
+                                name: '1111',
+                                phone: '11111',
+                                email: confirm._options.targetEvent.email,
+                                message: "fuiste eliminado de rrpp"
+                            },
+                            cache: false,
+                            success: function() {
+console.log("siiiiiiiiiiiiiiiiiiiiiii");
+                            },
+                            error: function() {
+console.log("noooooooooooooooooooooo");
+                            },
+                        });
+
+                    }else
+                    {
+                        firebase.database().ref(
+                            'admins/'
+                            +adminLogeado.$id+
+                            '/rrpps/'
+                            +confirm._options.targetEvent.$id
+                        ).set(null);
+                        traerRRPPS(adminLogeado.idClubWork);
+                    }
+                }, function() {
+
+                });
+
+            };
 
 
 

@@ -44,7 +44,7 @@ angular.module('myApp.view1', ['ngRoute'])
                         adminLogeado = adminLocal;
                         console.log(adminLogeado);
                         if(adminLogeado.idClubWork == false){
-                            console.log("entreeeeeeeeeeeeeeeeeeeeeeeee")
+                            console.log("entreeeeeeeeeeeeeeeeeeeeeeeee");
                             ObtenerClub (adminLogeado);
                         }else{
                             var clubNombreMostrar = [];
@@ -66,7 +66,7 @@ angular.module('myApp.view1', ['ngRoute'])
                         var eventsAdminRequest = $firebaseArray(eventosAdmin);
                         eventsAdminRequest.$loaded().then(function() {
                             $scope.Allvents = $filter('filter')(eventsAdminRequest, getFuturesEvents);
-                            console.log(eventsAdminRequest)
+                            console.log(eventsAdminRequest);
                             if(eventsAdminRequest == undefined){
                                 console.log("no cargo nada");
                                 document.getElementById('noHayEventos').style.display = 'block';
