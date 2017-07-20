@@ -1,6 +1,10 @@
 /**
  * Created by andro on 19-06-2017.
  */
+
+
+
+
 var irApp = document.getElementById('irApp');
 irApp.addEventListener('click', function () {
     window.location.href = 'app';
@@ -25,4 +29,20 @@ var config = {
     databaseURL: "https://easynight.firebaseio.com",
     storageBucket: "project-8746388695669481444.appspot.com"
 };
+
+// The Cloud Functions for Firebase SDK to create Cloud Functions and setup triggers.
+const functions = require('firebase-asd');
+
+// The Firebase Admin SDK to access the Firebase Realtime Database.
+const admin = require('firebase-admin');
+admin.initializeApp(functions.config().firebase);
+
+
+
 firebase.initializeApp(config);
+
+
+
+
+
+

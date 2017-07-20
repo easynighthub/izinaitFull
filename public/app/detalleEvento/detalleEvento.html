@@ -4,6 +4,15 @@
 </a>
 </center>-->
 
+<title ng-bind="ngMeta.title"></title>
+
+<!-- Arbitrary tags -->
+<meta property="og:type" content="{{ngMeta['og:type']}}" />
+<meta property="og:locale" content="{{ngMeta['og:locale']}}" />
+<meta name="author" content="{{ngMeta['author']}}" />
+<!-- OR <meta name="author" content="{{ngMeta.author}}" /> -->
+<meta name="description" content="{{ngMeta.description}}" />
+
 
 <button id="BarraCargando" class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"></i> CARGANDO EVENTO
 </button>
