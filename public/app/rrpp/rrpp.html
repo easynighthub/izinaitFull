@@ -1,0 +1,50 @@
+<center>
+    <button id="BarraCargando" class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"></i> CARGANDO EVENTOS
+    </button>
+
+     </center>
+
+<center>
+    <div id="eventosRrpp" style="display: none">
+
+    <font size="5"> Lista de {{rrpp.name}}</font>
+    <br><br>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4 padd-0-xs inline-block float-fix"
+             ng-repeat="event in events | orderBy:'date' | filter: event.musicGenres "
+             ng-click="goEventRRpp(event)"
+             ng-show="event.visible">
+            <div class="testcard">
+
+
+                <img height="167" width="450" class="testimage" src="{{event.image}}">
+
+                <span class="testfecha">
+                        {{event.date | date:"EEEE dd', 'MMMM " }}
+                    </span>
+
+                <div class="testcontenido">
+                    <p class=testh2"><strong>{{event.name}}</strong></p>
+                    <p class="teststyle"><i class="material-icons testico">store</i> {{getClub(event.clubs)}}</p>
+
+                    <p class="teststyle"><i class="material-icons testico">music_note</i> {{event.musicGenres}}</p>
+                    <p class="teststyle"><i class="material-icons testico">layers</i> {{event.eventEnvironment}}</p>
+                </div>
+
+                <div class="testfooter">
+                    <p class="testboton btn " ng-show="event.freemiumHour == event.date"> CPL
+                        ${{event.entryValue }}</p>
+                    <p class="testboton btn " ng-show="event.freemiumHour != event.date">
+                        GRATIS</p>
+
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+</center>
