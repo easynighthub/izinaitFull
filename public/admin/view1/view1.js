@@ -31,6 +31,8 @@ angular.module('myApp.view1', ['ngRoute'])
 
 
 
+
+
             $(eventos).addClass( "active" );
             $(configuracion).removeClass( "active" );
 

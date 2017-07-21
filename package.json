@@ -1,5 +1,7 @@
 {
   "name": "izinaitFull",
-  "version": "0.0.1"
-  
+  "version": "0.0.1",
+  "dependencies": {
+    "angular-bootstrap-datetimepicker": "^1.1.4"
+  }
 }
