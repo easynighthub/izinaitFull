@@ -34,6 +34,7 @@ angular.module('myApp.view1', ['ngRoute'])
                         console.log(usuarioLogeado);
                         //  $('.user-header .imagen').text(usersLocal.picture);
                         $('.codigoAcceder').text("Tú Codigo");
+                        $('.pruebacon').removeClass("contenedor");
                       //  $('.codigoAcceder').prepend($('<img>',{id:'theImg',src:usuarioLogeado.picture}))
                         console.log(window.currentApp + " ENTRE");
                         $(navigationexample).removeClass("in");

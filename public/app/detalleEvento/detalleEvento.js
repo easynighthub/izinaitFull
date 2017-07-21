@@ -78,6 +78,11 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             });
 
             /////
+            $scope.cargarImage=function () {
+                document.getElementById('contenedor').style.marginLeft('0px');
+                document.getElementById('contenedor').style.width('100%');
+
+            };
 
 
             $scope.shareButtonFacebook = function () {

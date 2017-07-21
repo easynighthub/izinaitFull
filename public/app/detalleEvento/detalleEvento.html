@@ -4,6 +4,18 @@
 </a>
 </center>-->
 
+<img height="auto"
+     style=" box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+         display: block;
+         width: 100% !important;
+         margin-top: -10px;
+
+
+"
+     class="height-auto full-width"
+
+     src="{{event.image}}">
+
 <title ng-bind="ngMeta.title"></title>
 
 <!-- Arbitrary tags -->
@@ -18,13 +30,10 @@
 </button>
 
 
-<div id="detalleEvento" style="display: none">
+<div onload="loadImage()" id="detalleEvento" style="display: none">
 
 
-    <img height="auto"
-         style=" box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);   display: block;    width: 100% !important;"
-         class="height-auto full-width"
-         src="{{event.image}}">
+
 
 
     <div id="contact-buttons-bar" class="contact-buttons-bar.slide-on-scroll" data-top="120px" style="left: 0px;">
@@ -51,7 +60,7 @@
 
     <center>
 
-        <div class="mdl-color-text--white mdl-cell "
+        <div class=" date111 mdl-color-text--white mdl-cell "
              style="color: white; margin-top: -25px; z-index: auto!important;">
 
 
@@ -136,10 +145,10 @@
         <br>
 
 
-        <div class="serviciosEvent row col-md-12">
+        <div class="serviciosEvent  col-md-12">
             <h3 class="info-title" style="color: #340034">Precio Antecipado</h3>
             <br>
-            <div class="row">
+            <div>
                 <div class="col-lg-3 col-md-6 col-sm-6" ng-repeat="eventsService in allEventsService">
                     <div class="card1 card1-stats">
                         <div class="card1-header" data-background-color="gray">
@@ -192,7 +201,7 @@
         <div class="features ">
 
             <center>
-                <div class="text-center col-md-10 row col-md-offset-1 col-xs-12">
+                <div class="text-center col-md-10 col-md-offset-1 col-xs-12">
                     <div class="col-md-3 col-xs-6">
                         <div class="info">
                             <div class="icon " style="color: #fe0072">
@@ -372,6 +381,9 @@
 
 
 </script>
+
+
+
 
 
 
