@@ -1,7 +1,7 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header" data-background-color="purple">
                         <h4 class="title">Crear Evento</h4>
@@ -16,7 +16,66 @@
                                         <input type="text" class="form-control">
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+
+                                    <div
+                                             data-resize="true" data-originalsize="false"  data-editstart="true"
+                                            ng-click="openFileInput()" alt="portada evento"
+                                    >
+                                        <input accept="image/x-png,image/gif,image/jpeg" class="mdl-cell hidden"
+                                               type='file' id="imgInp"/>
+                                       <p class="text-center"><STRONG >PORTADA DEL EVENTO</STRONG></p>
+
+                                        <img
+                                             style="height: 300px; border: dotted; border-color: whitesmoke; background: ghostwhite"
+                                             id="blah" src="{{newEvent.image}}">
+                                        </img>
+                                        <BR>
+                                       <p style="position:absolute ;margin-left: 320px ;margin-top:  -150px;" class="text-center"> <strong>HAZ CLIC PARA AÑADIR </strong>
+
+                                        Recomendamos (1350 x 450 px)
+                                       </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="dropdown form-group dropdown-start-parent">
+
+                                        <a class="dropdown-toggle" id="dropdownStart" role="button" data-toggle="dropdown" data-target=".dropdown-start-parent"
+                                        >
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" placeholder="Fecha de Inicio" data-ng-model="dateRangeStart">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar "></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                            <datetimepicker data-ng-model="dateRangeStart"
+                                                            data-datetimepicker-config="{ dropdownSelector: '#dropdownStart', renderOn: 'end-date-changed' }"
+                                                            data-on-set-time="startDateOnSetTime()"
+                                                            data-before-render="startDateBeforeRender($dates)"></datetimepicker>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="dropdown form-group dropdown-end-parent">
+                                        <a class="dropdown-toggle" id="dropdownEnd" role="button" data-toggle="dropdown" data-target=".dropdown-end-parent"
+                                        >
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" placeholder="Fecha de termino" data-ng-model="dateRangeEnd">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                            <datetimepicker data-ng-model="dateRangeEnd"
+                                                            data-datetimepicker-config="{ dropdownSelector: '#dropdownEnd', renderOn: 'start-date-changed' }"
+                                                            data-on-set-time="endDateOnSetTime()"
+                                                            data-before-render="endDateBeforeRender($view, $dates, $leftDate, $upDate, $rightDate)"></datetimepicker>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
+
+
                             <div class="row">
                                 <div class="col-md-12">
 
@@ -32,60 +91,188 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Fist Name</label>
-                                        <input type="text" class="form-control" >
-                                    </div>
+                                <div class="col-md-4">
+                                    <md-input-container class="col-md-12">
+                                        <label>Edad Minima Mujeres</label>
+                                        <md-select ng-model="ageRangeFemale">
+                                            <md-option><em>None</em></md-option>
+                                            <md-option ng-value="ageRange.$value" ng-repeat="ageRange in ageRanges">
+                                                +{{ageRange.$value}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Last Name</label>
-                                        <input type="text" class="form-control" >
-                                    </div>
+                                <div class="col-md-4">
+                                    <md-input-container class="col-md-12">
+                                        <label>Edad Minima Hombres</label>
+                                        <md-select ng-model="ageRangeMale">
+                                            <md-option><em>None</em></md-option>
+                                            <md-option ng-value="ageRange.$value" ng-repeat="ageRange in ageRanges">
+                                                +{{ageRange.$value}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-4">
+                                    <md-input-container class="col-md-12">
+                                        <label>Codigo de vestimenta</label>
+                                        <md-select ng-model="newEvent.clothing">
+                                            <md-option><em>None</em></md-option>
+                                            <md-option ng-value="close.name" ng-repeat="close in clothings">{{close.name}}</md-option>
+                                        </md-select>
+                                    </md-input-container>
                                 </div>
                             </div>
 
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <md-input-container class="col-md-12">
+                                        <label>Genero musical (max 3)</label>
+                                        <md-select  class=" musicalSelec" ng-model="newEvent.musicGenres" multiple
+                                                   ng-change="allow3musicaGenres()">
+                                            <md-option class=" music-options" ng-value="music.name" ng-repeat="music in musics"
+                                                       ng-show="music.visible == true">{{music.name}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-4">
+                                    <md-input-container class="col-md-12">
+                                        <label>Artista, dj, banda</label>
+                                        <input ng-model="newEvent.djs">
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-4">
+                                    <md-input-container class="col-md-12">
+                                        <label>Ambiente (max 2)</label>
+                                        <md-select ng-model="eventEnvironment" multiple ng-change="allowUpTo2Ambiente()">
+                                            <md-option class="ambiente-option" ng-value="environment.name"
+                                                       ng-repeat="environment in environments">{{environment.name}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-4">
+
+                                </div>
+                                <div class="col-md-4">
+
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Adress</label>
-                                        <input type="text" class="form-control" >
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">City</label>
-                                        <input type="text" class="form-control" >
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Country</label>
-                                        <input type="text" class="form-control" >
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Postal Code</label>
-                                        <input type="text" class="form-control" >
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>About Me</label>
-                                        <div class="form-group label-floating">
-                                            <label class="control-label"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
-                                            <textarea class="form-control" rows="5"></textarea>
+                                    <div class="card" style="background-color: #e5e5e5" data-ng-repeat="servicioEvent in serviciosEvent">
+                                        <div style="background-color: {{servicioEvent.color}}; color: white"
+                                             class="card-header">
+                                            <strong>{{servicioEvent.tipo}}</strong>
                                         </div>
+
+                                        <div>
+
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <input required="required" type="number" ng-model="servicioEvent.precio" placeholder="Precio" class="form-control" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <input required="required" type="number"  ng-model="servicioEvent.cantidad" placeholder="Cantidad" class="form-control" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <input required="required" type="number"  ng-model="servicioEvent.maxEntradas" placeholder="Max entradas por compra" class="form-control" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                <textarea ng-model="servicioEvent.desc"  class="form-control" placeholder="Descripción" rows="3"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+
+                                                <div class="dropdown">
+                                                    <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" >
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" data-ng-model="servicioEvent.fechaFin" placeholder="Fecha cierra servicio">
+                                                            <span class="input-group-addon">
+                                                                <i class="glyphicon glyphicon-calendar">
+
+                                                                </i>
+                                                            </span>
+                                                        </div>
+                                                    </a>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                        <datetimepicker data-ng-model="servicioEvent.fechaFin" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"/>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-6 ">
+                                                <button ng-click="removeChoice()"
+                                                        class=" btn  btn-default">
+                                                    <i class="material-icons pointer btn_rsvp_trash">delete_forever</i><strong>BORRAR</strong>
+                                                </button>
+                                            </div>
+
+
+
+
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-xs-12 contentCard white-bg" STYLE="padding-top: 20px;padding-bottom :20px">
+                                        <center>
+                                            <div>
+                                                <STRONG>AÑADIR PROMOCION</STRONG>
+                                            </div>
+
+                                            <br>
+                                            <button class="btn btn-danger "
+                                                    ng-click="addNewChoicePREVENTA()" ng-model="PREVENTA">
+                                                <i class="material-icons">add_box</i>
+                                                PREVENTA
+                                            </button>
+                                            <button class="btn btn-success"
+
+                                                    ng-click="addNewChoiceMESA()"
+                                                    ng-model="MESA">
+                                                <i class="material-icons">add_box</i>
+                                                MESA
+                                            </button>
+                                            <button class="btn btn-info"
+                                                    ng-click="addNewChoiceBOTELLAS()" ng-model="PREVENTA">
+                                                <i class="material-icons">add_box</i>
+                                                BOTELLAS
+                                            </button>
+                                            <button class="btn btn-default"
+                                                    ng-click="addNewChoiceVIP()"
+                                                    ng-model="VIP">
+                                                <i class="material-icons">add_box</i>
+                                                VIP
+                                            </button>
+                                            <button class="btn btn-warning"
+                                                    ng-click="addNewChoiceESPECIAL()"
+                                                    ng-model="ESPECIAL">
+                                                <i class="material-icons">add_box</i>
+                                                ESPECIAL
+                                            </button>
+                                        </center>
                                     </div>
                                 </div>
+
                             </div>
 
                             <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
@@ -94,19 +281,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card card-profile">
 
-
-                    <div class="content">
-                        <h6 class="category text-gray">CLUB</h6>
-                        <h4 class="card-title">{{clubName}}</h4>
-                        <p class="card-content">
-                        </p>
-                        <a href="#pablo" class="btn btn-primary btn-round"></a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
