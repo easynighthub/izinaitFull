@@ -15,6 +15,26 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             $(eventos).addClass( "active" );
             $(configuracion).removeClass( "active" );
 
+            $(".dropzone").html5imageupload({
+                onAfterProcessImage: function() {
+                    $eventImage.val($(this.element).data("name")),
+                        $(".cover-container").parent().parent().removeClass("has-error"),
+                        coverIsFalse = !1,
+                        $("#checkCover").removeClass("checkRequired"),
+                        checkAllRequired()
+                },
+                onAfterCancel: function() {
+                    $("#checkCover").addClass("checkRequired"),
+                        coverIsFalse = !0,
+                        checkAllRequired()
+                },
+                onAfterRemoveImage: function() {
+                    $("#checkCover").addClass("checkRequired"),
+                        coverIsFalse = !0,
+                        checkAllRequired()
+                }
+            });
+
             var admin = window.currentAdmin;
             var adminLogeado = "";
 

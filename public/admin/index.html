@@ -31,12 +31,14 @@
 
     <link rel="stylesheet" href="node_modules/angular-bootstrap-datetimepicker/src/css/datetimepicker.css"/>
 
+    <link href="assets/css/demo.html5imageupload.css?v1.3" rel="stylesheet">
+
 </head>
 
 <body>
 
 <div class="wrapper">
-    <div class="sidebar" data-color="purple" data-image="../qr/assets/img/sidebar-1.jpg">
+    <div class="sidebar" data-color="purple" data-image="../qr/assets/img/sidebar-3.jpg">
 
         <!--
             Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
@@ -84,8 +86,8 @@
         </div>
     </div>
 
-    <div class="main-panel">
-        <nav class="navbar navbar-transparent navbar-absolute">
+    <div class="main-panel" >
+        <nav class="navbar navbar-color-on-scroll fixado">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse">
@@ -140,7 +142,7 @@
             </div>
         </nav>
 
-        <div class="content">
+        <div class="content" style="margin-top: 5px!important;">
             <div class="container-fluid">
                 <div  ng-view>
 
@@ -149,23 +151,23 @@
                 </div>
             </div>
         </div>
-        <footer class="footer">
-            <div class="container-fluid">
-                <nav class="pull-left">
-                    <ul>
-                        <li>
-                            <a href="#">
-                                Home
-                            </a>
-                        </li>
+        <!--<footer class="footer">-->
+            <!--<div class="container-fluid">-->
+                <!--<nav class="pull-left">-->
+                    <!--<ul>-->
+                        <!--<li>-->
+                            <!--<a href="#">-->
+                                <!--Home-->
+                            <!--</a>-->
+                        <!--</li>-->
 
-                    </ul>
-                </nav>
-                <p class="copyright pull-right">
-                    &copy; <script>document.write(new Date().getFullYear())</script> <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
-                </p>
-            </div>
-        </footer>
+                    <!--</ul>-->
+                <!--</nav>-->
+                <!--<p class="copyright pull-right">-->
+                    <!--&copy; <script>document.write(new Date().getFullYear())</script> <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web-->
+                <!--</p>-->
+            <!--</div>-->
+        <!--</footer>-->
     </div>
 </div>
 
@@ -237,5 +239,7 @@
 <script type="text/javascript" src="node_modules/moment/moment.js"></script>
 <script type="text/javascript" src="node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
 <script type="text/javascript" src="node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js"></script>
+
+<script src="assets/js/html5imageupload.js?v1.4.3"></script>
 
 </html>

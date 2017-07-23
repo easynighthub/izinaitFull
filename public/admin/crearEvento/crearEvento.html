@@ -1,13 +1,17 @@
-<div class="content">
-    <div class="container-fluid">
+<div class="content" >
+    <div >
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header" data-background-color="purple">
-                        <h4 class="title">Crear Evento</h4>
-                        <p class="category"></p>
+                    <div class="card-header fixado" style="top:81px!important;    z-index: 1000!important;" data-background-color="purple">
+
+                        <h4>Crear Evento <button style="float: right; margin: 0px 0px!important; top: -6px;"  type="submit" class="btn btn-success ">Publicar</button></h4>
+
+
+
                     </div>
-                    <div class="card-content">
+                    <div class="card-content" style="padding-right: 50px; padding-left: 50px">
+
                         <form>
                             <div class="row">
                                 <div class="col-md-12">
@@ -16,27 +20,40 @@
                                         <input type="text" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class=" col-xs-12 padd-0-xs">
 
-                                    <div
-                                             data-resize="true" data-originalsize="false"  data-editstart="true"
-                                            ng-click="openFileInput()" alt="portada evento"
-                                    >
-                                        <input accept="image/x-png,image/gif,image/jpeg" class="mdl-cell hidden"
-                                               type='file' id="imgInp"/>
-                                       <p class="text-center"><STRONG >PORTADA DEL EVENTO</STRONG></p>
-
-                                        <img
-                                             style="height: 300px; border: dotted; border-color: whitesmoke; background: ghostwhite"
-                                             id="blah" src="{{newEvent.image}}">
-                                        </img>
-                                        <BR>
-                                       <p style="position:absolute ;margin-left: 320px ;margin-top:  -150px;" class="text-center"> <strong>HAZ CLIC PARA AÑADIR </strong>
-
-                                        Recomendamos (1350 x 450 px)
-                                       </p>
+                                    <div class="cover-container">
+                                        <div class="dropzone" data-download="true" data-ajax="false"  data-width="1350" data-resize="true" data-originalsize="false" data-height="500" data-editstart="true" style="height: auto; width: 100%;">
+                                            <input id="thumb" type="file" style="position: absolute;">
+                                        </div>
                                     </div>
+
+                                    <!--<div-->
+                                             <!--data-resize="true" data-originalsize="false"  data-editstart="true"-->
+                                            <!--ng-click="openFileInput()" alt="portada evento"-->
+                                    <!--&gt;-->
+                                        <!--<input accept="image/x-png,image/gif,image/jpeg" class="mdl-cell hidden"-->
+                                               <!--type='file' id="imgInp"/>-->
+                                       <!--<p class="text-center"><STRONG >PORTADA DEL EVENTO</STRONG></p>-->
+
+                                        <!--<img-->
+                                             <!--style="height: 300px; border: dotted; border-color: whitesmoke; background: ghostwhite"-->
+                                             <!--id="blah" src="{{newEvent.image}}">-->
+                                        <!--</img>-->
+                                        <!--<BR>-->
+                                       <!--<p style="position:absolute ;margin-left: 320px ;margin-top:  -150px;" class="text-center"> <strong>HAZ CLIC PARA AÑADIR </strong>-->
+
+                                        <!--Recomendamos (1350 x 450 px)-->
+                                       <!--</p>-->
+
+
+
+                                    <!--</div>-->
+
+
                                 </div>
+
+
                                 <div class="col-md-6">
                                     <div class="dropdown form-group dropdown-start-parent">
 
@@ -240,30 +257,35 @@
                                             </div>
 
                                             <br>
-                                            <button class="btn btn-danger "
+                                            <button style="width: 15%"
+                                                    class="btn btn-danger "
                                                     ng-click="addNewChoicePREVENTA()" ng-model="PREVENTA">
                                                 <i class="material-icons">add_box</i>
                                                 PREVENTA
                                             </button>
-                                            <button class="btn btn-success"
+                                            <button style="width: 15%"
+                                            class="btn btn-success"
 
                                                     ng-click="addNewChoiceMESA()"
                                                     ng-model="MESA">
                                                 <i class="material-icons">add_box</i>
                                                 MESA
                                             </button>
-                                            <button class="btn btn-info"
+                                            <button style="width: 15%"
+                                                    class="btn btn-info"
                                                     ng-click="addNewChoiceBOTELLAS()" ng-model="PREVENTA">
                                                 <i class="material-icons">add_box</i>
                                                 BOTELLAS
                                             </button>
-                                            <button class="btn btn-default"
+                                            <button style="width: 15%"
+                                                    class="btn btn-default"
                                                     ng-click="addNewChoiceVIP()"
                                                     ng-model="VIP">
                                                 <i class="material-icons">add_box</i>
                                                 VIP
                                             </button>
-                                            <button class="btn btn-warning"
+                                            <button style="width: 15%"
+                                                    class="btn btn-warning"
                                                     ng-click="addNewChoiceESPECIAL()"
                                                     ng-model="ESPECIAL">
                                                 <i class="material-icons">add_box</i>
@@ -275,9 +297,9 @@
 
                             </div>
 
-                            <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
-                            <div class="clearfix"></div>
+
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -285,6 +307,8 @@
         </div>
     </div>
 </div>
+
+
 
 
 
