@@ -194,7 +194,68 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 }
             });
             ////////////////////////////////////////////////////////////////////////
+            var environmentER = firebase.database().ref().child('environmentEvent');
+            $scope.environmentER = $firebaseArray(environmentER);
+            $scope.environmentER.$loaded().then(function () {
+                $scope.environments = $scope.environmentER;
+            });
 
+            var clothingER = firebase.database().ref().child('clothing');
+            $scope.clothingER = $firebaseArray(clothingER);
+            $scope.clothingER.$loaded().then(function () {
+                $scope.clothings = $scope.clothingER;
+            });
+
+            var ageRangesER = firebase.database().ref().child('agerange');
+            $scope.ageRangesER = $firebaseArray(ageRangesER);
+            $scope.ageRangesER.$loaded().then(function () {
+                $scope.ageRanges = $scope.ageRangesER;
+            });
+
+            var musicsER = firebase.database().ref().child('styleEvent');
+            $scope.musicsER = $firebaseArray(musicsER);
+            $scope.musicsER.$loaded().then(function () {
+                $scope.musics = $scope.musicsER;
+            });
+
+            $scope.allow3musicaGenres = function () {
+                var options = $('.music-options');
+                if ($scope.newEvent.musicGenres.length >= 3) {
+                    angular.forEach(options, function (opt) {
+                        var a = $(opt).attr('aria-selected');
+                        if (a === 'false') {
+                            $(opt).addClass('hidden');
+                        }
+                    });
+                } else {
+                    angular.forEach(options, function (opt) {
+                        var a = $(opt).attr('aria-selected');
+                        if (a === 'false') {
+                            $(opt).removeClass('hidden');
+                        }
+                    });
+                }
+            };
+
+
+            $scope.allowUpTo2Ambiente = function () {
+                var options = $('.ambiente-option');
+                if ($scope.eventEnvironment.length >= 2) {
+                    angular.forEach(options, function (opt) {
+                        var a = $(opt).attr('aria-selected');
+                        if (a === 'false') {
+                            $(opt).addClass('hidden');
+                        }
+                    });
+                } else {
+                    angular.forEach(options, function (opt) {
+                        var a = $(opt).attr('aria-selected');
+                        if (a === 'false') {
+                            $(opt).removeClass('hidden');
+                        }
+                    });
+                }
+            };
 
 
         }]);

@@ -169,6 +169,7 @@ ingresarAdmin.addEventListener('click', function() {
             firebase.database().ref('/admins/' + s.uid).once('value').then(function(snapshot) {
                 if (snapshot.val() != null)
                     window.location.href = 'admin';
+
                 else {
                     alert('Este usuario no es Admin');
                     firebase.auth().signOut();
