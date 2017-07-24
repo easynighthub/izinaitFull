@@ -23,13 +23,10 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             var admin = window.currentAdmin;
             var adminLogeado = "";
             var eventId = $routeParams.id; // id del evento entregador por url
+            $scope.totalListasGratis = 0;
+            $scope.impresionesTotales = 0;
 
-            var listaGratis = firebase.database().ref('/events/' + eventId + '/asist');
-            var listaGratisRQ = $firebaseObject(listaGratis);
-            listaGratisRQ.$loaded().then(function () {
-                $scope.listaGratis = listaGratisRQ;
-                console.log(listaGratisRQ);
-            });
+
 
             firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
@@ -55,6 +52,27 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                     }
                                 });
                             });
+
+                            var listaGratis = firebase.database().ref('/events/' + eventId + '/asist');
+                            var listaGratisRQ = $firebaseObject(listaGratis);
+                            listaGratisRQ.$loaded().then(function () {
+                                $scope.listaGratis = listaGratisRQ;
+                                $scope.listaGratis.forEach(function (x) {
+                                    console.log(adminLogeado);
+                                    console.log(x.totalList);
+                                    $scope.totalListasGratis =$scope.totalListasGratis+ x.totalList;
+                                });
+                            });
+                            var impresiones = firebase.database().ref('/impresiones/' + eventId );
+                            var impresionesRQ = $firebaseObject(impresiones);
+                            impresionesRQ.$loaded().then(function () {
+                                $scope.impresionesRRPP = impresionesRQ;
+                                $scope.impresionesRRPP.forEach(function (j) {
+                                    console.log(j.openLink);
+                                    $scope.impresionesTotales = $scope.impresionesTotales+ j.openLink;
+                                });
+                            });
+
 
                         };
                         console.log(adminLogeado);
