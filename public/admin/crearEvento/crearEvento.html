@@ -87,7 +87,8 @@
             <div class="col-xs-12 padd-12-tb">
                 <!--  edad mujeres-->
                 <md-input-container class="col-xs-12 padd-0-xs col-sm-6">
-                    <label>Edad Minima Mujeres</label>
+                    <i style="float: left;" class="fa fa-venus" aria-hidden="true"></i>
+                    <label>Edad mujeres</label>
                     <md-select ng-model="ageRangeFemale">
                         <md-option><em>None</em></md-option>
                         <md-option ng-value="ageRange.$value" ng-repeat="ageRange in ageRanges">
@@ -97,7 +98,8 @@
                 </md-input-container>
                 <!--  edad hombres  -->
                 <md-input-container class="col-xs-12 padd-0-xs col-sm-6">
-                    <label>Edad Minima Hombres</label>
+                    <i style="float: left;" class="fa fa-mars"></i>
+                    <label>Edad Hombres</label>
                     <md-select ng-model="ageRangeMale">
                         <md-option><em>None</em></md-option>
                         <md-option ng-value="ageRange.$value" ng-repeat="ageRange in ageRanges">
@@ -111,6 +113,7 @@
             <div class="col-xs-12 padd-12-tb">
                 <!--  vestimenta  -->
                 <md-input-container class="col-xs-12 padd-0-xs col-sm-6">
+                    <i style="float: left;" class="material-icons">accessibility</i>
                     <label>Codigo de vestimenta</label>
                     <md-select ng-model="newEvent.clothing">
                         <md-option><em>None</em></md-option>
@@ -122,6 +125,7 @@
 
                 <!--  genero  -->
                 <md-input-container class="col-xs-12 padd-0-xs col-sm-6">
+                    <i style="float: left;" class="material-icons">music_note</i>
                     <label>Genero musical (max 3)</label>
                     <md-select class=" musicalSelec" ng-model="newEvent.musicGenres" multiple
                                ng-change="allow3musicaGenres()">
@@ -139,6 +143,7 @@
 
                 <!--  ambiente  -->
                 <md-input-container class="col-xs-12 padd-0-xs col-sm-6">
+                    <i style="float: left;" class="material-icons">layers</i>
                     <label>Ambiente (max 2)</label>
                     <md-select ng-model="eventEnvironment" multiple
                                ng-change="allowUpTo2Ambiente()">
@@ -149,10 +154,12 @@
                 </md-input-container>
 
                 <!--  artista -->
-                <md-input-container class="col-xs-12 padd-0-xs col-sm-6">
-                    <label>LineUP</label>
-                    <input ng-model="newEvent.djs">
-                </md-input-container>
+                <div class="input-group">
+		            <span class="input-group-addon">
+			            <i class="fa fa-headphones"></i>
+		            </span>
+                    <input type="text" class="form-control" placeholder="Line UP">
+                </div>
             </div>
 
 
@@ -243,34 +250,35 @@
 
                 <button style="float: none!important;" class="col-md-2 col-xs-5 col-sm-6 centered btn btn-danger "
                         ng-click="addNewChoicePREVENTA()" ng-model="PREVENTA">
-                    <i class="material-icons">add_box</i>
+                    <i class="fa fa-ticket "></i>
                     PREVENTA
                 </button>
+
 
                 <button style="float: none!important;" class="col-md-2 col-xs-5 col-sm-6 btn centered btn-success"
                         ng-click="addNewChoiceMESA()"
                         ng-model="MESA">
-                    <i class="material-icons">add_box</i>
+                    <i class=" material-icons ">local_play</i>
                     MESA
                 </button>
 
                 <button style="float: none!important;" class=" col-md-2 col-xs-5 col-sm-6 centered btn btn-info"
                         ng-click="addNewChoiceBOTELLAS()" ng-model="PREVENTA">
-                    <i class="material-icons">add_box</i>
+                    <i class="fa fa-glass"></i>
                     BOTELLAS
                 </button>
 
                 <button style="float: none!important;" class="col-md-2 col-xs-5 col-sm-6 btn centered btn-default"
                         ng-click="addNewChoiceVIP()"
                         ng-model="VIP">
-                    <i class="material-icons">add_box</i>
+                    <i class="fa fa-diamond"></i>
                     VIP
                 </button>
 
                 <button style="float: none!important;" class="col-md-2 col-xs-5 col-sm-12 centered btn btn-warning"
                         ng-click="addNewChoiceESPECIAL()"
                         ng-model="ESPECIAL">
-                    <i class="material-icons">add_box</i>
+                    <i class=" material-icons ">stars</i>
                     ESPECIAL
                 </button>
 
