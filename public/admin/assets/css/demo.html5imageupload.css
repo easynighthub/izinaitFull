@@ -4,19 +4,23 @@ html, body {
     font-family: arial;
 }
 
-@media only screen and (max-width: 767px){
-
+@media only screen and (max-width: 767px) {
+    .crearEvento {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
 
     .dropzone:after {
-        font-size: 14px!important;
-        bottom: 50%!important;
-    }
-    .dropzone:before {
-        font-size: 12px!important;
-        bottom: 35%!important;
+        font-size: 13px !important;
+        bottom: 50% !important;
     }
 
-    .testMedia{
+    .dropzone:before {
+        font-size: 12px !important;
+        bottom: 35% !important;
+    }
+
+    .testMedia {
         padding-right: 0px;
         padding-left: 0px;
     }
@@ -37,7 +41,7 @@ html, body {
     content: '¡Arrastra tu imagen aquí o haz clic para añadir!';
     font-size: 30px;
     color: #bbbbbb;
-    position: absolute!important;
+    position: absolute !important;
     bottom: 60%;
     left: 0;
     width: 100%;
@@ -100,10 +104,11 @@ html, body {
 }
 
 .dropzone.smalltext:after {
-    font-size: 15px!important;
+    font-size: 15px !important;
 }
+
 .dropzone.smalltext:before {
-    font-size: 12px!important;
+    font-size: 12px !important;
 }
 
 .dropzone > span {
