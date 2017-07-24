@@ -229,6 +229,11 @@ angular.module('myApp.view1', ['ngRoute'])
             };
 
 
+            $scope.goToEventDetails = function(evento ) {
+                document.location.href = '#!/detalleEvento?id=' + evento.$id;
+            }
+
+
 
 
 

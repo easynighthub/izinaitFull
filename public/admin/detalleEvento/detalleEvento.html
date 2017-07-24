@@ -1,0 +1,64 @@
+<div class="content" >
+    <div >
+        <div class="row">
+
+            <div class="col-md-9" data-ng-show="true">
+                <div class="card">
+                    <div class="card-header" data-background-color="purple">
+                        <h4 class="title">Servicios Comprados</h4>
+                        <p class="category">Lista de Servicios adquirido por los usuarios.</p>
+                    </div>
+                    <div class="card-content table-responsive">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+            <div class="card">
+                <div class="card-header" data-background-color="purple">
+                    <h4 class="title">IMPRESIONES</h4>
+                    <p class="category">total de impresiones : {{impresionesTotales}} </p>
+                </div>
+                <div class="card-content table-responsive">
+
+                </div>
+            </div>
+        </div>
+            <div class="col-md-9" data-ng-show="true">
+                <div class="card">
+                    <div class="card-header" data-background-color="purple">
+                        <h4 class="title">Servicios Comprados</h4>
+                        <p class="category">Lista de Servicios adquirido por los usuarios.</p>
+                    </div>
+                    <div class="card-content table-responsive">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header" data-background-color="purple">
+                        <h4 class="title">LISTAS GRATIS</h4>
+                        <p class="category">total de lista : {{totalListasGratis}} </p>
+                    </div>
+                    <div class="card-content table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                            <th>Nombre</th>
+                            <th>Cantidad</th>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="user in listaGratis">
+                                <td>Dakota Rice</td>
+                                <td>Niger</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -40,15 +40,14 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                         console.log(window.currentApp + " ENTRE");
 
                         buscarmeRequest.$loaded().then(function () {
-                            $scope.todosLosDatos = buscarmeRequest;
-                            $scope.rrpps = $scope.todosLosDatos;
-                            console.log($scope.rrpps);
+                            $scope.buscarmeEnEvent = buscarmeRequest;
+                            console.log($scope.buscarmeEnEvent);
                             buscarme.once("value").then(function (snapshot) {
-                                $scope.rrpps.forEach(function (data) {
-                                    var c = snapshot.child(data.$id + '/' + usuarioLogeado.$id).exists(); // true
+                                $scope.buscarmeEnEvent.forEach(function (data) {
+                                    var c = snapshot.child(usuarioLogeado.$id).exists(); // true
                                     if (c === true) {
                                         var Rrpp = data.$id;
-                                        var totalAsist = firebase.database().ref('/events/' + eventId + '/asist/' + Rrpp + '/' + usuarioLogeado.$id);
+                                        var totalAsist = firebase.database().ref('/events/' + eventId + '/asist/'  + usuarioLogeado.$id);
                                         var totalAsistRrequest = $firebaseObject(totalAsist);
                                         totalAsistRrequest.$loaded().then(function () {
                                             $scope.datosAsistire = totalAsistRrequest;
@@ -286,9 +285,9 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 $scope.nuevaAsistencia.fechaClick = Date.now();
                 $scope.nuevaAsistencia.totalList = $scope.totalReserva;
                 $scope.nuevaAsistencia.displayName = usuarioLogeado.displayName;
+                $scope.nuevaAsistencia.idRRPP = Rrpp;
                 var totalAsistenciaVisible = $scope.totalReserva;
                 if (usuarioLogeado != "") {
-                    console.log(user);
                     guardarListaGratisFuncion(totalAsistenciaVisible);
                 } else {
                     alert("DEBES INICIAR SESION");
@@ -298,7 +297,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             };
 
             function guardarListaGratisFuncion(total) {
-                firebase.database().ref('events/' + eventId + '/asist/' + Rrpp + '/' + usuarioLogeado.$id).update($scope.nuevaAsistencia);
+                firebase.database().ref('events/' + eventId + '/asist/' + usuarioLogeado.$id).update($scope.nuevaAsistencia);
                 document.getElementById('botonAsistir').style.display = 'none';
                 document.getElementById('selectLista').style.display = 'none';
                 document.getElementById('botonLista').style.display = 'block';
