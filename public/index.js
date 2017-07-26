@@ -41,6 +41,12 @@ admin.initializeApp(functions.config().firebase);
 
 firebase.initializeApp(config);
 
+$(document).ready(function() {
+    $('#Carousel').carousel({
+        interval: 5000
+    })
+});
+
 
 
 

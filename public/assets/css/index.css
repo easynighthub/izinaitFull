@@ -70,6 +70,497 @@
     transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
+.carousel {
+    margin-bottom: 0;
+    padding: 0 40px 30px 40px;
+    text-align: center!important;
+}
+/* The controlsy */
+.carousel-control1 {
+    width: 24px;
+    display: flex;
+    align-items: center;
+    color: #340034!important;
+    background-image: none;
+}
+.carousel-control1.right {
+    right: -12px;
+}
+/* The indicators */
+.carousel-indicators {
+    right: 50%;
+    top: auto;
+    bottom: -10px;
+    margin-right: -19px;
+}
+/* The colour of the indicators */
+.carousel-indicators li {
+    background: #cecece;
+}
+.carousel-indicators .active {
+    background: #428bca;
+}
+
+
+
+
+.player-card {
+
+    height: 250px;
+    background-color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    box-shadow: 0 0 25px rgba(0,0,0,0.1);
+    margin: 15px;
+    display: inline-block;
+    float: none!important;
+}
+.player-card .icon{
+    margin: auto;
+    max-width: 30%;
+    padding: 20px 10px;
+    border-bottom: 1px solid #cccccc;
+    text-align: center;
+    font-size: 40px!important;
+    color: #fe0072;
+}
+
+
+.player-card:hover {
+    text-decoration: none;
+    box-shadow: 0 0 25px rgba(0,0,0,0.2)
+}
+
+.player-card .card-body {
+    padding: 10px
+}
+
+
+.player-card .card-body h4 {
+    text-align: center;
+    font-size: 15px;
+    color: #340034;
+    margin-bottom: 5px;
+    font-weight: 500;
+
+}
+
+.player-card .card-body p {
+    line-height: 1.3;
+    text-align: center;
+    font-size: 12px
+}
+
+
+.carousel {
+    border: none;
+}
+
+.carousel .carousel-indicators li {
+    margin: 3px;
+    border-radius: 50%;
+    background-color: #340034
+}
+
+.carousel .carousel-indicators li.active {
+    width: 10px;
+    height: 10px;
+    background-color: #fe0072
+}
+
+
+.carousel-control1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 15%;
+    opacity: .5;
+    filter: alpha(opacity=50);
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0)
+}
+
+.carousel-control1.left {
+    background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.0001) 100%);
+    background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.0001) 100%);
+    background-image: -webkit-gradient(linear, left top, right top, color-stop(0, rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.0001)));
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.0001) 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1)
+}
+
+.carousel-control1.right {
+    left: auto;
+    right: 0;
+    background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.0001) 0, rgba(0, 0, 0, 0.5) 100%);
+    background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.0001) 0, rgba(0, 0, 0, 0.5) 100%);
+    background-image: -webkit-gradient(linear, left top, right top, color-stop(0, rgba(0, 0, 0, 0.0001)), to(rgba(0, 0, 0, 0.5)));
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.0001) 0, rgba(0, 0, 0, 0.5) 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1)
+}
+
+.carousel-control1:hover, .carousel-control1:focus {
+    outline: 0;
+    color: #fff;
+    text-decoration: none;
+    opacity: .9;
+    filter: alpha(opacity=90)
+}
+
+.carousel-control1 .icon-prev, .carousel-control1 .icon-next, .carousel-control1 .glyphicon-chevron-left, .carousel-control1 .glyphicon-chevron-right {
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    z-index: 5;
+    display: inline-block
+}
+
+.carousel-control1 .icon-prev, .carousel-control1 .glyphicon-chevron-left {
+    left: 50%;
+    margin-left: -10px
+}
+
+.carousel-control1 .icon-next, .carousel-control1 .glyphicon-chevron-right {
+    right: 50%;
+    margin-right: -10px
+}
+
+.carousel-control1 .icon-prev, .carousel-control1 .icon-next {
+    width: 20px;
+    height: 20px;
+    line-height: 1;
+    font-family: serif
+}
+
+.carousel-control1 .icon-prev:before {
+    content: '\2039'
+}
+
+.carousel-control1 .icon-next:before {
+    content: '\203a'
+}
+.aleft {
+    left: -16px;
+}
+
+.aright {
+    float: right!important;
+    left: auto;
+    right: -16px;
+
+    margin-left: auto;
+
+}
+
+
+
+
+
+
+svg.icon {
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+    fill: none
+}
+
+.icon.icon-inline-middle {
+    display: inline-block;
+    vertical-align: middle
+}
+
+svg.icon:not(.icon-xs):not(.icon-sm):not(.icon-lg):not(.icon-xl) {
+    width: 40px;
+    height: 52px;
+    stroke-width: 1.25;
+}
+
+svg.icon:not(.icon-xs):not(.icon-sm):not(.icon-lg):not(.icon-xl) .page-symbol,svg.icon:not(.icon-xs):not(.icon-sm):not(.icon-lg):not(.icon-xl) .shield-symbol {
+    stroke-width: 2.5
+}
+
+svg.icon:not(.icon-xs):not(.icon-sm):not(.icon-lg):not(.icon-xl) .circle-symbol,svg.icon:not(.icon-xs):not(.icon-sm):not(.icon-lg):not(.icon-xl) .caution-sign-symbol {
+    stroke-width: 2.775
+}
+
+svg.icon:not(.icon-xs):not(.icon-sm):not(.icon-lg):not(.icon-xl) .page-corner-symbol {
+    stroke-width: 2.3125
+}
+
+svg.icon:not(.icon-xs):not(.icon-sm):not(.icon-lg):not(.icon-xl) .page-center-symbol {
+    stroke-width: 4.1625
+}
+
+svg.icon:not(.icon-xs):not(.icon-sm):not(.icon-lg):not(.icon-xl) .badge-symbol {
+    stroke-width: 5
+}
+
+svg.icon:not(.icon-xs):not(.icon-sm):not(.icon-lg):not(.icon-xl) .caution-badge-symbol {
+    stroke-width: 6.25
+}
+
+svg.icon.icon-xs {
+    width: 12px;
+    height: 12px;
+    stroke-width: 2.5
+}
+
+svg.icon.icon-xs .page-symbol,svg.icon.icon-xs .shield-symbol {
+    stroke-width: 5
+}
+
+svg.icon.icon-xs .circle-symbol,svg.icon.icon-xs .caution-sign-symbol {
+    stroke-width: 5.55
+}
+
+svg.icon.icon-xs .page-corner-symbol {
+    stroke-width: 4.625
+}
+
+svg.icon.icon-xs .page-center-symbol {
+    stroke-width: 8.325
+}
+
+svg.icon.icon-xs .badge-symbol {
+    stroke-width: 10
+}
+
+svg.icon.icon-xs .caution-badge-symbol {
+    stroke-width: 12.5
+}
+
+svg.icon.icon-sm {
+    width: 15.84px;
+    height: 15.84px;
+    stroke-width: 1.8939393939
+}
+
+svg.icon.icon-sm .page-symbol,svg.icon.icon-sm .shield-symbol {
+    stroke-width: 3.7878787879
+}
+
+svg.icon.icon-sm .circle-symbol,svg.icon.icon-sm .caution-sign-symbol {
+    stroke-width: 4.2045454545
+}
+
+svg.icon.icon-sm .page-corner-symbol {
+    stroke-width: 3.5037878788
+}
+
+svg.icon.icon-sm .page-center-symbol {
+    stroke-width: 6.3068181818
+}
+
+svg.icon.icon-sm .badge-symbol {
+    stroke-width: 7.5757575758
+}
+
+svg.icon.icon-sm .caution-badge-symbol {
+    stroke-width: 9.4696969697
+}
+
+svg.icon.icon-lg {
+    width: 36px;
+    height: 36px;
+    stroke-width: 0.8333333333
+}
+
+svg.icon.icon-lg .page-symbol,svg.icon.icon-lg .shield-symbol {
+    stroke-width: 1.6666666667
+}
+
+svg.icon.icon-lg .circle-symbol,svg.icon.icon-lg .caution-sign-symbol {
+    stroke-width: 1.85
+}
+
+svg.icon.icon-lg .page-corner-symbol {
+    stroke-width: 1.5416666667
+}
+
+svg.icon.icon-lg .page-center-symbol {
+    stroke-width: 2.775
+}
+
+svg.icon.icon-lg .badge-symbol {
+    stroke-width: 3.3333333333
+}
+
+svg.icon.icon-lg .caution-badge-symbol {
+    stroke-width: 4.1666666667
+}
+
+svg.icon.icon-xl {
+    width: 48px;
+    height: 48px;
+    stroke-width: 0.625
+}
+
+svg.icon.icon-xl .page-symbol,svg.icon.icon-xl .shield-symbol {
+    stroke-width: 1.25
+}
+
+svg.icon.icon-xl .circle-symbol,svg.icon.icon-xl .caution-sign-symbol {
+    stroke-width: 1.3875
+}
+
+svg.icon.icon-xl .page-corner-symbol {
+    stroke-width: 1.15625
+}
+
+svg.icon.icon-xl .page-center-symbol {
+    stroke-width: 2.08125
+}
+
+svg.icon.icon-xl .badge-symbol {
+    stroke-width: 2.5
+}
+
+svg.icon.icon-xl .caution-badge-symbol {
+    stroke-width: 3.125
+}
+
+svg.icon:not(.icon-inverse) .shape {
+    stroke: none;
+    fill: currentColor
+}
+
+svg.icon:not(.icon-inverse) .outline {
+    stroke: currentColor;
+    fill: none
+}
+
+svg.icon:not(.icon-inverse) .line {
+    stroke: currentColor;
+    fill: none
+}
+
+svg.icon:not(.icon-inverse) .frame-circle,svg.icon:not(.icon-inverse) .frame-caution-sign,svg.icon:not(.icon-inverse) .frame-page,svg.icon:not(.icon-inverse) .frame-shield {
+    stroke: currentColor;
+    fill: none
+}
+
+svg.icon:not(.icon-inverse) .frame-page-with-corner {
+    stroke: currentColor
+}
+
+svg.icon:not(.icon-inverse) .frame-badge,svg.icon:not(.icon-inverse) .frame-caution-badge {
+    stroke: currentColor;
+    fill: white
+}
+
+svg.icon.icon-inverse .shape {
+    stroke: none;
+    fill: white
+}
+
+svg.icon.icon-inverse .outline {
+    stroke: white;
+    fill: currentColor
+}
+
+svg.icon.icon-inverse .line {
+    stroke: white;
+    fill: none
+}
+
+svg.icon.icon-inverse .frame-circle,svg.icon.icon-inverse .frame-shield,svg.icon.icon-inverse .frame-caution-sign {
+    stroke: currentColor;
+    fill: currentColor
+}
+
+svg.icon.icon-inverse .frame-caution-badge,svg.icon.icon-inverse .frame-badge {
+    stroke: currentColor;
+    fill: white
+}
+
+svg.icon.icon-inverse .caution-badge-symbol .shape,svg.icon.icon-inverse .badge-symbol .shape {
+    stroke: none;
+    fill: currentColor
+}
+
+svg.icon.icon-inverse .caution-badge-symbol .outline,svg.icon.icon-inverse .badge-symbol .outline {
+    stroke: currentColor;
+    fill: none
+}
+
+svg.icon.icon-inverse .caution-badge-symbol .line,svg.icon.icon-inverse .badge-symbol .line {
+    stroke: currentColor;
+    fill: none
+}
+
+svg.icon.icon-green:not(.icon-inverse) .shape {
+    stroke: none;
+    fill: #1abc96
+}
+
+svg.icon.icon-green:not(.icon-inverse) .outline {
+    stroke: #1abc96;
+    fill: none
+}
+
+svg.icon.icon-green:not(.icon-inverse) .line {
+    stroke: #1abc96;
+    fill: none
+}
+
+svg.icon.icon-green:not(.icon-inverse) .frame-circle,svg.icon.icon-green:not(.icon-inverse) .frame-caution-sign,svg.icon.icon-green:not(.icon-inverse) .frame-page,svg.icon.icon-green:not(.icon-inverse) .frame-shield {
+    stroke: #1abc96;
+    fill: none
+}
+
+svg.icon.icon-green:not(.icon-inverse) .frame-page-with-corner {
+    stroke: #1abc96
+}
+
+svg.icon.icon-green:not(.icon-inverse) .frame-badge,svg.icon.icon-green:not(.icon-inverse) .frame-caution-badge {
+    stroke: #1abc96;
+    fill: white
+}
+
+svg.icon.icon-green.icon-inverse .shape {
+    stroke: none;
+    fill: white
+}
+
+svg.icon.icon-green.icon-inverse .outline {
+    stroke: white;
+    fill: #1abc96
+}
+
+svg.icon.icon-green.icon-inverse .line {
+    stroke: white;
+    fill: none
+}
+
+svg.icon.icon-green.icon-inverse .frame-circle,svg.icon.icon-green.icon-inverse .frame-shield,svg.icon.icon-green.icon-inverse .frame-caution-sign {
+    stroke: #1abc96;
+    fill: #1abc96
+}
+
+svg.icon.icon-green.icon-inverse .frame-caution-badge,svg.icon.icon-green.icon-inverse .frame-badge {
+    stroke: #1abc96;
+    fill: white
+}
+
+svg.icon.icon-green.icon-inverse .caution-badge-symbol .shape,svg.icon.icon-green.icon-inverse .badge-symbol .shape {
+    stroke: none;
+    fill: #1abc96
+}
+
+svg.icon.icon-green.icon-inverse .caution-badge-symbol .outline,svg.icon.icon-green.icon-inverse .badge-symbol .outline {
+    stroke: #1abc96;
+    fill: none
+}
+
+svg.icon.icon-green.icon-inverse .caution-badge-symbol .line,svg.icon.icon-green.icon-inverse .badge-symbol .line {
+    stroke: #1abc96;
+    fill: none
+}
+
 .HoverTest{
     display: block;
 }
