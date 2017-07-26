@@ -311,11 +311,11 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 $scope.newEvent.eventEnvironment = $scope.eventEnvironment ? $scope.eventEnvironment.join(', ') : '';
                 $scope.newEvent.musicGenres = $scope.newEvent.musicGenres ? $scope.newEvent.musicGenres.join(', ') : '';
 
-                if($scope.serviciosEvent.length > 0){
-                    guardarServicios();
-                    subirImagen();
+               if($scope.serviciosEvent.length > 0){
+                   guardarServicios();
+                  subirImagen();
                 }else{
-                    subirImagen();
+                  subirImagen();
                 };
 
                 console.log($scope.newEvent);
