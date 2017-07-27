@@ -548,20 +548,23 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 $scope.adquirir = function (cantidadDeCompra, celular) {
                     console.log(celular);
                     $scope.newTicket.email = $scope.usuarioLogeado.email;
-                    $scope.newTicket.ideventservices = $scope.eventsService.id; // !!!!!! falta rescatar el id de la fila selecionada "del servicio a comprar"
-                    $scope.newTicket.lastName = $scope.usuarioLogeado.lastName; //$scope.datosTicket.lastName;
+                    $scope.newTicket.ideventservices = $scope.eventsService.id;
+                    $scope.newTicket.tipoEventservices = $scope.eventsService.tipo;
+                    // !!!!!! falta rescatar el id de la fila selecionada "del servicio a comprar"
+                    $scope.newTicket.displayName = $scope.usuarioLogeado.lastName; //$scope.datosTicket.lastName;
                     $scope.newTicket.firstName = $scope.usuarioLogeado.firstName; //$scope.datosTicket.firstName;
                     $scope.newTicket.celular = celular;
                     $scope.newTicket.date = new Date().getTime();
                     $scope.newTicket.paidOut = false; //devolver pago
                     $scope.newTicket.rrppid = Rrpp;
+                    $scope.newTicket.cantidadDeCompra = cantidadDeCompra;
                     $scope.newTicket.totalAPagar = $scope.eventsService.precio * cantidadDeCompra;
                     $scope.newTicket.eventId = eventId;
                     $scope.newTicket.userId = $scope.usuarioLogeado.$id;
                     $scope.newTicket.ticketId = firebase.database().ref().child('ticketsCreate/').push().key;
 
 
-                    firebase.database().ref('tickets/' + eventId + '/' + $scope.usuarioLogeado.$id + '/' + $scope.newTicket.ticketId).set($scope.newTicket).then(
+                    firebase.database().ref('tickets/' + eventId + '/'  + $scope.newTicket.ticketId).set($scope.newTicket).then(
                         function (s) {
                             console.log('se guardaron bien el tickets ');
                             firebase.database().ref('ticketsCreate/' + $scope.newTicket.ticketId).set(true);
