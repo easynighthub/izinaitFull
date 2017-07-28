@@ -23,10 +23,16 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             var admin = window.currentAdmin;
             var adminLogeado = "";
             var eventId = $routeParams.id; // id del evento entregador por url
+            var event;
             $scope.totalListasGratis = 0;
             $scope.impresionesTotales = 0;
 
-
+            var eventCargado = firebase.database().ref('/events/').child(eventId);
+            var eventCargadoRQ = $firebaseObject(eventCargado);
+            eventCargadoRQ.$loaded().then(function () {
+                event = eventCargadoRQ;
+                console.log(event);
+            });
 
             firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
@@ -63,13 +69,29 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                     $scope.totalListasGratis =$scope.totalListasGratis+ x.totalList;
                                 });
                             });
+
                             var impresiones = firebase.database().ref('/impresiones/' + eventId );
-                            var impresionesRQ = $firebaseObject(impresiones);
+                            var impresionesRQ = $firebaseArray(impresiones);
                             impresionesRQ.$loaded().then(function () {
                                 $scope.impresionesRRPP = impresionesRQ;
                                 $scope.impresionesRRPP.forEach(function (j) {
-                                    console.log(j.openLink);
-                                    $scope.impresionesTotales = $scope.impresionesTotales+ j.openLink;
+
+                                    angular.forEach(event.rrpps, function(rp){
+                                        if (j.$id == rp.uid){
+                                            j.nameRRPP = rp.email;
+
+                                            $scope.impresionesTotales = $scope.impresionesTotales+ j.openLink;
+                                        }
+                                    });
+                                });
+                            });
+
+                            var tickets = firebase.database().ref('/tickets/' + eventId );
+                            var ticketsRQ = $firebaseArray(tickets);
+                            ticketsRQ.$loaded().then(function () {
+                                $scope.ticketsEvent = ticketsRQ;
+                                $scope.ticketsEvent.forEach(function (x) {
+                                    console.log(x);
                                 });
                             });
 

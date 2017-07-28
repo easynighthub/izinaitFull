@@ -329,8 +329,6 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                if($scope.activarHoraGratis == false){
                    $scope.newEvent.freemiumHour = undefined;
                }
-
-
             };
 
 
@@ -367,11 +365,11 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 }
             };
             var subirImagen = function ()  {
-                var file = $('#imgInp')[0].files[0];   // URL DE LA IMAGEN
+            /*    var file = $('#imgInp')[0].files[0];   // URL DE LA IMAGEN
                 var ref = firebase.storage().ref('eventImages/' + $scope.newEvent.id + '/' + file.name);  // RUTA DE DONDE SE GUARDARA EN FACEBOOK
                 ref.put(file).then(function (snapshot) {
-                    console.log("guarde bien la imagen");
-                    $scope.newEvent.image = snapshot.a.downloadURLs[0]; // url donde quedo el archivo guardado
+                    console.log("guarde bien la imagen");*/
+                    $scope.newEvent.image = "hola"; // url donde quedo el archivo guardado
                     firebase.database().ref('events/' + $scope.newEvent.id).set($scope.newEvent).then(
                         function (s) {
                             firebase.database().ref('clubs/' + getclubId($scope.selectedClub) + '/events/' + $scope.newEvent.id).set(true).then(
@@ -382,7 +380,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
                                 }, managerError);
                         }, managerError);
-                }, managerError);
+             //   }, managerError);
             };
 
 

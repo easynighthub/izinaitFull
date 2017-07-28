@@ -13,6 +13,41 @@
                         <p class="category">Lista de Servicios adquirido por los usuarios.</p>
                     </div>
                     <div class="card-content table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Cantidad</th>
+                            <th>Pagado</th>
+                            <th>Utilizado</th>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="ticketEvent in ticketsEvent">
+                                <td>{{ticketEvent.firstName}} {{ticketEvent.displayName}}</td>
+                                <td>{{ticketEvent.tipoEventservices}}</td>
+                                <td>
+                                   {{ticketEvent.cantidadDeCompra}}
+                                </td>
+                                <td>
+                                    <md-checkbox
+                                            ng-model="ticketEvent.ticketEvent"
+                                            aria-label="Checkbox 1"
+                                        ng-click="accionVisibleDoorman(doorman)">
+
+                                    </md-checkbox>
+                                </td>
+                                <td>
+                                    <md-checkbox
+                                            ng-model="ticketEvent.redeemed"
+                                            aria-label="Checkbox 1"
+                                            ng-click="accionVisibleDoorman(doorman)">
+
+                                    </md-checkbox>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
 
                     </div>
                 </div>
@@ -41,17 +76,6 @@
                 </div>
             </div>
         </div>
-            <div class="col-md-9" data-ng-show="true">
-                <div class="card">
-                    <div class="card-header" data-background-color="purple">
-                        <h4 class="title">Servicios Comprados</h4>
-                        <p class="category">Lista de Servicios adquirido por los usuarios.</p>
-                    </div>
-                    <div class="card-content table-responsive">
-
-                    </div>
-                </div>
-            </div>
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-header" data-background-color="purple">
@@ -75,6 +99,18 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-9" data-ng-show="true">
+                <div class="card">
+                    <div class="card-header" data-background-color="purple">
+                        <h4 class="title">Servicios Comprados</h4>
+                        <p class="category">Lista de Servicios adquirido por los usuarios.</p>
+                    </div>
+                    <div class="card-content table-responsive">
+
+                    </div>
+                </div>
+            </div>
+
 
         </div>
     </div>

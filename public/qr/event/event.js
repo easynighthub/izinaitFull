@@ -20,7 +20,8 @@ angular.module('myApp.event', ['ngRoute'])
 
 
             var eventId = $routeParams.id; // id del evento entregador por url
-            $scope.url = 'zxing://scan/?ret=http://'+location.host+'/reciveCode.html?code={CODE}';
+            var code = $routeParams.code;
+            $scope.url = 'zxing://scan/?ret=http://'+location.host+'/codigoRecibido.html?code={CODE}&id='+eventId;
             console.log(eventId);
 
             if (doorman != "") {
@@ -55,11 +56,13 @@ angular.module('myApp.event', ['ngRoute'])
                                 console.log($scope.rrpps);
                             }
                         });
-                    }
+                    };
 
                 });
 
             });
+
+
 
 
             $scope.AgregarPersonas = function (rrppSelect) {
