@@ -347,7 +347,8 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                             cantidad: element.cantidad,
                             maxEntradas: element.maxEntradas,
                             desc: element.desc,
-                            fechaFin: new Date(element.fechaFin).getTime()
+                            fechaFin: new Date(element.fechaFin).getTime(),
+                            visible:true
                         };
 
                         tipoServicio.push(service);

@@ -85,36 +85,36 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 });
                             });
 
+                            var serviciosEvent = firebase.database().ref('/eventServices/' + eventId );
+                            var serviciosEventRQ = $firebaseArray(serviciosEvent);
                             var tickets = firebase.database().ref('/tickets/' + eventId );
                             var ticketsRQ = $firebaseArray(tickets);
                             ticketsRQ.$loaded().then(function () {
-                                $scope.ticketsEvent = ticketsRQ;
-                                $scope.ticketsEvent.forEach(function (x) {
-                                    console.log(x);
-                                });
-                            });
+                                serviciosEventRQ.$loaded().then(function () {
+                                    $scope.ticketsEvent = ticketsRQ;
+                                    $scope.serviciosEvent = serviciosEventRQ;
+                                    $scope.serviciosEvent.forEach(function (j) {
+                                        j.utilizados = 0;
+                                        $scope.ticketsEvent.forEach(function (x) {
+                                            console.log(x);
+                                            console.log(j)
+                                            if(x.ideventservices == j.$id){
+                                                j.utilizados =  j.utilizados +  x.cantidadDeCompra;
 
-                            var serviciosEvent = firebase.database().ref('/eventServices/' + eventId );
-                            var serviciosEventRQ = $firebaseArray(serviciosEvent);
-                            serviciosEventRQ.$loaded().then(function () {
-                                $scope.serviciosEvent = serviciosEventRQ;
-                                $scope.serviciosEvent.forEach(function (j) {
-                                    $scope.ticketsEvent.forEach(function (x) {
-                                    console.log(x);
-                                    console.log(j)
-                                        if(x.ideventservices == j.$id){
-                                            j.utilizados =+ x.cantidadDeCompra;
-                                        }
+                                            }
 
+                                        });
+                                        /* angular.forEach(event.rrpps, function(rp){
+                                         if (j.$id == rp.uid){
+                                         j.nameRRPP = rp.name;
+                                         $scope.impresionesTotales = $scope.impresionesTotales+ j.openLink;
+                                         }
+                                         });*/
                                     });
-                                   /* angular.forEach(event.rrpps, function(rp){
-                                        if (j.$id == rp.uid){
-                                            j.nameRRPP = rp.name;
-                                            $scope.impresionesTotales = $scope.impresionesTotales+ j.openLink;
-                                        }
-                                    });*/
                                 });
                             });
+
+
 
 
                         };
@@ -131,6 +131,30 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             });
 
 
+
+            $scope.accionVisible = function (servicioEvent) {
+                console.log(servicioEvent);
+                var ref = firebase.database().ref().child("/eventServices/"+eventId).child(servicioEvent.$id);
+                ref.update({
+                    visible : !servicioEvent.visible
+                });
+                servicioEvent.visible = !servicioEvent.visible;
+
+                $scope.serviciosEvent.forEach(function (j) {
+                    j.utilizados = 0;
+                    $scope.ticketsEvent.forEach(function (x) {
+                        console.log(x);
+                        console.log(j)
+                        if(x.ideventservices == j.$id){
+                            j.utilizados =  j.utilizados +  x.cantidadDeCompra;
+
+                        }
+
+                    });
+
+                });
+
+            };
 
 
 

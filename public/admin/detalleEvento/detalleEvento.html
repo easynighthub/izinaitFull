@@ -112,12 +112,18 @@
                             <th>Tipo</th>
                             <th>Valor</th>
                             <th>Cantidad / Vendidos</th>
+                            <th>visible</th>
                             </thead>
                             <tbody>
                             <tr data-ng-repeat="servicioEvent in serviciosEvent">
                                 <td>{{servicioEvent.tipo}}</td>
                                 <td>{{servicioEvent.precio}}</td>
                                 <td>{{servicioEvent.cantidad}}/ {{servicioEvent.utilizados}}</td>
+                                <td><md-switch  ng-click="accionVisible(servicioEvent)" ng-model="servicioEvent.visible" aria-label="Switch 1">
+
+                                </md-switch>
+
+                                </td>
                             </tr>
                             </tbody>
                         </table>

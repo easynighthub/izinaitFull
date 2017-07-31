@@ -149,7 +149,7 @@
             <h3 class="info-title" style="color: #340034">Precio Antecipado</h3>
             <br>
             <div>
-                <div class="col-lg-3 col-md-6 col-sm-6" ng-repeat="eventsService in allEventsService">
+                <div class="col-lg-3 col-md-6 col-sm-6" ng-repeat="eventsService in allEventsService"  ng-show="eventsService.visible">
                     <div class="card1 card1-stats">
                         <div class="card1-header" data-background-color="gray">
                             <i ng-show="eventsService.tipo == 'MESA'"
@@ -170,7 +170,7 @@
                                 <small> $</small>
                                 {{eventsService.precio}}
                             </h3>
-                            <p class="category">Fin de Venta: {{ eventsService.fechaFin |date : 'dd MMM'}}
+                            <p class="category">Fin de Venta<br> {{ eventsService.fechaFin |date : 'dd MMM'}}
                                 <br>
                             <p class="category">{{ eventsService.fechaFin |date : 'HH:mm a'}}
                             </p>
@@ -356,6 +356,23 @@
         </md-select>
         <center>
             <table class="text-center">
+                <tr>
+                    <th>
+                        <p class="description"><i class="material-icons" style="vertical-align: middle;">email</i>
+                        </p>
+                    </th>
+                    <th>
+                        &nbsp;&nbsp;
+                    </th>
+                    <th>
+                        <div style="margin-top: 1px" class="form-group label-floating " id="agregarCorrecto2">
+                            <input type="text" class="form-control" placeholder="Ingresa Email" ng-model="email"/>
+                            <span class="form-control-feedback">
+			<i class="material-icons">done</i>
+		</span>
+                        </div>
+                    </th>
+                </tr>
                 <tr>
                     <th>
                         <p class="description"><i class="material-icons" style="vertical-align: middle;">call</i> +569
