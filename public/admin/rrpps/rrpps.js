@@ -140,7 +140,8 @@ angular.module('myApp.rrpps', ['ngRoute'])
                                             uid:x.uid,
                                             bloqueado:false,
                                             visible:true,
-                                            email:x.email
+                                            email:x.email,
+                                            name:name
                                         });
                                         firebase.database().ref('admins/'
                                             +adminLogeado.$id

@@ -22,8 +22,8 @@
                             <th>Utilizado</th>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="ticketEvent in ticketsEvent">
-                                <td>{{ticketEvent.firstName}} {{ticketEvent.displayName}}</td>
+                            <tr  ng-repeat="ticketEvent in ticketsEvent">
+                                <td >{{ticketEvent.firstName}} {{ticketEvent.displayName}}</td>
                                 <td>{{ticketEvent.tipoEventservices}}</td>
                                 <td>
                                    {{ticketEvent.cantidadDeCompra}}
@@ -102,10 +102,25 @@
             <div class="col-md-9" data-ng-show="true">
                 <div class="card">
                     <div class="card-header" data-background-color="purple">
-                        <h4 class="title">Servicios Comprados</h4>
-                        <p class="category">Lista de Servicios adquirido por los usuarios.</p>
+                        <h4 class="title">Servicios Asignados</h4>
+                        <p class="category">lista de servicios.</p>
                     </div>
                     <div class="card-content table-responsive">
+
+                        <table class="table">
+                            <thead class="text-primary">
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                            <th>Cantidad / Vendidos</th>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="servicioEvent in serviciosEvent">
+                                <td>{{servicioEvent.tipo}}</td>
+                                <td>{{servicioEvent.precio}}</td>
+                                <td>{{servicioEvent.cantidad}}/ {{servicioEvent.utilizados}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
 
                     </div>
                 </div>

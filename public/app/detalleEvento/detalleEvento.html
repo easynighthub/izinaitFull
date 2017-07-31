@@ -177,7 +177,9 @@
                         </div>
                         <div class="card1-footer">
                             <div class="stats">
-                                <a class="btn btn-info" ng-click="dialogAdquirirServicio(eventsService)"> Adquirir</a>
+                                 <a class="btn btn-info" data-ng-show="eventsService.cantidad > eventsService.totalComprados" ng-click="dialogAdquirirServicio(eventsService)"> Adquirir</a>
+                                <a class="btn btn-default" data-ng-show="eventsService.cantidad <= eventsService.totalComprados" > AGOTADO!</a>
+
                             </div>
                         </div>
                     </div>

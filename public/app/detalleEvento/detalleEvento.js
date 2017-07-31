@@ -308,16 +308,27 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
             var serviciosCapturados = firebase.database().ref('/eventServices/').child(eventId);
             var objDeServicios = $firebaseObject(serviciosCapturados);
+            var tickets = firebase.database().ref('/tickets/' + eventId );
+            var ticketsRQ = $firebaseArray(tickets);
             objDeServicios.$loaded().then(function () {
+                ticketsRQ.$loaded().then(function () {
+                    $scope.ticketsEvent = ticketsRQ;
+
                 var eventServices = [];
                 angular.forEach(objDeServicios, function (value, key) {
-                    console.log(key);
+                    value.totalComprados = 0;
+                    $scope.ticketsEvent.forEach(function (j) {
+                        if(key == j.ideventservices){
+                            value.totalComprados =  value.totalComprados + j.cantidadDeCompra;
+                        };
+                    });
                     value.id = key;
                     eventServices.push(value);
                 });
 
                 $scope.allEventsService = eventServices; //obj;
                 console.log($scope.allEventsService);
+            });
             });
 
 

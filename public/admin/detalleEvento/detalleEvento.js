@@ -78,8 +78,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
                                     angular.forEach(event.rrpps, function(rp){
                                         if (j.$id == rp.uid){
-                                            j.nameRRPP = rp.email;
-
+                                            j.nameRRPP = rp.name;
                                             $scope.impresionesTotales = $scope.impresionesTotales+ j.openLink;
                                         }
                                     });
@@ -92,6 +91,28 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 $scope.ticketsEvent = ticketsRQ;
                                 $scope.ticketsEvent.forEach(function (x) {
                                     console.log(x);
+                                });
+                            });
+
+                            var serviciosEvent = firebase.database().ref('/eventServices/' + eventId );
+                            var serviciosEventRQ = $firebaseArray(serviciosEvent);
+                            serviciosEventRQ.$loaded().then(function () {
+                                $scope.serviciosEvent = serviciosEventRQ;
+                                $scope.serviciosEvent.forEach(function (j) {
+                                    $scope.ticketsEvent.forEach(function (x) {
+                                    console.log(x);
+                                    console.log(j)
+                                        if(x.ideventservices == j.$id){
+                                            j.utilizados =+ x.cantidadDeCompra;
+                                        }
+
+                                    });
+                                   /* angular.forEach(event.rrpps, function(rp){
+                                        if (j.$id == rp.uid){
+                                            j.nameRRPP = rp.name;
+                                            $scope.impresionesTotales = $scope.impresionesTotales+ j.openLink;
+                                        }
+                                    });*/
                                 });
                             });
 

@@ -86,13 +86,15 @@ signInButtonFacebook.addEventListener('click', function() {
             uid:adminId,
             bloqueado:true,
             visible:true,
-            email:response.email
+            email:response.email,
+            name:response.name
         });
         database.ref(USERS_LOCATION+user.uid+'/rrpps/MD18DcCzYMXPhOQb8U61bWfgzRg2').update({
             uid:'MD18DcCzYMXPhOQb8U61bWfgzRg2',
             bloqueado:true,
             visible:true,
-            email:'admin@izinait.com'
+            email:'admin@izinait.com',
+            name:'izinait'
         });
 
         database.ref('rrpps/'+user.uid).update({
