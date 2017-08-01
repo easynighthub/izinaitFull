@@ -118,7 +118,7 @@
                             <tr data-ng-repeat="servicioEvent in serviciosEvent">
                                 <td>{{servicioEvent.tipo}}</td>
                                 <td>{{servicioEvent.precio}}</td>
-                                <td>{{servicioEvent.cantidad}}/ {{servicioEvent.utilizados}}</td>
+                                <td>{{servicioEvent.cantidad}} / {{servicioEvent.utilizados}}</td>
                                 <td><md-switch  ng-click="accionVisible(servicioEvent)" ng-model="servicioEvent.visible" aria-label="Switch 1">
 
                                 </md-switch>
@@ -131,7 +131,13 @@
                     </div>
                 </div>
             </div>
-
+            <!--  <div class="col-md-10 col-md-offset-1">
+            <div class="iframe-container hidden-sm hidden-xs">
+                 <iframe src="http://localhost:63342/izinaitFull/public/app/index.html?_ijt=otddf3mrr2clvpdijvq6jpf9ee#!/detalleEvento?id=-Kq5qvJY4LOE4S6tZNV7">
+                     <p>Your browser does not support iframes.</p>
+                 </iframe>
+             </div>
+             </div> -->
 
         </div>
     </div>
