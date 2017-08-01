@@ -545,8 +545,10 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 if ($scope.usuarioLogeado.celular) {
                     $scope.celular = $scope.usuarioLogeado.celular;
                 }
-                if($scope.usuarioLogeado.email){
+                if($scope.usuarioLogeado.email != 'null@izinait.com'){
                     $scope.email = $scope.usuarioLogeado.email;
+                }else{
+                    $scope.email = "";
                 }
 
                 for (var i = 1; i <= $scope.eventsService.maxEntradas; i++) {
