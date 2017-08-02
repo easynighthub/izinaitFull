@@ -1,4 +1,44 @@
+<input type="text" class="form-control" placeholder="Buscar por nombre"
+       ng-keyup="filterEventsByText()" ng-model="filterNameInput"/>
 <div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" data-background-color="purple">
+                <h4 class="title">Servicios
+                    <button style="float: right; margin: 0px 0px!important; top: 2px;"
+                            class="btn btn-sm btn-success ">Leer QR
+                    </button></h4>
+                <p class="category"></p>
+            </div>
+            <div class="card-content table-responsive">
+                <table class="table">
+                    <thead class="text-primary">
+                    <th>NOMBRE</th>
+                    <th>CANTIDAD</th>
+                    <th>ACCION</th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="ticketObtenido in ticketsObtenidos">
+                        <td>{{ticketObtenido.displayName}}</td>
+                        <td class="text-primary">
+                            {{ticketObtenido.cantidadUtilizada}} / {{ticketObtenido.cantidadDeCompra}}
+                        </td>
+                        <td><button class="btn btn-sm btn-info">
+                            <i style="float: left;" class="material-icons">check</i>
+                        </button></td>
+
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header" data-background-color="purple">
@@ -35,7 +75,7 @@
 
 
 
-<p class="btn  text-center btn-info" ng-click="abrirLectorQr()">  ABRIR LECTOR QR</p>
+
 
 <script id="dialogAgregarPersonas" type="text/ng-template"   >
     <md-dialog   aria-label="Confirmar Check In">
@@ -121,3 +161,4 @@
     </md-dialog>
 
 </script>
+ -->

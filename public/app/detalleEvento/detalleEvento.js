@@ -573,6 +573,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                         $scope.newTicket.date = new Date().getTime();
                         $scope.newTicket.paidOut = false; //devolver pago
                         $scope.newTicket.redeemed = false;
+                        $scope.newTicket.cantidadUtilizada = 0;
                         $scope.newTicket.rrppid = Rrpp;
                         $scope.newTicket.cantidadDeCompra = cantidadDeCompra;
                         $scope.newTicket.totalAPagar = $scope.eventsService.precio * cantidadDeCompra;

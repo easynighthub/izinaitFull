@@ -16,31 +16,54 @@ angular.module('myApp.event', ['ngRoute'])
             var doormanLogeado = "";
             var rrppsCapturados = [];
             $scope.rrpps = [];
-
-
-
-            var eventId = $routeParams.id; // id del evento entregador por url
+            var eventIdSelect = localStorage.getItem('eventIdSelect');
+            console.log(eventIdSelect);
+            var eventId = $routeParams.id || eventIdSelect; // id del evento entregador por url
             var code = $routeParams.code;
-            $scope.url = 'zxing://scan/?ret=http://'+location.host+'/codigoRecibido.html?code={CODE}&id='+eventId;
-            console.log(eventId);
+            $scope.url = 'zxing://scan/?ret=http://'+location.host+'/codigoRecibido.html?code={CODE}';
 
-            if (doorman != "") {
-                var currentDay = new Date().getTime();
-                var ref = firebase.database().ref('/doormans/').child(doorman.$id || doorman.uid);
-                var doormanFB = $firebaseObject(ref);
-                doormanFB.$loaded().then(function () {
-                    doormanLogeado = doormanFB;
-                    console.log(doormanLogeado);
-                    console.log(window.currentDoorman + " ENTRE");
-                });
-            } else {
-                console.log(window.currentDoorman + " NO ENTRE");
-            };
 
-        $scope.abrirLectorQr = function () {
+
+
+
+            firebase.database().ref('doormans/').child(doorman.$id || doorman.uid || 'offline').once('value', function(snapshot) {
+                var exists = (snapshot.val() !== null);
+                console.log(exists);
+
+                if (exists == true) {
+                    var ref = firebase.database().ref('/doormans/').child(doorman.$id || doorman.uid);
+                    var doormLocal = $firebaseObject(ref);
+                    doormLocal.$loaded().then(function () {
+                        doormanLogeado = doormLocal;
+                        console.log(doormanLogeado);
+
+                        var tickets = $firebaseArray(firebase.database().ref('/tickets/'+ eventId));
+                        tickets.$loaded().then(function () {
+                            $scope.AllticketsObtenidos = tickets;
+                            console.log($scope.AllticketsObtenidos);
+                            $scope.ticketsObtenidos = $scope.AllticketsObtenidos;
+                        });
+
+
+
+                    });
+                } else {
+                    window.currentDoorman = "";
+                    doormanLogeado = "";
+                    console.log(window.currentDoorman + " NO ENTRE");
+                };
+
+            });
+
+
+            $scope.abrirLectorQr = function () {
             location.href = $scope.url;
         };
 
+            $scope.filterEventsByText = function () {
+                console.log("adsadasdsa");
+                $scope.ticketsObtenidos = $filter('filter')($scope.AllticketsObtenidos, {displayName: $scope.filterNameInput});
+            }
 
             var rrpps = $firebaseArray(firebase.database().ref('/rrpps/'));
             rrpps.$loaded().then(function () {

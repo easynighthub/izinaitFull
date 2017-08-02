@@ -24,64 +24,69 @@ angular.module('myApp.view1', ['ngRoute'])
 
 
 
-
-
-
             var doorman = window.currentDoorman;
             var doormanLogeado = "";
             $scope.allEvents = [];
             $scope.events = [];
             var eventIndex = 0;
+            var currentDay = new Date().getTime();
 
-            if (doorman != "") {
+            firebase.database().ref('doormans/').child(doorman.$id || doorman.uid || 'offline').once('value', function(snapshot) {
+                var exists = (snapshot.val() !== null);
+                console.log(exists);
 
-                var currentDay = new Date().getTime();
-                var ref = firebase.database().ref('/doormans/').child(doorman.$id || doorman.uid);
-                var newEvent = firebase.database().ref('/events/').orderByChild('toHour').startAt(currentDay);
-                var newEventFB = $firebaseArray(newEvent);
-                var doormanFB = $firebaseObject(ref);
-                doormanFB.$loaded().then(function () {
-                    doormanLogeado = doormanFB;
-                    console.log(doormanLogeado);
-                    console.log(window.currentDoorman + " ENTRE");
-                    var doormanData = $firebaseObject(firebase.database().ref('/doormans/').child(doormanLogeado.$id));
-                    doormanData.$loaded().then(function(){
-                        $rootScope.doormanData = doormanData;
-                        if(doormanData.events) {
-                            $scope.eventsId = Object.keys(doormanData.events);
+                if (exists == true) {
+                    var ref = firebase.database().ref('/doormans/').child(doorman.$id || doorman.uid);
+                    var doormLocal = $firebaseObject(ref);
+                    doormLocal.$loaded().then(function () {
+                        doormanLogeado = doormLocal;
+                        console.log(doormanLogeado);
+
+                        var newEvent = firebase.database().ref('/events/').orderByChild('toHour').startAt(currentDay);
+                        var newEventFB = $firebaseArray(newEvent);
+
+                        if(doormanLogeado.events) {
+                            $scope.eventsId = Object.keys(doormanLogeado.events);
                             console.log($scope.eventsId);
-                        }
-                        newEventFB.$loaded().then(function(){
-                            $scope.allEvents = newEventFB;
-                            $scope.allEvents.forEach(function (j) {
-                                $scope.eventsId.forEach(function (x) {
+
+                            newEventFB.$loaded().then(function(){
+                                $scope.allEvents = newEventFB;
+                                $scope.allEvents.forEach(function (j) {
+                                    $scope.eventsId.forEach(function (x) {
                                         if(j.$id == x){
                                             $scope.events.push(j);
                                             console.log($scope.events);
-                                        }
+                                        };
                                     });
 
                                 });
-                        });
+                            });
+                        }else
+                        {
+                            alert("no tiene eventos asignado");
+                        }
+
+
+
                     });
-                });
-            } else {
-                console.log(window.currentDoorman + " NO ENTRE");
-            };
-
-
-
-            var listaDeUsuariosGratis = firebase.database().ref('/asist/');
-            var listaDeUsuariosGratisFB = $firebaseArray(listaDeUsuariosGratis);
-            listaDeUsuariosGratisFB.$loaded().then(function(){
+                } else {
+                    window.currentDoorman = "";
+                    doormanLogeado = "";
+                    console.log(window.currentDoorman + " NO ENTRE");
+                };
 
             });
 
 
-
             $scope.administrar = function(event) {
+                localStorage.setItem("eventIdSelect", event.$id);
                 location.href = "#!/event?id=" + event.$id;
             }
+
+
+
+
+
 
 
 

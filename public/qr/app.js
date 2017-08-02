@@ -38,7 +38,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
         console.log(window.currentDoorman);
     } else {
         $routeProvider.otherwise({redirectTo: '/view1'});
-        window.currentApp ="";
+        window.currentDoorman ="";
         console.log(window.currentDoorman);
     }
 
