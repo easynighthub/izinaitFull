@@ -59,9 +59,11 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                                         console.log(adminLogeado.rrpps);
                                         angular.forEach(adminLogeado.rrpps,function (rp) {
                                             if(rp.bloqueado == true){
+                                                rp.numeroTotal = 0;
                                                 $scope.newEvent.rrpps.push(rp);
                                             }else{
                                                 if(Object.keys(rp.clubs).indexOf(adminLogeado.idClubWork) >= 0){
+                                                    rp.numeroTotal = 0;
                                                     $scope.newEvent.rrpps.push(rp);
                                                 }else {
                                                     console.log("rrpp no trabaja para este club")

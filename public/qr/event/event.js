@@ -19,10 +19,14 @@ angular.module('myApp.event', ['ngRoute'])
             var eventIdSelect = localStorage.getItem('eventIdSelect');
             console.log(eventIdSelect);
             var eventId = $routeParams.id || eventIdSelect; // id del evento entregador por url
+            var code ="";
             var code = $routeParams.code;
             $scope.url = 'zxing://scan/?ret=http://'+location.host+'/codigoRecibido.html?code={CODE}';
 
+            if(code != ""){
 
+
+            }
 
 
 
@@ -109,11 +113,7 @@ angular.module('myApp.event', ['ngRoute'])
                 $scope.rrppSelect = rrppSelect;
                 console.log($scope.rrppSelect);
 
-
-
-
-
-                $scope.adquirir = function (cantidadDeCompra,celular) {
+                   $scope.adquirir = function (cantidadDeCompra,celular) {
                     console.log(celular);
                     $scope.newTicket.email =  $scope.usuarioLogeado.email;
                     $scope.newTicket.ideventservices =  $scope.eventsService.id; // !!!!!! falta rescatar el id de la fila selecionada "del servicio a comprar"

@@ -567,7 +567,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                         $scope.newTicket.ideventservices = $scope.eventsService.id;
                         $scope.newTicket.tipoEventservices = $scope.eventsService.tipo;
                         // !!!!!! falta rescatar el id de la fila selecionada "del servicio a comprar"
-                        $scope.newTicket.displayName = $scope.usuarioLogeado.lastName; //$scope.datosTicket.lastName;
+                        $scope.newTicket.displayName = $scope.usuarioLogeado.displayName;
+                        $scope.newTicket.lastName = $scope.usuarioLogeado.lastName; //$scope.datosTicket.lastName;
                         $scope.newTicket.firstName = $scope.usuarioLogeado.firstName; //$scope.datosTicket.firstName;
                         $scope.newTicket.celular = celular;
                         $scope.newTicket.date = new Date().getTime();

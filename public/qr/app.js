@@ -12,7 +12,8 @@ angular.module('myApp', [
     'ngMaterial',
     'myApp.view1',
     'myApp.event',
-    'myApp.userDetalle'
+    'myApp.userDetalle',
+    'myApp.puerta',
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
     $locationProvider.hashPrefix('!');
