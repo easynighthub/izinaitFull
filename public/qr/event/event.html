@@ -20,17 +20,26 @@
                     <thead class="text-primary">
                     <th>NOMBRE</th>
                     <th>CANTIDAD</th>
-                    <th>ACCION</th>
+                    <th>TOTAL $</th>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="ticketObtenido in ticketsObtenidos">
-                        <td>{{ticketObtenido.displayName}}</td>
+                    <tr ng-repeat="ticketObtenido in ticketsObtenidos" data-ng-click="cobrarServicio(ticketObtenido)"
+                    >
+                        <td>{{ticketObtenido.displayName}}
+                            <br> <p class="description">{{ticketObtenido.tipoEventservices}} </p> </td>
                         <td class="text-primary">
                             {{ticketObtenido.cantidadUtilizada}} / {{ticketObtenido.cantidadDeCompra}}
                         </td>
-                        <td><button class="btn btn-sm btn-info">
-                            <i style="float: left;" class="material-icons">check</i>
-                        </button></td>
+                        <td>
+                            <button ng-show="!ticketObtenido.paidOut"
+                                 class="btn btn-sm btn-info">
+                           $ {{(ticketObtenido.totalAPagar/ticketObtenido.cantidadDeCompra)*(ticketObtenido.cantidadDeCompra-ticketObtenido.cantidadUtilizada)}}
+                        </button>
+                            <button ng-show="ticketObtenido.paidOut"
+                                    class="btn btn-sm btn-info">
+                                PAGADO
+                            </button>
+                        </td>
 
                     </tr>
 
@@ -81,8 +90,9 @@
 
 
 
+-->
 
-<script id="dialogAgregarPersonas" type="text/ng-template"   >
+<script id="dialogAbrirCode" type="text/ng-template"   >
     <md-dialog   aria-label="Confirmar Check In">
 <center>
         <table class="table text-center">
@@ -166,4 +176,78 @@
     </md-dialog>
 
 </script>
- -->
+
+<script id="dialogCobrarServicio" type="text/ng-template" >
+    <md-dialog   aria-label="Confirmar Check In"  >
+
+        <center>
+            <br>
+            <img  class="fotoPerfilCodigo text-center" src="{{user.picture}}">
+            <br>
+            <h5>{{user.displayName}} </h5>
+            <p>tickets Utilizados : {{ticketObtenido.cantidadUtilizada}}</p>
+            <p> Habilitados : {{ingresosRestantes}} x {{ticketObtenido.tipoEventservices}} = $  {{ingresosRestantes*precioIndividual}}</p>
+
+            <i  class="fa fa-mars"></i>
+            <button class="btn btn-sm btn-info" data-ng-click="disminuirEntradasHombre(entradasHombre)">
+                -
+            </button>
+            {{entradasHombre}}
+            <button class="btn btn-sm btn-info" data-ng-click="aumentarEntradasHombre(entradasHombre,entradasMujer)">
+                +
+            </button>
+            <br>
+            <i class="fa fa-venus"></i>
+            <button class="btn btn-sm btn-info" data-ng-click="disminuirEntradasMujer(entradasMujer)">
+            -
+        </button>
+            {{entradasMujer}}
+            <button class="btn btn-sm btn-info" data-ng-click="aumentarEntradasMujer(entradasHombre,entradasMujer)">
+                +
+            </button>
+            <br>
+
+
+            <div data-ng-show="!ticketObtenido.paidOut">
+                total a pagar : {{(entradasMujer +entradasHombre)*precioIndividual}}
+                <br>
+                <md-checkbox  ng-click="obtenerTipoDePago('tarjeta')" ng-disabled="efectivo" ng-model="tarjeta" aria-label="Checkbox 1">
+                    TARJETA
+                </md-checkbox>
+                <md-checkbox ng-click="obtenerTipoDePago('efectivo')" ng-disabled="tarjeta" ng-model="efectivo" aria-label="Checkbox 1">
+                    EFECTIVO
+                </md-checkbox>
+            </div>
+            <div data-ng-show="ticketObtenido.paidOut">
+                ESTE TICKET YA ESTA PAGADO.
+            </div>
+
+        </center>
+
+        <div class="text-right col-xs-offset-1">
+             <button  data-ng-click="cancel()" class="btn btn-default btn-sm  col-xs-3"> x </button>
+                <button data-ng-click="guardarEntrada()" class="btn btn-primary  btn-sm  col-xs-8"> APLICAR </button>
+
+        </div>
+
+
+
+
+
+
+
+
+    </md-dialog>
+
+    <style>
+
+        .fotoPerfilCodigo {
+            width: 90px;
+            height: 90px;
+            border: 1px solid #fe0072;
+            box-shadow: 1px 1px 5px 0 rgba(255,255,255,0.1);
+            border-radius: 4px;
+        }
+    </style>
+
+</script>

@@ -231,7 +231,8 @@ angular.module('myApp.puerta', ['ngRoute'])
                             valorVipHombre :  $scope.valorVipHombre,
                             vipMujer :  $scope.vipMujer,
                             valorVipMujer : $scope.valorVipMujer,
-                            rrppId :  $scope.rrppSelect.uid
+                            rrppId :  $scope.rrppSelect.uid,
+                            date : new Date().getTime()
                         };
                     console.log(puertaTicket);
 
