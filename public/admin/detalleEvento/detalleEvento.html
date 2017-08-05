@@ -17,33 +17,21 @@
                             <thead class="text-primary">
                             <th>Nombre</th>
                             <th>Tipo</th>
-                            <th>Cantidad</th>
-                            <th>Pagado</th>
-                            <th>Utilizado</th>
+                            <th>Utilizado/Cantidad</th>
+                            <th>Total Pagado</th>
                             </thead>
                             <tbody>
                             <tr  ng-repeat="ticketEvent in ticketsEvent">
-                                <td >{{ticketEvent.firstName}} {{ticketEvent.displayName}}</td>
+                                <td> {{ticketEvent.displayName}}</td>
                                 <td>{{ticketEvent.tipoEventservices}}</td>
                                 <td>
-                                   {{ticketEvent.cantidadDeCompra}}
+                                    {{ticketEvent.cantidadUtilizada}} / {{ticketEvent.cantidadDeCompra}}
                                 </td>
                                 <td>
-                                    <md-checkbox
-                                            ng-model="ticketEvent.ticketEvent"
-                                            aria-label="Checkbox 1"
-                                        ng-click="accionVisibleDoorman(doorman)">
+                                    <div ng-show="!ticketEvent.paidOut"> ${{(ticketEvent.totalAPagar/ticketEvent.cantidadDeCompra)*ticketEvent.cantidadUtilizada}}</div>
+                                    <div ng-show="ticketEvent.paidOut"> ${{ticketEvent.totalAPagar}}</div>
 
-                                    </md-checkbox>
-                                </td>
-                                <td>
-                                    <md-checkbox
-                                            ng-model="ticketEvent.redeemed"
-                                            aria-label="Checkbox 1"
-                                            ng-click="accionVisibleDoorman(doorman)">
-
-                                    </md-checkbox>
-                                </td>
+                            </td>
                             </tr>
 
                             </tbody>
@@ -86,12 +74,12 @@
                         <table class="table">
                             <thead class="text-primary">
                             <th>Nombre</th>
-                            <th>Cantidad</th>
+                            <th>Utilizadas / Cantidad</th>
                             </thead>
                             <tbody>
                             <tr data-ng-repeat="user in listaGratis">
                                 <td>{{user.displayName}}</td>
-                                <td>{{user.totalList}}</td>
+                                <td>{{user.totalAsist}} / {{user.totalList}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -111,14 +99,14 @@
                             <thead class="text-primary">
                             <th>Tipo</th>
                             <th>Valor</th>
-                            <th>Cantidad / Vendidos</th>
+                            <th>Vendidos / Cantidad  </th>
                             <th>visible</th>
                             </thead>
                             <tbody>
                             <tr data-ng-repeat="servicioEvent in serviciosEvent">
                                 <td>{{servicioEvent.tipo}}</td>
                                 <td>{{servicioEvent.precio}}</td>
-                                <td>{{servicioEvent.cantidad}} / {{servicioEvent.utilizados}}</td>
+                                <td>{{servicioEvent.utilizados}} / {{servicioEvent.cantidad}} </td>
                                 <td><md-switch  ng-click="accionVisible(servicioEvent)" ng-model="servicioEvent.visible" aria-label="Switch 1">
 
                                 </md-switch>

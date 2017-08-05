@@ -1,0 +1,129 @@
+<center>
+    <a href="#!/event" class="btn btn-sm">SERVICIOS </a>
+    <a href="#!/puerta" class="btn btn-sm">PUERTA </a>
+    <a href="#!/listaGratis" class="btn btn-sm">LISTA GRATIS </a>
+</center>
+<input type="text" class="form-control " placeholder="Buscar por nombre"
+       ng-keyup="filterEventsByText()" ng-model="filterNameInput"/>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" data-background-color="purple">
+                <h4 class="title">Lista Gratis
+
+                    <button data-ng-click="abrirLectorQr()" style="float: right; margin: 0px 0px!important; top: 2px;"
+                            class="btn btn-sm btn-success ">Leer QR
+                    </button>
+
+
+                </h4>
+                <p class="category"></p>
+            </div>
+            <div class="card-content table-responsive">
+                <table class="table">
+                    <thead class="text-primary">
+                    <th class="col-xs-6">NOMBRE</th>
+                    <th style="margin-right: 100px">CANTIDAD</th>
+
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="user in listaGratis" data-ng-click="abrirListaGratis(user)">
+
+                        <td>
+                            {{user.displayName}}
+                            <br> <p class="description">LISTA GRATIS </p> </td>
+                        <td>
+                            {{user.totalAsist}} / {{user.totalList}}
+                            <br>
+                            <button
+                                    class="btn btn-sm btn-info">
+                                        GRATIS
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+                </table>
+
+
+            </div>
+
+        </div>
+        <a  data-ng-click="borrarQr()" ng-show="code != ''" style="float: left; margin: 0px 0px !important; top: 2px; "
+            class="btn btn-sm btn-success col-md-12 "> X
+        </a>
+    </div>
+</div>
+
+
+
+
+
+<script id="dialogAbrirListaGratis" type="text/ng-template" >
+    <md-dialog   aria-label="Confirmar Check In"  >
+
+        <center>
+            <br>
+            <img  class="fotoPerfilCodigo text-center" src="{{user.picture}}">
+            <br>
+            <h5>{{user.displayName}} </h5>
+            <p>Total lista Utilizada : {{userCapturado.totalAsist}}</p>
+            <p> Lista restante : ilimitada.</p>
+
+            <i  class="fa fa-mars"></i>
+            <button class="btn btn-sm btn-info" data-ng-click="disminuirEntradasHombre(entradasHombre)">
+                -
+            </button>
+            {{entradasHombre}}
+            <button class="btn btn-sm btn-info" data-ng-click="aumentarEntradasHombre(entradasHombre,entradasMujer)">
+                +
+            </button>
+            <br>
+            <i class="fa fa-venus"></i>
+            <button class="btn btn-sm btn-info" data-ng-click="disminuirEntradasMujer(entradasMujer)">
+                -
+            </button>
+            {{entradasMujer}}
+            <button class="btn btn-sm btn-info" data-ng-click="aumentarEntradasMujer(entradasHombre,entradasMujer)">
+                +
+            </button>
+            <br>
+
+
+            <div>
+                ESTA LISTA ES GRATIS
+            </div>
+
+        </center>
+
+        <div class="text-right col-xs-offset-1">
+            <button  data-ng-click="cancel()" class="btn btn-default btn-sm  col-xs-3"> x </button>
+            <button data-ng-click="guardarEntrada()" class="btn btn-primary  btn-sm  col-xs-8"> APLICAR </button>
+
+        </div>
+
+
+
+
+
+
+
+
+    </md-dialog>
+
+    <style>
+
+        .fotoPerfilCodigo {
+            width: 90px;
+            height: 90px;
+            border: 1px solid #fe0072;
+            box-shadow: 1px 1px 5px 0 rgba(255,255,255,0.1);
+            border-radius: 4px;
+        }
+    </style>
+
+</script>

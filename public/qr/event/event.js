@@ -19,24 +19,13 @@ angular.module('myApp.event', ['ngRoute'])
             var eventIdSelect = localStorage.getItem('eventIdSelect');
             console.log(eventIdSelect);
             var eventId = $routeParams.id || eventIdSelect; // id del evento entregador por url
-            var code ="";
+            $scope.code = '';
             if($routeParams.code){
-                var code = $routeParams.code;
+                $scope.code = $routeParams.code;
             }
 
             $scope.url = 'zxing://scan/?ret=http://'+location.host+'/codigoRecibido.html?code={CODE}';
 
-            if(code != ""){
-                $mdDialog.show({
-                    controller: ControllerdialogAbrirCode,
-                    templateUrl: 'dialogAbrirCode',
-                    parent: angular.element(document.body),
-                    clickOutsideToClose:true,
-                    locals : {
-                        code : code,
-                    }
-                });
-            }
 
 
 
@@ -56,7 +45,13 @@ angular.module('myApp.event', ['ngRoute'])
                             $scope.AllticketsObtenidos = tickets;
                             console.log($scope.AllticketsObtenidos);
                             $scope.ticketsObtenidos = $scope.AllticketsObtenidos;
+
+                            if($scope.code != ""){
+                                $scope.ticketsObtenidos = $filter('filter')($scope.AllticketsObtenidos, {userId: $scope.code});
+                                console.log($scope.code);
+                            };
                         });
+
 
 
 
@@ -80,7 +75,10 @@ angular.module('myApp.event', ['ngRoute'])
             }
 
 
-                $scope.cobrarServicio = function (ticketObtenido) {
+
+
+
+            $scope.cobrarServicio = function (ticketObtenido) {
                         var user = [];
                     firebase.database().ref('users/').child(ticketObtenido.userId).once('value', function(snapshot) {
                         var exists = (snapshot.val() !== null);
@@ -162,13 +160,15 @@ angular.module('myApp.event', ['ngRoute'])
 
                     $scope.guardarEntrada = function () {
                         var total = $scope.ticketObtenido.cantidadUtilizada + $scope.entradasHombre + $scope.entradasMujer;
-                        var nuevoIngreso = firebase.database().ref('tickets/' + eventId  +$scope.ticketObtenido.$id +'/ingresos').push().key;
+                        var nuevoIngreso = firebase.database().ref('tickets/' + eventId  +'/'+$scope.ticketObtenido.$id +'/ingresos').push().key;
 
                         if( $scope.ticketObtenido.paidOut)
                         {
                             firebase.database().ref('tickets/' + eventId  +'/'+$scope.ticketObtenido.$id).update({
-                                    cantidadUtilizada : total
+                                    cantidadUtilizada : total,
+                                    redeemed:true
                             });
+
                             firebase.database().ref('tickets/' + eventId  +'/'+$scope.ticketObtenido.$id +'/ingresos/'+nuevoIngreso).update({
                                 cantidadHombres : $scope.entradasHombre,
                                 cantidadMujer : $scope.entradasMujer,
@@ -178,11 +178,11 @@ angular.module('myApp.event', ['ngRoute'])
 
                             });
                             $mdDialog.hide();
-
                         }else{
 
                             firebase.database().ref('tickets/' + eventId  +'/'+$scope.ticketObtenido.$id).update({
-                                cantidadUtilizada : total
+                                cantidadUtilizada : total,
+                                redeemed:true
                             });
                             firebase.database().ref('tickets/' + eventId  +'/'+$scope.ticketObtenido.$id +'/ingresos/'+nuevoIngreso).update({
                                 cantidadHombres : $scope.entradasHombre,
@@ -192,9 +192,10 @@ angular.module('myApp.event', ['ngRoute'])
                                 medioDePago : tipoDePago
 
                             });
-                            $mdDialog.hide();
 
+                            $mdDialog.hide();
                         }
+
 
 
                     };
@@ -227,7 +228,11 @@ angular.module('myApp.event', ['ngRoute'])
             function ControllerdialogAbrirCode($scope, $mdDialog,$timeout, $q, $log, code) {
                 $scope.code = code;
 
+            };
 
+            $scope.borrarQr = function () {
+              $scope.code = '';
+              location.href = "#!/event";
             };
 
 

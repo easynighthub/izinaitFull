@@ -3,38 +3,44 @@
 <a href="#!/puerta" class="btn btn-sm">PUERTA </a>
 <a href="#!/listaGratis" class="btn btn-sm">LISTA GRATIS </a>
 </center>
-<input type="text" class="form-control" placeholder="Buscar por nombre"
+<input type="text" class="form-control " placeholder="Buscar por nombre"
        ng-keyup="filterEventsByText()" ng-model="filterNameInput"/>
+
+
 <div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header" data-background-color="purple">
                 <h4 class="title">Servicios
-                    <button style="float: right; margin: 0px 0px!important; top: 2px;"
+
+                    <button data-ng-click="abrirLectorQr()" style="float: right; margin: 0px 0px!important; top: 2px;"
                             class="btn btn-sm btn-success ">Leer QR
-                    </button></h4>
+                    </button>
+
+
+                </h4>
                 <p class="category"></p>
             </div>
             <div class="card-content table-responsive">
                 <table class="table">
                     <thead class="text-primary">
-                    <th>NOMBRE</th>
-                    <th>CANTIDAD</th>
-                    <th>TOTAL $</th>
+                    <th class="col-xs-6">NOMBRE</th>
+                    <th style="margin-right: 100px">CANTIDAD</th>
+
                     </thead>
                     <tbody>
-                    <tr ng-repeat="ticketObtenido in ticketsObtenidos" data-ng-click="cobrarServicio(ticketObtenido)"
-                    >
-                        <td>{{ticketObtenido.displayName}}
-                            <br> <p class="description">{{ticketObtenido.tipoEventservices}} </p> </td>
-                        <td class="text-primary">
-                            {{ticketObtenido.cantidadUtilizada}} / {{ticketObtenido.cantidadDeCompra}}
-                        </td>
+                    <tr ng-repeat="ticketObtenido in ticketsObtenidos" data-ng-click="cobrarServicio(ticketObtenido)">
+
                         <td>
+                            {{ticketObtenido.displayName}}
+                            <br> <p class="description">{{ticketObtenido.tipoEventservices}} </p> </td>
+                        <td>
+                            {{ticketObtenido.cantidadUtilizada}} / {{ticketObtenido.cantidadDeCompra}}
+                            <br>
                             <button ng-show="!ticketObtenido.paidOut"
-                                 class="btn btn-sm btn-info">
-                           $ {{(ticketObtenido.totalAPagar/ticketObtenido.cantidadDeCompra)*(ticketObtenido.cantidadDeCompra-ticketObtenido.cantidadUtilizada)}}
-                        </button>
+                                    class="btn btn-sm btn-info">
+                                $ {{(ticketObtenido.totalAPagar/ticketObtenido.cantidadDeCompra)*(ticketObtenido.cantidadDeCompra-ticketObtenido.cantidadUtilizada)}}
+                            </button>
                             <button ng-show="ticketObtenido.paidOut"
                                     class="btn btn-sm btn-info">
                                 PAGADO
@@ -46,8 +52,13 @@
                     </tbody>
                 </table>
 
+
             </div>
+
         </div>
+        <a  data-ng-click="borrarQr()" ng-show="code != ''" style="float: left; margin: 0px 0px !important; top: 2px; "
+            class="btn btn-sm btn-success col-md-12 "> X
+        </a>
     </div>
 </div>
 

@@ -284,6 +284,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 $scope.nuevaAsistencia.asistencia = false;
                 $scope.nuevaAsistencia.fechaClick = Date.now();
                 $scope.nuevaAsistencia.totalList = $scope.totalReserva;
+                $scope.nuevaAsistencia.totalAsist = 0;
                 $scope.nuevaAsistencia.displayName = usuarioLogeado.displayName;
                 $scope.nuevaAsistencia.idRRPP = Rrpp;
                 var totalAsistenciaVisible = $scope.totalReserva;

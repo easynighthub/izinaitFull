@@ -14,6 +14,7 @@ angular.module('myApp', [
     'myApp.event',
     'myApp.userDetalle',
     'myApp.puerta',
+    'myApp.listaGratis'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
     $locationProvider.hashPrefix('!');

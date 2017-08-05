@@ -75,7 +75,6 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                             impresionesRQ.$loaded().then(function () {
                                 $scope.impresionesRRPP = impresionesRQ;
                                 $scope.impresionesRRPP.forEach(function (j) {
-
                                     angular.forEach(event.rrpps, function(rp){
                                         if (j.$id == rp.uid){
                                             j.nameRRPP = rp.name;
