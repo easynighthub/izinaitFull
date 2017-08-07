@@ -19,10 +19,17 @@ angular.module('myApp.event', ['ngRoute'])
             var eventIdSelect = localStorage.getItem('eventIdSelect');
             console.log(eventIdSelect);
             var eventId = $routeParams.id || eventIdSelect; // id del evento entregador por url
+            var eventoCompleto = [];
             $scope.code = '';
             if($routeParams.code){
                 $scope.code = $routeParams.code;
             }
+
+            firebase.database().ref('events/').child(eventId).once('value', function(snapshot) {
+              eventoCompleto = snapshot.val() ;
+              console.log(Object.keys(eventoCompleto.clubs)[0]);
+            });
+
 
             $scope.url = 'zxing://scan/?ret=http://'+location.host+'/codigoRecibido.html?code={CODE}';
 
@@ -162,12 +169,20 @@ angular.module('myApp.event', ['ngRoute'])
                         var total = $scope.ticketObtenido.cantidadUtilizada + $scope.entradasHombre + $scope.entradasMujer;
                         var nuevoIngreso = firebase.database().ref('tickets/' + eventId  +'/'+$scope.ticketObtenido.$id +'/ingresos').push().key;
 
+                        var idClub = Object.keys(eventoCompleto.clubs)[0];
+                        var GuardarCliente='admins/'+eventoCompleto.admin+'/clients/'+idClub+'/'+ $scope.ticketObtenido.userId;
+                        firebase.database().ref(GuardarCliente).set(true);
+                        firebase.database().ref('users/' + $scope.ticketObtenido.userId + '/events/' +eventoCompleto.admin+'/'+ eventId).set(new Date().getTime());
+
                         if( $scope.ticketObtenido.paidOut)
                         {
                             firebase.database().ref('tickets/' + eventId  +'/'+$scope.ticketObtenido.$id).update({
                                     cantidadUtilizada : total,
                                     redeemed:true
                             });
+
+
+
 
                             firebase.database().ref('tickets/' + eventId  +'/'+$scope.ticketObtenido.$id +'/ingresos/'+nuevoIngreso).update({
                                 cantidadHombres : $scope.entradasHombre,

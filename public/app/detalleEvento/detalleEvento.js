@@ -588,10 +588,41 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                          console.log('se guardaron bien el tickets ');
                          firebase.database().ref('ticketsCreate/' + $scope.newTicket.ticketId).set(true);
 
-                         firebase.database().ref('users/' + $scope.usuarioLogeado.$id + '/events/' + eventId).set(true);
+                       //  firebase.database().ref('users/' + $scope.usuarioLogeado.$id + '/events/'+ $scope.event.admin+'/' + eventId).set(true);
+
                          firebase.database().ref('users/' + $scope.usuarioLogeado.$id).update(
                          {celular: $scope.newTicket.celular});
                          $mdDialog.hide();
+
+                             $scope.getClub = function (club) {
+                                 if (club) {
+                                     var clubKey = Object.keys(club)[0];
+                                     return $filter('filter')(clubsER, {$id: clubKey})[0].name;
+                                 }
+                             };
+                             var nameClub = $scope.getClub(getEvent.clubs);
+
+
+                             $.ajax({
+                                 url: 'http://www.abcs.cl/correo/reservarServicio.php',
+                                 type: "POST",
+                                 data: {
+                                     name: $scope.usuarioLogeado.displayName,
+                                     phone: $scope.newTicket.celular,
+                                     email:  $scope.usuarioLogeado.email,
+                                     message: "GRACIAS POR COMPRAR ESTE SERVICIO",
+                                     eventName : getEvent.name,
+                                     clubName : nameClub
+                                 },
+                                 cache: false,
+                                 success: function() {
+                                     console.log("siiiiiiiiiiiiiiiiiiiiiii");
+                                 },
+                                 error: function() {
+                                     console.log("noooooooooooooooooooooo");
+                                 },
+                             });
+
                          }, function (e) {
                          alert('Error, intente de nuevo');
                          // console.log('se guardo mal ', e);

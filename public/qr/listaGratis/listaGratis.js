@@ -20,7 +20,10 @@ angular.module('myApp.listaGratis', ['ngRoute'])
             var eventIdSelect = localStorage.getItem('eventIdSelect');
             console.log(eventIdSelect);
             var eventId = $routeParams.id || eventIdSelect; // id del evento entregador por url
-
+            var eventoCompleto = [];
+            firebase.database().ref('events/').child(eventId).once('value', function(snapshot) {
+                eventoCompleto = snapshot.val() ;
+            });
             $scope.code = '';
             if($routeParams.code){
                 $scope.code = $routeParams.code;
@@ -156,6 +159,7 @@ angular.module('myApp.listaGratis', ['ngRoute'])
                         firebase.database().ref('events/' + eventId  +'/asist/'+$scope.userCapturado.$id).update({
                             totalAsist : total
                         });
+
                         firebase.database().ref('events/' + eventId  +'/asist/'+$scope.userCapturado.$id +'/ingresos/'+nuevoIngreso).update({
                             cantidadHombres : $scope.entradasHombre,
                             cantidadMujer : $scope.entradasMujer,
@@ -163,7 +167,15 @@ angular.module('myApp.listaGratis', ['ngRoute'])
                             gratis : true,
 
                         });
-                        $mdDialog.hide();
+
+                    var idClub = Object.keys(eventoCompleto.clubs)[0];
+                    var GuardarCliente='admins/'+eventoCompleto.admin+'/clients/'+idClub+'/'+$scope.userCapturado.userId;
+                    firebase.database().ref(GuardarCliente).set(true);
+
+                    firebase.database().ref('users/' + $scope.userCapturado.userId + '/events/' +eventoCompleto.admin+'/'+ eventId).set(new Date().getTime());
+
+
+                    $mdDialog.hide();
 
 
 

@@ -23,6 +23,10 @@ angular.module('myApp.puerta', ['ngRoute'])
             var eventIdSelect = localStorage.getItem('eventIdSelect');
             console.log(eventIdSelect);
             var eventId = $routeParams.id || eventIdSelect; // id del evento entregador por url
+            var eventoCompleto = [];
+            firebase.database().ref('events/').child(eventId).once('value', function(snapshot) {
+                eventoCompleto = snapshot.val() ;
+            });
 
 
 
@@ -66,6 +70,10 @@ angular.module('myApp.puerta', ['ngRoute'])
 
 
             $scope.AgregarPersonas = function (index,rrppSelect) {
+             console.log(index + "  "+ rrppSelect);
+
+
+
                 $mdDialog.show({
                     controller: ControllerdialogAgregarPersonas,
                     templateUrl: 'dialogAgregarPersonas',
@@ -84,9 +92,21 @@ angular.module('myApp.puerta', ['ngRoute'])
             // var content = element && element.getAttribute("content");
 
             function ControllerdialogAgregarPersonas($scope, $mdDialog,$timeout, $q, $log, rrppSelect,index) {
-                $scope.rrppSelect = rrppSelect;
+                if(index == 'noRRPP'){
+                    $scope.rrppSelect = [];
+                    $scope.rrppSelect.uid = 'noRRPP';
+
+                    firebase.database().ref('events/' + eventId + '/rrpps/'+index).update({
+                        name : 'Sin RRPP',
+                        uid : index,
+                        email : 'sinrrpp@izinait.com'
+                    });
+
+                }else{
+                    $scope.rrppSelect = rrppSelect;
+                }
                 console.log(index);
-                console.log($scope.rrppSelect);
+                console.log($scope.rrppSelect.uid);
                 $scope.gratisHombre = 0;
                 $scope.valorGratisHombre = 0;
                 $scope.gratisMujer = 0;
@@ -237,27 +257,27 @@ angular.module('myApp.puerta', ['ngRoute'])
                     console.log(puertaTicket);
 
                     firebase.database().ref('events/' + eventId + '/puertaTickets/'+newIdPuerta).set(puertaTicket);
+
                     var rrppsCapturados = $firebaseObject(firebase.database().ref('events/'+eventIdSelect+'/rrpps'));
                     rrppsCapturados.$loaded().then(function () {
                         $scope.rrppsCapturado = rrppsCapturados;
                         $scope.rrppsCapturado.forEach(function (lk) {
-                            if(lk.uid == $scope.rrppSelect.uid){
+                            if (lk.uid == $scope.rrppSelect.uid) {
                                 console.log(lk);
-                              lk.numeroTotal =
-                                  lk.numeroTotal +
-                                  $scope.extraMujer +
-                                  $scope.extraHombre +
-                                  $scope.gratisHombre +
-                                  $scope.gratisMujer +
-                                  $scope.vipHombre +
-                                  $scope.vipMujer
-                               firebase.database().ref('events/' + eventId + '/rrpps/'+index).update(lk);
-                            };
-
+                                lk.numeroTotal =
+                                    lk.numeroTotal +
+                                    $scope.extraMujer +
+                                    $scope.extraHombre +
+                                    $scope.gratisHombre +
+                                    $scope.gratisMujer +
+                                    $scope.vipHombre +
+                                    $scope.vipMujer
+                                firebase.database().ref('events/' + eventId + '/rrpps/' + index).update(lk);
+                            }
+                            ;
                         });
-                        console.log( $scope.rrppsCapturado);
-                    });
 
+                    });
                     $mdDialog.hide();
 
 

@@ -21,6 +21,7 @@ angular.module('myApp', [
     'myApp.crearEvento',
     'myApp.selectClub',
     'myApp.detalleEvento',
+    'myApp.clientes',
     'ui.bootstrap.datetimepicker'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
