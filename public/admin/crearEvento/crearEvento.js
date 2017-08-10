@@ -19,6 +19,51 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             var admin = window.currentAdmin;
             var adminLogeado = "";
             $scope.newEvent = {};
+            $scope.serviciosEvent = [];
+            console.log($rootScope.eventToRepet);
+            if ($rootScope.eventToRepet) {
+                $scope.serviciosEvent = $rootScope.eventToRepet.reservas;
+                $scope.serviciosEvent.forEach(function (serv) {
+                    if(serv.tipo == "ESPECIAL"){
+                        serv.color = "#ff9800";
+                    };
+                    if(serv.tipo == "PREVENTA"){
+                        serv.color = "#f44336";
+                    };
+                    if(serv.tipo == "MESA"){
+                        serv.color = "#4caf50";
+                    };
+                    if(serv.tipo == "BOTELLAS"){
+                        serv.color = "#00bcd4";
+                    };
+                    if(serv.tipo == "VIP"){
+                        serv.color = "#c8c8c8";
+                    };
+
+
+                });
+
+
+                $scope.serviciosEvent.forEach(function (s) {
+                   s.fechaFin = null;
+                });
+                $scope.newEvent.eventDetails = $rootScope.eventToRepet.eventDetails;
+                $scope.newEvent.ageRangeFemale = $rootScope.eventToRepet.ageRangeFemale;
+                $scope.newEvent.ageRangeMale = $rootScope.eventToRepet.ageRangeMale;
+                $scope.newEvent.clothing = $rootScope.eventToRepet.clothing;
+                $scope.newEvent.entryValue = $rootScope.eventToRepet.entryValue;
+                $scope.newEvent.djs = $rootScope.eventToRepet.djs;
+                $scope.newEvent.name = $rootScope.eventToRepet.name;
+                if($rootScope.eventToRepet.freemiumHour != $rootScope.eventToRepet.date){
+                    $scope.activarHoraGratis = true;
+
+
+                }
+
+            };
+
+
+
 
 
             firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function(snapshot) {
@@ -156,13 +201,14 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 readURL(this);
             });
 
-            $scope.serviciosEvent = [];
+
 
             $scope.addNewChoicePREVENTA = function () {
                 var newItemNo = $scope.PREVENTA;
                 $scope.serviciosEvent.push({
                         tipo: "PREVENTA",
                         color: '#f44336'
+
 
                     }
                 );
@@ -173,6 +219,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 $scope.serviciosEvent.push({
                         tipo: "MESA",
                         color: '#4caf50'
+
                     }
                 );
             };
@@ -182,6 +229,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 $scope.serviciosEvent.push({
                         tipo: "BOTELLAS",
                         color: '#00bcd4'
+
                     }
                 );
             };

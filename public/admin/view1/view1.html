@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-4 padd-0-xs inline-block float-fix"
          ng-repeat="event in eventsWithServices | orderBy:'date'"
-         ng-click="goToEventDetails(event)"
+
          ng-show="event.toHour > eventosFuturoFecha">
         <div class="testcard">
 
@@ -55,10 +55,10 @@
             <div class="testfooter">
 
                 <button class=" btn btn-sm "
-                        ng-click="redirectToEvent($index)" >Informe</button>
+                        ng-click="goToEventDetails(event)" >Informe</button>
 
                 <button class="btn btn-sm "
-                        ng-click="duplicateEvent($index)">Duplicar</button>
+                        ng-click="duplicateEvent(event)">Duplicar</button>
 
                 <button class="btn btn-sm"
                         ng-click="duplicateEvent($index)">Editar</button>

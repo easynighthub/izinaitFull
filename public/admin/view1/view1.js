@@ -75,12 +75,28 @@ angular.module('myApp.view1', ['ngRoute'])
                                 $('.tituloIziboss').text("Eventos Futuros");
                             }else
                             {
+                                $scope.tickets = [];
                                 $scope.Allvents.forEach(function (x) {
                                     var eventServices = firebase.database().ref('/eventServices/'+x.$id);
                                     var eventServicesRQ = $firebaseArray(eventServices);
                                     eventServicesRQ.$loaded().then(function(){
                                         x.reservas = eventServicesRQ;
                                         x.ReservaCantidad = eventServicesRQ.length;
+                                        x.reservas.forEach(function (j) {
+                                            j.utilizados = 0;
+                                            var ticketServices = firebase.database().ref('/tickets/'+x.$id);
+                                            var ticketServiceRQ = $firebaseArray(ticketServices);
+                                            ticketServiceRQ.$loaded().then(function(){
+                                                console.log(ticketServiceRQ);
+                                                $scope.tickets = ticketServiceRQ;
+                                                $scope.tickets.forEach(function (k) {
+                                                   if(j.$id == k.ideventservices){
+                                                    j.utilizados = j.utilizados + k.cantidadDeCompra;
+                                                   };
+                                                });
+                                            });
+                                        });
+
                                         $scope.eventsWithServices.push(x);
                                         console.log($scope.eventsWithServices);
                                     });
@@ -231,7 +247,12 @@ angular.module('myApp.view1', ['ngRoute'])
 
             $scope.goToEventDetails = function(evento ) {
                 document.location.href = '#!/detalleEvento?id=' + evento.$id;
-            }
+            };
+
+            $scope.duplicateEvent = function(event) {
+                $rootScope.eventToRepet = event;
+                document.location.href = '#!/crearEvento';
+            };
 
 
 

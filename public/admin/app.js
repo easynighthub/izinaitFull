@@ -44,10 +44,10 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     }
 
     if(validateUser()) {
-        $routeProvider.otherwise({redirectTo: '/view1'});
+        $routeProvider.otherwise({redirectTo: '/selectClub'});
         console.log(window.currentAdmin);
     } else {
-        $routeProvider.otherwise({redirectTo: '/view1'});
+        $routeProvider.otherwise({redirectTo: '/selectClub'});
         window.currentAdmin ="";
         console.log( window.currentAdmin);
     }
