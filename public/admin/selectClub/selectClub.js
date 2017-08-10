@@ -63,6 +63,8 @@ angular.module('myApp.selectClub', ['ngRoute'])
 
                         };
                     });
+
+                    $('.no-js').removeClass('nav-open');
                 } else {
                     window.currentAdmin = "";
                     $scope.adminLogeado = "";

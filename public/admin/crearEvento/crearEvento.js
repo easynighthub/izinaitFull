@@ -131,6 +131,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                         console.log(adminLogeado);
 
                         $('.tituloIziboss').text("Crear Evento");
+                        $('.no-js').removeClass('nav-open');
                     });
                 } else {
                     window.currentAdmin = "";

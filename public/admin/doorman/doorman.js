@@ -50,8 +50,8 @@ angular.module('myApp.doorman', ['ngRoute'])
 
                  document.getElementById('BarraCargando').style.display = 'none';
                  document.getElementById('panelPrincipal').style.display = 'block';
-
                  $('.tituloIziboss').text("Doorman");
+                 $('.no-js').removeClass('nav-open');
              });
          } else {
              window.currentAdmin = "";

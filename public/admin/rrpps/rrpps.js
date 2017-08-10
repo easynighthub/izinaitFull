@@ -59,6 +59,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
                         document.getElementById('BarraCargando').style.display = 'none';
                         document.getElementById('panelPrincipal').style.display = 'block';
                         $('.tituloIziboss').text("Relaciones Publicas");
+                        $('.no-js').removeClass('nav-open');
                     });
                 } else {
                     window.currentAdmin = "";
@@ -92,12 +93,8 @@ angular.module('myApp.rrpps', ['ngRoute'])
                                     x.nickName = buscarNick.nickName;
                                     $scope.rrpps.push(x);
                                 });
-                            }
-                        }
-
-
-
-
+                            };
+                        };
 
                     });
                 });

@@ -70,11 +70,13 @@ angular.module('myApp.view1', ['ngRoute'])
                             $scope.Allvents = $filter('filter')(eventsAdminRequest, getFuturesEvents);
                             console.log(eventsAdminRequest);
                             if(eventsAdminRequest == undefined){
+                                $('.no-js').removeClass('nav-open');
                                 console.log("no cargo nada");
                                 document.getElementById('noHayEventos').style.display = 'block';
                                 $('.tituloIziboss').text("Eventos Futuros");
                             }else
                             {
+                                $('.no-js').removeClass('nav-open');
                                 $scope.tickets = [];
                                 $scope.Allvents.forEach(function (x) {
                                     var eventServices = firebase.database().ref('/eventServices/'+x.$id);
@@ -101,9 +103,13 @@ angular.module('myApp.view1', ['ngRoute'])
                                         console.log($scope.eventsWithServices);
                                     });
                                 });
-                                document.getElementById('BarraCargando').style.display = 'none';
-                                $('.tituloIziboss').text("Eventos Futuros");
-                            }
+
+
+                            };
+
+                            document.getElementById('BarraCargando').style.display = 'none';
+                            $('.tituloIziboss').text("Eventos Futuros");
+
 
 
                         });

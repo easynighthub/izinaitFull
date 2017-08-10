@@ -76,8 +76,9 @@ angular.module('myApp.clientes', ['ngRoute'])
                                 });
                             });
                         });
-
-
+                        $('.tituloIziboss').text("Cientes");
+                        $('.no-js').removeClass('nav-open');
+                        document.getElementById('BarraCargando').style.display = 'none';
 
                     });
                 } else {

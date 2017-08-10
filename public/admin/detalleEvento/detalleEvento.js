@@ -120,6 +120,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                         console.log(adminLogeado);
 
                         $('.tituloIziboss').text("Detalle Evento");
+                        $('.no-js').removeClass('nav-open');
                     });
                 } else {
                     window.currentAdmin = "";
