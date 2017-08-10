@@ -1,9 +1,9 @@
 <center>
-  <div style="background-color: white">
-<a href="#!/event" class="btn btn-sm">VENTAS </a>
-<a href="#!/puerta" class="btn btn-sm">INGRESOS </a>
-<a href="#!/listaGratis" class="btn btn-sm">LISTA GRATIS </a>
-  </div>
+    <div style="background-color: white">
+        <a href="#!/event" class="btn btn-sm">VENTAS </a>
+        <a href="#!/puerta" class="btn btn-sm">INGRESOS </a>
+        <a href="#!/listaGratis" class="btn btn-sm">LISTA GRATIS </a>
+    </div>
 </center>
 <input type="text" class="form-control " placeholder="Buscar por nombre"
        ng-keyup="filterEventsByText()" ng-model="filterNameInput"/>
@@ -34,7 +34,8 @@
                     <tr ng-repeat="ticketObtenido in ticketsObtenidos" data-ng-click="cobrarServicio(ticketObtenido)">
 
                         <td>
-                            {{ticketObtenido.displayName}}
+                            {{ticketObtenido.firstName}}<br>
+                            {{ticketObtenido.lastName}}
                             <br> <p class="description">{{ticketObtenido.tipoEventservices}} </p> </td>
                         <td>
                             {{ticketObtenido.cantidadUtilizada}} / {{ticketObtenido.cantidadDeCompra}}

@@ -50,7 +50,15 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
         $routeProvider.otherwise({redirectTo: '/selectClub'});
         window.currentAdmin ="";
         console.log( window.currentAdmin);
-    }
+    };
+
+    var salir = document.getElementById('salir');
+
+    salir.addEventListener('click', function() {
+        firebase.auth().signOut();
+
+        window.location.href = '/admin.html';
+    });
 
 
 }]);
