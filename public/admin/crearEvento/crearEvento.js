@@ -7,8 +7,8 @@ angular.module('myApp.crearEvento', ['ngRoute'])
         });
     }])
 
-    .controller('crearEventoCtrl', ['$scope', '$routeParams','$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
-        function ($scope,$routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope) {
+    .controller('crearEventoCtrl', ['$scope', '$routeParams','$firebaseObject', '$firebaseArray', '$filter', '$rootScope','$mdDialog',
+        function ($scope,$routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope,$mdDialog) {
 
 
 
@@ -374,6 +374,9 @@ var linkGuardarFoto;
                 $scope.newEvent.musicGenres = $scope.newEvent.musicGenres ? $scope.newEvent.musicGenres.join(', ') : '';
                  */
               if($scope.serviciosEvent.length > 0){
+
+                  document.getElementById('BarraCargando').style.display = 'block';
+                  document.getElementById('crearEvento').style.display = 'none';
                    guardarServicios();
                   subirImagen();
                 }else{
@@ -494,6 +497,8 @@ var linkGuardarFoto;
 
                 });
 
+
+
                 $scope.shareWithFacebook = 'https://www.facebook.com/share.php?u=' + $scope.newEvent.evenUrl;
                 $scope.shareWithTwiter = 'http://twitter.com/share?text=An%20Awesome%20Link&url=' + $scope.newEvent.evenUrl;
 
@@ -501,6 +506,9 @@ var linkGuardarFoto;
                 $scope.newEvent = {};
                 document.location.href = '#!/view1';
             };
+
+
+
 
 
         }]);

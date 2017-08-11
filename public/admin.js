@@ -119,7 +119,20 @@ signInButtonFacebook.addEventListener('click', function() {
 
 
 
-    }
+    };
+
+    function updateData(response) {
+        var adminId = user.uid
+        database.ref(USERS_LOCATION + user.uid).update({
+            displayName: response.name,
+            picture: response.picture.data.url,
+            firstName: response.first_name,
+            lastName: response.last_name,
+        });
+
+
+
+    };
 
     function onAuthStateChanged(user) {
         //cleanupUi();
@@ -139,12 +152,13 @@ signInButtonFacebook.addEventListener('click', function() {
 
     function userExistsCallback(exists, response) {
         if (exists) {
-
-            writeUserData(response);
+            updateData(response);
             setTimeout(function(){window.location.href = 'admin'},500); // 3000ms = 3s
+
         } else {
             writeUserData(response);
             setTimeout(function(){window.location.href = 'admin'},500); // 3000ms = 3s
+
         }
     }
 

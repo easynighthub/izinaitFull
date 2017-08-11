@@ -117,7 +117,6 @@ angular.module('myApp.codigo', ['ngRoute'])
                             displayName: response.name,
                             email: response.email || "null@izinait.com",
                             picture: response.picture.data.url,
-                            provider: provider,
                             type: 'Free',
                             age: response.age_range.min,
                             birthday: response.birthday || "11/11/1111",
@@ -126,7 +125,17 @@ angular.module('myApp.codigo', ['ngRoute'])
                             lastName: response.last_name,
                             gender : response.gender
                         });
-                }
+                };
+                function    updateData(response) {
+                    database
+                        .ref(USERS_LOCATION + user.uid)
+                        .update({
+                            displayName: response.name,
+                            picture: response.picture.data.url,
+                            firstName: response.first_name,
+                            lastName: response.last_name,
+                        });
+                };
 
                 function onAuthStateChanged(user) {
                     //cleanupUi();
@@ -147,7 +156,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                 function userExistsCallback(exists, response) {
                     if (exists) {
 
-                        writeUserData(response);
+                        updateData(response);
                         console.log(response);
                         console.log("obtuve el codigo");
                         update_qrcode();    // obtengo codigo
@@ -164,7 +173,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                             $scope.email = $scope.usuarioLogeado.email;
                             $scope.foto = $scope.usuarioLogeado.picture;
 
-                            $.ajax({
+                         /*   $.ajax({
                                 url: 'http://www.abcs.cl/correo/contact_me.php',
                                 type: "POST",
                                 data: {
@@ -180,7 +189,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                                 error: function() {
                                     console.log("noooooooooooooooooooooo");
                                 },
-                            });
+                            }); */
 
                             document.getElementById('codigoVisibile').style.display = 'block';
                             document.getElementById('pedirCodigo').style.display = 'none';

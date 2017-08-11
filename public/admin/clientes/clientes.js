@@ -68,13 +68,15 @@ angular.module('myApp.clientes', ['ngRoute'])
                         firebase.database().ref('admins/'+adminLogeado.$id+'/clients').child(adminLogeado.idClubWork).once('value', function(snapshot) {
                                 console.log(snapshot.val());
                                 clientes = snapshot.val();
+                                if(clientes != null){
+                                    angular.forEach(Object.keys(clientes), function(client){
+                                        var clientesRequest = $firebaseObject(firebase.database().ref('/users/' + client));
+                                        clientesRequest.$loaded().then(function(){
+                                            getLastEvent(clientesRequest);
+                                        });
+                                    });
+                                        }
 
-                            angular.forEach(Object.keys(clientes), function(client){
-                                var clientesRequest = $firebaseObject(firebase.database().ref('/users/' + client));
-                                clientesRequest.$loaded().then(function(){
-                                    getLastEvent(clientesRequest);
-                                });
-                            });
                         });
                         $('.tituloIziboss').text("Cientes");
                         $('.no-js').removeClass('nav-open');
