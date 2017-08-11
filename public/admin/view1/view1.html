@@ -25,7 +25,7 @@
             <div class="testcontenido">
                 <p class="testh2 text-center" ><strong>{{event.name}}</strong></p>
 
-                <div ng-repeat="reserva in event.reservas" ng-show="event.ReservaCantidad > 1">
+                <div ng-repeat="reserva in event.reservas" ng-show="event.ReservaCantidad >= 1">
                     <tr>
 
                         <td>
@@ -60,8 +60,8 @@
                 <button class="btn btn-sm "
                         ng-click="duplicateEvent(event)">Duplicar</button>
 
-                <button class="btn btn-sm"
-                        ng-click="duplicateEvent($index)">Editar</button>
+             <!--   <button class="btn btn-sm"
+                        ng-click="editEvent(event)">Editar</button> -->
 
 
             </div>

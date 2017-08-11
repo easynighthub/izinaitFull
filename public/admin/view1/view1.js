@@ -257,6 +257,13 @@ angular.module('myApp.view1', ['ngRoute'])
 
             $scope.duplicateEvent = function(event) {
                 $rootScope.eventToRepet = event;
+                $rootScope.eventEdit = undefined;
+                document.location.href = '#!/crearEvento';
+            };
+
+            $scope.editEvent = function(event) {
+                $rootScope.eventEdit = event;
+                $rootScope.eventToRepet = undefined;
                 document.location.href = '#!/crearEvento';
             };
 

@@ -20,8 +20,47 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             var adminLogeado = "";
             $scope.newEvent = {};
             $scope.serviciosEvent = [];
+
             console.log($rootScope.eventToRepet);
-            if ($rootScope.eventToRepet) {
+            console.log($rootScope.eventEdit);
+
+            if($rootScope.eventEdit != null){
+                $scope.serviciosEvent = $rootScope.eventEdit.reservas;
+                $scope.serviciosEvent.forEach(function (serv) {
+
+
+                    var myDate = new Date( serv.fechaFin );
+                   serv.fechaFin = myDate.toGMTString();
+
+                    if(serv.tipo == "ESPECIAL"){
+                        serv.color = "#ff9800";
+
+                    };
+                    if(serv.tipo == "PREVENTA"){
+                        serv.color = "#f44336";
+                    };
+                    if(serv.tipo == "MESA"){
+                        serv.color = "#4caf50";
+                    };
+                    if(serv.tipo == "BOTELLAS"){
+                        serv.color = "#00bcd4";
+                    };
+                    if(serv.tipo == "VIP"){
+                        serv.color = "#c8c8c8";
+                    };
+
+                });
+
+                if($rootScope.eventEdit.freemiumHour != $rootScope.eventEdit.date){
+                    $scope.activarHoraGratis = true;
+                };
+
+                $scope.newEvent = $rootScope.eventEdit;
+
+
+            };
+
+            if ($rootScope.eventToRepet != null) {
                 $scope.serviciosEvent = $rootScope.eventToRepet.reservas;
                 $scope.serviciosEvent.forEach(function (serv) {
                     if(serv.tipo == "ESPECIAL"){
@@ -57,6 +96,9 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 if($rootScope.eventToRepet.freemiumHour != $rootScope.eventToRepet.date){
                     $scope.activarHoraGratis = true;
                 };
+                $scope.newEvent.eventEnvironment = $rootScope.eventToRepet.eventEnvironment;
+                $scope.newEvent.musicGenres = $rootScope.eventToRepet.musicGenres;
+
 
 
             };
@@ -91,7 +133,11 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                                         $scope.newEvent.lat = x.latitude;
                                         $scope.newEvent.lng = x.longitude;
                                         $scope.newEvent.admin = adminLogeado.$id;
-                                        $scope.newEvent.id =  firebase.database().ref().child('events/').push().key;
+                                        if($rootScope.eventEdit != undefined){
+                                            $scope.newEvent.id = $rootScope.eventEdit.$id;
+                                        }else{
+                                            $scope.newEvent.id =  firebase.database().ref().child('events/').push().key;
+                                        }
                                         $scope.newEvent.evenUrl = 'http://izinait.com/user/app/#!/detalleEvento?id=' + $scope.newEvent.id;
                                         console.log(adminLogeado.clubs[x.$id].validado);
                                         $scope.newEvent.visible = adminLogeado.clubs[x.$id].validado;
@@ -502,13 +548,39 @@ var linkGuardarFoto;
                 $scope.shareWithFacebook = 'https://www.facebook.com/share.php?u=' + $scope.newEvent.evenUrl;
                 $scope.shareWithTwiter = 'http://twitter.com/share?text=An%20Awesome%20Link&url=' + $scope.newEvent.evenUrl;
 
-                alert('EVENTO CARGADO EXITOSAMENETE , izinait lo aprobara en unos minutos');
                 $scope.newEvent = {};
-                document.location.href = '#!/view1';
+
+
+                if(adminLogeado.clubs[adminLogeado.idClubWork].validado){
+                    $scope.showConfirm(true);
+                }else {
+                    $scope.showConfirm(false);
+                }
             };
 
 
+            $scope.showConfirm = function(validado) {
+                var text = "";
+                if(validado){
+                    text =  "IZINAIT YA APROBO TU EVENTO Y SE VISUALIZA EN NUESTRA WEB"
+                }else {
+                    text = "IZINAIT LO APROBARA EN UNOS MINUTOS"
+                }
 
+                // Appending dialog to document.body to cover sidenav in docs app
+                var confirm = $mdDialog.confirm()
+                    .title('EVENTO CARGADO EXITOSAMENETE')
+                    .textContent(text)
+                    .ariaLabel('Lucky day')
+                    .ok('LISTO!!')
+
+                $mdDialog.show(confirm).then(function() {
+                    document.location.href = '#!/view1';
+
+                }, function() {
+
+                });
+            };
 
 
         }]);
