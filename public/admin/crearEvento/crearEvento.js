@@ -56,9 +56,8 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 $scope.newEvent.name = $rootScope.eventToRepet.name;
                 if($rootScope.eventToRepet.freemiumHour != $rootScope.eventToRepet.date){
                     $scope.activarHoraGratis = true;
+                };
 
-
-                }
 
             };
 
@@ -185,22 +184,32 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 }
             };
 
+var linkGuardarFoto;
 
+            $('.dropzone').html5imageupload({
+                onSave: function() {
 
-            function     readURL(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        $scope.imageInBase64 = e.target.result;
-                        $('#blah').attr('src', e.target.result);
-                    };
-                    reader.readAsDataURL(input.files[0]);
+                },
+                onAfterCancel: function() {
+                    $("#thumb").val('');
+                },
+                onAfterProcessImage:function () {
+                    console.log(this);
+                 console.log(this.image[0].src);
+                    // Data URL string
+                    console.log($('.thumb'));
+                  linkGuardarFoto = this.imageGhost[0].currentSrc;
+                    // Create a root reference
+
+                // Create a reference to 'mountains.jpg'
+                  /*   */
                 }
-            };
-
-            $("#imgInp").change(function () {
-                readURL(this);
             });
+
+
+
+
+
 
 
 
@@ -263,22 +272,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
             ////////////////////////////// controla el pick image ////////////////////////
 
-            $(".dropzone").html5imageupload({
-                onAfterProcessImage: function() {
-                    $eventImage.val($(this.element).data("name")),
-                        $(".cover-container").parent().parent().removeClass("has-error"),
-                        coverIsFalse = !1,
-                        $("#checkCover").removeClass("checkRequired")
-                },
-                onAfterCancel: function() {
-                    $("#checkCover").addClass("checkRequired"),
-                        coverIsFalse = !0
-                },
-                onAfterRemoveImage: function() {
-                    $("#checkCover").addClass("checkRequired"),
-                        coverIsFalse = !0
-                }
-            });
+
             ////////////////////////////////////////////////////////////////////////
             var environmentER = firebase.database().ref().child('environmentEvent');
             $scope.environmentER = $firebaseArray(environmentER);
@@ -358,11 +352,28 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
                 $scope.newEvent.premiumHour = $scope.newEvent.freemiumHour;
 
+           /*     var musicStyleText = "";
+                angular.forEach($scope.newEvent.musicGenres,function (musicStyle) {
+                    console.log(musicStyle);
+                    musicStyleText = musicStyle +', '+ musicStyleText;
+                    console.log(musicStyleText);
 
-                $scope.newEvent.eventEnvironment = $scope.eventEnvironment ? $scope.eventEnvironment.join(', ') : '';
+                });
+                var StyleText = "";
+                angular.forEach($scope.newEvent.eventEnvironment,function (style) {
+                    console.log(style);
+                    StyleText = style +', '+ StyleText;
+                    console.log(StyleText);
+
+                });
+ */
+
+
+
+                /*    $scope.newEvent.eventEnvironment = $scope.eventEnvironment ? $scope.eventEnvironment.join(', ') : '';
                 $scope.newEvent.musicGenres = $scope.newEvent.musicGenres ? $scope.newEvent.musicGenres.join(', ') : '';
-
-               if($scope.serviciosEvent.length > 0){
+                 */
+              if($scope.serviciosEvent.length > 0){
                    guardarServicios();
                   subirImagen();
                 }else{
@@ -416,15 +427,28 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     );
                 }
             };
+
+
+          /*  var ref = firebase.storage().ref('andro');
+            ref.putString(message, 'data_url').then(function(snapshot) {
+                console.log( snapshot.a.downloadURLs[0]);
+                console.log('Uploaded a data_url string!');
+            }); */
+            var managerError = function (e) {
+                stopLoading();
+                console.log('Hubo un Error', e);
+                alert('Error interno, intente nuevamente.');
+            };
+
             var subirImagen = function ()  {
-            /*    var file = $('#imgInp')[0].files[0];   // URL DE LA IMAGEN
-                var ref = firebase.storage().ref('eventImages/' + $scope.newEvent.id + '/' + file.name);  // RUTA DE DONDE SE GUARDARA EN FACEBOOK
-                ref.put(file).then(function (snapshot) {
-                    console.log("guarde bien la imagen");*/
-                    $scope.newEvent.image = "hola"; // url donde quedo el archivo guardado
+              var file = linkGuardarFoto;  // URL DE LA IMAGEN
+                var ref = firebase.storage().ref('eventImages/' + $scope.newEvent.id);  // RUTA DE DONDE SE GUARDARA
+                ref.putString(file, 'data_url').then(function(snapshot) {
+                    console.log("guarde bien la imagen");
+                    $scope.newEvent.image = snapshot.a.downloadURLs[0]; // url donde quedo el archivo guardado
                     firebase.database().ref('events/' + $scope.newEvent.id).set($scope.newEvent).then(
                         function (s) {
-                            firebase.database().ref('clubs/' + getclubId($scope.selectedClub) + '/events/' + $scope.newEvent.id).set(true).then(
+                            firebase.database().ref('clubs/' + adminLogeado.idClubWork + '/events/' + $scope.newEvent.id).set(true).then(
                                 function (s) {
 
                                     updateDoormanEvents($scope.newEvent.id);
@@ -432,7 +456,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
                                 }, managerError);
                         }, managerError);
-             //   }, managerError);
+               }, managerError);
             };
 
 
