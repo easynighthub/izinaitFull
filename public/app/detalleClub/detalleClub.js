@@ -54,12 +54,15 @@ angular.module('myApp.detalleClub', ['ngRoute'])
                 });
 
                 var getEvents = function () {
-                    angular.forEach(Object.keys($scope.club.events), function (event) {
-                        var eventsRequest = $firebaseObject(firebase.database().ref('/events/' + event));
-                        eventsRequest.$loaded().then(function () {
-                            getFuturesEvents(eventsRequest);
+                    if($scope.club.events){
+                        angular.forEach(Object.keys($scope.club.events), function (event) {
+                            var eventsRequest = $firebaseObject(firebase.database().ref('/events/' + event));
+                            eventsRequest.$loaded().then(function () {
+                                getFuturesEvents(eventsRequest);
+                            });
                         });
-                    });
+                    }
+
                 };
 
             var getFuturesEvents = function (event) {

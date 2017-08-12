@@ -2,7 +2,16 @@
  * Created by andro on 19-06-2017.
  */
 
-
+fetch('https://api.qvo.cl/customers', { method: 'POST'}, {
+    email: "theimp@lannistercorp.gov",
+    name: "Tyrion Lannister"
+})
+    .then(function(res) {
+        return res.json();
+        console.log(res);
+    }).then(function(body) {
+    console.log(body);
+});
 
 
 var irApp = document.getElementById('irApp');
