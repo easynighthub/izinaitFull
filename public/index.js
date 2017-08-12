@@ -41,6 +41,18 @@ $(document).ready(function() {
 });
 
 
+const request = require('node-fetch');
+
+fetch('https://api.qvo.cl/customers', { method: 'POST'}, {
+    email: "theimp@lannistercorp.gov",
+    name: "Tyrion Lannister"
+})
+    .then(function(res) {
+        return res.json();
+    }).then(function(body) {
+    console.log(body);
+});
+
 
 
 
