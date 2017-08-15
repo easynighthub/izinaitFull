@@ -10,8 +10,8 @@
         background-size: 100% auto;
     }
 </style>
-<div id="codigoVisibile" style='display:none;'>
-    <center>
+<div id="codigoVisibile"    style='display:none;'>
+    <div class="col-sm-6 col-md-6">    <center>
         <br>
         <img class="fotoPerfilCodigo" src="{{foto}}">
         <br>
@@ -34,7 +34,50 @@
         </button>
         <!--  <img class="imagenRedonda" src="{{foto}}"/>-->
 
-    </center>
+    </center></div>
+    <div class="col-md-6 ">
+
+        <div class="title">
+            <center>
+            <h3>AGREGAR TARJETA DE CREDITO</h3>
+
+            <div class="col-md-12">
+
+                  <input  type="text" placeholder="Numero de tarjeta" class="form-control" ng-model="newCreditCard.number">
+
+            </div>
+            <div class="col-md-12">
+
+                     <input  type="number" placeholder="CCV" class="form-control" ng-model="newCreditCard.cvc">
+            </div>
+            <div class="col-md-12">
+              <div class="col-md-4" style="margin-top: 10px">
+                  VENCIMIENTO :
+              </div>
+                <div class="col-md-4">
+                    <input type="number" placeholder="MES" class="form-control col-md-4" ng-model="newCreditCard.exp_month" size="2">
+
+                </div>
+                <div class="col-md-4">
+                    <input type="number" placeholder="AÑO" class="form-control col-md-6" ng-model="newCreditCard.exp_year" size="4">
+
+                </div>
+
+            </div>
+            <div class="col-md-12">
+
+                      <input type="number" placeholder="CODIGO POSTAL" class="form-control" NG-model="newCreditCard.address_zip">
+
+            </div>
+            <button class="btn btn-success" ng-click="submitNewCreditCard()"> AGREGAR TARJETA</button>
+
+            </center>
+        </div>
+
+
+
+    </div>
+
 </div>
 
 <style>
