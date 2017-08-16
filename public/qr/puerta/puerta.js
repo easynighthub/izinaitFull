@@ -104,7 +104,7 @@ angular.module('myApp.puerta', ['ngRoute'])
 
                 }else{
                     $scope.rrppSelect = rrppSelect;
-                }
+                };
                 console.log(index);
                 console.log($scope.rrppSelect.uid);
                 $scope.gratisHombre = 0;
@@ -263,6 +263,9 @@ angular.module('myApp.puerta', ['ngRoute'])
                         $scope.rrppsCapturado = rrppsCapturados;
                         $scope.rrppsCapturado.forEach(function (lk) {
                             if (lk.uid == $scope.rrppSelect.uid) {
+                                if(!lk.numeroTotal){
+                                    lk.numeroTotal = 0;
+                                }
                                 console.log(lk);
                                 lk.numeroTotal =
                                     lk.numeroTotal +

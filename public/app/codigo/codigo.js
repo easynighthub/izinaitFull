@@ -270,16 +270,7 @@ angular.module('myApp.codigo', ['ngRoute'])
 
             });
 
-            const request = require('node-fetch');
-            fetch('https://api.qvo.cl/customers', { method: 'POST'}, {
-                email: "theimp@lannistercorp.gov",
-                name: "Tyrion Lannister"
-            })
-                .then(function(res) {
-                    return res.json();
-                }).then(function(body) {
-                console.log(body);
-            });
+
 
 
 // muestro datos en la pantalla

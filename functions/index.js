@@ -15,15 +15,19 @@
  */
 'use strict';
 
-var functions = require('firebase-functions');
+const functions = require('firebase-functions'),
+    admin = require('firebase-admin'),
+    logging = require('@google-cloud/logging')();
+
+
+admin.initializeApp(functions.config().firebase);
+
 
 exports.helloWorld = functions.https.onRequest((request, response) => {
         response.send("HELLO FROM FIREBASE");
 });
 
-
-
-
+// Using Express
 
 
 
