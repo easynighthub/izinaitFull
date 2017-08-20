@@ -4,56 +4,83 @@
     </button>
 </center>
 <div id="panelPrincipal" style="display: none">
-    <center>
 
-        <a class="btn btn-primary" ng-click="agregarRRPP()">
-            AGREGAR RRPP
-        </a>
+
+    <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header" data-background-color="purple">
-                    <h4 class="title">RRPPS HABILITADOS</h4>
-                    <p class="category">Acá podras agregar las personas habilitadas para compartir tus eventos</p>
+                <div type="button" ng-click="showSwal('input-field')"
+                     class="card-header btn-default card-header-icon pull-right"
+                     data-background-color="purple">
+                    <center><i class="material-icons">assignment</i></center>
+
+                    <p class="category">Añadir RR.PP</p>
                 </div>
 
-                <div class="card-content table-responsive">
-                    <table class="table">
-                        <thead class="text-primary">
-                        <th>Correo</th>
-                        <th>nickName</th>
-                        <th>Accion</th>
-                        <th>Habilitado</th>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="rrpp in rrpps">
-                            <td>{{rrpp.email}}</td>
-                            <td>{{rrpp.nickName}}<br>
-                                <a href="http://izinait.com/app/#!/rrpp#{{rrpp.nickName}}">http://izinait.com/app/#!/rrpp#{{rrpp.nickName}}</a>
-                            </td>
-                            <td>
-                                <i ng-click="borrarRRPPdelClub(rrpp)" ng-show="!rrpp.bloqueado" class="fa fa-close"> </i>
-                                <p ng-show="rrpp.bloqueado"></p>
-                            </td>
-                            <td>
 
-                                <md-checkbox
-                                        style="margin-top: 15px"
-                                        ng-disabled="rrpp.bloqueado"
-                                        ng-model="rrpp.visible"
-                                        aria-label="Checkbox 1"
-                                        ng-click="accionVisibleDoorman(rrpp)">
-                                </md-checkbox>
+                <div class="card-content">
+                    <h4 class="card-title">RR.PPS HABILITADOS
+                        <p class="category">Acá podras agregar las personas habilitadas para compartir tus
+                            eventos</p>
+                    </h4>
+                    <div class="toolbar">
+                        <!--        Here you can write extra buttons/actions for the toolbar              -->
+                    </div>
+                    <div class="material-datatables">
+                        <table id="datatables" class="table table-striped table-no-bordered table-hover"
+                               cellspacing="0" width="100%" style="width:100%">
+                            <thead>
+                            <th>Correo</th>
+                            <th>Alias / Link</th>
+                            <th class="disabled-sorting text-right">Acciones</th>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Correo</th>
+                                <th>Alias / Link</th>
+                                <th class="text-right">Acciones</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <tr ng-repeat="rrpp in rrpps">
+                                <td>{{rrpp.email}}</td>
+                                <td>{{rrpp.nickName}}<br>
+                                    <a href="http://izinait.com/app/#!/rrpp#{{rrpp.nickName}}">http://izinait.com/app/#!/rrpp#{{rrpp.nickName}}</a>
+                                </td>
+                                <td>
+                                    <i ng-click="borrarRRPPdelClub(rrpp)" ng-show="!rrpp.bloqueado"
+                                       class="fa fa-close"> </i>
+                                    <p ng-show="rrpp.bloqueado"></p>
+                                </td>
+                                <td class="text-right">
 
-                            </td>
-                        </tr>
+                                    <md-checkbox
 
-                        </tbody>
-                    </table>
+                                            ng-disabled="rrpp.bloqueado"
+                                            ng-model="rrpp.visible"
+                                            aria-label="Checkbox 1"
+                                            ng-click="accionVisibleDoorman(rrpp)">
+                                    </md-checkbox>
 
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </center>
+    </div>
+
+
+
+
+    <!--       separacion          -->
+
+
+    <!-- end row -->
+
 </div>
 
 

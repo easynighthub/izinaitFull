@@ -33,8 +33,13 @@ angular.module('myApp.view1', ['ngRoute'])
 
 
 
-            $(eventos).addClass( "active" );
-            $(configuracion).removeClass( "active" );
+
+            $(sideEventos).addClass( "active" );
+            $(crearEventos).removeClass( "active" );
+
+            $(verEventosFuturos).addClass( "active" );
+            $(sideClientes).removeClass( "active" );
+            $(sideRrpp).removeClass( "active" );
 
             firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
@@ -44,6 +49,7 @@ angular.module('myApp.view1', ['ngRoute'])
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
+                        $('.photo').prepend($('<img>',{id:'theImg',src:adminLogeado.picture}))
                         console.log(adminLogeado);
                         if(adminLogeado.idClubWork == false){
                             console.log("entreeeeeeeeeeeeeeeeeeeeeeeee");
@@ -251,8 +257,16 @@ angular.module('myApp.view1', ['ngRoute'])
             };
 
 
+
+
+
             $scope.goToEventDetails = function(evento ) {
                 document.location.href = '#!/detalleEvento?id=' + evento.$id;
+            };
+
+            $scope.verEvento = function(evento ) {
+                //document.location.href = 'https://izinait.com/app/#!/detalleEvento?id=' + evento.$id, '_blank';
+                window.open('https://izinait.com/app/#!/detalleEvento?id=' + evento.$id, '_blank')
             };
 
             $scope.duplicateEvent = function(event) {
