@@ -12,8 +12,15 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
 
 
-            $(eventos).addClass( "active" );
-            $(configuracion).removeClass( "active" );
+
+            $(sideEventos).addClass( "active" );
+            $(crearEventos).addClass( "active" );
+
+            $(verEventosFuturos).removeClass( "active" );
+            $(sideClientes).removeClass( "active" );
+            $(sideRrpp).removeClass( "active" );
+
+
 
 
             var admin = window.currentAdmin;
@@ -21,8 +28,6 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             $scope.newEvent = {};
             $scope.serviciosEvent = [];
 
-            console.log($rootScope.eventToRepet);
-            console.log($rootScope.eventEdit);
 
             if($rootScope.eventEdit != null){
                 $scope.serviciosEvent = $rootScope.eventEdit.reservas;
@@ -109,7 +114,6 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
             firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
-                console.log(exists);
                 if (exists == true) {
                     var ref = firebase.database().ref('/admins/').child(admin.$id || admin.uid);
                     var adminLocal = $firebaseObject(ref);
@@ -139,14 +143,12 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                                             $scope.newEvent.id =  firebase.database().ref().child('events/').push().key;
                                         }
                                         $scope.newEvent.evenUrl = 'http://izinait.com/user/app/#!/detalleEvento?id=' + $scope.newEvent.id;
-                                        console.log(adminLogeado.clubs[x.$id].validado);
                                         $scope.newEvent.visible = adminLogeado.clubs[x.$id].validado;
                                         $scope.newEvent.descOutHour = 0;
                                         $scope.newEvent.premiumCover = 0;
                                         $scope.newEvent.freeCover = 0;
                                         $scope.newEvent.isPremiumEvent = false;
                                         $scope.newEvent.rrpps =[];
-                                        console.log(adminLogeado.rrpps);
                                         angular.forEach(adminLogeado.rrpps,function (rp) {
                                             if(rp.bloqueado == true){
                                                 rp.numeroTotal = 0;
@@ -173,7 +175,6 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                             });
 
                         };
-                        console.log(adminLogeado);
 
                         $('.tituloIziboss').text("Crear Evento");
                         $('.no-js').removeClass('nav-open');
