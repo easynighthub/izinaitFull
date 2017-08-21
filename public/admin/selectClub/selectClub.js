@@ -31,8 +31,8 @@ angular.module('myApp.selectClub', ['ngRoute'])
             var admin = window.currentAdmin ;
             var adminLogeado = "";
 
-            $(eventos).removeClass( "active" );
-            $(configuracion).removeClass( "active" );
+         //   $(eventos).removeClass( "active" );
+           // $(configuracion).removeClass( "active" );
 
             firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
