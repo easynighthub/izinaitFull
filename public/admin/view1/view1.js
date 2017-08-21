@@ -51,6 +51,7 @@ angular.module('myApp.view1', ['ngRoute'])
                         adminLogeado = adminLocal;
                         $('.photo').prepend($('<img>',{id:'theImg',src:adminLogeado.picture}))
                         console.log(adminLogeado);
+
                         if(adminLogeado.idClubWork == false){
                             console.log("entreeeeeeeeeeeeeeeeeeeeeeeee");
                             ObtenerClub (adminLogeado);

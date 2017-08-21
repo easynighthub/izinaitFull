@@ -16,8 +16,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
 
 
-            $(eventos).addClass( "active" );
-            $(configuracion).removeClass( "active" );
+            //$(eventos).addClass( "active" );
+            //$(configuracion).removeClass( "active" );
 
 
             var admin = window.currentAdmin;
