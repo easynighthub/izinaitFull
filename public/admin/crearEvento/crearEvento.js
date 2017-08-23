@@ -20,18 +20,18 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             $(sideRrpp).removeClass( "active" );
 
 
-
-
             var admin = window.currentAdmin;
             var adminLogeado = "";
             $scope.newEvent = {};
             $scope.serviciosEvent = [];
 
 
+
+            var eventId = $routeParams.id;
+
             if($rootScope.eventEdit != null){
                 $scope.serviciosEvent = $rootScope.eventEdit.reservas;
                 $scope.serviciosEvent.forEach(function (serv) {
-
 
                     var myDate = new Date( serv.fechaFin );
                    serv.fechaFin = myDate.toGMTString();
@@ -100,12 +100,19 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 if($rootScope.eventToRepet.freemiumHour != $rootScope.eventToRepet.date){
                     $scope.activarHoraGratis = true;
                 };
-                $scope.newEvent.eventEnvironment = $rootScope.eventToRepet.eventEnvironment;
-                $scope.newEvent.musicGenres = $rootScope.eventToRepet.musicGenres;
+                $scope.newEvent.eventEnvironmentSelect = $rootScope.eventToRepet.eventEnvironmentSelect;
+                $scope.newEvent.musicGenresSelect = $rootScope.eventToRepet.musicGenresSelect;
 
 
 
             };
+
+
+            if($rootScope.eventEdit == null && $rootScope.eventToRepet == null &&  eventId == null){
+                location.href = "#!/crearEvento?id=nuevoEvento";
+                location.reload();
+
+            }
 
 
 
@@ -415,11 +422,10 @@ var linkGuardarFoto;
  */
 
 
-
-
+                $scope.newEvent.eventEnvironment = $scope.newEvent.eventEnvironmentSelect ? $scope.newEvent.eventEnvironmentSelect.join(', ') : '';
                 $scope.newEvent.musicGenres = $scope.newEvent.musicGenresSelect ? $scope.newEvent.musicGenresSelect.join(', ') : '';
-                $scope.newEvent.eventEnvironment = $scope.eventEnvironmentSelect ? $scope.eventEnvironmentSelect.join(', ') : '';
-           /*   if($scope.serviciosEvent.length > 0){
+
+              if($scope.serviciosEvent.length > 0){
 
                   document.getElementById('BarraCargando').style.display = 'block';
                   document.getElementById('crearEvento').style.display = 'none';
@@ -427,7 +433,7 @@ var linkGuardarFoto;
                   subirImagen();
                 }else{
                   subirImagen();
-                }; */
+                };
 
                 console.log($scope.newEvent);
 
