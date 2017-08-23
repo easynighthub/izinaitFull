@@ -2,92 +2,229 @@
     padding-left: 5px;
     padding-right: 5px;">
 
+
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header" data-background-color="orange">
+                <i class="material-icons">weekend</i>
+            </div>
+            <div class="card-content">
+                <p class="category">Reservas</p>
+                <h3 class="card-title">{{sumaTicketsTotal}}</h3>
+            </div>
+            <div class="card-footer">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header" data-background-color="orange">
+                <i class="material-icons">assignment</i>
+            </div>
+            <div class="card-content">
+                <p class="category">Lista Gratis</p>
+                <h3 class="card-title">{{totalListasGratis}}</h3>
+            </div>
+            <div class="card-footer">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header" data-background-color="orange">
+                <i class="material-icons">assignment</i>
+            </div>
+            <div class="card-content">
+                <p class="category">Impresiones</p>
+                <h3 class="card-title">{{impresionesTotales}}</h3>
+            </div>
+            <div class="card-footer">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header" data-background-color="orange">
+                <i class="material-icons">assignment</i>
+            </div>
+            <div class="card-content">
+                <p class="category">Efectividad</p>
+                <h3 class="card-title" type="number">{{((sumaTicketsTotal+totalListasGratis)/impresionesTotales)*100 | number:2}} %</h3>
+            </div>
+            <div class="card-footer">
+
+            </div>
+        </div>
+    </div>
+<!--
+
+    <tr>
+        <td colspan="3"></td>
+        <td class="text-primary text-right">
+            Total de impresiones
+        </td>
+        <td class="text-right text-primary">
+            {{impresionesTotales}}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3"></td>
+        <td class="text-primary text-right">
+            Total de Lista
+        </td>
+        <td class="text-right text-primary">
+            {{totalListasGratis}}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3"></td>
+        <td class="text-primary text-right">
+            total de Servicios
+        </td>
+        <td class="text-right text-primary">
+            {{sumaTicketsTotal}}
+        </td>
+    </tr>
+-->
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-icon" data-background-color="rose">
+                <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">Servicios Comprados</h4>
+            <div class="card-content">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <th>Nombre</th>
+                        <th>Contacto</th>
+                        <th>Tipo</th>
+                        <th>Utilizado/Cantidad</th>
+                        <th>Total Pagado</th>
+                        </thead>
+                        <tbody>
+                        <tr  ng-repeat="ticketEvent in ticketsEvent">
+                            <td> {{ticketEvent.displayName}}</td>
+                            <td> 9 {{ticketEvent.celular}}</td>
+                            <td>{{ticketEvent.tipoEventservices}}</td>
+                            <td>
+                                {{ticketEvent.cantidadUtilizada}} / {{ticketEvent.cantidadDeCompra}}
+                            </td>
+                            <td  class="text-primary">
+                                <div ng-show="!ticketEvent.paidOut"> ${{(ticketEvent.totalAPagar/ticketEvent.cantidadDeCompra)*ticketEvent.cantidadUtilizada}}</div>
+                                <div ng-show="ticketEvent.paidOut"> ${{ticketEvent.totalAPagar}}</div>
+
+                            </td>
+                        </tr>
+                    <!--    <tr>
+                            <td colspan="3"></td>
+                            <td>
+                                Total Pagado
+                            </td>
+                            <td>
+                                <small>&euro;</small>12,999
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"></td>
+                            <td>
+                                Total Pago en Puerta
+                            </td>
+                            <td>
+                                <small>&euro;</small>12,999
+                            </td>
+                        </tr> -->
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header card-header-icon" data-background-color="rose">
+                <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">Lista Gratis</h4>
+            <div class="card-content">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <th>Nombre</th>
+                        <th class="text-center">Utilizadas / Cantidad</th>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="user in listaGratis">
+                            <td>{{user.displayName}}</td>
+                            <td class="text-center">{{user.totalAsist}} / {{user.totalList}}</td>
+                        </tr>
+                         <tr>
+                             <!--   <td colspan="0"></td> -->
+                                <td class="text-primary text-right">
+                                    Total Lista
+                                </td>
+                                <td class="text-right text-primary">
+                                    {{totalListasGratis}}
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-icon" data-background-color="rose">
+                <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">Relacionadores Publico</h4>
+            <div class="card-content">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <th>Nombre</th>
+                        <th>Impresiones</th>
+                        <th>Lista</th>
+                        <th>Servicios</th>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="rrpp in datosTotalesRRPP">
+                            <td>{{rrpp.nameRRPP}}</td>
+                            <td>{{rrpp.openLink}}</td>
+                            <td>{{rrpp.listaTotal}}</td>
+                            <td>{{rrpp.ticketsTotal}}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 <div class="content" >
     <div >
         <div class="row">
 
-            <div class="col-md-9" data-ng-show="true">
-                <div class="card">
-                    <div class="card-header" data-background-color="purple">
-                        <h4 class="title">Servicios Comprados</h4>
-                        <p class="category">Lista de Servicios adquirido por los usuarios.</p>
-                    </div>
-                    <div class="card-content table-responsive">
-                        <table class="table">
-                            <thead class="text-primary">
-                            <th>Nombre</th>
-                            <th>Tipo</th>
-                            <th>Utilizado/Cantidad</th>
-                            <th>Total Pagado</th>
-                            </thead>
-                            <tbody>
-                            <tr  ng-repeat="ticketEvent in ticketsEvent">
-                                <td> {{ticketEvent.displayName}}</td>
-                                <td>{{ticketEvent.tipoEventservices}}</td>
-                                <td>
-                                    {{ticketEvent.cantidadUtilizada}} / {{ticketEvent.cantidadDeCompra}}
-                                </td>
-                                <td>
-                                    <div ng-show="!ticketEvent.paidOut"> ${{(ticketEvent.totalAPagar/ticketEvent.cantidadDeCompra)*ticketEvent.cantidadUtilizada}}</div>
-                                    <div ng-show="ticketEvent.paidOut"> ${{ticketEvent.totalAPagar}}</div>
-
-                            </td>
-                            </tr>
-
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-            <div class="card">
-                <div class="card-header" data-background-color="purple">
-                    <h4 class="title">IMPRESIONES</h4>
-                    <p class="category">total de impresiones : {{impresionesTotales}} </p>
-                </div>
-                <div class="card-content table-responsive">
-                    <table class="table">
-                        <thead class="text-primary">
-                        <th>RRPP</th>
-                        <th>Tolta</th>
-                        </thead>
-                        <tbody>
-                        <tr data-ng-repeat="rrpp in impresionesRRPP">
-                            <td>{{rrpp.nameRRPP}}</td>
-                            <td>{{rrpp.openLink}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
 
 
-                </div>
-            </div>
-        </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-header" data-background-color="purple">
-                        <h4 class="title">LISTAS GRATIS</h4>
-                        <p class="category">total de lista : {{totalListasGratis}} </p>
-                    </div>
-                    <div class="card-content table-responsive">
-                        <table class="table">
-                            <thead class="text-primary">
-                            <th>Nombre</th>
-                            <th>Utilizadas / Cantidad</th>
-                            </thead>
-                            <tbody>
-                            <tr data-ng-repeat="user in listaGratis">
-                                <td>{{user.displayName}}</td>
-                                <td>{{user.totalAsist}} / {{user.totalList}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-9" data-ng-show="true">
+            <div class="col-md-12" data-ng-show="true">
                 <div class="card">
                     <div class="card-header" data-background-color="purple">
                         <h4 class="title">Servicios Asignados</h4>

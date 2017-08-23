@@ -59,31 +59,6 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 });
                             });
 
-                            var listaGratis = firebase.database().ref('/events/' + eventId + '/asist');
-                            var listaGratisRQ = $firebaseObject(listaGratis);
-                            listaGratisRQ.$loaded().then(function () {
-                                $scope.listaGratis = listaGratisRQ;
-                                $scope.listaGratis.forEach(function (x) {
-                                    console.log(adminLogeado);
-                                    console.log(x.totalList);
-                                    $scope.totalListasGratis =$scope.totalListasGratis+ x.totalList;
-                                });
-                            });
-
-                            var impresiones = firebase.database().ref('/impresiones/' + eventId );
-                            var impresionesRQ = $firebaseArray(impresiones);
-                            impresionesRQ.$loaded().then(function () {
-                                $scope.impresionesRRPP = impresionesRQ;
-                                $scope.impresionesRRPP.forEach(function (j) {
-                                    angular.forEach(event.rrpps, function(rp){
-                                        if (j.$id == rp.uid){
-                                            j.nameRRPP = rp.name;
-                                            $scope.impresionesTotales = $scope.impresionesTotales+ j.openLink;
-                                        }
-                                    });
-                                });
-                            });
-
                             var serviciosEvent = firebase.database().ref('/eventServices/' + eventId );
                             var serviciosEventRQ = $firebaseArray(serviciosEvent);
                             var tickets = firebase.database().ref('/tickets/' + eventId );
@@ -112,6 +87,63 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                     });
                                 });
                             });
+
+
+                            var listaGratis = firebase.database().ref('/events/' + eventId + '/asist');
+                            var listaGratisRQ = $firebaseObject(listaGratis);
+                            listaGratisRQ.$loaded().then(function () {
+                                $scope.listaGratis = listaGratisRQ;
+                                $scope.listaGratis.forEach(function (x) {
+                                    console.log(adminLogeado);
+                                    console.log(x.totalList);
+                                    $scope.totalListasGratis =$scope.totalListasGratis+ x.totalList;
+                                });
+                            });
+                            $scope.datosTotalesRRPP = [];
+                            $scope.sumaTicketsTotal = 0;
+                            var impresiones = firebase.database().ref('/impresiones/' + eventId );
+                            var impresionesRQ = $firebaseArray(impresiones);
+                            impresionesRQ.$loaded().then(function () {
+                                ticketsRQ.$loaded().then(function () {
+                                    $scope.impresionesRRPP = impresionesRQ;
+                                    angular.forEach(event.rrpps, function (rp) {
+                                        if (rp.uid != 'noRRPP') {
+
+                                            var rrpp = [];
+                                            rrpp.listaTotal = 0;
+                                            rrpp.openLink = 0;
+                                            rrpp.ticketsTotal = 0;
+
+                                            rrpp.nameRRPP = rp.name;
+
+                                            $scope.listaGratis.forEach(function (x) {
+                                                if (rp.uid == x.idRRPP) {
+                                                    rrpp.listaTotal = rrpp.listaTotal + x.totalList;
+                                                }
+                                            });
+
+                                            $scope.ticketsEvent.forEach(function (t) {
+                                                if(rp.uid == t.rrppid){
+                                                    rrpp.ticketsTotal =  rrpp.ticketsTotal + t.cantidadDeCompra;
+                                                    $scope.sumaTicketsTotal = $scope.sumaTicketsTotal + t.cantidadDeCompra;
+                                                }
+
+
+
+                                            });
+
+                                            $scope.impresionesRRPP.forEach(function (j) {
+                                                if (j.$id == rp.uid) {
+                                                    rrpp.openLink = j.openLink;
+                                                    $scope.impresionesTotales = $scope.impresionesTotales + j.openLink;
+                                                }
+                                            });
+                                            $scope.datosTotalesRRPP.push(rrpp);
+                                        }
+                                    });
+                                });
+                            });
+
 
 
 
