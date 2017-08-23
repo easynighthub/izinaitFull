@@ -172,7 +172,7 @@ angular.module('myApp.event', ['ngRoute'])
                         var idClub = Object.keys(eventoCompleto.clubs)[0];
                         var GuardarCliente='admins/'+eventoCompleto.admin+'/clients/'+idClub+'/'+ $scope.ticketObtenido.userId;
                         firebase.database().ref(GuardarCliente).set(true);
-                        firebase.database().ref('users/' + $scope.ticketObtenido.userId + '/events/' +eventoCompleto.admin+'/'+ eventId).set(new Date().getTime());
+                        firebase.database().ref('users/' + $scope.ticketObtenido.userId + '/events/' +eventoCompleto.admin+'/'+idClub +'/'+ eventId).set(new Date().getTime());
 
                         if( $scope.ticketObtenido.paidOut)
                         {

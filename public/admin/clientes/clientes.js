@@ -76,6 +76,19 @@ angular.module('myApp.clientes', ['ngRoute'])
                                     angular.forEach(Object.keys(clientes), function(client){
                                         var clientesRequest = $firebaseObject(firebase.database().ref('/users/' + client));
                                         clientesRequest.$loaded().then(function(){
+                                         adminLogeado.idClubWork;
+
+                                            console.log([clientesRequest.events[adminLogeado.$id]]);
+                                            angular.forEach([clientesRequest.events[adminLogeado.$id]],function (asistencias) {
+                                              console.log(Object.keys(asistencias));
+                                                if(asistencias ==  adminLogeado.idClubWork){
+                                                   console.log("hooola");
+                                                }
+
+
+                                            });
+
+
                                             getLastEvent(clientesRequest);
                                         });
                                     });

@@ -172,7 +172,7 @@ angular.module('myApp.listaGratis', ['ngRoute'])
                     var GuardarCliente='admins/'+eventoCompleto.admin+'/clients/'+idClub+'/'+$scope.userCapturado.userId;
                     firebase.database().ref(GuardarCliente).set(true);
 
-                    firebase.database().ref('users/' + $scope.userCapturado.userId + '/events/' +eventoCompleto.admin+'/'+ eventId).set(new Date().getTime());
+                    firebase.database().ref('users/' + $scope.userCapturado.userId + '/events/' +eventoCompleto.admin+'/'+idClub+'/'+ eventId).set(new Date().getTime());
 
 
                     $mdDialog.hide();

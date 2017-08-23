@@ -25,6 +25,7 @@
                                 <th>Celular</th>
                                 <th>Ultima Asistencia</th>
                                 <th>Clumpleaños</th>
+                                <th> Cantidad de Eventos</th>
                                 </thead>
                                 <tbody>
                                 <tr  ng-repeat="cliente in clientes">
@@ -35,6 +36,7 @@
                                     </td>
                                     <td>{{cliente.lastDate | date : 'shortDate' }}</td>
                                     <td>{{cliente.birthday}}</td>
+                                    <td>{{cliente.cantidadDeEventos}}</td>
                                 </tr>
 
                                 </tbody>
