@@ -15,7 +15,6 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
             $(sideEventos).addClass( "active" );
             $(crearEventos).addClass( "active" );
-
             $(verEventosFuturos).removeClass( "active" );
             $(sideClientes).removeClass( "active" );
             $(sideRrpp).removeClass( "active" );
@@ -417,10 +416,10 @@ var linkGuardarFoto;
 
 
 
-                /*    $scope.newEvent.eventEnvironment = $scope.eventEnvironment ? $scope.eventEnvironment.join(', ') : '';
-                $scope.newEvent.musicGenres = $scope.newEvent.musicGenres ? $scope.newEvent.musicGenres.join(', ') : '';
-                 */
-              if($scope.serviciosEvent.length > 0){
+
+                $scope.newEvent.musicGenres = $scope.newEvent.musicGenresSelect ? $scope.newEvent.musicGenresSelect.join(', ') : '';
+                $scope.newEvent.eventEnvironment = $scope.eventEnvironmentSelect ? $scope.eventEnvironmentSelect.join(', ') : '';
+           /*   if($scope.serviciosEvent.length > 0){
 
                   document.getElementById('BarraCargando').style.display = 'block';
                   document.getElementById('crearEvento').style.display = 'none';
@@ -428,7 +427,7 @@ var linkGuardarFoto;
                   subirImagen();
                 }else{
                   subirImagen();
-                };
+                }; */
 
                 console.log($scope.newEvent);
 

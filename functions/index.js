@@ -19,12 +19,31 @@ const functions = require('firebase-functions'),
     admin = require('firebase-admin'),
     logging = require('@google-cloud/logging')();
 
+const token = functions.config().qvo.token;
+
 
 admin.initializeApp(functions.config().firebase);
 
+var fetch = require('node-fetch');
 
-exports.helloWorld = functions.https.onRequest((request, response) => {
-        response.send("HELLO FROM FIREBASE");
+
+
+exports.createCustomer = functions.database.ref('/prueba/{userId}').onWrite(event => {
+        const data = event.data;
+
+return fetch('https://api.qvo.cl/customers', {
+    method: 'POST',
+    headers: {
+        Authorization: 'Token ' + token
+    }
+}, {
+    email: data.email
+})
+    .then(function (res) {
+        let customer = res.json();
+
+        return admin.database().ref(`/qvo_customers/${data.uid}/customer_id`).set(customer.id);
+    });
 });
 
 // Using Express

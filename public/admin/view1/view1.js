@@ -75,7 +75,10 @@ angular.module('myApp.view1', ['ngRoute'])
                         var eventsAdminRequest = $firebaseArray(eventosAdmin);
                         eventsAdminRequest.$loaded().then(function() {
                             $scope.Allvents = $filter('filter')(eventsAdminRequest, getFuturesEvents);
-                            console.log(eventsAdminRequest);
+                            console.log($scope.Allvents);
+                            if($scope.Allvents.length == 0){
+                                document.getElementById('noHayEventos').style.display = 'block';
+                            }
                             if(eventsAdminRequest == undefined){
                                 $('.no-js').removeClass('nav-open');
                                 console.log("no cargo nada");

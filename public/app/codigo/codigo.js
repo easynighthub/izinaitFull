@@ -253,12 +253,25 @@ angular.module('myApp.codigo', ['ngRoute'])
                     var usersRef = database.ref(USERS_LOCATION);
                     usersRef.child(userId).once('value', function(snapshot) {
                         var exists = (snapshot.val() !== null);
-                        console.log(exists);
-                        userExistsCallback(exists, response);
+                        console.log(snapshot.val().facebookId);
+                        if(snapshot.val().facebookId == undefined){
+                            exists = false;
+                            console.log(exists);
+                            userExistsCallback(exists, response);
+                        }else {
+                            console.log(exists);
+                            userExistsCallback(exists, response);
+                        }
+
                     });
                 }
             });
 
+            $scope.submitNewCreditCard = function () {
+
+                firebase.database().ref('prueba/' + $scope.usuarioLogeado.$id ).set(true);
+                
+            };
 
             var signOutButton = document.getElementById('salir');
             signOutButton.addEventListener('click', function () {
