@@ -387,14 +387,75 @@ var linkGuardarFoto;
             };
 
             $scope.grabarEvento = function () {
+                var subir = true;
+                var errorList = [];
+                if(!$scope.newEvent.name){
+                    subir = false;
+                    errorList.push("FALTA NOMBRE");
+                };
+                if(!linkGuardarFoto){
+                    subir = false;
+                    errorList.push("FALTA IMAGEN");
+                };
+                if(!$scope.newEvent.fromHour){
+                    subir = false;
+                    errorList.push("FALTA HORA DE INICIO");
+                };
+                if(!$scope.newEvent.toHour){
+                    subir = false;
+                    errorList.push("FALTA HORA DE TERMINO");
+                };
+                if(!$scope.newEvent.eventDetails){
+                    subir = false;
+                    errorList.push("FALTA DETALLE DE EVENTO");
+                };
+                if(!$scope.newEvent.ageRangeFemale){
+                    subir = false;
+                    errorList.push("FALTA EDAD MUJER");
+                };
+                if(!$scope.newEvent.ageRangeMale){
+                    subir = false;
+                    errorList.push("FALTA EDAD HOMBRE");
+                };
+                if(!$scope.newEvent.clothing){
+                    subir = false;
+                    errorList.push("FALTA CODIGO DE VESTIMENTA");
+                };
+
+                if(!$scope.newEvent.eventEnvironmentSelect){
+                    subir = false;
+                    errorList.push("FALTA ESTILO MUSICAL");
+                }else{
+                    if($scope.newEvent.eventEnvironmentSelect.length > 3){
+                        errorList.push("SOLO PUEDES SELECIONAR UN MAXIMO DE 3 ESTILOS MUSICALES");
+                        subir = false;
+                    };
+                };
+                if(!$scope.newEvent.musicGenresSelect){
+                    subir = false;
+                    errorList.push("FALTA ESTILO MUSICAL");
+                }else{
+                    if($scope.newEvent.musicGenresSelect.length > 2){
+                        subir = false;
+                        errorList.push("SOLO PUEDES SELECIONAR UN MAXIMO DE 2 AMBIENTES");
+                    };
+                };
+
+
+
+
+                console.log(errorList);
+
 
                 if ($scope.activarHoraGratis == true) {
                     $scope.newEvent.freemiumHour = new Date($scope.newEvent.freemiumHour).getTime();
                 } else {
                     $scope.newEvent.freemiumHour = $scope.newEvent.fromHour;
-                }
+                };
 
                 $scope.newEvent.date = $scope.newEvent.fromHour;
+
+
                 $scope.newEvent.policiesDoor =
                     'Hombres '
                     + $scope.newEvent.ageRangeMale
@@ -425,6 +486,10 @@ var linkGuardarFoto;
                 $scope.newEvent.eventEnvironment = $scope.newEvent.eventEnvironmentSelect ? $scope.newEvent.eventEnvironmentSelect.join(', ') : '';
                 $scope.newEvent.musicGenres = $scope.newEvent.musicGenresSelect ? $scope.newEvent.musicGenresSelect.join(', ') : '';
 
+
+                if(subir = true){
+
+
               if($scope.serviciosEvent.length > 0){
 
                   document.getElementById('BarraCargando').style.display = 'block';
@@ -433,6 +498,7 @@ var linkGuardarFoto;
                   subirImagen();
                 }else{
                   subirImagen();
+                };
                 };
 
                 console.log($scope.newEvent);

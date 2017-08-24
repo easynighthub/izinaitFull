@@ -19,7 +19,7 @@ const functions = require('firebase-functions'),
     admin = require('firebase-admin'),
     logging = require('@google-cloud/logging')();
 
-const token = functions.config().qvo.token;
+
 
 
 admin.initializeApp(functions.config().firebase);
@@ -28,23 +28,31 @@ var fetch = require('node-fetch');
 
 
 
-exports.createCustomer = functions.database.ref('/prueba/{userId}').onWrite(event => {
-        const data = event.data;
+exports.makeUppercase = functions.database.ref('/messages/{pushId}/email')
+        .onWrite(event => {
+        // Grab the current value of what was written to the Realtime Database.
+        console.log(event.data);
 
-return fetch('https://api.qvo.cl/customers', {
+return fetch('https://playground.qvo.cl/customers', {
     method: 'POST',
     headers: {
-        Authorization: 'Token ' + token
+        'Authorization': 'Token ' + functions.config().qvo.token
     }
 }, {
-    email: data.email
+    email: 'andro.ostoic@gmail.com',
+    name: 'Andro Ostoic'
 })
     .then(function (res) {
+        console.log(' entre');
         let customer = res.json();
-
-        return admin.database().ref(`/qvo_customers/${data.uid}/customer_id`).set(customer.id);
-    });
+        console.log(customer);
+       // return admin.database().ref(`/qvo_customers/customer_id`).set(customer.id);
+    }).then(function(body) {
+        console.log(body)
 });
+});
+
+
 
 // Using Express
 
