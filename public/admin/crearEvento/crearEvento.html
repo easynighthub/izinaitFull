@@ -434,7 +434,13 @@
                                 </a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                     <datetimepicker data-ng-model="servicioEvent.fechaFin"
-                                                    data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"/>
+
+                                                    data-datetimepicker-config="{ dropdownSelector: '#dropdown2',
+                                                      renderOn: 'start-date-changed',}"
+
+                                                    data-on-set-time="endDateOnSetTime()"
+                                                    data-before-render="endDateBeforeRender($view, $dates, $leftDate, $upDate, $rightDate)">
+                                    </datetimepicker>>
                                 </ul>
                             </div>
 

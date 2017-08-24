@@ -424,10 +424,10 @@ var linkGuardarFoto;
 
                 if(!$scope.newEvent.eventEnvironmentSelect){
                     subir = false;
-                    errorList.push("FALTA ESTILO MUSICAL");
+                    errorList.push("FALTA AMBIENTE");
                 }else{
-                    if($scope.newEvent.eventEnvironmentSelect.length > 3){
-                        errorList.push("SOLO PUEDES SELECIONAR UN MAXIMO DE 3 ESTILOS MUSICALES");
+                    if($scope.newEvent.eventEnvironmentSelect.length > 2){
+                        errorList.push("SOLO PUEDES SELECIONAR UN MAXIMO DE 2 AMBIENTES");
                         subir = false;
                     };
                 };
@@ -435,62 +435,71 @@ var linkGuardarFoto;
                     subir = false;
                     errorList.push("FALTA ESTILO MUSICAL");
                 }else{
-                    if($scope.newEvent.musicGenresSelect.length > 2){
+                    if($scope.newEvent.musicGenresSelect.length > 3){
                         subir = false;
-                        errorList.push("SOLO PUEDES SELECIONAR UN MAXIMO DE 2 AMBIENTES");
+                        errorList.push("SOLO PUEDES SELECIONAR UN MAXIMO DE 3 ESTILOS MUSICALES");
                     };
                 };
 
+                var NumeroDeServicio = 0;
+
+                $scope.serviciosEvent.forEach(function (serv) {
+                    NumeroDeServicio ++;
+                    if(!serv.precio){
+                        subir = false;
+                        errorList.push("EL SERVICIO NUMERO "+NumeroDeServicio+" NO TIENE PRECIO ASIGNADO");
+                    };
+                    if(!serv.cantidad){
+                        subir = false;
+                        errorList.push("EL SERVICIO NUMERO "+NumeroDeServicio+" NO TIENE CANTIDAD DE CUPOS");
+                    };
+                    if(!serv.maxEntradas){
+                        subir = false;
+                        errorList.push("EL SERVICIO NUMERO "+NumeroDeServicio+" NO TIENE CANTIDAD DE COMPRAS POR USUARIO");
+                    };
+                    if(!serv.desc){
+                        subir = false;
+                        errorList.push("EL SERVICIO NUMERO "+NumeroDeServicio+" NO TIENE DESCRIPCION DEL SERVICIO");
+                    };
+                    if(!serv.fechaFin){
+                        subir = false;
+                        errorList.push("EL SERVICIO NUMERO "+NumeroDeServicio+" NO TIENE FECHA DE CIERRE DEL SERVICIO");
+                    };
+                });
 
 
 
                 console.log(errorList);
 
 
-                if ($scope.activarHoraGratis == true) {
-                    $scope.newEvent.freemiumHour = new Date($scope.newEvent.freemiumHour).getTime();
-                } else {
-                    $scope.newEvent.freemiumHour = $scope.newEvent.fromHour;
-                };
-
-                $scope.newEvent.date = $scope.newEvent.fromHour;
 
 
-                $scope.newEvent.policiesDoor =
-                    'Hombres '
-                    + $scope.newEvent.ageRangeMale
-                    + ' | Mujeres '
-                    + $scope.newEvent.ageRangeFemale
-                    + ' | Dresscode '
-                    + $scope.newEvent.clothing;
+                if(subir == true){
 
-                $scope.newEvent.premiumHour = $scope.newEvent.freemiumHour;
+                    if ($scope.activarHoraGratis == true) {
+                        $scope.newEvent.freemiumHour = new Date($scope.newEvent.freemiumHour).getTime();
+                    } else {
+                        $scope.newEvent.freemiumHour = $scope.newEvent.fromHour;
+                    };
 
-           /*     var musicStyleText = "";
-                angular.forEach($scope.newEvent.musicGenres,function (musicStyle) {
-                    console.log(musicStyle);
-                    musicStyleText = musicStyle +', '+ musicStyleText;
-                    console.log(musicStyleText);
-
-                });
-                var StyleText = "";
-                angular.forEach($scope.newEvent.eventEnvironment,function (style) {
-                    console.log(style);
-                    StyleText = style +', '+ StyleText;
-                    console.log(StyleText);
-
-                });
- */
+                    $scope.newEvent.date = $scope.newEvent.fromHour;
 
 
-                $scope.newEvent.eventEnvironment = $scope.newEvent.eventEnvironmentSelect ? $scope.newEvent.eventEnvironmentSelect.join(', ') : '';
-                $scope.newEvent.musicGenres = $scope.newEvent.musicGenresSelect ? $scope.newEvent.musicGenresSelect.join(', ') : '';
+                    $scope.newEvent.policiesDoor =
+                        'Hombres '
+                        + $scope.newEvent.ageRangeMale
+                        + ' | Mujeres '
+                        + $scope.newEvent.ageRangeFemale
+                        + ' | Dresscode '
+                        + $scope.newEvent.clothing;
+
+                    $scope.newEvent.premiumHour = $scope.newEvent.freemiumHour;
+
+                    $scope.newEvent.eventEnvironment = $scope.newEvent.eventEnvironmentSelect ? $scope.newEvent.eventEnvironmentSelect.join(', ') : '';
+                    $scope.newEvent.musicGenres = $scope.newEvent.musicGenresSelect ? $scope.newEvent.musicGenresSelect.join(', ') : '';
 
 
-                if(subir = true){
-
-
-              if($scope.serviciosEvent.length > 0){
+                    if($scope.serviciosEvent.length > 0){
 
                   document.getElementById('BarraCargando').style.display = 'block';
                   document.getElementById('crearEvento').style.display = 'none';
