@@ -30,6 +30,10 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             var eventId = $routeParams.id;
 
             if($rootScope.eventEdit != null){
+
+                location.href = "#!/crearEvento?id="+$rootScope.eventEdit.$id;;
+                location.reload();
+
                 $scope.serviciosEvent = $rootScope.eventEdit.reservas;
                 $scope.serviciosEvent.forEach(function (serv) {
 
@@ -144,7 +148,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                                         $scope.newEvent.lng = x.longitude;
                                         $scope.newEvent.admin = adminLogeado.$id;
                                         if($rootScope.eventEdit != undefined){
-                                            $scope.newEvent.id = $rootScope.eventEdit.$id;
+                                            $scope.newEvent.id = eventId;
                                         }else{
                                             $scope.newEvent.id =  firebase.database().ref().child('events/').push().key;
                                         }
@@ -237,8 +241,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 }
             };
 
-var linkGuardarFoto;
-
+                var linkGuardarFoto;
             $('.dropzone').html5imageupload({
                 onSave: function() {
 
@@ -271,8 +274,6 @@ var linkGuardarFoto;
                 $scope.serviciosEvent.push({
                         tipo: "PREVENTA",
                         color: '#f44336'
-
-
                     }
                 );
             };
