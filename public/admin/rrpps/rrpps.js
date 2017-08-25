@@ -247,7 +247,6 @@ angular.module('myApp.rrpps', ['ngRoute'])
 
             $scope.showSwal = function (type) {
 
-
                 swal({
                     title: 'Añadir RR.PP',
                     html: '<form  action="" method="">' +
@@ -259,7 +258,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
                     '<span class="input-group-addon">' +
                     '<i class="material-icons">email</i>' +
                     '</span>' +
-                    '<input class="form-control" name="email" placeholder="Email..." type="email" required="true" aria-required="true">' +
+                    '<input class="form-control"  id="correoRrpp" name="email" placeholder="Email..." type="email" required="true" aria-required="true">' +
                     '</div>' +
                     '</form>'
                     ,
@@ -268,10 +267,13 @@ angular.module('myApp.rrpps', ['ngRoute'])
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function (result) {
+
+                    console.log(result);
+
                     swal({
                         type: 'success',
                         html: 'El rr.pp: <strong>' +
-                        $('#nombre').val() +'</strong> creado con éxito',
+                        $('#correoRrpp').val() +'</strong> creado con éxito',
                         confirmButtonClass: 'btn btn-success',
                         buttonsStyling: false
 
