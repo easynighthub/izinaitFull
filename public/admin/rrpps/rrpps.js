@@ -161,6 +161,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
                                         ;
                                     });
                                     if (existeEnBaseDeDatos) {
+
                                         alert('AGREGADO CON EXITO');
 
                                     } else  // CREAR RELACIONADOR PUBLICO Y ENVIAR CORREO
