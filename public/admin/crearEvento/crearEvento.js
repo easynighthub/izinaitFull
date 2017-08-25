@@ -30,7 +30,6 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             var eventId = $routeParams.id;
 
             if($rootScope.eventEdit != null){
-
                 location.href = "#!/crearEvento?id="+$rootScope.eventEdit.$id;;
                 location.reload();
 
@@ -129,6 +128,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
+                        $('.photo').prepend($('<img>',{id:'theImg',src:adminLogeado.picture}));
                         if(adminLogeado.idClubWork == false){
                             ObtenerClub (adminLogeado);
                         }else{
@@ -217,6 +217,8 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 if ($scope.dateRangeEnd) {
                     console.log(new Date($scope.dateRangeEnd).getTime());
                     console.log(new Date($scope.dateRangeStart).getTime());
+                    $scope.newEvent.fromHourSelect = $scope.dateRangeStart;
+                    $scope.newEvent.toHourSelect = $scope.dateRangeEnd;
                     $scope.newEvent.fromHour = new Date($scope.dateRangeStart).getTime();
                     $scope.newEvent.toHour = new Date($scope.dateRangeEnd).getTime();
                     var activeDate = moment($scope.dateRangeEnd);
@@ -478,12 +480,15 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 if(subir == true){
 
                     if ($scope.activarHoraGratis == true) {
+                        $scope.newEvent.freemiumHourSelect = $scope.newEvent.freemiumHour;
                         $scope.newEvent.freemiumHour = new Date($scope.newEvent.freemiumHour).getTime();
                     } else {
                         $scope.newEvent.freemiumHour = $scope.newEvent.fromHour;
+                        $scope.newEvent.freemiumHourSelect = $scope.newEvent.fromHourSelect;
                     };
 
                     $scope.newEvent.date = $scope.newEvent.fromHour;
+
 
 
                     $scope.newEvent.policiesDoor =
