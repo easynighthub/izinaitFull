@@ -100,10 +100,21 @@ signInButtonFacebook.addEventListener('click', function() {
         });
 
         database.ref('rrpps/'+user.uid).update({
-            uid:user.uid,
-            email:response.email || "null@izinait.com", //editable si no existe el correo
-            name :response.name,
-            nickName:user.uid // editable al momonento de ingresar
+            displayName: response.name,
+            email: response.email || "null@izinait.com",
+            picture: response.picture.data.url,
+            birthday: response.birthday || "11/11/1111",
+            firstName: response.first_name,
+            facebookId: response.id,
+            lastName: response.last_name,
+            gender : response.gender,
+            confirm : false,
+            nickName:adminId// editable al momonento de ingresar
+        });
+
+        database.ref('/nickName/'+user.uid).update({
+            uid:adminId,
+            nickName:adminId
         });
 
         database.ref(USERS_LOCATION+user.uid+'/doormans/'+adminId).update({
