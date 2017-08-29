@@ -268,10 +268,44 @@ angular.module('myApp.codigo', ['ngRoute'])
             });
 
             $scope.submitNewCreditCard = function () {
+                var userQvoSelect;
+                var qvo = firebase.database().ref('userQvo/').child($scope.usuarioLogeado.$id);
+                var userQvo = $firebaseObject(qvo);
+                userQvo.$loaded().then(function () {
+                    console.log(userQvo);
+                    userQvoSelect = userQvo;
+                    console.log(userQvoSelect);
+                    return userQvoSelect;
 
-                firebase.database().ref('prueba/' + $scope.usuarioLogeado.$id ).set(true);
-                
+                }).then(function (userQvoSelect) {
+                    console.log(userQvoSelect);
+                    firebase.database().ref('userQvo/' + $scope.usuarioLogeado.$id +'/tarjeta').set({
+                        userQvo : userQvoSelect.customer_id,
+                        tarjeta : true
+
+                    });
+                });
+
+
+
+
             };
+
+            $scope.crearCliente = function () {
+
+                console.log($scope.usuarioLogeado);
+                firebase.database().ref('userQvo/' + $scope.usuarioLogeado.$id ).update(
+                    {
+                        email: $scope.usuarioLogeado.email,
+                        uid :$scope.usuarioLogeado.$id,
+                        qvo :true
+                    }
+                );
+
+
+            };
+
+
 
             var signOutButton = document.getElementById('salir');
             signOutButton.addEventListener('click', function () {
