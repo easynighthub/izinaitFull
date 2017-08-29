@@ -7,17 +7,15 @@ angular.module('myApp.crearEvento', ['ngRoute'])
         });
     }])
 
-    .controller('crearEventoCtrl', ['$scope', '$routeParams','$firebaseObject', '$firebaseArray', '$filter', '$rootScope','$mdDialog',
-        function ($scope,$routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope,$mdDialog) {
+    .controller('crearEventoCtrl', ['$scope', '$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope', '$mdDialog',
+        function ($scope, $routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope, $mdDialog) {
 
 
-
-
-            $(sideEventos).addClass( "active" );
-            $(crearEventos).addClass( "active" );
-            $(verEventosFuturos).removeClass( "active" );
-            $(sideClientes).removeClass( "active" );
-            $(sideRrpp).removeClass( "active" );
+            $(sideEventos).addClass("active");
+            $(crearEventos).addClass("active");
+            $(verEventosFuturos).removeClass("active");
+            $(sideClientes).removeClass("active");
+            $(sideRrpp).removeClass("active");
 
 
             var admin = window.currentAdmin;
@@ -26,73 +24,85 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             $scope.serviciosEvent = [];
 
 
-
             var eventId = $routeParams.id;
 
-            if($rootScope.eventEdit != null){
+            if ($rootScope.eventEdit != null) {
 
-                location.href = "#!/crearEvento?id="+$rootScope.eventEdit.$id;;
+                location.href = "#!/crearEvento?id=" + $rootScope.eventEdit.$id;
+                ;
                 location.reload();
 
                 $scope.serviciosEvent = $rootScope.eventEdit.reservas;
                 $scope.serviciosEvent.forEach(function (serv) {
 
-                    var myDate = new Date( serv.fechaFin );
-                   serv.fechaFin = myDate.toGMTString();
+                    var myDate = new Date(serv.fechaFin);
+                    serv.fechaFin = myDate.toGMTString();
 
-                    if(serv.tipo == "ESPECIAL"){
+                    if (serv.tipo == "ESPECIAL") {
                         serv.color = "#ff9800";
 
-                    };
-                    if(serv.tipo == "PREVENTA"){
+                    }
+                    ;
+                    if (serv.tipo == "PREVENTA") {
                         serv.color = "#f44336";
-                    };
-                    if(serv.tipo == "MESA"){
+                    }
+                    ;
+                    if (serv.tipo == "MESA") {
                         serv.color = "#4caf50";
-                    };
-                    if(serv.tipo == "BOTELLAS"){
+                    }
+                    ;
+                    if (serv.tipo == "BOTELLAS") {
                         serv.color = "#00bcd4";
-                    };
-                    if(serv.tipo == "VIP"){
+                    }
+                    ;
+                    if (serv.tipo == "VIP") {
                         serv.color = "#c8c8c8";
-                    };
+                    }
+                    ;
 
                 });
 
-                if($rootScope.eventEdit.freemiumHour != $rootScope.eventEdit.date){
+                if ($rootScope.eventEdit.freemiumHour != $rootScope.eventEdit.date) {
                     $scope.activarHoraGratis = true;
-                };
+                }
+                ;
 
                 $scope.newEvent = $rootScope.eventEdit;
 
 
-            };
+            }
+            ;
 
             if ($rootScope.eventToRepet != null) {
                 $scope.serviciosEvent = $rootScope.eventToRepet.reservas;
                 $scope.serviciosEvent.forEach(function (serv) {
-                    if(serv.tipo == "ESPECIAL"){
+                    if (serv.tipo == "ESPECIAL") {
                         serv.color = "#ff9800";
-                    };
-                    if(serv.tipo == "PREVENTA"){
+                    }
+                    ;
+                    if (serv.tipo == "PREVENTA") {
                         serv.color = "#f44336";
-                    };
-                    if(serv.tipo == "MESA"){
+                    }
+                    ;
+                    if (serv.tipo == "MESA") {
                         serv.color = "#4caf50";
-                    };
-                    if(serv.tipo == "BOTELLAS"){
+                    }
+                    ;
+                    if (serv.tipo == "BOTELLAS") {
                         serv.color = "#00bcd4";
-                    };
-                    if(serv.tipo == "VIP"){
+                    }
+                    ;
+                    if (serv.tipo == "VIP") {
                         serv.color = "#c8c8c8";
-                    };
+                    }
+                    ;
 
 
                 });
 
 
                 $scope.serviciosEvent.forEach(function (s) {
-                   s.fechaFin = null;
+                    s.fechaFin = null;
                 });
                 $scope.newEvent.eventDetails = $rootScope.eventToRepet.eventDetails;
                 $scope.newEvent.ageRangeFemale = $rootScope.eventToRepet.ageRangeFemale;
@@ -101,57 +111,55 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 $scope.newEvent.entryValue = $rootScope.eventToRepet.entryValue;
                 $scope.newEvent.djs = $rootScope.eventToRepet.djs;
                 $scope.newEvent.name = $rootScope.eventToRepet.name;
-                if($rootScope.eventToRepet.freemiumHour != $rootScope.eventToRepet.date){
+                if ($rootScope.eventToRepet.freemiumHour != $rootScope.eventToRepet.date) {
                     $scope.activarHoraGratis = true;
-                };
+                }
+                ;
                 $scope.newEvent.eventEnvironmentSelect = $rootScope.eventToRepet.eventEnvironmentSelect;
                 $scope.newEvent.musicGenresSelect = $rootScope.eventToRepet.musicGenresSelect;
 
 
+            }
+            ;
 
-            };
 
-
-            if($rootScope.eventEdit == null && $rootScope.eventToRepet == null &&  eventId == null){
+            if ($rootScope.eventEdit == null && $rootScope.eventToRepet == null && eventId == null) {
                 location.href = "#!/crearEvento?id=nuevoEvento";
                 location.reload();
 
             }
 
 
-
-
-
-            firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function(snapshot) {
+            firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
                 if (exists == true) {
                     var ref = firebase.database().ref('/admins/').child(admin.$id || admin.uid);
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
-                        $('.photo').prepend($('<img>',{id:'theImg',src:adminLogeado.picture}));
-                        if(adminLogeado.idClubWork == false){
-                            ObtenerClub (adminLogeado);
-                        }else{
+                        $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
+                        if (adminLogeado.idClubWork == false) {
+                            ObtenerClub(adminLogeado);
+                        } else {
                             var clubNombreMostrar = [];
                             var clubNombre = firebase.database().ref().child('clubs');
                             $scope.clubNombre = $firebaseArray(clubNombre);
-                            $scope.clubNombre.$loaded().then(function() {
+                            $scope.clubNombre.$loaded().then(function () {
 
                                 clubNombreMostrar = $scope.clubNombre;
                                 clubNombreMostrar.forEach(function (x) {
-                                    if(x.$id == adminLogeado.idClubWork){
-                                        $('.clubSelecionado').text(x.name +" ");
+                                    if (x.$id == adminLogeado.idClubWork) {
+                                        $('.clubSelecionado').text(x.name + " ");
                                         $scope.newEvent.city = x.city;
                                         $scope.newEvent.clubs = {};
                                         $scope.newEvent.clubs[x.$id] = true;
                                         $scope.newEvent.lat = x.latitude;
                                         $scope.newEvent.lng = x.longitude;
                                         $scope.newEvent.admin = adminLogeado.$id;
-                                        if($rootScope.eventEdit != undefined){
+                                        if ($rootScope.eventEdit != undefined) {
                                             $scope.newEvent.id = eventId;
-                                        }else{
-                                            $scope.newEvent.id =  firebase.database().ref().child('events/').push().key;
+                                        } else {
+                                            $scope.newEvent.id = firebase.database().ref().child('events/').push().key;
                                         }
                                         $scope.newEvent.evenUrl = 'http://izinait.com/user/app/#!/detalleEvento?id=' + $scope.newEvent.id;
                                         $scope.newEvent.visible = adminLogeado.clubs[x.$id].validado;
@@ -159,33 +167,32 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                                         $scope.newEvent.premiumCover = 0;
                                         $scope.newEvent.freeCover = 0;
                                         $scope.newEvent.isPremiumEvent = false;
-                                        $scope.newEvent.rrpps =[];
-                                        angular.forEach(adminLogeado.rrpps,function (rp) {
-                                            if(rp.bloqueado == true){
+                                        $scope.newEvent.rrpps = [];
+                                        angular.forEach(adminLogeado.rrpps, function (rp) {
+                                            if (rp.bloqueado == true) {
                                                 rp.numeroTotal = 0;
                                                 $scope.newEvent.rrpps.push(rp);
-                                            }else{
-                                                if(Object.keys(rp.clubs).indexOf(adminLogeado.idClubWork) >= 0){
+                                            } else {
+                                                if (Object.keys(rp.clubs).indexOf(adminLogeado.idClubWork) >= 0) {
                                                     rp.numeroTotal = 0;
                                                     $scope.newEvent.rrpps.push(rp);
-                                                }else {
+                                                } else {
                                                     console.log("rrpp no trabaja para este club")
                                                 }
-                                            };
+                                            }
+                                            ;
 
 
                                         });
 
 
-
-
-
-                                        $( ".clubSelecionado" ).append( "<b class='caret'> </b>" );
+                                        $(".clubSelecionado").append("<b class='caret'> </b>");
                                     }
                                 });
                             });
 
-                        };
+                        }
+                        ;
 
                         $('.tituloIziboss').text("Crear Evento");
                         $('.no-js').removeClass('nav-open');
@@ -194,9 +201,11 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     window.currentAdmin = "";
                     $scope.adminLogeado = "";
                     window.location = "https://www.izinait.com/admin.html";
-                };
+                }
+                ;
 
             });
+
 
             $scope.endDateBeforeRender = endDateBeforeRender;
             $scope.endDateOnSetTime = endDateOnSetTime;
@@ -204,17 +213,19 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             $scope.startDateBeforeRender = startDateBeforeRender;
             $scope.startDateOnSetTime = startDateOnSetTime;
 
-            function startDateOnSetTime () {
+            function startDateOnSetTime() {
                 $scope.$broadcast('start-date-changed');
             }
 
-            function endDateOnSetTime () {
+            function endDateOnSetTime() {
                 $scope.$broadcast('end-date-changed');
             }
-            function endDateOnSetTime1 () {
+
+            function endDateOnSetTime1() {
                 $scope.$broadcast('end-date-changed');
             }
-            function startDateBeforeRender ($dates) {
+
+            function startDateBeforeRender($dates) {
                 if ($scope.dateRangeEnd) {
                     console.log(new Date($scope.dateRangeEnd).getTime());
                     console.log(new Date($scope.dateRangeStart).getTime());
@@ -230,7 +241,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 }
             }
 
-            function endDateBeforeRender ($view, $dates) {
+            function endDateBeforeRender($view, $dates) {
                 if ($scope.dateRangeStart) {
                     var activeDate = moment($scope.dateRangeStart).subtract(1, $view).add(1, 'minute');
 
@@ -242,32 +253,27 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 }
             };
 
-                var linkGuardarFoto;
+            var linkGuardarFoto;
             $('.dropzone').html5imageupload({
-                onSave: function() {
+                onSave: function () {
 
                 },
-                onAfterCancel: function() {
+                onAfterCancel: function () {
                     $("#thumb").val('');
                 },
-                onAfterProcessImage:function () {
+                onAfterProcessImage: function () {
                     console.log(this);
-                 console.log(this.image[0].src);
-                    // Data URL string
-                    console.log($('.thumb'));
-                  linkGuardarFoto = this.imageGhost[0].currentSrc;
-                    // Create a root reference
+                    //console.log(this.imageObj);
+                    //console.log(this.imageFinal(this.image[0]));
 
-                // Create a reference to 'mountains.jpg'
-                  /*   */
+
+                    linkGuardarFoto = this.image[0].currentSrc;
+                    //console.log(linkGuardarFoto);
+
+                    // Create a reference to 'mountains.jpg'
+                    /*   */
                 }
             });
-
-
-
-
-
-
 
 
             $scope.addNewChoicePREVENTA = function () {
@@ -316,7 +322,6 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     }
                 );
             };
-
 
 
             $scope.removeChoice = function () {
@@ -391,98 +396,113 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             $scope.grabarEvento = function () {
                 var subir = true;
                 var errorList = [];
-                if(!$scope.newEvent.name){
+                if (!$scope.newEvent.name) {
                     subir = false;
                     errorList.push("FALTA NOMBRE");
-                };
-                if(!linkGuardarFoto){
+                }
+                ;
+                if (!linkGuardarFoto) {
                     subir = false;
                     errorList.push("FALTA IMAGEN");
-                };
-                if(!$scope.newEvent.fromHour){
+                }
+                ;
+                if (!$scope.newEvent.fromHour) {
                     subir = false;
                     errorList.push("FALTA HORA DE INICIO");
-                };
-                if(!$scope.newEvent.toHour){
+                }
+                ;
+                if (!$scope.newEvent.toHour) {
                     subir = false;
                     errorList.push("FALTA HORA DE TERMINO");
-                };
-                if(!$scope.newEvent.eventDetails){
+                }
+                ;
+                if (!$scope.newEvent.eventDetails) {
                     subir = false;
                     errorList.push("FALTA DETALLE DE EVENTO");
-                };
-                if(!$scope.newEvent.ageRangeFemale){
+                }
+                ;
+                if (!$scope.newEvent.ageRangeFemale) {
                     subir = false;
                     errorList.push("FALTA EDAD MUJER");
-                };
-                if(!$scope.newEvent.ageRangeMale){
+                }
+                ;
+                if (!$scope.newEvent.ageRangeMale) {
                     subir = false;
                     errorList.push("FALTA EDAD HOMBRE");
-                };
-                if(!$scope.newEvent.clothing){
+                }
+                ;
+                if (!$scope.newEvent.clothing) {
                     subir = false;
                     errorList.push("FALTA CODIGO DE VESTIMENTA");
-                };
+                }
+                ;
 
-                if(!$scope.newEvent.eventEnvironmentSelect){
+                if (!$scope.newEvent.eventEnvironmentSelect) {
                     subir = false;
                     errorList.push("FALTA AMBIENTE");
-                }else{
-                    if($scope.newEvent.eventEnvironmentSelect.length > 2){
+                } else {
+                    if ($scope.newEvent.eventEnvironmentSelect.length > 2) {
                         errorList.push("SOLO PUEDES SELECIONAR UN MAXIMO DE 2 AMBIENTES");
                         subir = false;
-                    };
-                };
-                if(!$scope.newEvent.musicGenresSelect){
+                    }
+                    ;
+                }
+                ;
+                if (!$scope.newEvent.musicGenresSelect) {
                     subir = false;
                     errorList.push("FALTA ESTILO MUSICAL");
-                }else{
-                    if($scope.newEvent.musicGenresSelect.length > 3){
+                } else {
+                    if ($scope.newEvent.musicGenresSelect.length > 3) {
                         subir = false;
                         errorList.push("SOLO PUEDES SELECIONAR UN MAXIMO DE 3 ESTILOS MUSICALES");
-                    };
-                };
+                    }
+                    ;
+                }
+                ;
 
                 var NumeroDeServicio = 0;
 
                 $scope.serviciosEvent.forEach(function (serv) {
-                    NumeroDeServicio ++;
-                    if(!serv.precio){
+                    NumeroDeServicio++;
+                    if (!serv.precio) {
                         subir = false;
-                        errorList.push("EL SERVICIO NUMERO "+NumeroDeServicio+" NO TIENE PRECIO ASIGNADO");
-                    };
-                    if(!serv.cantidad){
+                        errorList.push("EL SERVICIO NUMERO " + NumeroDeServicio + " NO TIENE PRECIO ASIGNADO");
+                    }
+                    ;
+                    if (!serv.cantidad) {
                         subir = false;
-                        errorList.push("EL SERVICIO NUMERO "+NumeroDeServicio+" NO TIENE CANTIDAD DE CUPOS");
-                    };
-                    if(!serv.maxEntradas){
+                        errorList.push("EL SERVICIO NUMERO " + NumeroDeServicio + " NO TIENE CANTIDAD DE CUPOS");
+                    }
+                    ;
+                    if (!serv.maxEntradas) {
                         subir = false;
-                        errorList.push("EL SERVICIO NUMERO "+NumeroDeServicio+" NO TIENE CANTIDAD DE COMPRAS POR USUARIO");
-                    };
-                    if(!serv.desc){
+                        errorList.push("EL SERVICIO NUMERO " + NumeroDeServicio + " NO TIENE CANTIDAD DE COMPRAS POR USUARIO");
+                    }
+                    ;
+                    if (!serv.desc) {
                         subir = false;
-                        errorList.push("EL SERVICIO NUMERO "+NumeroDeServicio+" NO TIENE DESCRIPCION DEL SERVICIO");
-                    };
-                    if(!serv.fechaFin){
+                        errorList.push("EL SERVICIO NUMERO " + NumeroDeServicio + " NO TIENE DESCRIPCION DEL SERVICIO");
+                    }
+                    ;
+                    if (!serv.fechaFin) {
                         subir = false;
-                        errorList.push("EL SERVICIO NUMERO "+NumeroDeServicio+" NO TIENE FECHA DE CIERRE DEL SERVICIO");
-                    };
+                        errorList.push("EL SERVICIO NUMERO " + NumeroDeServicio + " NO TIENE FECHA DE CIERRE DEL SERVICIO");
+                    }
+                    ;
                 });
-
 
 
                 console.log(errorList);
 
 
-
-
-                if(subir == true){
+                if (subir == true) {
 
                     if ($scope.activarHoraGratis == true) {
                         $scope.newEvent.freemiumHour = new Date($scope.newEvent.freemiumHour).getTime();
                     } else {
                         $scope.newEvent.freemiumHour = $scope.newEvent.fromHour;
-                    };
+                    }
+                    ;
 
                     $scope.newEvent.date = $scope.newEvent.fromHour;
 
@@ -501,15 +521,16 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     $scope.newEvent.musicGenres = $scope.newEvent.musicGenresSelect ? $scope.newEvent.musicGenresSelect.join(', ') : '';
 
 
-                    if($scope.serviciosEvent.length > 0){
+                    if ($scope.serviciosEvent.length > 0) {
 
-                  document.getElementById('BarraCargando').style.display = 'block';
-                  document.getElementById('crearEvento').style.display = 'none';
-                   guardarServicios();
-                  subirImagen();
-                }else{
-                  subirImagen();
-                };
+                        document.getElementById('BarraCargando').style.display = 'block';
+                        document.getElementById('crearEvento').style.display = 'none';
+                        guardarServicios();
+                        subirImagen();
+                    } else {
+                        subirImagen();
+                        demo.showSwal('success-message');
+                    };
                 };
 
                 console.log($scope.newEvent);
@@ -517,12 +538,22 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
             };
 
+            $scope.showSuccess = function (type) {
+                swal({
+                    title: "Exelente!",
+                    text: "Tu evento ha sido creado exitosamente, pronto lo aprobaremos para ser visualizado en nuestras plataformas.!",
+                    buttonsStyling: true,
+                    confirmButtonClass: "btn btn-success",
+                    type: "success"
+                });
+            }
+
             $scope.activarHoraGratisF = function () {
                 console.log($scope.newEvent.freemiumHour);
                 !$scope.activarHoraGratis;
-               if($scope.activarHoraGratis == false){
-                   $scope.newEvent.freemiumHour = undefined;
-               }
+                if ($scope.activarHoraGratis == false) {
+                    $scope.newEvent.freemiumHour = undefined;
+                }
             };
 
 
@@ -542,13 +573,13 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                             maxEntradas: element.maxEntradas,
                             desc: element.desc,
                             fechaFin: new Date(element.fechaFin).getTime(),
-                            visible:true
+                            visible: true
                         };
 
                         tipoServicio.push(service);
                     });
 
-                  var newPostKey = firebase.database().ref().child('events/' + $scope.newEvent.id + '/').push().key; //esto es solo para probar rapido
+                    var newPostKey = firebase.database().ref().child('events/' + $scope.newEvent.id + '/').push().key; //esto es solo para probar rapido
                     firebase.database().ref('eventServices/' + $scope.newEvent.id + '/').set(tipoServicio).then(
                         function (s) {
                             console.log('se guardaron bien los servicios ', s);
@@ -561,21 +592,21 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             };
 
 
-          /*  var ref = firebase.storage().ref('andro');
-            ref.putString(message, 'data_url').then(function(snapshot) {
-                console.log( snapshot.a.downloadURLs[0]);
-                console.log('Uploaded a data_url string!');
-            }); */
+            /*  var ref = firebase.storage().ref('andro');
+              ref.putString(message, 'data_url').then(function(snapshot) {
+                  console.log( snapshot.a.downloadURLs[0]);
+                  console.log('Uploaded a data_url string!');
+              }); */
             var managerError = function (e) {
                 stopLoading();
                 console.log('Hubo un Error', e);
                 alert('Error interno, intente nuevamente.');
             };
 
-            var subirImagen = function ()  {
-              var file = linkGuardarFoto;  // URL DE LA IMAGEN
+            var subirImagen = function () {
+                var file = linkGuardarFoto;  // URL DE LA IMAGEN
                 var ref = firebase.storage().ref('eventImages/' + $scope.newEvent.id);  // RUTA DE DONDE SE GUARDARA
-                ref.putString(file, 'data_url').then(function(snapshot) {
+                ref.putString(file, 'data_url').then(function (snapshot) {
                     console.log("guarde bien la imagen");
                     $scope.newEvent.image = snapshot.a.downloadURLs[0]; // url donde quedo el archivo guardado
                     firebase.database().ref('events/' + $scope.newEvent.id).set($scope.newEvent).then(
@@ -588,7 +619,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
                                 }, managerError);
                         }, managerError);
-               }, managerError);
+                }, managerError);
             };
 
 
@@ -600,32 +631,33 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 console.log("guarde bien el events id en el administrador");
                 console.log("entro a guardar doormans");
 
-                angular.forEach(adminLogeado.doormans,function (dr) {
-                    if(dr.bloqueado == true){
+                angular.forEach(adminLogeado.doormans, function (dr) {
+                    if (dr.bloqueado == true) {
                         firebase.database().ref('doormans/' + dr.uid + '/events/' + $scope.newEvent.id).set(true);
-                    }else{
-                        if(Object.keys(dr.clubs).indexOf(adminLogeado.idClubWork) >= 0){
+                    } else {
+                        if (Object.keys(dr.clubs).indexOf(adminLogeado.idClubWork) >= 0) {
                             firebase.database().ref('doormans/' + dr.uid + '/events/' + $scope.newEvent.id).set(true);
-                        }else {
+                        } else {
                             console.log("doorman no trabaja para este club")
                         }
-                    };
+                    }
+                    ;
 
                 });
 
-                angular.forEach(adminLogeado.rrpps,function (rp) {
-                    if(rp.bloqueado == true){
+                angular.forEach(adminLogeado.rrpps, function (rp) {
+                    if (rp.bloqueado == true) {
                         firebase.database().ref('rrpps/' + rp.uid + '/events/' + $scope.newEvent.id).set(true)
-                    }else{
-                        if(Object.keys(rp.clubs).indexOf(adminLogeado.idClubWork) >= 0){
+                    } else {
+                        if (Object.keys(rp.clubs).indexOf(adminLogeado.idClubWork) >= 0) {
                             firebase.database().ref('rrpps/' + rp.uid + '/events/' + $scope.newEvent.id).set(true)
-                        }else {
+                        } else {
                             console.log("rrpp no trabaja para este club")
                         }
-                    };
+                    }
+                    ;
 
                 });
-
 
 
                 $scope.shareWithFacebook = 'https://www.facebook.com/share.php?u=' + $scope.newEvent.evenUrl;
@@ -634,19 +666,19 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 $scope.newEvent = {};
 
 
-                if(adminLogeado.clubs[adminLogeado.idClubWork].validado){
+                if (adminLogeado.clubs[adminLogeado.idClubWork].validado) {
                     $scope.showConfirm(true);
-                }else {
+                } else {
                     $scope.showConfirm(false);
                 }
             };
 
 
-            $scope.showConfirm = function(validado) {
+            $scope.showConfirm = function (validado) {
                 var text = "";
-                if(validado){
-                    text =  "IZINAIT YA APROBO TU EVENTO Y SE VISUALIZA EN NUESTRA WEB"
-                }else {
+                if (validado) {
+                    text = "IZINAIT YA APROBO TU EVENTO Y SE VISUALIZA EN NUESTRA WEB"
+                } else {
                     text = "IZINAIT LO APROBARA EN UNOS MINUTOS"
                 }
 
@@ -657,10 +689,10 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     .ariaLabel('Lucky day')
                     .ok('LISTO!!')
 
-                $mdDialog.show(confirm).then(function() {
+                $mdDialog.show(confirm).then(function () {
                     document.location.href = '#!/view1';
 
-                }, function() {
+                }, function () {
 
                 });
             };

@@ -4,351 +4,353 @@
 
 
 <div id="crearEvento">
-    <div class="card">
+    <div class="card col-md-11">
 
-
-        <!--  header  -->
-        <div class=" fixado card-header-icon" data-background-color="rose">
-            <button ng-click="grabarEvento()" class="btn btn-success pull-right">
+        <form>
+            <!--  header  -->
+            <div class=" fixado card-header-icon" data-background-color="rose">
+                <button ng-click="grabarEvento()" class="btn btn-success pull-right">
                         <span class="btn-label">
                             <i class="material-icons">check</i>
                         </span>
-                Publicar
-            </button>
-            <i style="font-size: 50px" class="material-icons">today</i>
-        </div>
-
-
+                    Publicar
+                </button>
+                <i style="font-size: 50px" class="material-icons">today</i>
+            </div>
 
 
             <!--  titulo evento  -->
-            <div class="col-xs-12 padd-10-tb">
+            <div class="col-md-10 col-md-offset-1">
                 <div class="form-group label-floating">
                     <label class="">
                         Titulo del Evento
-                        <star>*</star>
                     </label>
-                    <input data-ng-model="newEvent.name" type="text"  class="form-control">
+                    <input data-ng-model="newEvent.name" required="true" type="text" class="form-control col-md-10">
                 </div>
             </div>
+
 
             <!--  imagen  -->
-            <div class="col-xs-12 padd-10-tb testMedia">
+            <div class="col-md-10 col-md-offset-1 testMedia">
                 <div class="cover-container col-xs-12 padd-10-tb ">
-                    <div class="dropzone fileinput fileinput-new" data-download="true" data-ajax="false"
-                         data-save="true" data-width="1350"
-                         data-resize="true" data-originalsize="false" data-height="500" smaller="true"
-                         data-editstart="true" style="height: auto; width: 100%;">
-
-                        <input id="thumb" class=" thumb" name="thumb" type="file"
-                               style="position: absolute;"
+                    <div class="dropzone fileinput fileinput-new"
+                         data-download="true"
+                         data-width="1350"
+                         data-ghost="true"
+                         data-ajax="false"
+                         data-resize="true"
+                         data-originalsize="false"
+                         data-height="500"
+                         data-editstart="true">
+                        <input id="thumb" required="true" class="thumb" name="thumb" type="file"
                                accept="image/x-png,image/gif,image/jpeg">
                     </div>
-
                 </div>
-
             </div>
 
 
-            <!--  fecha inicio  -->
-            <div class="dropdown form-group dropdown-start-parent col-xs-12 padd-0-xs col-md-6">
+            <div class="col-md-10 col-md-offset-1">
 
-                <a class="dropdown-toggle" id="dropdownStart" role="button"
-                   data-toggle="dropdown" data-target="dropdown-start-parent">
-                    <div class="input-group date">
-                        <input type="text" class="form-control" placeholder="Fecha de Inicio"
-                               data-ng-model="dateRangeStart">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar "></i></span>
+
+                <!--  fecha inicio  -->
+                <div class="dropdown form-group dropdown-start-parent col-xs-12 padd-0-xs col-md-6">
+
+                    <a class="dropdown-toggle" id="dropdownStart" role="button"
+                       data-toggle="dropdown" data-target="dropdown-start-parent">
+                        <div class="input-group date">
+                            <input type="text" class="form-control" data-date-time-input="DD/MM/YY HH:mm"
+                                   required="true"
+                                   placeholder="Fecha de Inicio"
+                                   data-ng-model="dateRangeStart">
+                            <span class="input-group-addon">
+                                <i class="glyphicon glyphicon-calendar "></i>
+                            </span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker data-ng-model="dateRangeStart"
+                                        data-datetimepicker-config="{ dropdownSelector: '#dropdownStart', renderOn: 'end-date-changed', minuteStep: 15 }"
+                                        data-on-set-time="startDateOnSetTime()"
+                                        data-before-render="startDateBeforeRender($dates)">
+                        </datetimepicker>
+                    </ul>
+                </div>
+
+                <!--  fecha termino  -->
+                <div class="dropdown form-group dropdown-end-parent col-xs-12 padd-0-xs col-md-6">
+                    <a class="dropdown-toggle" id="dropdownEnd" role="button" data-toggle="dropdown"
+                       data-target=".dropdown-end-parent">
+                        <div class="input-group date">
+                            <input type="text" required="true" class="form-control"
+                                   placeholder="Fecha de termino"
+                                   data-ng-model="dateRangeEnd">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker data-ng-model="dateRangeEnd"
+                                        data-datetimepicker-config="{ dropdownSelector: '#dropdownEnd', renderOn: 'start-date-changed', minuteStep: 15 }"
+                                        data-on-set-time="endDateOnSetTime()"
+                                        data-before-render="endDateBeforeRender($view, $dates, $leftDate, $upDate, $rightDate)"></datetimepicker>
+                    </ul>
+                </div>
+
+
+                <!--  descripcion evento  -->
+                <div class="col-xs-12 padd-10-tb">
+                    <div class="form-group label-floating">
+                        <label class=""> Descripción del evento </label>
+                        <textarea required="true" data-ng-model="newEvent.eventDetails"
+                                   class="form-control"
+                                  rows="5"></textarea>
+                        <span class="help-block">Cuéntanos que tan sorprendente sera este evento.</span>
                     </div>
-                </a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    <datetimepicker data-ng-model="dateRangeStart"
-                                    data-datetimepicker-config="{ dropdownSelector: '#dropdownStart', renderOn: 'end-date-changed' }"
-                                    data-on-set-time="startDateOnSetTime()"
-                                    data-before-render="startDateBeforeRender($dates)">
-                    </datetimepicker>
-                </ul>
-            </div>
+                </div>
 
-            <!--  fecha termino  -->
-            <div class="dropdown form-group dropdown-end-parent col-xs-12 padd-0-xs col-md-6">
-                <a class="dropdown-toggle" id="dropdownEnd" role="button" data-toggle="dropdown"
-                   data-target=".dropdown-end-parent">
-                    <div class="input-group date">
-                        <input type="text" class="form-control" placeholder="Fecha de termino"
-                               data-ng-model="dateRangeEnd">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                <!--  ambiente y genero -->
+                <div class="col-xs-12 padd-10-tb">
+                    <!--  vestimenta
+                    <md-input-container class="col-xs-12 padd-0-xs col-sm-6">
+                        <i style="float: left;" class="material-icons">accessibility</i>
+                        <label>Codigo de vestimenta</label>
+                        <md-select ng-model="newEvent.clothing">
+                            <md-option><em>None</em></md-option>
+                            <md-option ng-value="close.name" ng-repeat="close in clothings">
+                                {{close.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+        -->
+
+
+                    <div class="col-md-6">
+                        <select ng-model="newEvent.musicGenresSelect" class="selectpicker " data-max-options="3"
+                                data-style="select-with-transition" multiple title="Genero musical (max 3)"
+                                data-size="7">
+                            <option disabled>Genero musical (max 3)</option>
+                            <option value="80'S">80'S</option>
+                            <option value="Clasico">Clasico</option>
+                            <option value="Dance">Dance</option>
+                            <option value="Dance Hall">Dance Hall</option>
+                            <option value="Deep House">Deep House</option>
+                            <option value="Electronica">Electronica</option>
+                            <option value="Funky">Funky</option>
+                            <option value="Hip Hop">Hip Hop</option>
+                            <option value="Hits">Hits</option>
+                            <option value="House">House</option>
+                            <option value="Latin">Latin</option>
+                            <option value="Pachanga">Pachanga</option>
+                            <option value="Reggae">Reggae</option>
+                            <option value="Reggaeton">Reggaeton</option>
+                            <option value="Retro">Retro</option>
+                            <option value="Rock">Rock</option>
+                            <option value="R&B">R&B</option>
+                            <option value="Salsa">Salsa</option>
+                            <option value="Techno">Techno</option>
+                        </select>
                     </div>
-                </a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    <datetimepicker data-ng-model="dateRangeEnd"
-                                    data-datetimepicker-config="{ dropdownSelector: '#dropdownEnd', renderOn: 'start-date-changed' }"
-                                    data-on-set-time="endDateOnSetTime()"
-                                    data-before-render="endDateBeforeRender($view, $dates, $leftDate, $upDate, $rightDate)"></datetimepicker>
-                </ul>
-            </div>
 
+                    <div class="col-md-6">
 
-            <!--  descripcion evento  -->
-            <div class="col-xs-12 padd-10-tb">
-                <div class="form-group label-floating">
-                    <label class=""> Descripción del evento </label>
-                    <textarea data-ng-model="newEvent.eventDetails" class="form-control"rows="5"></textarea>
-                </div>
-            </div>
-
-
-            <!--  edad -->
-
-
-            <div class="col-xs-12">
-
-                <div class="col-md-4">
-
-                  <!--  <i style="float: left;" class="fa fa-venus" aria-hidden="true"></i>  -->
-
-                    <select ng-model="newEvent.ageRangeFemale" class="selectpicker" data-style="select-with-transition" title="Edad Mujeres " data-size="7">
-                        <option disabled> Edad Mujeres</option>
-                        <option value="18"> +18</option>
-                        <option value="19">+19 </option>
-                        <option value="20">+20</option>
-                        <option value="21">+21</option>
-                        <option value="22"> +22</option>
-                        <option value="23">+23 </option>
-                        <option value="24">+24</option>
-                        <option value="25">+25</option>
-                    </select>
-
-                </div>
-                <div class="col-sm-4">
-
-                    <!--  <i style="float: left;" class="fa fa-venus" aria-hidden="true"></i>  -->
-
-                    <select  ng-model="newEvent.ageRangeMale" class="selectpicker" data-style="select-with-transition" title="Edad Hombres" data-size="7">
-                        <option disabled> Edad Hombres</option>
-                        <option value="18"> +18</option>
-                        <option value="19">+19 </option>
-                        <option value="20">+20</option>
-                        <option value="21">+21</option>
-                        <option value="22">+22</option>
-                        <option value="23">+23 </option>
-                        <option value="24">+24</option>
-                        <option value="25">+25</option>
-                    </select>
-
-                </div>
-                <div class="col-sm-4">
-
-                    <!--  <i style="float: left;" class="fa fa-venus" aria-hidden="true"></i>  -->
-
-                    <select  ng-model="newEvent.clothing" class="selectpicker" data-style="select-with-transition" title="Codigo de Vestimenta" data-size="7">
-                        <option disabled> Codigo de vestimenta</option>
-                        <option value="Black and White">Black and White</option>
-                        <option value="Casual">Casual </option>
-                        <option value="Disfraces">Disfraces</option>
-                        <option value="Gala">Gala</option>
-                        <option value="SemiFormal">SemiFormal</option>
-                        <option value="Verano">Verano </option>
-                    </select>
-
+                        <select ng-model="newEvent.eventEnvironmentSelect" required="true" class="selectpicker"
+                                data-max-options="2"
+                                data-style="select-with-transition" multiple title="Ambiente (max 2)" data-size="7">
+                            <option disabled>Ambiente (max 2)</option>
+                            <option value="Alocado">Alocado</option>
+                            <option value="Alternativo">Alternativo</option>
+                            <option value="Concierto">Concierto</option>
+                            <option value="Elegante">Elegante</option>
+                            <option value="Festival">Festival</option>
+                            <option value="Internacional">Internacional</option>
+                            <option value="Lounge and Bar">Lounge and Bar</option>
+                            <option value="Outdoor">Outdoor</option>
+                            <option value="Sofisticado">Sofisticado</option>
+                            <option value="Terraza">Terraza</option>
+                            <option value="Ultra Bailable">Ultra Bailable</option>
+                            <option value="Underground">Underground</option>
+                            <option value="Universitario">Universitario</option>
+                            <option value="Pub">Pub</option>
+                        </select>
+                    </div>
+                    <!--  genero
+                    <md-input-container class="col-xs-12 padd-0-xs col-sm-6">
+                        <i style="float: left;" class="material-icons">music_note</i>
+                        <label>Genero musical (max 3)</label>
+                        <md-select class="musicalSelec" ng-model="newEvent.musicGenres" multiple
+                                   ng-change="allow3musicaGenres()">
+                            <md-option class="music-options" ng-value="music.name"
+                                       ng-repeat="music in musics"
+                                       ng-show="music.visible == true">{{music.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    -->
                 </div>
 
 
-                <!--  edad mujeres
-                <md-input-container class=" col-xs-12 padd-0-xs col-sm-6">
-                    <i style="float: left;" class="fa fa-venus" aria-hidden="true"></i>
-                    <label>Edad mujeres</label>
-                    <md-select  ng-model="newEvent.ageRangeFemale">
-                        <md-option><em>None</em></md-option>
-                        <md-option ng-value="ageRange.$value" ng-repeat="ageRange in ageRanges">
-                            +{{ageRange.$value}}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
--->
+                <!--  edad -->
+                <div class="col-xs-12">
+
+                    <div class="col-md-4">
+
+                        <!--  <i style="float: left;" class="fa fa-venus" aria-hidden="true"></i>  -->
+
+                        <select ng-model="newEvent.ageRangeFemale" required="true" class="selectpicker"
+                                data-style="select-with-transition"
+                                title="Edad Mujeres " data-size="7">
+                            <option disabled> Edad Mujeres</option>
+                            <option value="18">+18</option>
+                            <option value="19">+19</option>
+                            <option value="20">+20</option>
+                            <option value="21">+21</option>
+                            <option value="22">+22</option>
+                            <option value="23">+23</option>
+                            <option value="24">+24</option>
+                            <option value="25">+25</option>
+                        </select>
+
+                    </div>
+                    <div class="col-sm-4">
+
+                        <!--  <i style="float: left;" class="fa fa-venus" aria-hidden="true"></i>  -->
+
+                        <select ng-model="newEvent.ageRangeMale" required="true" class="selectpicker"
+                                data-style="select-with-transition"
+                                title="Edad Hombres" data-size="7">
+                            <option disabled> Edad Hombres</option>
+                            <option value="18">+18</option>
+                            <option value="19">+19</option>
+                            <option value="20">+20</option>
+                            <option value="21">+21</option>
+                            <option value="22">+22</option>
+                            <option value="23">+23</option>
+                            <option value="24">+24</option>
+                            <option value="25">+25</option>
+                        </select>
+
+                    </div>
+                    <div class="col-sm-4">
+
+                        <!--  <i style="float: left;" class="fa fa-venus" aria-hidden="true"></i>  -->
+
+                        <select ng-model="newEvent.clothing" required="true" class="selectpicker"
+                                data-style="select-with-transition"
+                                title="Codigo de Vestimenta" data-size="7">
+                            <option disabled>Codigo de vestimenta</option>
+                            <option value="Black and White">Black and White</option>
+                            <option value="Casual">Casual</option>
+                            <option value="Disfraces">Disfraces</option>
+                            <option value="Gala">Gala</option>
+                            <option value="SemiFormal">SemiFormal</option>
+                            <option value="Verano">Verano</option>
+                        </select>
+
+                    </div>
 
 
+                    <!--  edad mujeres
+                    <md-input-container class=" col-xs-12 padd-0-xs col-sm-6">
+                        <i style="float: left;" class="fa fa-venus" aria-hidden="true"></i>
+                        <label>Edad mujeres</label>
+                        <md-select  ng-model="newEvent.ageRangeFemale">
+                            <md-option><em>None</em></md-option>
+                            <md-option ng-value="ageRange.$value" ng-repeat="ageRange in ageRanges">
+                                +{{ageRange.$value}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+        -->
 
 
-
-                <!--  edad hombres
-                <md-input-container class="col-xs-12 padd-0-xs col-sm-6">
-                    <i style="float: left;" class="fa fa-mars"></i>
-                    <label>Edad Hombres</label>
-                    <md-select ng-model="newEvent.ageRangeMale">
-                        <md-option><em>None</em></md-option>
-                        <md-option ng-value="ageRange.$value" ng-repeat="ageRange in ageRanges">
-                            +{{ageRange.$value}}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
-                   -->
-            </div>
-
-
-            <!--  vestimenta y genero -->
-            <div class="col-xs-12 padd-12-tb">
-                <!--  vestimenta
-                <md-input-container class="col-xs-12 padd-0-xs col-sm-6">
-                    <i style="float: left;" class="material-icons">accessibility</i>
-                    <label>Codigo de vestimenta</label>
-                    <md-select ng-model="newEvent.clothing">
-                        <md-option><em>None</em></md-option>
-                        <md-option ng-value="close.name" ng-repeat="close in clothings">
-                            {{close.name}}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
- -->
-
-
-
-
-
-
-
-
-
-                <div class="col-md-6">
-                    <select ng-model="newEvent.musicGenresSelect"  class="selectpicker" data-style="select-with-transition" multiple title="Genero musical (max 3)"  data-size="7">
-                        <option disabled>Genero musical (max 3)</option>
-                        <option value="80'S"> 80'S </option>
-                        <option value="Clasico">Clasico</option>
-                        <option value="Dance">Dance</option>
-                        <option value="Dance Hall">Dance Hall</option>
-                        <option value="Deep House">Deep House </option>
-                        <option value="Electronica"> Electronica</option>
-                        <option value="Funky">Funky </option>
-                        <option value="Hip Hop">Hip Hop</option>
-                        <option value="Hits">Hits</option>
-                        <option value="Hous">Hous</option>
-                        <option value="Latin">Latin </option>
-                        <option value="Pachanga">Pachanga</option>
-                        <option value="Reggae">Reggae </option>
-                        <option value="Reggaeton">Reggaeton</option>
-                        <option value="Retro">Retro</option>
-                        <option value="Rock">Rock</option>
-                        <option value="R&B">R&B </option>
-                        <option value="Salsa">Salsa</option>
-                        <option value="Techno">Techno</option>
-                    </select>
+                    <!--  edad hombres
+                    <md-input-container class="col-xs-12 padd-0-xs col-sm-6">
+                        <i style="float: left;" class="fa fa-mars"></i>
+                        <label>Edad Hombres</label>
+                        <md-select ng-model="newEvent.ageRangeMale">
+                            <md-option><em>None</em></md-option>
+                            <md-option ng-value="ageRange.$value" ng-repeat="ageRange in ageRanges">
+                                +{{ageRange.$value}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                       -->
                 </div>
 
-                <div class="col-md-6">
 
-                    <select ng-model="newEvent.eventEnvironmentSelect"  class="selectpicker" data-style="select-with-transition" multiple title="Ambiente (max 2)"  data-size="7">
-                        <option disabled>Ambiente (max 2)</option>
-                        <option value="Alocado">Alocado </option>
-                        <option value="Alternativo">Alternativo</option>
-                        <option value="Concierto">Concierto</option>
-                        <option value="Elegante">Elegante</option>
-                        <option value="Festival">Festival </option>
-                        <option value="Internacional">Internacional</option>
-                        <option value="Lounge and Bar">Lounge and Bar </option>
-                        <option value="Outdoor">Outdoor</option>
-                        <option value="Sofisticado">Sofisticado</option>
-                        <option value="Terraza">Terraza</option>
-                        <option value="Ultra Bailable">Ultra Bailable </option>
-                        <option value="Underground">Underground</option>
-                        <option value="Universitario">Universitario </option>
-                    </select>
-                </div>
-                <!--  genero
-                <md-input-container class="col-xs-12 padd-0-xs col-sm-6">
-                    <i style="float: left;" class="material-icons">music_note</i>
-                    <label>Genero musical (max 3)</label>
-                    <md-select class="musicalSelec" ng-model="newEvent.musicGenres" multiple
-                               ng-change="allow3musicaGenres()">
-                        <md-option class="music-options" ng-value="music.name"
-                                   ng-repeat="music in musics"
-                                   ng-show="music.visible == true">{{music.name}}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
-                -->
-            </div>
+                <!--  artista y ambiente -->
+                <div class="col-md-9 col-md-offset-1">
+
+                    <div class="col-md-9">
 
 
-            <!--  artista y ambiente -->
-            <div class="col-xs-12 padd-12-tb">
+                        <div class="form-group  is-empty">
+                            <label class="label-on-left label-floating">Line Up</label>
+                            <input ng-model="newEvent.djs" required="true" type="text" class="form-control">
+                            <span class="help-block">Mencione los artistas que estaran presente.</span>
+                        </div>
 
-                <div class="row col-md-6">
-                    <label class="col-md-4 label-on-left">Line Up</label>
-                    <div class="col-md-8">
-                        <div class="form-group label-floating is-empty">
-                            <label class="control-label"></label>
-                            <input ng-model="newEvent.djs" type="text" class="form-control">
-                            <span class="help-block">Nombres de Dj's Que tocaran.</span>
+                    </div>
+                    <div class="col-md-3">
+
+
+                        <div class="form-group  is-empty">
+                            <label class="label-on-left label-floating">Valor Puerta</label>
+                            <input ng-model="newEvent.entryValue" required="true" type="number"
+                                   class="form-control">
+
+                            <span class="help-block">Valor entrada en puerta dia del evento.</span>
+
                         </div>
                     </div>
-                </div>
-                <div class="row col-md-6">
-                    <label class="col-md-4 label-on-left">Valor Puerta</label>
-                    <div class="col-md-8">
-                        <div class="form-group label-floating is-empty">
-                            <label class="control-label"></label>
-                            <input ng-model="newEvent.entryValue" type="number" class="form-control">
-
-                            <span class="help-block">Valor que estara en puerta para los usuarios.</span>
-                        </div>
-                    </div>
-                </div>
 
 
-                <!--  ambiente
-                <md-input-container class="col-xs-12 padd-0-xs col-sm-6">
-                    <i style="float: left;" class="material-icons">layers</i>
-                    <label>Ambiente (max 2)</label>
-                    <md-select ng-model="newEvent.eventEnvironment" multiple
-                               ng-change="allowUpTo2Ambiente()">
-                        <md-option class="ambiente-option" ng-value="environment.name"
-                                   ng-repeat="environment in environments">{{environment.name}}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
-                -->
+                    <!--  ambiente
+                    <md-input-container class="col-xs-12 padd-0-xs col-sm-6">
+                        <i style="float: left;" class="material-icons">layers</i>
+                        <label>Ambiente (max 2)</label>
+                        <md-select ng-model="newEvent.eventEnvironment" multiple
+                                   ng-change="allowUpTo2Ambiente()">
+                            <md-option class="ambiente-option" ng-value="environment.name"
+                                       ng-repeat="environment in environments">{{environment.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    -->
 
-                <!--  artista
-                <div class="input-group ">
-		            <span class="input-group-addon">
-			            <i class="fa fa-headphones"></i>
-		            </span>
-                    <input type="text" ng-model="newEvent.djs" class="form-control" placeholder="Line UP">
-                </div>
-
-                <div class="input-group col-sm-6">
-		            <span class="input-group-addon">
-			            <i class="fa fa-usd"></i>
-		            </span>
-                    <input type="number" ng-model="newEvent.entryValue" class="form-control"
-                           placeholder="Valor puerta">
-                </div>
-                  -->
-            </div>
-
-            <!--  horario gratis -->
-            <div class="col-xs-12 padd-12-tb">
-
-
-                <div class="row">
-                    <div class="col-md-6" style="margin-top: 25px">
-                        <p class="text-center">
-                            <strong>Agregar un horario gratis para todos los usuarios : </strong>
-                            <md-checkbox
-                                    ng-model="activarHoraGratis" ng-click="activarHoraGratisF()"
-                                    aria-label="Checkbox 1"
-                                    ng-click="accionVisibleDoorman(doorman)">
-                            </md-checkbox>
-                        </p>
+                    <!--  artista
+                    <div class="input-group ">
+                        <span class="input-group-addon">
+                            <i class="fa fa-headphones"></i>
+                        </span>
+                        <input type="text" ng-model="newEvent.djs" class="form-control" placeholder="Line UP">
                     </div>
 
+                    <div class="input-group col-sm-6">
+                        <span class="input-group-addon">
+                            <i class="fa fa-usd"></i>
+                        </span>
+                        <input type="number" ng-model="newEvent.entryValue" class="form-control"
+                               placeholder="Valor puerta">
+                    </div>
+                      -->
+                </div>
 
+                <!--  horario gratis -->
+                <div class="col-md-6 col-md-offset-3">
+
+                    <md-switch
+                            ng-model="activarHoraGratis" ng-click="activarHoraGratisF()"
+                            aria-label="Checkbox 1">
+                        <bold>Definir Horario Gratis</bold>
+                    </md-switch>
                     <div ng-show="activarHoraGratis"
-                         class="dropdown form-group dropdown-end-parent1 col-xs-12 padd-0-xs col-md-6">
+                         class="dropdown form-group dropdown-end-parent1">
                         <a class="dropdown-toggle" id="dropdownEndFree" role="button" data-toggle="dropdown"
                            data-target=".dropdown-end-parent1">
                             <div class="input-group date">
-                                <input type="text" class="form-control" placeholder="Fecha de termino Hora Gratis"
+                                <input type="text" class="form-control"
+                                       placeholder="Limite horario gratuito"
                                        data-ng-model="newEvent.freemiumHour">
                                 <span class="input-group-addon"><i
                                         class="glyphicon glyphicon-calendar"></i></span>
@@ -358,36 +360,73 @@
                             <datetimepicker data-ng-model="newEvent.freemiumHour"
                                             data-datetimepicker-config="
                                             {
-                                            dropdownSelector: '#dropdownEndFree',
-                                            renderOn: 'start-date-changed',
+                                            dropdownSelector: '#dropdownEndFree'
+                                            ,renderOn: 'end-date-changed'
+                                            ,startView:'hour'
+                                            ,minuteStep: 15
+
                                             }"
                                             data-on-set-time="endDateOnSetTime()"
                                             data-before-render="endDateBeforeRender($view, $dates, $leftDate, $upDate, $rightDate)"></datetimepicker>
                         </ul>
                     </div>
+
                 </div>
 
 
-            </div>
+                <!--  antecipada  botones-->
+                <div class="col-md-12 col-md-offset-1 text-center" title="AÑADIR PROMOCION">
 
 
-            <!--  antecipada  -->
-            <div class="col-xs-12 col-md-12 text-center">
+                    <a class="col-md-2 col-xs-12 btn-round btn btn-danger "
+                       ng-click="addNewChoicePREVENTA()" ng-model="PREVENTA">
+                        <i class="fa fa-ticket "></i>
+                        PREVENTA
+                    </a>
 
 
-                <div class="card" style="background-color: #e4e4e4"
+                    <a class="col-md-2 col-xs-12 btn btn-round btn-success"
+                       ng-click="addNewChoiceMESA()"
+                       ng-model="MESA">
+                        <i class=" material-icons ">local_play</i>
+                        MESA
+                    </a>
+
+                    <a class="col-md-2 col-xs-12 btn-round btn btn-info"
+                       ng-click="addNewChoiceBOTELLAS()" ng-model="PREVENTA">
+                        <i class="fa fa-glass"></i>
+                        BOTELLAS
+                    </a>
+
+                    <a class="col-md-2 col-xs-12 btn btn-round btn-default"
+                       ng-click="addNewChoiceVIP()"
+                       ng-model="VIP">
+                        <i class="fa fa-diamond"></i>
+                        VIP
+                    </a>
+
+                    <a class="col-md-2 col-xs-12 btn-round btn btn-warning"
+                       ng-click="addNewChoiceESPECIAL()"
+                       ng-model="ESPECIAL">
+                        <i class=" material-icons ">stars</i>
+                        ESPECIAL
+                    </a>
+
+
+                </div>
+
+                <!--  antecipada  panel-->
+                <div class="card col-md-9 col-md-offset-2" style="background-color: whitesmoke"
                      data-ng-repeat="servicioEvent in serviciosEvent">
-                    <div style="background-color: {{servicioEvent.color}}; color: white"
-                         class="card-header">
+                    <div style="border-radius: 5px!important; background-color: {{servicioEvent.color}}!important;padding: 5px!important; color: white"
+                         class="card-header text-center">
                         <strong>{{servicioEvent.tipo}}</strong>
                     </div>
 
                     <div>
-
-
                         <div class="col-md-4">
                             <div class="form-group">
-                                <input  type="number"
+                                <input type="number" required="true"
                                        ng-model="servicioEvent.precio" placeholder="Precio"
                                        class="form-control"/>
                             </div>
@@ -395,7 +434,7 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <input  type="number"
+                                <input type="number" required="true"
                                        ng-model="servicioEvent.cantidad" placeholder="Cantidad"
                                        class="form-control"/>
                             </div>
@@ -403,116 +442,58 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <input type="number"
+                                <input type="number" required="true"
                                        ng-model="servicioEvent.maxEntradas"
                                        placeholder="Max entradas por compra" class="form-control"/>
                             </div>
                         </div>
 
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                                    <textarea ng-model="servicioEvent.desc" class="form-control"
-                                                              placeholder="Descripción" rows="3"></textarea>
-                            </div>
+
+                        <div class="form-group col-md-12">
+                                <textarea ng-model="servicioEvent.desc" class="form-control" required="true"
+                                          placeholder="Descripción" rows="3">
+                                </textarea>
                         </div>
-                        <div class="col-md-6">
 
-                            <div class="dropdown">
-                                <a class="dropdown-toggle" id="dropdown2" role="button"
-                                   data-toggle="dropdown">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control"
-                                               data-ng-model="servicioEvent.fechaFin"
-                                               placeholder="Fecha cierra servicio">
-                                        <span class="input-group-addon">
-                                                                <i class="glyphicon glyphicon-calendar">
 
-                                                                </i>
-                                                            </span>
-                                    </div>
-                                </a>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <datetimepicker data-ng-model="servicioEvent.fechaFin"
+                        <div class="dropdown col-md-8 col-xs-12">
+                            <a class="dropdown-toggle" id="dropdown2" role="button"
+                               data-toggle="dropdown">
+                                <div class="input-group date">
+                                    <input type="text" class="form-control" required="true"
+                                           data-ng-model="servicioEvent.fechaFin"
+                                           placeholder="Horario Limite Promoción">
+                                    <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="servicioEvent.fechaFin"
+                                                data-datetimepicker-config="{ dropdownSelector: '#dropdown2',
+                                                      renderOn: 'start-date-changed'}"
+                                                data-on-set-time="endDateOnSetTime()"
+                                                data-before-render="endDateBeforeRender($view, $dates, $leftDate, $upDate, $rightDate)">
+                                </datetimepicker>
 
-                                                    data-datetimepicker-config="{ dropdownSelector: '#dropdown2',
-                                                      renderOn: 'start-date-changed',}"
-
-                                                    data-on-set-time="endDateOnSetTime()"
-                                                    data-before-render="endDateBeforeRender($view, $dates, $leftDate, $upDate, $rightDate)">
-                                    </datetimepicker>>
-                                </ul>
-                            </div>
-
+                            </ul>
                         </div>
-                        <div class="col-md-6 ">
-                            <button ng-click="removeChoice()"
-                                    class=" btn  btn-default">
-                                <i class="material-icons pointer btn_rsvp_trash">delete_forever</i><strong>BORRAR</strong>
-                            </button>
-                        </div>
+
+                        <a ng-click="removeChoice()"
+                           class="btn  btn-default btn-round pull-right  btn-fab-mini col-md-3 col-xs-12">
+                            <i class="material-icons pointer btn_rsvp_trash">delete_forever</i>
+                        </a>
 
 
                     </div>
 
                 </div>
-
-
-                <div class="col-xs-12 padd-0-xs text-center">
-                    <STRONG>AÑADIR PROMOCION</STRONG>
-                </div>
-
-
-                <button style="float: none!important;"
-                        class="col-md-2 col-xs-5 col-sm-6 centered btn btn-danger "
-                        ng-click="addNewChoicePREVENTA()" ng-model="PREVENTA">
-                    <i class="fa fa-ticket "></i>
-                    PREVENTA
-                </button>
-
-
-                <button style="float: none!important;"
-                        class="col-md-2 col-xs-5 col-sm-6 btn centered btn-success"
-                        ng-click="addNewChoiceMESA()"
-                        ng-model="MESA">
-                    <i class=" material-icons ">local_play</i>
-                    MESA
-                </button>
-
-                <button style="float: none!important;"
-                        class=" col-md-2 col-xs-5 col-sm-6 centered btn btn-info"
-                        ng-click="addNewChoiceBOTELLAS()" ng-model="PREVENTA">
-                    <i class="fa fa-glass"></i>
-                    BOTELLAS
-                </button>
-
-                <button style="float: none!important;"
-                        class="col-md-2 col-xs-5 col-sm-6 btn centered btn-default"
-                        ng-click="addNewChoiceVIP()"
-                        ng-model="VIP">
-                    <i class="fa fa-diamond"></i>
-                    VIP
-                </button>
-
-                <button style="float: none!important;"
-                        class="col-md-2 col-xs-5 col-sm-12 centered btn btn-warning"
-                        ng-click="addNewChoiceESPECIAL()"
-                        ng-model="ESPECIAL">
-                    <i class=" material-icons ">stars</i>
-                    ESPECIAL
-                </button>
-
-
             </div>
-
-
-
-
+        </form>
 
     </div>
 </div>
 
-
-<script src="../assets/js/jquery.tagsinput.js"></script>
 <!--PRIMER PASO: Colocar dentro del tag HEAD -->
 
 

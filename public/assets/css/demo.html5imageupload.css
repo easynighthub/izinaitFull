@@ -210,8 +210,9 @@ html, body {
 
 .dropzone .download {
     position: absolute;
-    left: 0px;
-    top: 27px;
+    width: 150px!important;
+    right: 5px;
+    bottom: 5px;
     z-index: 999;
     display: inline-block;
 }

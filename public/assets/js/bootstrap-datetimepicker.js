@@ -47,9 +47,9 @@
     'use strict';
     if (typeof define === 'function' && define.amd) {
         // AMD is used - Register as an anonymous module.
-        define(['jquery', 'moment'], factory);
+        define(['jquery', 'public/admin/tools/moment/moment'], factory);
     } else if (typeof exports === 'object') {
-        factory(require('jquery'), require('moment'));
+        factory(require('jquery'), require('public/admin/tools/moment/moment'));
     } else {
         // Neither AMD nor CommonJS used. Use global variables.
         if (typeof jQuery === 'undefined') {

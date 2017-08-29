@@ -51,11 +51,11 @@
     }
 
     $.html5imageupload.defaults = {
-        width: null,
-        height: null,
+        width: 1350,
+        height: 500,
         image: null,
         ghost: true,
-        originalsize: true,
+        originalsize: false,
         url: false,
         removeurl: null,
         data: {},
@@ -67,7 +67,7 @@
         editstart: false,
         saveOriginal: false,
         save: true,
-        download: false,
+        download: true,
 
         smaller: false,
         smallerWidth: false,
