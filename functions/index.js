@@ -29,6 +29,14 @@ const nodemailer = require('nodemailer');
 var qrProyect = require('qr-image');
 var promise = require('request-promise');
 
+var MP = require ("mercadopago");
+var mp = new MP ("5964968665437935", "jx1s7T0577ftWPqqm9kLNIKVyUlxQEAf");
+
+mp.getAccessToken(function (err, accessToken){
+    console.log (accessToken);
+    console.log("getAccessToken");
+});
+
 
 const gmailEmail = encodeURIComponent(functions.config().gmail.email);
 const gmailPassword = encodeURIComponent(functions.config().gmail.password);
@@ -38,6 +46,8 @@ const mailTransport = nodemailer.createTransport(`smtps://${gmailEmail}:${gmailP
 // Your company name to include in the emails
 // TODO: Change this to your app or company name to customize the email sent.
 const APP_NAME = 'IZINAIT';
+
+
 
 
 exports.crearUsuarioQvo = functions.database.ref('/userQvo/{userId}')
@@ -72,6 +82,97 @@ fetch('https://playground.qvo.cl/customers', {
 
 
 
+exports.consultarUsuarioQvo = functions.https.onRequest((req, res) => {
+        // Grab the current value of what was written to the Realtime Database.
+        const userQvo = req.query.userQvo;
+
+fetch('https://playground.qvo.cl/customers/'+userQvo, {
+      headers: {
+        'Authorization': 'Token '+functions.config().qvo.token,
+        'Content-Type': 'application/json'
+    }
+}).then(function(res) {
+        return res.json();
+        console.log(res.json());
+        console.log("NETRE AL RES");
+    }).then(function(body) {
+    console.log(body);
+    res.status(200).send(body);
+    return body
+}).then(function (ok) {
+    console.log("ok");
+});
+});
+
+
+exports.agregarTarjetaUsuarioQvo = functions.https.onRequest((req, res) => {
+        // Grab the current value of what was written to the Realtime Database.
+        const userQvo = req.query.userQvo;
+
+fetch('https://playground.qvo.cl/customers/'+userQvo+'/cards/inscriptions', {
+    method: 'POST',
+    headers: {
+        'Authorization': 'Token '+functions.config().qvo.token,
+        'Content-Type': 'application/x-www-form-urlencoded'
+
+    },
+    body: JSON.stringify({
+        return_url: "http://izinait.com/app"
+    })
+}).then(function(response) {
+    console.log(response)
+    return response.json();
+}).then(function (body) {
+    console.log(body);
+    res.status(200).send(body);
+    //res.redirect(303, body.redirect_url);
+    return body;
+
+}).then(function (ok) {
+    console.log(ok);
+});
+
+});
+
+exports.cobrarTarjetaDeCredito = functions.https.onRequest((req, res) => {
+        // Grab the current value of what was written to the Realtime Database.
+        const userQvo = req.query.userQvo;
+        const tarjetaCredito = req.query.tarjetaCredito;
+
+fetch('https://playground.qvo.cl/customers/'+userQvo+'/cards/'+tarjetaCredito+'/charge', {
+    method: 'POST',
+    headers: {
+        'Authorization': 'Token '+functions.config().qvo.token,
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        amount: 3000
+    })
+}).then(function(response) {
+    console.log(response)
+    return response.json();
+}).then(function (body) {
+    console.log(body);
+    res.status(200).send(body);
+    return body;
+
+}).then(function (ok) {
+    console.log(ok);
+});
+
+});
+
+
+exports.addMessagess = functions.https.onRequest((req, res) => {
+        // Grab the text parameter.
+        const original = req.query.text;
+// Push the new message into the Realtime Database using the Firebase Admin SDK.
+admin.database().ref('/messages').push({original: original}).then(snapshot => {
+    // Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
+    res.redirect(303, snapshot.ref);
+});
+});
+
 exports.agregarTarjeta = functions.database.ref('/userQvo/{userId}/tarjeta')
         .onWrite(event => {
         // Grab the current value of what was written to the Realtime Database.
@@ -91,19 +192,42 @@ fetch('https://playground.qvo.cl/customers/'+data.userQvo+'/cards/inscriptions',
     })
 }).then(function(response) {
     console.log(response)
+    return response.json();
+}).then(function (body) {
+    console.log(body);
+    return body;
+
+}).then(function (ok) {
+    console.log(ok);
 });
 
 });
 
+exports.addMessagess2 = functions.https.onRequest((req, res) => {
+        // Grab the text parameter.
+        const idUser = req.query.idUser;
 
+fetch('https://playground.qvo.cl/customers/'+idUser+'/cards/inscriptions', {
+    method: 'POST',
+    headers: {
+        'Authorization': 'Token '+functions.config().qvo.token,
+        'Content-Type': 'application/json'
 
-$scope.boleta = [];
-$scope.ordenes.forEach(function (x) {
-
-   $scope.boleta.push(x.idBoletaComun);
-
+    },
+    body: JSON.stringify({
+        return_url: "http://izinait.com/app"
+    })
+}).then(function(response) {
+    console.log(response);
+    console.log(response.json());
+});
+// Push the new message into the Realtime Database using the Firebase Admin SDK.
 
 });
+
+
+
+
 
 
 
@@ -180,6 +304,21 @@ fetch('https://playground.qvo.cl/customers/cus_kVf3XE91uyZOD_VV3LKNtA', {
 
 });
 
+exports.obtenerClienteQvo = functions.https.onRequest((req, res) => {
+        // Grab the text parameter.
+        const id = req.query.idQvo;
+        fetch('https://playground.qvo.cl/customers/'+id, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + functions.config().qvo.token,
+                'Content-Type': 'application/json'
+                    }
+                }).then(function(response) {
+            console.log(response);
+        });
+
+});
+
 
 
 
@@ -189,7 +328,8 @@ fetch('https://playground.qvo.cl/customers/cus_kVf3XE91uyZOD_VV3LKNtA', {
 function sendWelcomeEmail(email, displayName) {
     const mailOptions = {
         from: `${APP_NAME} <noreply@firebase.com>`,
-        to: email
+        to: email,
+        html: '<b>Hello world ?</b>'
     };
 
     // The user subscribed to the newsletter.
@@ -199,36 +339,9 @@ function sendWelcomeEmail(email, displayName) {
     return mailTransport.sendMail(mailOptions).then(() => {
             console.log('New welcome email sent t1111111o:', email);
 });
-}
+};
 
 
-/*
-exports.makeUppercase = functions.database.ref('/messages/{pushId}/email')
-        .onWrite(event => {
-        // Grab the current value of what was written to the Realtime Database.
-        console.log(event.data);
-
-fetch('https://playground.qvo.cl/customers', {
-    method: 'POST',
-    headers: {
-        'Authorization': 'Bearer '+functions.config().qvo.token
-    }
-}, {
-    email: "androstoic@gmail.com",
-    name: "Tyrion Lannister"
-})
-    .then(function(res) {
-        return res.json();
-        console.log(res.json());
-    }).then(function(body) {
-    console.log(body);
-});
-
-});
- */
-
-
-// Using Express
 
 
 
