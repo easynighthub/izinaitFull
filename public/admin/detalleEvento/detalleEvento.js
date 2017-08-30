@@ -11,8 +11,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
         });
     }])
 
-    .controller('detalleEventoCtrl', ['$scope', '$routeParams','$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
-        function ($scope,$routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope) {
+    .controller('detalleEventoCtrl', ['$scope','$timeout',  '$routeParams','$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
+        function ($scope,$timeout,$routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope) {
 
 
 
@@ -160,7 +160,21 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     window.location = "https://www.izinait.com/admin.html";
                 };
 
-            });
+
+
+            }$('#datatables').DataTable({
+                "pagingType": "full_numbers",
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                responsive: true,
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search records",
+                }
+
+            }););
 
 
 
@@ -187,6 +201,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 });
 
             };
+
+
 
 
 
