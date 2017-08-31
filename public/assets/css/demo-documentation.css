@@ -130,7 +130,7 @@ html * {
 }
 
 .txt-white {
-    color: #FFFFFF;
+    color: #FFFFFF!important;
 }
 
 .txt-gray {
