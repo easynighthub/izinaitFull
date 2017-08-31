@@ -330,7 +330,29 @@ angular.module('myApp.codigo', ['ngRoute'])
                 $scope.crearUsuarioQvo = function () {
 
                  if($scope.userQvoRQ.userQvoId != undefined){
-                        "https://us-central1-project-8746388695669481444.cloudfunctions.net/agregarTarjetaUsuarioQvo?userQvo=cus_sEZGcXEEwjAD_sgj1CsOFA"
+
+                        "cus_sEZGcXEEwjAD_sgj1CsOFA"
+
+
+                     var url = "https://us-central1-project-8746388695669481444.cloudfunctions.net/agregarTarjetaUsuarioQvo?userQvo="
+                         +$scope.userQvoRQ.userQvoId
+
+                     $http({
+                         method: 'GET',
+                         url: url,
+                         crossOrigin: true,
+                     }).then(function successCallback(response) {
+                         console.log(response);
+                         location.href = response.data.redirect_url ;
+                         // this callback will be called asynchronously
+                         // when the response is available
+                     }, function errorCallback(response) {
+                         // called asynchronously if an error occurs
+                         // or server returns response with an error status.
+                     });
+
+
+
 
                             }else {
 

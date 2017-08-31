@@ -70,6 +70,34 @@ exports.createUserQvo = functions.https.onRequest((req, res) => {
     });
 });
 
+exports.agregarTarjetaUsuarioQvo = functions.https.onRequest((req, res) => {
+    // Grab the current value of what was written to the Realtime Database.
+    const userQvo = req.query.userQvo;
+
+    fetch('https://playground.qvo.cl/customers/' + userQvo + '/cards/inscriptions', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Token ' + functions.config().qvo.token,
+            'Content-Type': 'application/json'
+
+        },
+        body: JSON.stringify({
+            return_url: "https://izinait.com/app#!/codigo"
+        })
+    }).then(function (response) {
+        console.log(response)
+        return response.json();
+    }).then(function (body) {
+        console.log(body);
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.status(200).send(body);
+        //return res.redirect(303, body.redirect_url);
+
+
+    });
+
+});
+
 
 exports.crearUsuarioQvo = functions.database.ref('/userQvo/{userId}')
     .onWrite(event => {
@@ -125,32 +153,7 @@ exports.consultarUsuarioQvo = functions.https.onRequest((req, res) => {
 });
 
 
-exports.agregarTarjetaUsuarioQvo = functions.https.onRequest((req, res) => {
-    // Grab the current value of what was written to the Realtime Database.
-    const userQvo = req.query.userQvo;
 
-    fetch('https://playground.qvo.cl/customers/' + userQvo + '/cards/inscriptions', {
-        method: 'POST',
-        headers: {
-            'Authorization': 'Token ' + functions.config().qvo.token,
-            'Content-Type': 'application/json'
-
-        },
-        body: JSON.stringify({
-            return_url: "https://izinait.com/app#!/view1"
-        })
-    }).then(function (response) {
-        console.log(response)
-        return response.json();
-    }).then(function (body) {
-        console.log(body);
-        //res.status(200).send(body);
-        return res.redirect(303, body.redirect_url);
-
-
-    });
-
-});
 
 exports.cobrarTarjetaDeCredito = functions.https.onRequest((req, res) => {
     // Grab the current value of what was written to the Realtime Database.
