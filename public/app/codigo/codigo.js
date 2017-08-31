@@ -13,8 +13,8 @@ angular.module('myApp.codigo', ['ngRoute'])
         });
     }])
 
-    .controller('codigoCtrl', ['$scope', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
-        function($scope, $firebaseObject, $firebaseArray, $filter, $rootScope) {
+    .controller('codigoCtrl', ['$scope', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope','$mdDialog',
+        function($scope, $firebaseObject, $firebaseArray, $filter, $rootScope,$mdDialog) {
 
 
             var user = window.currentApp;
@@ -293,17 +293,108 @@ angular.module('myApp.codigo', ['ngRoute'])
 
             $scope.crearCliente = function () {
 
-                console.log($scope.usuarioLogeado);
-                firebase.database().ref('userQvo/' + $scope.usuarioLogeado.$id ).update(
+               var usuarioLogeado =  $scope.usuarioLogeado;
+                console.log(usuarioLogeado)
+                var userQvo = firebase.database().ref('/userQvo/').child(usuarioLogeado.$id);
+                console.log(userQvo);
+                var userQvoRQ = $firebaseObject(userQvo);
+                userQvoRQ.$loaded().then(function () {
+                    console.log(userQvoRQ);
+                });
+
+                $mdDialog.show({
+                    controller: controllerDialogCrearClienteQvo,
+                    templateUrl: 'dialogCrearClienteQvo',
+                    parent: angular.element(document.body),
+                    clickOutsideToClose: true,
+                    locals: {
+                        usuarioLogeado: usuarioLogeado,
+                        userQvoRQ:userQvoRQ
+                    }
+                });
+              /*  firebase.database().ref('userQvo/' + $scope.usuarioLogeado.$id ).update(
                     {
                         email: $scope.usuarioLogeado.email,
                         uid :$scope.usuarioLogeado.$id,
                         qvo :true
                     }
                 );
+ */
+            };
+
+            function controllerDialogCrearClienteQvo($scope, $mdDialog, $timeout, $q, $log,$http, usuarioLogeado,userQvoRQ) {
+
+                $scope.usuarioLogeado = usuarioLogeado;
+                $scope.userQvoRQ = userQvoRQ;
+
+                $scope.crearUsuarioQvo = function () {
+
+                 if($scope.userQvoRQ.userQvoId != undefined){
+                        "https://us-central1-project-8746388695669481444.cloudfunctions.net/agregarTarjetaUsuarioQvo?userQvo=cus_sEZGcXEEwjAD_sgj1CsOFA"
+
+                            }else {
+
+                     var url = "https://us-central1-project-8746388695669481444.cloudfunctions.net/createUserQvo?email="
+                         +$scope.usuarioLogeado.email
+                         +"&name="
+                         +$scope.usuarioLogeado.displayName
+
+                     $http({
+                         method: 'GET',
+                         url: url,
+                         crossOrigin: true,
+                     }).then(function successCallback(response) {
+                         console.log(response);
+                         if(response.data.error != undefined){
+                             alert("ESTE CORREO YA EXISTE");
+                         }
+                         else{
+                             firebase.database().ref('userQvo/' + $scope.usuarioLogeado.$id).set(
+                                 {
+                                     id :$scope.usuarioLogeado.$id,
+                                     userQvoEmail : response.data.email,
+                                     userQvoId : response.data.id,
+                                     userQvoName: response.data.name
+                                 }
+                             );
+                         }
+
+                         // this callback will be called asynchronously
+                         // when the response is available
+                     }, function errorCallback(response) {
+                         // called asynchronously if an error occurs
+                         // or server returns response with an error status.
+                     });
+
+
+                 }
+
+
+/*                    firebase.database().ref('userQvo/' + $scope.usuarioLogeado.$id ).update(
+                        {
+                            email: $scope.usuarioLogeado.email,
+                            uid :$scope.usuarioLogeado.$id,
+                            qvo :true
+                        }
+                    ); */
+
+
+
+                };
+
+
+                $scope.hide = function () {
+                    $mdDialog.hide();
+                };
+
+                $scope.cancel = function () {
+                    $mdDialog.cancel();
+
+                };
 
 
             };
+
 
 
 
