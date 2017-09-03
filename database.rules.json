@@ -1,0 +1,75 @@
+{
+  "rules": {
+    "adminIzinait":
+    {
+      ".write": "auth != null",
+      ".read": "auth != null"
+    },
+    "admins":
+    {
+      ".write": "auth != null",
+      ".read": "auth != null"
+    },
+    "clubs":
+    {
+      ".write": "auth != null",
+      ".read": "true"
+    },
+    "doormans":
+    {
+      ".write": "auth != null",
+      ".read": "auth != null"
+    },
+    "eventServices":
+    {
+      ".write": "auth != null",
+      ".read": "true"
+    },
+    "events" :
+    {
+      ".indexOn": "toHour",
+      ".write": "auth != null",
+      ".read": "true"
+    },
+    "impresiones" :
+    {
+      ".read": "true",
+      ".write": "true"
+    },
+    "nickName":
+    {
+      ".write": "auth != null",
+      ".read": "true"
+    },
+    "rrpps":
+    {
+      ".write": "auth != null",
+      ".read": "true"
+    },
+    "tickets":
+    {
+      ".write": "auth != null",
+      ".read": "auth != null"
+    },
+    "ticketsCreate":
+    {
+      ".write": "auth != null",
+      ".read": "auth != null"
+    },
+
+    "userQvo": {
+      "$uid":
+      {
+        ".write": "auth != null",
+        ".read": "$uid === auth.uid"
+      }
+    },
+    "users": {
+      ".write": "auth != null",
+      ".read":  "auth != null"
+    }
+
+
+
+  }
+}

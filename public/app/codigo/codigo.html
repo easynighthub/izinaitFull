@@ -106,3 +106,23 @@
     <hr class="hrStyle">
 
 </div>
+
+<script type="text/ng-template" id="dialogCrearClienteQvo" class="col-xs-12">
+
+    <div class="col-md-12">
+        <center><br>
+            <h5> CONFIRMAR DATOS</h5>
+            <input  type="text" placeholder="Nombre" class="form-control col-md-12"  ng-model="usuarioLogeado.displayName">
+            <input  type="text" placeholder="Correo" class="form-control col-md-12" ng-model="usuarioLogeado.email">
+            <button ng-click="crearUsuarioQvo()" scope="public_profile email user_birthday"
+                    class=" btn btn-info">
+                <i class="material-icons"></i> Agregar Tarjeta
+            </button>
+            <br>
+
+
+        </center>
+    </div>
+
+
+</script>
