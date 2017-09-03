@@ -34,7 +34,7 @@
     <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="card card-stats">
             <div class="card-header col-md-6 col-xs-5" data-background-color="purple">
-                <p class="card-title">Impresiones</p>
+                <p class="card-title">Visitas</p>
             </div>
             <div class="card-content">
 
@@ -99,31 +99,36 @@
             <div class="card-content">
                 <div class="tab-content">
                     <div class="tab-pane active" id="Servicios">
-                        <div class="table-responsive">
-                            <table  id="datatables" datatable="ng" onchange="" class="table table-striped">
+                        <div class="card-content">
+                            <table  id="dtServicios" class="table table-striped">
                                 <thead>
                                 <th>Nombre</th>
                                 <th>Contacto</th>
                                 <th>Tipo</th>
-                                <th>Utilizado/Cantidad</th>
-                                <th>Total Pagado</th>
+
+                                <th class="text-right">Cantidad</th>
+                                <th class="text-right">Pagado</th>
+                                <th>RR.PP</th>
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="ticketEvent in ticketsEvent">
                                     <td> {{ticketEvent.displayName}}</td>
-                                    <td> +56 9 {{ticketEvent.celular}}</td>
+                                    <td> {{ticketEvent.celular}}</td>
                                     <td>{{ticketEvent.tipoEventservices}}</td>
-                                    <td>
-                                        {{ticketEvent.cantidadUtilizada}} / {{ticketEvent.cantidadDeCompra}}
+
+                                    <td class="text-right">
+                                        {{ticketEvent.cantidadDeCompra}}
                                     </td>
-                                    <td class="text-primary">
+                                    <td class="text-primary text-right">
                                         <div ng-show="!ticketEvent.paidOut">
                                             ${{(ticketEvent.totalAPagar/ticketEvent.cantidadDeCompra)*ticketEvent.cantidadUtilizada}}
                                         </div>
                                         <div ng-show="ticketEvent.paidOut"> ${{ticketEvent.totalAPagar}}</div>
 
                                     </td>
+                                    <td>nombre del rrpp</td>
                                 </tr>
+
                                 <!--    <tr>
                                         <td colspan="3"></td>
                                         <td>
@@ -149,47 +154,38 @@
                     </div>
                     <div class="tab-pane" id="listas">
                         <div class="card-content table-responsive">
-                            <table class="table table-striped">
+                            <table id="dtListas"  class="table table-striped">
                                 <thead>
                                 <th>Nombre</th>
-                                <th class="text-center">Utilizadas / Cantidad</th>
+                                <th class="text-right">Cantidad</th>
+                                <th>RR.PP</th>
                                 </thead>
+
                                 <tbody>
                                 <tr data-ng-repeat="user in listaGratis">
                                     <td>{{user.displayName}}</td>
-                                    <td class="text-center">{{user.totalAsist}} / {{user.totalList}}</td>
+                                    <td class="text-right"> {{user.totalList}}</td>
+                                    <td> nombre rrpp</td>
                                 </tr>
-                                <tr>
-                                    <!--   <td colspan="0"></td> -->
-                                    <td class="text-primary text-right">
-                                        Total Lista
-                                    </td>
-                                    <td class="text-right text-primary">
-                                        {{totalListasGratis}}
-                                    </td>
-                                </tr>
-
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <div class="tab-pane" id="rrpp">
                         <div class="card-content table-responsive">
-                            <table class="table table-striped">
+                            <table id="dtRrpp" onchange="dtRrpp()" class="table table-striped">
                                 <thead>
                                 <th>Nombre</th>
-                                <th>Impresiones</th>
-                                <th>Lista</th>
-                                <th>Servicios</th>
+                                <th>Visitas</th>
+                                <th class="text-right">Lista</th>
+                                <th class="text-right">Anticipadas</th>
                                 </thead>
                                 <tbody>
                                 <tr data-ng-repeat="rrpp in datosTotalesRRPP">
                                     <td>{{rrpp.nameRRPP}}</td>
                                     <td>{{rrpp.openLink}}</td>
-                                    <td>{{rrpp.listaTotal}}</td>
-                                    <td>{{rrpp.ticketsTotal}}</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td class="text-right">{{rrpp.listaTotal}}</td>
+                                    <td class="text-right">{{rrpp.ticketsTotal}}</td>
                                 </tr>
 
 
@@ -200,25 +196,32 @@
                     </div>
                     <div class="tab-pane" id="asignados">
                         <div class="card-content table-responsive">
-                            <table class="table">
+                            <table class="table table-striped">
                                 <thead class="text-primary">
                                 <th>Tipo</th>
-                                <th>Valor</th>
-                                <th>Vendidos / Cantidad</th>
-                                <th>visible</th>
+                                <th class="text-right">Valor</th>
+                                <th class="text-right">Vendidas</th>
+                                <th class="text-right">Estado</th>
+                                <th class="text-right">Finaliza</th>
                                 </thead>
                                 <tbody>
                                 <tr data-ng-repeat="servicioEvent in serviciosEvent">
-                                    <td>{{servicioEvent.tipo}}</td>
-                                    <td>{{servicioEvent.precio}}</td>
-                                    <td>{{servicioEvent.utilizados}} / {{servicioEvent.cantidad}}</td>
                                     <td>
-                                        <md-switch ng-click="accionVisible(servicioEvent)"
+                                        <span>{{servicioEvent.tipo}}
+                                            <p><small class="category">{{servicioEvent.desc}}</small></p>
+                                        </span>
+
+                                    </td>
+                                    <td class="text-right">{{servicioEvent.precio}}</td>
+                                    <td class="text-right">{{servicioEvent.utilizados}}/{{servicioEvent.cantidad}}</td>
+                                    <td class="text-right">
+                                        <md-switch class="pull-right" ng-click="accionVisible(servicioEvent)"
                                                    ng-model="servicioEvent.visible" aria-label="Switch 1">
 
                                         </md-switch>
 
                                     </td>
+                                    <td class="text-right">{{servicioEvent.fechaFin | date:"dd 'de' MMM', 'HH:mm" }}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -439,5 +442,23 @@
 -->
 
 </div>
+
+<script >
+    function dtRrpp() {
+        $('#dtRrpp').DataTable(
+            {
+                "pagingType": "simple_numbers"
+                , "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
+                , responsive: true
+                , language: {
+                search: "_INPUT_"
+                , searchPlaceholder: "Buscar"
+
+            }
+            }
+        )
+
+    }
+</script>
 
 
