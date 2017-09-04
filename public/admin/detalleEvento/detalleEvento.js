@@ -67,7 +67,9 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                             var ticketsRQ = $firebaseArray(tickets);
 
 
-                            ticketsRQ.$loaded().then(function (dtServicios) {
+
+
+                            ticketsRQ.$loaded().then(function () {
                                 serviciosEventRQ.$loaded().then(function () {
                                     $.when($scope.ticketsEvent = ticketsRQ).then(function dtServicios() {
                                         $('#dtServicios').DataTable(
@@ -175,6 +177,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                     })
                                 })
                             })
+
+
 
 
 
