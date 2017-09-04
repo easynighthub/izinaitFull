@@ -11,13 +11,22 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
         });
     }])
 
-    .controller('detalleEventoCtrl', ['$scope','$timeout',  '$routeParams','$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
-        function ($scope,$timeout,$routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope) {
+    .controller('detalleEventoCtrl', ['$scope', '$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
+        function ($scope, $routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope) {
 
 
 
             //$(eventos).addClass( "active" );
             //$(configuracion).removeClass( "active" );
+            $('.tituloIziboss').text("Detalle Evento");
+            $('.no-js').removeClass('nav-open');
+
+            $(sideEventos).addClass("active");
+            $(crearEventos).removeClass("active");
+
+            $(verEventosFuturos).addClass("active");
+            $(sideClientes).removeClass("active");
+            $(sideRrpp).removeClass("active");
 
 
             var admin = window.currentAdmin;
@@ -31,49 +40,66 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             var eventCargadoRQ = $firebaseObject(eventCargado);
             eventCargadoRQ.$loaded().then(function () {
                 event = eventCargadoRQ;
-                console.log(event);
-            });
 
-            firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function(snapshot) {
+            })
+
+            firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
-                console.log(exists);
+
                 if (exists == true) {
                     var ref = firebase.database().ref('/admins/').child(admin.$id || admin.uid);
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
-                        if(adminLogeado.idClubWork == false){
-                            ObtenerClub (adminLogeado);
-                        }else{
+                        if (adminLogeado.idClubWork == false) {
+                            ObtenerClub(adminLogeado);
+                        } else {
                             var clubNombreMostrar = [];
                             var clubNombre = firebase.database().ref().child('clubs');
                             $scope.clubNombre = $firebaseArray(clubNombre);
-                            $scope.clubNombre.$loaded().then(function() {
+                            $scope.clubNombre.$loaded().then(function () {
 
                                 clubNombreMostrar = $scope.clubNombre;
                                 clubNombreMostrar.forEach(function (x) {
-                                    if(x.$id == adminLogeado.idClubWork){
-                                        $('.clubSelecionado').text(x.name +" ");
-                                        $( ".clubSelecionado" ).append( "<b class='caret'> </b>" );
+                                    if (x.$id == adminLogeado.idClubWork) {
+                                        $('.clubSelecionado').text(x.name + " ");
+                                        $(".clubSelecionado").append("<b class='caret'> </b>");
                                     }
                                 });
                             });
 
-                            var serviciosEvent = firebase.database().ref('/eventServices/' + eventId );
+                            var serviciosEvent = firebase.database().ref('/eventServices/' + eventId);
                             var serviciosEventRQ = $firebaseArray(serviciosEvent);
-                            var tickets = firebase.database().ref('/tickets/' + eventId );
+                            var tickets = firebase.database().ref('/tickets/' + eventId);
                             var ticketsRQ = $firebaseArray(tickets);
+
+
+
+
                             ticketsRQ.$loaded().then(function () {
                                 serviciosEventRQ.$loaded().then(function () {
-                                    $scope.ticketsEvent = ticketsRQ;
+                                    $.when($scope.ticketsEvent = ticketsRQ).then(function dtServicios() {
+                                        $('#dtServicios').DataTable(
+                                            {
+                                                "pagingType": "simple_numbers"
+                                                , "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
+                                                , responsive: true
+                                                ,buttons: ['csv']
+                                                , language: {
+                                                search: "_INPUT_"
+                                                , searchPlaceholder: "Buscar"
+                                            }
+                                            }
+                                        )
+
+                                    })
                                     $scope.serviciosEvent = serviciosEventRQ;
                                     $scope.serviciosEvent.forEach(function (j) {
                                         j.utilizados = 0;
                                         $scope.ticketsEvent.forEach(function (x) {
-                                            console.log(x);
-                                            console.log(j)
-                                            if(x.ideventservices == j.$id){
-                                                j.utilizados =  j.utilizados +  x.cantidadDeCompra;
+
+                                            if (x.ideventservices == j.$id) {
+                                                j.utilizados = j.utilizados + x.cantidadDeCompra;
 
                                             }
 
@@ -84,24 +110,40 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                          $scope.impresionesTotales = $scope.impresionesTotales+ j.openLink;
                                          }
                                          });*/
-                                    });
-                                });
-                            });
+
+
+                                    })
+
+                                })
+                            })
 
 
                             var listaGratis = firebase.database().ref('/events/' + eventId + '/asist');
                             var listaGratisRQ = $firebaseObject(listaGratis);
                             listaGratisRQ.$loaded().then(function () {
-                                $scope.listaGratis = listaGratisRQ;
+                                $.when($scope.listaGratis = listaGratisRQ).then(function dtListas() {
+                                    $('#dtListas').DataTable(
+                                        {
+                                            "pagingType": "simple_numbers"
+                                            , "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
+                                            , responsive: true
+                                            , language: {
+                                            search: "_INPUT_"
+                                            , searchPlaceholder: "Buscar"
+
+                                        }
+                                        }
+                                    )
+
+                                })
                                 $scope.listaGratis.forEach(function (x) {
-                                    console.log(adminLogeado);
-                                    console.log(x.totalList);
-                                    $scope.totalListasGratis =$scope.totalListasGratis+ x.totalList;
+
+                                    $scope.totalListasGratis = $scope.totalListasGratis + x.totalList;
                                 });
                             });
                             $scope.datosTotalesRRPP = [];
                             $scope.sumaTicketsTotal = 0;
-                            var impresiones = firebase.database().ref('/impresiones/' + eventId );
+                            var impresiones = firebase.database().ref('/impresiones/' + eventId);
                             var impresionesRQ = $firebaseArray(impresiones);
                             impresionesRQ.$loaded().then(function () {
                                 ticketsRQ.$loaded().then(function () {
@@ -123,11 +165,10 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                             });
 
                                             $scope.ticketsEvent.forEach(function (t) {
-                                                if(rp.uid == t.rrppid){
-                                                    rrpp.ticketsTotal =  rrpp.ticketsTotal + t.cantidadDeCompra;
+                                                if (rp.uid == t.rrppid) {
+                                                    rrpp.ticketsTotal = rrpp.ticketsTotal + t.cantidadDeCompra;
                                                     $scope.sumaTicketsTotal = $scope.sumaTicketsTotal + t.cantidadDeCompra;
                                                 }
-
 
 
                                             });
@@ -140,59 +181,43 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                             });
                                             $scope.datosTotalesRRPP.push(rrpp);
                                         }
-                                    });
-                                });
-                            });
+                                    })
+                                })
+                            })
 
 
 
 
 
-                        };
-                        console.log(adminLogeado);
 
-                        $('.tituloIziboss').text("Detalle Evento");
-                        $('.no-js').removeClass('nav-open');
+                        }
+
+
                     });
                 } else {
                     window.currentAdmin = "";
                     $scope.adminLogeado = "";
                     window.location = "https://www.izinait.com/admin.html";
-                };
-
-
-
-            }$('#datatables').DataTable({
-                "pagingType": "full_numbers",
-                "lengthMenu": [
-                    [10, 25, 50, -1],
-                    [10, 25, 50, "All"]
-                ],
-                responsive: true,
-                language: {
-                    search: "_INPUT_",
-                    searchPlaceholder: "Search records",
                 }
 
-            }););
 
+            })
 
 
             $scope.accionVisible = function (servicioEvent) {
-                console.log(servicioEvent);
-                var ref = firebase.database().ref().child("/eventServices/"+eventId).child(servicioEvent.$id);
+
+                var ref = firebase.database().ref().child("/eventServices/" + eventId).child(servicioEvent.$id);
                 ref.update({
-                    visible : !servicioEvent.visible
+                    visible: !servicioEvent.visible
                 });
                 servicioEvent.visible = !servicioEvent.visible;
 
                 $scope.serviciosEvent.forEach(function (j) {
                     j.utilizados = 0;
                     $scope.ticketsEvent.forEach(function (x) {
-                        console.log(x);
-                        console.log(j)
-                        if(x.ideventservices == j.$id){
-                            j.utilizados =  j.utilizados +  x.cantidadDeCompra;
+
+                        if (x.ideventservices == j.$id) {
+                            j.utilizados = j.utilizados + x.cantidadDeCompra;
 
                         }
 
@@ -200,12 +225,11 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
                 });
 
-            };
+            }
+
+
+        }])
+;
 
 
 
-
-
-
-
-        }]);

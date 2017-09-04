@@ -1,4 +1,4 @@
-<div class="col-xs-12 col-sm-12">
+<div id="detalleEvento">
 
     <div class="col-lg-3 col-md-6 col-sm-6 ">
         <div class="card card-stats">
@@ -34,7 +34,7 @@
     <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="card card-stats">
             <div class="card-header col-md-6 col-xs-5" data-background-color="purple">
-                <p class="card-title">Impresiones</p>
+                <p class="card-title">Visitas</p>
             </div>
             <div class="card-content">
 
@@ -62,235 +62,72 @@
     </div>
 
 
-    <div class="col-lg-12 col-md-12">
-        <div class="card">
-            <div class="card-header card-header-tabs" data-background-color="green">
-                <div class="nav-tabs-navigation">
-                    <div class="nav-tabs-wrapper">
-                        <ul class="nav nav-tabs" data-tabs="tabs">
-                            <li class="col-md-3 col-xs-12 active">
-                                <a href="#Servicios" target="_blank" data-toggle="tab">
-                                    <p class="card-title text-center">Venta anticipada</p>
-                                    <div class="ripple-container"></div>
-                                </a>
-                            </li>
-                            <li class="col-md-3 col-xs-12">
-                                <a href="#listas" target="_blank" data-toggle="tab">
-                                    <p class="card-title text-center">Lista Gratis</p>
-                                    <div class="ripple-container"></div>
-                                </a>
-                            </li>
-                            <li class="col-md-3 col-xs-12">
-                                <a href="#rrpp" target="_blank" data-toggle="tab">
-                                    <p class="card-title text-center">RR.PP</p>
-                                    <div class="ripple-container"></div>
-                                </a>
-                            </li>
-                            <li class="col-md-3 col-xs-12">
-                                <a href="#asignados" target="_blank" data-toggle="tab">
-                                    <p class="card-title text-center">Anticipada Activas</p>
-                                    <div class="ripple-container"></div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="card-content">
-                <div class="tab-content">
-                    <div class="tab-pane active" id="Servicios">
-                        <div class="table-responsive">
-                            <table  id="datatables" datatable="ng" onchange="" class="table table-striped">
-                                <thead>
-                                <th>Nombre</th>
-                                <th>Contacto</th>
-                                <th>Tipo</th>
-                                <th>Utilizado/Cantidad</th>
-                                <th>Total Pagado</th>
-                                </thead>
-                                <tbody>
-                                <tr ng-repeat="ticketEvent in ticketsEvent">
-                                    <td> {{ticketEvent.displayName}}</td>
-                                    <td> +56 9 {{ticketEvent.celular}}</td>
-                                    <td>{{ticketEvent.tipoEventservices}}</td>
-                                    <td>
-                                        {{ticketEvent.cantidadUtilizada}} / {{ticketEvent.cantidadDeCompra}}
-                                    </td>
-                                    <td class="text-primary">
-                                        <div ng-show="!ticketEvent.paidOut">
-                                            ${{(ticketEvent.totalAPagar/ticketEvent.cantidadDeCompra)*ticketEvent.cantidadUtilizada}}
-                                        </div>
-                                        <div ng-show="ticketEvent.paidOut"> ${{ticketEvent.totalAPagar}}</div>
-
-                                    </td>
-                                </tr>
-                                <!--    <tr>
-                                        <td colspan="3"></td>
-                                        <td>
-                                            Total Pagado
-                                        </td>
-                                        <td>
-                                            <small>&euro;</small>12,999
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3"></td>
-                                        <td>
-                                            Total Pago en Puerta
-                                        </td>
-                                        <td>
-                                            <small>&euro;</small>12,999
-                                        </td>
-                                    </tr> -->
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="listas">
-                        <div class="card-content table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                <th>Nombre</th>
-                                <th class="text-center">Utilizadas / Cantidad</th>
-                                </thead>
-                                <tbody>
-                                <tr data-ng-repeat="user in listaGratis">
-                                    <td>{{user.displayName}}</td>
-                                    <td class="text-center">{{user.totalAsist}} / {{user.totalList}}</td>
-                                </tr>
-                                <tr>
-                                    <!--   <td colspan="0"></td> -->
-                                    <td class="text-primary text-right">
-                                        Total Lista
-                                    </td>
-                                    <td class="text-right text-primary">
-                                        {{totalListasGratis}}
-                                    </td>
-                                </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="rrpp">
-                        <div class="card-content table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                <th>Nombre</th>
-                                <th>Impresiones</th>
-                                <th>Lista</th>
-                                <th>Servicios</th>
-                                </thead>
-                                <tbody>
-                                <tr data-ng-repeat="rrpp in datosTotalesRRPP">
-                                    <td>{{rrpp.nameRRPP}}</td>
-                                    <td>{{rrpp.openLink}}</td>
-                                    <td>{{rrpp.listaTotal}}</td>
-                                    <td>{{rrpp.ticketsTotal}}</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-
-
-                                </tbody>
-
-                            </table>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="asignados">
-                        <div class="card-content table-responsive">
-                            <table class="table">
-                                <thead class="text-primary">
-                                <th>Tipo</th>
-                                <th>Valor</th>
-                                <th>Vendidos / Cantidad</th>
-                                <th>visible</th>
-                                </thead>
-                                <tbody>
-                                <tr data-ng-repeat="servicioEvent in serviciosEvent">
-                                    <td>{{servicioEvent.tipo}}</td>
-                                    <td>{{servicioEvent.precio}}</td>
-                                    <td>{{servicioEvent.utilizados}} / {{servicioEvent.cantidad}}</td>
-                                    <td>
-                                        <md-switch ng-click="accionVisible(servicioEvent)"
-                                                   ng-model="servicioEvent.visible" aria-label="Switch 1">
-
-                                        </md-switch>
-
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+    <div class="card">
+        <div class="card-header card-header-tabs" data-background-color="purple">
+            <div class="nav-tabs-navigation">
+                <div class="nav-tabs-wrapper">
+                    <ul class="nav nav-tabs" data-tabs="tabs">
+                        <li class="col-md-3 col-xs-6 active">
+                            <a href="#Servicios" target="_blank" data-toggle="tab">
+                                <p class="card-title text-center">Ventas</p>
+                                <div class="ripple-container"></div>
+                            </a>
+                        </li>
+                        <li class="col-md-3 col-xs-6">
+                            <a href="#listas" target="_blank" data-toggle="tab">
+                                <p class="card-title text-center">Lista</p>
+                                <div class="ripple-container"></div>
+                            </a>
+                        </li>
+                        <li class="col-md-3 col-xs-6">
+                            <a href="#rrpp" target="_blank" data-toggle="tab">
+                                <p class="card-title text-center">RR.PP</p>
+                                <div class="ripple-container"></div>
+                            </a>
+                        </li>
+                        <li class="col-md-3 col-xs-6">
+                            <a href="#asignados" target="_blank" data-toggle="tab">
+                                <p class="card-title text-center">Anticipadas</p>
+                                <div class="ripple-container"></div>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </div>
-  <!--  &lt;!&ndash;
-
-        <tr>
-            <td colspan="3"></td>
-            <td class="text-primary text-right">
-                Total de impresiones
-            </td>
-            <td class="text-right text-primary">
-                {{impresionesTotales}}
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3"></td>
-            <td class="text-primary text-right">
-                Total de Lista
-            </td>
-            <td class="text-right text-primary">
-                {{totalListasGratis}}
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3"></td>
-            <td class="text-primary text-right">
-                total de Servicios
-            </td>
-            <td class="text-right text-primary">
-                {{sumaTicketsTotal}}
-            </td>
-        </tr>
-
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header negative" data-background-color="green">
-                <h3 class="card-title">Servicios Vendidos</h3>
-            </div>
-
-            <div class="card-content">
-                <div class="table-responsive">
-                    <table class="table table-striped">
+        <div class="card-content">
+            <div class="tab-content table-responsive">
+                <div class="tab-pane active table-responsive" id="Servicios">
+                    <table id="dtServicios" class="table table-striped" style="width: 100%!important;">
                         <thead>
                         <th>Nombre</th>
                         <th>Contacto</th>
                         <th>Tipo</th>
-                        <th>Utilizado/Cantidad</th>
-                        <th>Total Pagado</th>
+
+                        <th class="text-right">Cantidad</th>
+                        <th class="text-right">Pagado</th>
+                        <th>RR.PP</th>
                         </thead>
                         <tbody>
                         <tr ng-repeat="ticketEvent in ticketsEvent">
                             <td> {{ticketEvent.displayName}}</td>
-                            <td> 9 {{ticketEvent.celular}}</td>
+                            <td> {{ticketEvent.celular}}</td>
                             <td>{{ticketEvent.tipoEventservices}}</td>
-                            <td>
-                                {{ticketEvent.cantidadUtilizada}} / {{ticketEvent.cantidadDeCompra}}
+
+                            <td class="text-right">
+                                {{ticketEvent.cantidadDeCompra}}
                             </td>
-                            <td class="text-primary">
+                            <td class="text-primary text-right">
                                 <div ng-show="!ticketEvent.paidOut">
                                     ${{(ticketEvent.totalAPagar/ticketEvent.cantidadDeCompra)*ticketEvent.cantidadUtilizada}}
                                 </div>
                                 <div ng-show="ticketEvent.paidOut"> ${{ticketEvent.totalAPagar}}</div>
 
                             </td>
+                            <td>nombre del rrpp</td>
                         </tr>
-                        &lt;!&ndash;    <tr>
+
+                        <!--    <tr>
                                 <td colspan="3"></td>
                                 <td>
                                     Total Pagado
@@ -307,73 +144,42 @@
                                 <td>
                                     <small>&euro;</small>12,999
                                 </td>
-                            </tr>
+                            </tr> -->
 
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header card-header-icon" data-background-color="rose">
-                <i class="material-icons">assignment</i>
-            </div>
-            <h4 class="card-title">Lista Gratis</h4>
-            <div class="card-content">
-                <div class="table-responsive">
-                    <table class="table table-striped">
+                <div class="tab-pane table-responsive" id="listas">
+                    <table id="dtListas" class="table table-striped" style="width: 100%!important;">
                         <thead>
                         <th>Nombre</th>
-                        <th class="text-center">Utilizadas / Cantidad</th>
+                        <th class="text-right">Cantidad</th>
+                        <th>RR.PP</th>
                         </thead>
+
                         <tbody>
                         <tr data-ng-repeat="user in listaGratis">
                             <td>{{user.displayName}}</td>
-                            <td class="text-center">{{user.totalAsist}} / {{user.totalList}}</td>
+                            <td class="text-right"> {{user.totalList}}</td>
+                            <td> nombre rrpp</td>
                         </tr>
-                        <tr>
-                            &lt;!&ndash;   <td colspan="0"></td> &ndash;&gt;
-                            <td class="text-primary text-right">
-                                Total Lista
-                            </td>
-                            <td class="text-right text-primary">
-                                {{totalListasGratis}}
-                            </td>
-                        </tr>
-
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header card-header-icon" data-background-color="rose">
-                <i class="material-icons">assignment</i>
-            </div>
-            <h4 class="card-title">Relacionadores Publico</h4>
-            <div class="card-content">
-                <div class="table-responsive">
-                    <table class="table table-striped">
+                <div class="tab-pane table-responsive" id="rrpp">
+                    <table id="dtRrpp" onchange="dtRrpp()"  class="table table-striped">
                         <thead>
                         <th>Nombre</th>
-                        <th>Impresiones</th>
-                        <th>Lista</th>
-                        <th>Servicios</th>
+                        <th>Visitas</th>
+                        <th class="text-right">Lista</th>
+                        <th class="text-right">Anticipadas</th>
                         </thead>
                         <tbody>
                         <tr data-ng-repeat="rrpp in datosTotalesRRPP">
                             <td>{{rrpp.nameRRPP}}</td>
                             <td>{{rrpp.openLink}}</td>
-                            <td>{{rrpp.listaTotal}}</td>
-                            <td>{{rrpp.ticketsTotal}}</td>
-                            <td></td>
-                            <td></td>
+                            <td class="text-right">{{rrpp.listaTotal}}</td>
+                            <td class="text-right">{{rrpp.ticketsTotal}}</td>
                         </tr>
 
 
@@ -381,63 +187,271 @@
 
                     </table>
                 </div>
-            </div>
-        </div>
-    </div>
+                <div class="tab-pane table-responsive" id="asignados">
+                    <table class="table table-striped">
+                        <thead class="text-primary">
+                        <th>Tipo</th>
+                        <th class="text-right">Valor</th>
+                        <th class="text-right">Vendidas</th>
 
+                        <th class="">Finaliza</th>
+                        <th class="text-right">Estado</th>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="servicioEvent in serviciosEvent">
+                            <td>
+                                        <span>{{servicioEvent.tipo}}
+                                            <p><small class="category">{{servicioEvent.desc}}</small></p>
+                                        </span>
 
-    <div class="content">
-        <div>
-            <div class="row">
+                            </td>
+                            <td class="text-right">{{servicioEvent.precio}}</td>
+                            <td class="text-right">{{servicioEvent.utilizados}}/{{servicioEvent.cantidad}}</td>
+                            <td class="">{{servicioEvent.fechaFin | date:"dd 'de' MMM', 'HH:mm" }}</td>
+                            <td class="text-right">
+                                <md-switch class="pull-right" ng-click="accionVisible(servicioEvent)"
+                                           ng-model="servicioEvent.visible" aria-label="Switch 1">
 
+                                </md-switch>
 
-                <div class="col-md-12" data-ng-show="true">
-                    <div class="card">
-                        <div class="card-header" data-background-color="purple">
-                            <h4 class="title">Servicios Asignados</h4>
-                            <p class="category">lista de servicios.</p>
-                        </div>
-                        <div class="card-content table-responsive">
+                            </td>
 
-                            <table class="table">
-                                <thead class="text-primary">
-                                <th>Tipo</th>
-                                <th>Valor</th>
-                                <th>Vendidos / Cantidad</th>
-                                <th>visible</th>
-                                </thead>
-                                <tbody>
-                                <tr data-ng-repeat="servicioEvent in serviciosEvent">
-                                    <td>{{servicioEvent.tipo}}</td>
-                                    <td>{{servicioEvent.precio}}</td>
-                                    <td>{{servicioEvent.utilizados}} / {{servicioEvent.cantidad}}</td>
-                                    <td>
-                                        <md-switch ng-click="accionVisible(servicioEvent)"
-                                                   ng-model="servicioEvent.visible" aria-label="Switch 1">
-
-                                        </md-switch>
-
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-                &lt;!&ndash;  <div class="col-md-10 col-md-offset-1">
-                <div class="iframe-container hidden-sm hidden-xs">
-                     <iframe src="http://localhost:63342/izinaitFull/public/app/index.html?_ijt=otddf3mrr2clvpdijvq6jpf9ee#!/detalleEvento?id=-Kq5qvJY4LOE4S6tZNV7">
-                         <p>Your browser does not support iframes.</p>
-                     </iframe>
-                 </div>
-                 </div> &ndash;&gt;
-
             </div>
         </div>
     </div>
--->
+
+    <!--  &lt;!&ndash;
+
+          <tr>
+              <td colspan="3"></td>
+              <td class="text-primary text-right">
+                  Total de impresiones
+              </td>
+              <td class="text-right text-primary">
+                  {{impresionesTotales}}
+              </td>
+          </tr>
+          <tr>
+              <td colspan="3"></td>
+              <td class="text-primary text-right">
+                  Total de Lista
+              </td>
+              <td class="text-right text-primary">
+                  {{totalListasGratis}}
+              </td>
+          </tr>
+          <tr>
+              <td colspan="3"></td>
+              <td class="text-primary text-right">
+                  total de Servicios
+              </td>
+              <td class="text-right text-primary">
+                  {{sumaTicketsTotal}}
+              </td>
+          </tr>
+
+      <div class="col-md-12">
+          <div class="card">
+              <div class="card-header negative" data-background-color="green">
+                  <h3 class="card-title">Servicios Vendidos</h3>
+              </div>
+
+              <div class="card-content">
+                  <div class="table-responsive">
+                      <table class="table table-striped">
+                          <thead>
+                          <th>Nombre</th>
+                          <th>Contacto</th>
+                          <th>Tipo</th>
+                          <th>Utilizado/Cantidad</th>
+                          <th>Total Pagado</th>
+                          </thead>
+                          <tbody>
+                          <tr ng-repeat="ticketEvent in ticketsEvent">
+                              <td> {{ticketEvent.displayName}}</td>
+                              <td> 9 {{ticketEvent.celular}}</td>
+                              <td>{{ticketEvent.tipoEventservices}}</td>
+                              <td>
+                                  {{ticketEvent.cantidadUtilizada}} / {{ticketEvent.cantidadDeCompra}}
+                              </td>
+                              <td class="text-primary">
+                                  <div ng-show="!ticketEvent.paidOut">
+                                      ${{(ticketEvent.totalAPagar/ticketEvent.cantidadDeCompra)*ticketEvent.cantidadUtilizada}}
+                                  </div>
+                                  <div ng-show="ticketEvent.paidOut"> ${{ticketEvent.totalAPagar}}</div>
+
+                              </td>
+                          </tr>
+                          &lt;!&ndash;    <tr>
+                                  <td colspan="3"></td>
+                                  <td>
+                                      Total Pagado
+                                  </td>
+                                  <td>
+                                      <small>&euro;</small>12,999
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td colspan="3"></td>
+                                  <td>
+                                      Total Pago en Puerta
+                                  </td>
+                                  <td>
+                                      <small>&euro;</small>12,999
+                                  </td>
+                              </tr>
+
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-6">
+          <div class="card">
+              <div class="card-header card-header-icon" data-background-color="rose">
+                  <i class="material-icons">assignment</i>
+              </div>
+              <h4 class="card-title">Lista Gratis</h4>
+              <div class="card-content">
+                  <div class="table-responsive">
+                      <table class="table table-striped">
+                          <thead>
+                          <th>Nombre</th>
+                          <th class="text-center">Utilizadas / Cantidad</th>
+                          </thead>
+                          <tbody>
+                          <tr data-ng-repeat="user in listaGratis">
+                              <td>{{user.displayName}}</td>
+                              <td class="text-center">{{user.totalAsist}} / {{user.totalList}}</td>
+                          </tr>
+                          <tr>
+                              &lt;!&ndash;   <td colspan="0"></td> &ndash;&gt;
+                              <td class="text-primary text-right">
+                                  Total Lista
+                              </td>
+                              <td class="text-right text-primary">
+                                  {{totalListasGratis}}
+                              </td>
+                          </tr>
+
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-12">
+          <div class="card">
+              <div class="card-header card-header-icon" data-background-color="rose">
+                  <i class="material-icons">assignment</i>
+              </div>
+              <h4 class="card-title">Relacionadores Publico</h4>
+              <div class="card-content">
+                  <div class="table-responsive">
+                      <table class="table table-striped">
+                          <thead>
+                          <th>Nombre</th>
+                          <th>Impresiones</th>
+                          <th>Lista</th>
+                          <th>Servicios</th>
+                          </thead>
+                          <tbody>
+                          <tr data-ng-repeat="rrpp in datosTotalesRRPP">
+                              <td>{{rrpp.nameRRPP}}</td>
+                              <td>{{rrpp.openLink}}</td>
+                              <td>{{rrpp.listaTotal}}</td>
+                              <td>{{rrpp.ticketsTotal}}</td>
+                              <td></td>
+                              <td></td>
+                          </tr>
+
+
+                          </tbody>
+
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+      <div class="content">
+          <div>
+              <div class="row">
+
+
+                  <div class="col-md-12" data-ng-show="true">
+                      <div class="card">
+                          <div class="card-header" data-background-color="purple">
+                              <h4 class="title">Servicios Asignados</h4>
+                              <p class="category">lista de servicios.</p>
+                          </div>
+                          <div class="card-content table-responsive">
+
+                              <table class="table">
+                                  <thead class="text-primary">
+                                  <th>Tipo</th>
+                                  <th>Valor</th>
+                                  <th>Vendidos / Cantidad</th>
+                                  <th>visible</th>
+                                  </thead>
+                                  <tbody>
+                                  <tr data-ng-repeat="servicioEvent in serviciosEvent">
+                                      <td>{{servicioEvent.tipo}}</td>
+                                      <td>{{servicioEvent.precio}}</td>
+                                      <td>{{servicioEvent.utilizados}} / {{servicioEvent.cantidad}}</td>
+                                      <td>
+                                          <md-switch ng-click="accionVisible(servicioEvent)"
+                                                     ng-model="servicioEvent.visible" aria-label="Switch 1">
+
+                                          </md-switch>
+
+                                      </td>
+                                  </tr>
+                                  </tbody>
+                              </table>
+
+                          </div>
+                      </div>
+                  </div>
+                  &lt;!&ndash;  <div class="col-md-10 col-md-offset-1">
+                  <div class="iframe-container hidden-sm hidden-xs">
+                       <iframe src="http://localhost:63342/izinaitFull/public/app/index.html?_ijt=otddf3mrr2clvpdijvq6jpf9ee#!/detalleEvento?id=-Kq5qvJY4LOE4S6tZNV7">
+                           <p>Your browser does not support iframes.</p>
+                       </iframe>
+                   </div>
+                   </div> &ndash;&gt;
+
+              </div>
+          </div>
+      </div>
+  -->
 
 </div>
+
+<script>
+    function dtRrpp() {
+        $('#dtRrpp').DataTable(
+            {
+                "pagingType": "simple_numbers"
+                , "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
+                , responsive: true
+                , language: {
+                search: "_INPUT_"
+                , searchPlaceholder: "Buscar"
+
+            }
+            }
+        )
+
+    }
+</script>
 
 

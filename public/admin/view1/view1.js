@@ -12,114 +12,108 @@ angular.module('myApp.view1', ['ngRoute'])
                     }
                 }
             }
-
-
         );
     }])
 
 
-
-    .controller('View1Ctrl', ['$scope','$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope','$mdDialog',
-        function ($scope, $routeParams,$firebaseObject, $firebaseArray, $filter, $rootScope,$mdDialog) {
-
+    .controller('View1Ctrl', ['$scope', '$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope', '$mdDialog',
+        function ($scope, $routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope, $mdDialog) {
 
 
-            var admin = window.currentAdmin ;
+            var admin = window.currentAdmin;
             var adminLogeado = "";
             $scope.eventosFuturoFecha = new Date().getTime();
             $scope.eventsWithServices = [];
 
 
+            $(sideEventos).addClass("active");
+            $(crearEventos).removeClass("active");
 
+            $(verEventosFuturos).addClass("active");
+            $(sideClientes).removeClass("active");
+            $(sideRrpp).removeClass("active");
 
-
-
-            $(sideEventos).addClass( "active" );
-            $(crearEventos).removeClass( "active" );
-
-            $(verEventosFuturos).addClass( "active" );
-            $(sideClientes).removeClass( "active" );
-            $(sideRrpp).removeClass( "active" );
-
-            firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function(snapshot) {
+            firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
-                console.log(exists);
+
                 if (exists == true) {
                     var ref = firebase.database().ref('/admins/').child(admin.$id || admin.uid);
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
-                        $('.photo').prepend($('<img>',{id:'theImg',src:adminLogeado.picture}));
-                        console.log(adminLogeado);
+                        $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
+                        //console.log(adminLogeado);
 
-                        if(adminLogeado.idClubWork == false){
-                            console.log("entreeeeeeeeeeeeeeeeeeeeeeeee");
-                            ObtenerClub (adminLogeado);
-                        }else{
+                        if (adminLogeado.idClubWork == false) {
+                            //console.log("entreeeeeeeeeeeeeeeeeeeeeeeee");
+                            ObtenerClub(adminLogeado);
+                        } else {
                             var clubNombreMostrar = [];
                             var clubNombre = firebase.database().ref().child('clubs');
                             $scope.clubNombre = $firebaseArray(clubNombre);
-                            $scope.clubNombre.$loaded().then(function() {
+                            $scope.clubNombre.$loaded().then(function () {
 
                                 clubNombreMostrar = $scope.clubNombre;
                                 clubNombreMostrar.forEach(function (x) {
-                                    if(x.$id == adminLogeado.idClubWork){
+                                    if (x.$id == adminLogeado.idClubWork) {
                                         $('.clubSelecionado').text(x.name + " ");
-                                        $( ".clubSelecionado" ).append( "<b class='caret'> </b>" );
-                                    };
+                                        $(".clubSelecionado").append("<b class='caret'> </b>");
+                                    }
+                                    ;
                                 });
                             });
 
-                        };
+                        }
+                        ;
                         var eventosAdmin = firebase.database().ref('/events').orderByChild('admin').equalTo(adminLogeado.$id);
                         var eventsAdminRequest = $firebaseArray(eventosAdmin);
-                        eventsAdminRequest.$loaded().then(function() {
+                        eventsAdminRequest.$loaded().then(function () {
                             $scope.Allvents = $filter('filter')(eventsAdminRequest, getFuturesEvents);
-                            console.log($scope.Allvents);
-                            if($scope.Allvents.length == 0){
+                            //console.log($scope.Allvents);
+                            if ($scope.Allvents.length == 0) {
                                 document.getElementById('noHayEventos').style.display = 'block';
                             }
-                            if(eventsAdminRequest == undefined){
+                            if (eventsAdminRequest == undefined) {
                                 $('.no-js').removeClass('nav-open');
-                                console.log("no cargo nada");
+                                //console.log("no cargo nada");
                                 document.getElementById('noHayEventos').style.display = 'block';
                                 $('.tituloIziboss').text("Eventos Futuros");
-                            }else
-                            {
+                            } else {
                                 $('.no-js').removeClass('nav-open');
                                 $scope.tickets = [];
                                 $scope.Allvents.forEach(function (x) {
-                                    var eventServices = firebase.database().ref('/eventServices/'+x.$id);
+                                    var eventServices = firebase.database().ref('/eventServices/' + x.$id);
                                     var eventServicesRQ = $firebaseArray(eventServices);
-                                    eventServicesRQ.$loaded().then(function(){
+                                    eventServicesRQ.$loaded().then(function () {
                                         x.reservas = eventServicesRQ;
                                         x.ReservaCantidad = eventServicesRQ.length;
                                         x.reservas.forEach(function (j) {
                                             j.utilizados = 0;
-                                            var ticketServices = firebase.database().ref('/tickets/'+x.$id);
+                                            var ticketServices = firebase.database().ref('/tickets/' + x.$id);
                                             var ticketServiceRQ = $firebaseArray(ticketServices);
-                                            ticketServiceRQ.$loaded().then(function(){
-                                                console.log(ticketServiceRQ);
+                                            ticketServiceRQ.$loaded().then(function () {
+                                                //console.log(ticketServiceRQ);
                                                 $scope.tickets = ticketServiceRQ;
                                                 $scope.tickets.forEach(function (k) {
-                                                   if(j.$id == k.ideventservices){
-                                                    j.utilizados = j.utilizados + k.cantidadDeCompra;
-                                                   };
+                                                    if (j.$id == k.ideventservices) {
+                                                        j.utilizados = j.utilizados + k.cantidadDeCompra;
+                                                    }
+                                                    ;
                                                 });
                                             });
                                         });
 
                                         $scope.eventsWithServices.push(x);
-                                        console.log($scope.eventsWithServices);
+                                        //console.log($scope.eventsWithServices);
                                     });
                                 });
 
 
-                            };
+                            }
+                            ;
 
                             document.getElementById('BarraCargando').style.display = 'none';
                             $('.tituloIziboss').text("Eventos Futuros");
-
 
 
                         });
@@ -128,7 +122,8 @@ angular.module('myApp.view1', ['ngRoute'])
                     window.currentAdmin = "";
                     $scope.adminLogeado = "";
                     window.location = "https://www.izinait.com/admin.html";
-                };
+                }
+                ;
 
             });
 
@@ -138,7 +133,7 @@ angular.module('myApp.view1', ['ngRoute'])
                 var date = new Date().getTime();
                 // if (currentDay < value.toHour){
                 if ($scope.eventosFuturoFecha < value.toHour) {
-                    if(Object.keys(value.clubs) == adminLogeado.idClubWork){
+                    if (Object.keys(value.clubs) == adminLogeado.idClubWork) {
                         return true;
                     }
                 }
@@ -148,30 +143,31 @@ angular.module('myApp.view1', ['ngRoute'])
             };
 
 
-            function dialogControllerSelecionarClub($scope, $mdDialog, $timeout, $q, $log,adminLogeadoRecibido ,clubsCargados) {
-                console.log(clubsCargados);
-                console.log(adminLogeadoRecibido);
+            function dialogControllerSelecionarClub($scope, $mdDialog, $timeout, $q, $log, adminLogeadoRecibido, clubsCargados) {
+                //console.log(clubsCargados);
+                //console.log(adminLogeadoRecibido);
                 $scope.clubs = clubsCargados;
 
                 $scope.clubsSelecionados = [];
 
                 $scope.selecionarClubs = function (club) {
                     club.selecionado = !club.selecionado;
-                    console.log($scope.clubs);
+                    //console.log($scope.clubs);
                 };
 
                 $scope.aceptarClub = function () {
                     $scope.clubs.forEach(function (x) {
-                        if(x.selecionado == true){
-                            firebase.database().ref('admins/' + adminLogeadoRecibido.$id+'/clubs/'+x.$id).update(
+                        if (x.selecionado == true) {
+                            firebase.database().ref('admins/' + adminLogeadoRecibido.$id + '/clubs/' + x.$id).update(
                                 {
                                     uid: x.$id,
                                     activoParaCrearEventos: true,
-                                    validado:false,
+                                    validado: false,
                                     nombre: x.name
                                 });
 
-                        };
+                        }
+                        ;
                     });
                     $mdDialog.hide();
                     location.reload();
@@ -191,13 +187,13 @@ angular.module('myApp.view1', ['ngRoute'])
             };
 
             var ObtenerClub = function (adminLogeadoRecibido) {
-                console.log(adminLogeadoRecibido.clubs);
+                //console.log(adminLogeadoRecibido.clubs);
 
-                if(adminLogeadoRecibido.clubs == undefined){
+                if (adminLogeadoRecibido.clubs == undefined) {
                     var clubsCargados = [];
                     var clubsER = firebase.database().ref().child('clubs');
                     $scope.clubsER = $firebaseArray(clubsER);
-                    $scope.clubsER.$loaded().then(function(){
+                    $scope.clubsER.$loaded().then(function () {
 
                         clubsCargados = $scope.clubsER;
                         clubsCargados.forEach(function (x) {
@@ -211,15 +207,14 @@ angular.module('myApp.view1', ['ngRoute'])
                             clickOutsideToClose: true,
                             locals: {
                                 adminLogeadoRecibido: adminLogeadoRecibido,
-                                clubsCargados :clubsCargados
+                                clubsCargados: clubsCargados
                             }
                         });
                     });
 
 
-
-                }else{
-                   var clubsParaAdministrar = adminLogeadoRecibido.clubs;
+                } else {
+                    var clubsParaAdministrar = adminLogeadoRecibido.clubs;
                     $mdDialog.show({
                         controller: dialogControllerAdministrarClub,
                         templateUrl: 'dialogAdministrarClub',
@@ -227,24 +222,24 @@ angular.module('myApp.view1', ['ngRoute'])
                         clickOutsideToClose: true,
                         locals: {
                             adminLogeadoRecibido: adminLogeadoRecibido,
-                            clubsParaAdministrar :clubsParaAdministrar
+                            clubsParaAdministrar: clubsParaAdministrar
                         }
                     });
                 }
             };
 
-            function dialogControllerAdministrarClub($scope, $mdDialog, $timeout, $q, $log,adminLogeadoRecibido ,clubsParaAdministrar) {
-                console.log(clubsParaAdministrar);
-                console.log(adminLogeadoRecibido);
+            function dialogControllerAdministrarClub($scope, $mdDialog, $timeout, $q, $log, adminLogeadoRecibido, clubsParaAdministrar) {
+                //console.log(clubsParaAdministrar);
+                //console.log(adminLogeadoRecibido);
                 $scope.clubs = clubsParaAdministrar;
 
-                     $scope.administrarClub = function (club) {
-                         console.log(club);
+                $scope.administrarClub = function (club) {
+                    //console.log(club);
 
-                         firebase.database().ref('admins/' + adminLogeadoRecibido.$id).update(
-                             {idClubWork:club.uid});
-                         $('.clubSelecionado').text(club.nombre);
-                         $mdDialog.hide();
+                    firebase.database().ref('admins/' + adminLogeadoRecibido.$id).update(
+                        {idClubWork: club.uid});
+                    $('.clubSelecionado').text(club.nombre);
+                    $mdDialog.hide();
 
                 };
 
@@ -261,33 +256,26 @@ angular.module('myApp.view1', ['ngRoute'])
             };
 
 
-
-
-
-            $scope.goToEventDetails = function(evento ) {
+            $scope.goToEventDetails = function (evento) {
                 document.location.href = '#!/detalleEvento?id=' + evento.$id;
             };
 
-            $scope.verEvento = function(evento ) {
+            $scope.verEvento = function (evento) {
                 //document.location.href = 'https://izinait.com/app/#!/detalleEvento?id=' + evento.$id, '_blank';
                 window.open('https://izinait.com/app/#!/detalleEvento?id=' + evento.$id, '_blank')
             };
 
-            $scope.duplicateEvent = function(event) {
+            $scope.duplicateEvent = function (event) {
                 $rootScope.eventToRepet = event;
                 $rootScope.eventEdit = undefined;
                 document.location.href = '#!/crearEvento';
             };
 
-            $scope.editEvent = function(event) {
+            $scope.editEvent = function (event) {
                 $rootScope.eventEdit = event;
                 $rootScope.eventToRepet = undefined;
                 document.location.href = '#!/crearEvento';
             };
-
-
-
-
 
 
         }]);
