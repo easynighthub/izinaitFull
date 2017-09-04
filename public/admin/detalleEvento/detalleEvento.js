@@ -21,6 +21,13 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             $('.tituloIziboss').text("Detalle Evento");
             $('.no-js').removeClass('nav-open');
 
+            $(sideEventos).addClass("active");
+            $(crearEventos).removeClass("active");
+
+            $(verEventosFuturos).addClass("active");
+            $(sideClientes).removeClass("active");
+            $(sideRrpp).removeClass("active");
+
 
             var admin = window.currentAdmin;
             var adminLogeado = "";
