@@ -93,6 +93,32 @@ exports.agregarTarjetaUsuarioQvo = functions.https.onRequest((req, res) => {
         res.status(200).send(body);
         //return res.redirect(303, body.redirect_url);
 
+    });
+
+});
+
+
+
+exports.obtenerUnaInscripcionDeTarjeta = functions.https.onRequest((req, res) => {
+    // Grab the current value of what was written to the Realtime Database.
+    const userQvo = req.query.userQvo;
+    const inscription_uid = req.query.inscription_uid;
+
+    fetch('https://playground.qvo.cl/customers/' + userQvo + '/cards/inscriptions/'+inscription_uid, {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Token ' + functions.config().qvo.token,
+            'Content-Type': 'application/json'
+
+        }
+    }).then(function (response) {
+        console.log(response)
+        return response.json();
+    }).then(function (body) {
+        console.log(body);
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.status(200).send(body);
+        //return res.redirect(303, body.redirect_url);
 
     });
 
@@ -159,6 +185,7 @@ exports.cobrarTarjetaDeCredito = functions.https.onRequest((req, res) => {
     // Grab the current value of what was written to the Realtime Database.
     const userQvo = req.query.userQvo;
     const tarjetaCredito = req.query.tarjetaCredito;
+    const cobroTotal = req.query.cobroTotal;
 
     fetch('https://playground.qvo.cl/customers/' + userQvo + '/cards/' + tarjetaCredito + '/charge', {
         method: 'POST',
@@ -167,12 +194,13 @@ exports.cobrarTarjetaDeCredito = functions.https.onRequest((req, res) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            amount: 3000
+            amount: cobroTotal
         })
     }).then(function (response) {
         console.log(response)
         return response.json();
     }).then(function (body) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
         console.log(body);
         res.status(200).send(body);
         return body;

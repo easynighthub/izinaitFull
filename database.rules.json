@@ -67,7 +67,27 @@
     "users": {
       ".write": "auth != null",
       ".read":  "auth != null"
+    },
+
+    "environmentEvent": {
+      ".write": "auth != null",
+      ".read":  "auth != null"
+    },
+    "agerange": {
+      ".write": "auth != null",
+      ".read":  "auth != null"
+    },
+    "styleEvent": {
+      ".write": "auth != null",
+      ".read":  "auth != null"
+    },
+    "clothing": {
+      ".write": "auth != null",
+      ".read":  "auth != null"
     }
+
+
+
 
 
 

@@ -11,6 +11,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
             var user = window.currentApp;
             var usuarioLogeado = "";
+            $scope.userQvoRQ = "";
 
             var oContainer = $("#contact-buttons-bar");
             // Make the buttons visible
@@ -38,6 +39,15 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                         //  $('.user-header .imagen').text(usersLocal.picture);
                         $('.codigoAcceder').text("Tú Codigo");
                         console.log(window.currentApp + " ENTRE");
+
+
+                        var userQvo = firebase.database().ref('/userQvo/').child( usuarioLogeado.$id);
+                        var userQvoRQ = $firebaseObject(userQvo);
+                        userQvoRQ.$loaded().then(function () {
+                            console.log(userQvoRQ);
+                            $scope.userQvoRQ = userQvoRQ;
+                        });
+
 
                         buscarmeRequest.$loaded().then(function () {
                             $scope.buscarmeEnEvent = buscarmeRequest;
@@ -334,6 +344,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
 
             $scope.dialogAdquirirServicio = function (eventsService) {
+
                 if (usuarioLogeado == "") {
                     $mdDialog.show({
                         controller: dialogControllerAccederConFacebook,
@@ -352,6 +363,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                         clickOutsideToClose: true,
                         locals: {
                             eventsService: eventsService,
+                            userQvoRQ:$scope.userQvoRQ
                         }
                     });
 
@@ -532,10 +544,11 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
             };
 
-            function dialogControllerAdquirirServicio($scope, $mdDialog, $timeout, $q, $log, eventsService) {
+            function dialogControllerAdquirirServicio($scope, $mdDialog, $timeout, $q, $log, $http, eventsService,userQvoRQ ) {
                 $scope.eventsService = eventsService;
                 console.log(eventsService);
                 $scope.usuarioLogeado = usuarioLogeado;
+                $scope.userQvoRQ =userQvoRQ;
                 console.log($scope.usuarioLogeado);
                 $scope.maxEntradas = [];
                 $scope.newTicket = [];
@@ -561,76 +574,106 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     //console.log("Entradas", $scope.maxEntradas)
                 };
 
-                $scope.adquirir = function (cantidadDeCompra, celular) {
+                $scope.adquirir = function (cantidadDeCompra, celular,metodoDePagoSelect) {
                     console.log(celular.toString().length);
                     if(celular.toString().length > 7){
-                        $scope.newTicket.email = $scope.usuarioLogeado.email;
-                        $scope.newTicket.ideventservices = $scope.eventsService.id;
-                        $scope.newTicket.tipoEventservices = $scope.eventsService.tipo;
-                        // !!!!!! falta rescatar el id de la fila selecionada "del servicio a comprar"
-                        $scope.newTicket.displayName = $scope.usuarioLogeado.displayName;
-                        $scope.newTicket.lastName = $scope.usuarioLogeado.lastName; //$scope.datosTicket.lastName;
-                        $scope.newTicket.firstName = $scope.usuarioLogeado.firstName; //$scope.datosTicket.firstName;
-                        $scope.newTicket.celular = celular;
-                        $scope.newTicket.date = new Date().getTime();
-                        $scope.newTicket.paidOut = false; //devolver pago
-                        $scope.newTicket.redeemed = false;
-                        $scope.newTicket.cantidadUtilizada = 0;
-                        $scope.newTicket.rrppid = Rrpp;
-                        $scope.newTicket.cantidadDeCompra = cantidadDeCompra;
-                        $scope.newTicket.totalAPagar = $scope.eventsService.precio * cantidadDeCompra;
-                        $scope.newTicket.eventId = eventId;
-                        $scope.newTicket.userId = $scope.usuarioLogeado.$id;
-                        $scope.newTicket.ticketId = firebase.database().ref().child('ticketsCreate/').push().key;
+                        if(metodoDePagoSelect == "oneClick"){
 
-                         firebase.database().ref('tickets/' + eventId + '/'  + $scope.newTicket.ticketId).set($scope.newTicket).then(
-                         function (s) {
-                         console.log('se guardaron bien el tickets ');
-                         firebase.database().ref('ticketsCreate/' + $scope.newTicket.ticketId).set(true);
+                            var url  = "https://us-central1-project-8746388695669481444.cloudfunctions.net/cobrarTarjetaDeCredito" +
+                                "?userQvo=" + $scope.userQvoRQ.userQvoId +
+                                "&" +
+                                "tarjetaCredito=" + $scope.userQvoRQ.creditCardDefault +
+                                "&" +
+                                "cobroTotal="+  $scope.eventsService.precio * cantidadDeCompra;
 
-                       //  firebase.database().ref('users/' + $scope.usuarioLogeado.$id + '/events/'+ $scope.event.admin+'/' + eventId).set(true);
+                            $http({
+                                method: 'GET',
+                                url: url,
+                                crossOrigin: true,
+                            }).then(function successCallback(response) {
+                                console.log(response);
+                                if(response.data.status == "successful"){
+                                    console.log(response.data.status);
 
-                         firebase.database().ref('users/' + $scope.usuarioLogeado.$id).update(
-                         {celular: $scope.newTicket.celular});
-                         $mdDialog.hide();
+                                    $scope.newTicket.email = $scope.usuarioLogeado.email;
+                                    $scope.newTicket.ideventservices = $scope.eventsService.id;
+                                    $scope.newTicket.tipoEventservices = $scope.eventsService.tipo;
+                                    // !!!!!! falta rescatar el id de la fila selecionada "del servicio a comprar"
+                                    $scope.newTicket.displayName = $scope.usuarioLogeado.displayName;
+                                    $scope.newTicket.lastName = $scope.usuarioLogeado.lastName; //$scope.datosTicket.lastName;
+                                    $scope.newTicket.firstName = $scope.usuarioLogeado.firstName; //$scope.datosTicket.firstName;
+                                    $scope.newTicket.celular = celular;
+                                    $scope.newTicket.date = new Date().getTime();
+                                    $scope.newTicket.paidOut = true; //devolver pago
+                                    $scope.newTicket.redeemed = false;
+                                    $scope.newTicket.cantidadUtilizada = 0;
+                                    $scope.newTicket.rrppid = Rrpp;
+                                    $scope.newTicket.cantidadDeCompra = cantidadDeCompra;
+                                    $scope.newTicket.totalAPagar = $scope.eventsService.precio * cantidadDeCompra;
+                                    $scope.newTicket.eventId = eventId;
+                                    $scope.newTicket.userId = $scope.usuarioLogeado.$id;
+                                    $scope.newTicket.ticketId = firebase.database().ref().child('ticketsCreate/').push().key;
 
-                             $scope.getClub = function (club) {
-                                 if (club) {
-                                     var clubKey = Object.keys(club)[0];
-                                     return $filter('filter')(clubsER, {$id: clubKey})[0].name;
-                                 }
-                             };
-                             var nameClub = $scope.getClub(getEvent.clubs);
+                                    firebase.database().ref('tickets/' + eventId + '/'  + $scope.newTicket.ticketId).set($scope.newTicket).then(
+                                        function (s) {
+                                            console.log('se guardaron bien el tickets ');
+                                            firebase.database().ref('ticketsCreate/' + $scope.newTicket.ticketId).set(true);
+
+                                            //  firebase.database().ref('users/' + $scope.usuarioLogeado.$id + '/events/'+ $scope.event.admin+'/' + eventId).set(true);
+
+                                            firebase.database().ref('users/' + $scope.usuarioLogeado.$id).update(
+                                                {celular: $scope.newTicket.celular});
+                                            $mdDialog.hide();
+
+                                            /*      $scope.getClub = function (club) {
+                                             if (club) {
+                                             var clubKey = Object.keys(club)[0];
+                                             return $filter('filter')(clubsER, {$id: clubKey})[0].name;
+                                             }
+                                             };
+                                             var nameClub = $scope.getClub(getEvent.clubs);
+                                             */
+
+                                            /*   $.ajax({
+                                             url: 'http://www.abcs.cl/correo/reservarServicio.php',
+                                             type: "POST",
+                                             data: {
+                                             name: $scope.usuarioLogeado.displayName,
+                                             phone: $scope.newTicket.celular,
+                                             email:  $scope.usuarioLogeado.email,
+                                             message: "GRACIAS POR COMPRAR ESTE SERVICIO",
+                                             eventName : getEvent.name,
+                                             clubName : nameClub
+                                             },
+                                             cache: false,
+                                             success: function() {
+                                             console.log("siiiiiiiiiiiiiiiiiiiiiii");
+                                             },
+                                             error: function() {
+                                             console.log("noooooooooooooooooooooo");
+                                             },
+                                             }); */
+
+                                        }, function (e) {
+                                            alert('Error, intente de nuevo');
+                                            // console.log('se guardo mal ', e);
+                                        }
+                                    );
+                                    //mostrar mensaje de exito!
+                                };
+                                // this callback will be called asynchronously
+                                // when the response is available
+                            }, function errorCallback(response) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                            });
 
 
-                             $.ajax({
-                                 url: 'http://www.abcs.cl/correo/reservarServicio.php',
-                                 type: "POST",
-                                 data: {
-                                     name: $scope.usuarioLogeado.displayName,
-                                     phone: $scope.newTicket.celular,
-                                     email:  $scope.usuarioLogeado.email,
-                                     message: "GRACIAS POR COMPRAR ESTE SERVICIO",
-                                     eventName : getEvent.name,
-                                     clubName : nameClub
-                                 },
-                                 cache: false,
-                                 success: function() {
-                                     console.log("siiiiiiiiiiiiiiiiiiiiiii");
-                                 },
-                                 error: function() {
-                                     console.log("noooooooooooooooooooooo");
-                                 },
-                             });
+                        }
 
-                         }, function (e) {
-                         alert('Error, intente de nuevo');
-                         // console.log('se guardo mal ', e);
-                         }
-                         );
                     }else{
                         alert('INGRESA UN NUMERO VALIDO');
-                    }
+                    };
 
 
 

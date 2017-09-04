@@ -40,41 +40,35 @@
         <div class="title">
             <center>
             <h3>AGREGAR TARJETA DE CREDITO</h3>
-                <button class="btn btn-success" ng-click="crearCliente()"> AGREGAR TARJETA</button>
-                <div>
-            <div class="col-md-12">
-
-                  <input  type="text" placeholder="Numero de tarjeta" class="form-control" ng-model="newCreditCard.number">
-
-            </div>
-            <div class="col-md-12">
-
-                     <input  type="number" placeholder="CCV" class="form-control" ng-model="newCreditCard.cvc">
-            </div>
-            <div class="col-md-12">
-              <div class="col-md-4" style="margin-top: 10px">
-                  VENCIMIENTO :
-              </div>
-                <div class="col-md-4">
-                    <input type="number" placeholder="MES" class="form-control col-md-4" ng-model="newCreditCard.exp_month" size="2">
-
-                </div>
-                <div class="col-md-4">
-                    <input type="number" placeholder="AÑO" class="form-control col-md-6" ng-model="newCreditCard.exp_year" size="4">
-
-                </div>
-
-            </div>
-            <div class="col-md-12">
-
-                      <input type="number" placeholder="CODIGO POSTAL" class="form-control" NG-model="newCreditCard.address_zip">
-
-            </div>
-            <button class="btn btn-success" ng-click="submitNewCreditCard()"> AGREGAR TARJETA 2</button>
-                </div>
+                <button class="btn btn-success" ng-click="crearCliente()"> AGREGAR TARJETA DE CREDITO ON-CLICK</button>
             </center>
         </div>
 
+
+        <table class="table col-md-8" ng-show="userQvoRQ.cards != undefined">
+            <thead>
+            <tr>
+                <th>Tipo</th>
+                <th>Fecha Creacion</th>
+                <th>Digitos</th>
+                <th>Metodo</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="card in userQvoRQ.cards">
+                <td style="line-height: 5px;">{{card.card_type}}  </td>
+                <td>{{card.created_at}}</td>
+                <td>**** {{card.last_4_digits}}</td>
+                <td >{{card.payment_type}}</td>
+                <td >
+                    <button class="btn btn-danger btn-sm" ng-click="eliminarTarjeta()"> eliminar</button>
+                </td>
+            </tr>
+
+
+            </tbody>
+        </table>
 
 
     </div>
@@ -112,12 +106,23 @@
     <div class="col-md-12">
         <center><br>
             <h5> CONFIRMAR DATOS</h5>
+            <button id="BarraCargando"  style="display: none"
+                    class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"> </i>
+                CONFIRMANDO DATOS
+            </button>
+            <button id="barraRedirectUrl"  style="display: none"
+                    class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"> </i>
+                Redirecciando a pagina segura.
+            </button>
+
+            <div id="datosClienteQvo">
             <input  type="text" placeholder="Nombre" class="form-control col-md-12"  ng-model="usuarioLogeado.displayName">
             <input  type="text" placeholder="Correo" class="form-control col-md-12" ng-model="usuarioLogeado.email">
             <button ng-click="crearUsuarioQvo()" scope="public_profile email user_birthday"
                     class=" btn btn-info">
                 <i class="material-icons"></i> Agregar Tarjeta
             </button>
+            </div>
             <br>
 
 

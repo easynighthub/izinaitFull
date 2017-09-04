@@ -13,13 +13,17 @@ angular.module('myApp.codigo', ['ngRoute'])
         });
     }])
 
-    .controller('codigoCtrl', ['$scope', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope','$mdDialog',
-        function($scope, $firebaseObject, $firebaseArray, $filter, $rootScope,$mdDialog) {
+    .controller('codigoCtrl', ['$scope','$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope','$mdDialog','$http',
+        function($scope,$routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope,$mdDialog,$http) {
+
+
+            var uidTarjetaDeCredito = $routeParams.uid || ""  ; // id del evento entregador por url
 
 
             var user = window.currentApp;
-            var token = "";
+            var token = "" ;
             $scope.usuarioLogeado = "";
+            $scope.userQvoRQ = "";
 
             document.getElementById('codigoVisibile').style.display = 'none';
             document.getElementById('pedirCodigo').style.display = 'none';
@@ -40,9 +44,63 @@ angular.module('myApp.codigo', ['ngRoute'])
                         $scope.foto = $scope.usuarioLogeado.picture;
                         $scope.email = $scope.usuarioLogeado.email;
 
+                        var userQvo = firebase.database().ref('/userQvo/').child( $scope.usuarioLogeado.$id);
+                        var userQvoRQ = $firebaseObject(userQvo);
+                        userQvoRQ.$loaded().then(function () {
+                            console.log(userQvoRQ);
+                        $scope.userQvoRQ = userQvoRQ;
+
+                            if(uidTarjetaDeCredito != ""){
+
+                                var url = "https://us-central1-project-8746388695669481444.cloudfunctions.net/obtenerUnaInscripcionDeTarjeta?" +
+                                    "userQvo=" +
+                                    userQvoRQ.userQvoId +
+                                    "&" +
+                                    "inscription_uid=" +
+                                    uidTarjetaDeCredito;
+
+                                $http({
+                                    method: 'GET',
+                                    url: url,
+                                    crossOrigin: true,
+                                }).then(function successCallback(response) {
+                                    console.log(response);
+                                    if(response.data.status == "succeeded"){
+                                        console.log(response.data.status);
+
+                                        firebase.database().ref('userQvo/' +$scope.usuarioLogeado.$id+'/cards/'+  response.data.card.id).set(
+                                            response.data.card);
+                                        location.href = "#!/codigo";
+                                        //mostrar mensaje de exito!
+                                    };
+                                    // this callback will be called asynchronously
+                                    // when the response is available
+                                }, function errorCallback(response) {
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                });
+
+
+                                /*  $mdDialog.show({
+                                 controller: controllerDialogStatusTarjetaCredito,
+                                 templateUrl: 'dialogStatusTarjetaCredito',
+                                 parent: angular.element(document.body),
+                                 clickOutsideToClose: true,
+                                 locals: {
+                                 usuarioLogeado: usuarioLogeado,
+                                 userQvoRQ:userQvoRQ
+                                 }
+                                 }); */
+
+                            }
+
+                        });
+
                         document.getElementById('codigoVisibile').style.display = 'block';
                         $('.codigoAcceder').text("Tú Codigo");
                         $(navigationexample).removeClass( "in" );
+
+
                     });
                 }
                 else {
@@ -55,6 +113,8 @@ angular.module('myApp.codigo', ['ngRoute'])
                 }
 
             });
+
+
 
 
 
@@ -293,6 +353,10 @@ angular.module('myApp.codigo', ['ngRoute'])
 
             $scope.crearCliente = function () {
 
+
+                var userQvoRQ =  $scope.userQvoRQ;
+                var usuarioLogeado =  $scope.usuarioLogeado;
+            /*
                var usuarioLogeado =  $scope.usuarioLogeado;
                 console.log(usuarioLogeado)
                 var userQvo = firebase.database().ref('/userQvo/').child(usuarioLogeado.$id);
@@ -301,6 +365,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                 userQvoRQ.$loaded().then(function () {
                     console.log(userQvoRQ);
                 });
+ */
 
                 $mdDialog.show({
                     controller: controllerDialogCrearClienteQvo,
@@ -329,14 +394,17 @@ angular.module('myApp.codigo', ['ngRoute'])
 
                 $scope.crearUsuarioQvo = function () {
 
+
+
+
                  if($scope.userQvoRQ.userQvoId != undefined){
 
-                        "cus_sEZGcXEEwjAD_sgj1CsOFA"
-
+                     document.getElementById('BarraCargando').style.display = 'none';
+                     document.getElementById('datosClienteQvo').style.display = 'none';
+                     document.getElementById('barraRedirectUrl').style.display = 'block';
 
                      var url = "https://us-central1-project-8746388695669481444.cloudfunctions.net/agregarTarjetaUsuarioQvo?userQvo="
-                         +$scope.userQvoRQ.userQvoId
-
+                         +$scope.userQvoRQ.userQvoId;
                      $http({
                          method: 'GET',
                          url: url,
@@ -350,11 +418,11 @@ angular.module('myApp.codigo', ['ngRoute'])
                          // called asynchronously if an error occurs
                          // or server returns response with an error status.
                      });
-
-
-
-
                             }else {
+
+                     document.getElementById('BarraCargando').style.display = 'block';
+                     document.getElementById('datosClienteQvo').style.display = 'none';
+                     document.getElementById('barraRedirectUrl').style.display = 'none';
 
                      var url = "https://us-central1-project-8746388695669481444.cloudfunctions.net/createUserQvo?email="
                          +$scope.usuarioLogeado.email
@@ -437,3 +505,4 @@ angular.module('myApp.codigo', ['ngRoute'])
 
 
         }]);
+

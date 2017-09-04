@@ -324,8 +324,10 @@
     }
 </script>
 
-<script id="dialogAdquirirServicio" type="text/ng-template">
-    <div class="col-xs-12">
+<script id="dialogAdquirirServicio" type="text/ng-template" style="margin: auto; width: 100%;" >
+    <div class="col-md-12" >
+
+    <div class="col-xs-12 col-md-12">
 
         <h6> Bienvenido {{usuarioLogeado.displayName}}</h6>
         <div class="text-center">
@@ -346,7 +348,7 @@
         </div>
         <br>
         <p class="description">¿Cantidad que deseas adquirir?</p>
-        <md-select name="ticketQty" ng-model="cantidadDeCompra"
+        <md-select class="col-md-12" name="ticketQty" ng-model="cantidadDeCompra"
                    placeholder=" - ">
             <md-option
                     ng-repeat="entrada in maxEntradas track by entrada.id"
@@ -354,7 +356,22 @@
                 {{entrada.name}}
             </md-option>
         </md-select>
+        <p class="col-md-12"  ng-show="cantidadDeCompra != undefined"  > Total : $ {{cantidadDeCompra*eventsService.precio}}</p>
         <center>
+            <p>METODO DE PAGO </p>
+            <md-radio-group ng-model="metodoDePagoSelect">
+
+            <md-radio-button  ng-show="userQvoRQ.cards" value="oneClick">
+                OneClick
+            </md-radio-button>
+                <md-radio-button  ng-show="userQvoRQ.cards" value="webPayPlus">
+                    WebPay Plus
+                </md-radio-button>
+
+            </md-radio-group>
+
+
+
             <table class="text-center">
                 <tr>
                     <th>
@@ -368,7 +385,7 @@
                         <div style="margin-top: 1px" class="form-group label-floating " id="agregarCorrecto2">
                             <input type="text" class="form-control" placeholder="Ingresa Email" ng-model="email"/>
                             <span class="form-control-feedback">
-			<i class="material-icons">done</i>
+			                <i class="material-icons">done</i>
 		</span>
                         </div>
                     </th>
@@ -395,8 +412,9 @@
 
         <div class="text-right">
             <button ng-click="hide()" class="btn  btn-sm"> Cancelar</button>
-            <button ng-click="adquirir(cantidadDeCompra,celular)" class="btn btn-info btn-sm "> Adquirir</button>
+            <button ng-click="adquirir(cantidadDeCompra,celular,metodoDePagoSelect)" class="btn btn-info btn-sm "> Adquirir</button>
         </div>
+    </div>
     </div>
 
 
