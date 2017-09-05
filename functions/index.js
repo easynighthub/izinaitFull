@@ -98,7 +98,6 @@ exports.agregarTarjetaUsuarioQvo = functions.https.onRequest((req, res) => {
 });
 
 
-
 exports.obtenerUnaInscripcionDeTarjeta = functions.https.onRequest((req, res) => {
     // Grab the current value of what was written to the Realtime Database.
     const userQvo = req.query.userQvo;
@@ -120,6 +119,39 @@ exports.obtenerUnaInscripcionDeTarjeta = functions.https.onRequest((req, res) =>
         res.status(200).send(body);
         //return res.redirect(303, body.redirect_url);
 
+    });
+
+});
+
+exports.cobrarConWebPayPlus = functions.https.onRequest((req, res) => {
+    // Grab the current value of what was written to the Realtime Database.
+    const userQvo = req.query.userQvo;
+    const url = "";
+    const cobroTotal = req.query.cobroTotal;
+
+    fetch('https://playground.qvo.cl/webpay_plus/charge', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Token ' + functions.config().qvo.token,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            amount: cobroTotal,
+            return_url: "http://www.izinait.com/app/#!/tickets",
+            customer_id: req.query.userQvo
+
+        })
+    }).then(function (response) {
+        console.log(response)
+        return response.json();
+    }).then(function (body) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        console.log(body);
+        res.status(200).send(body);
+        return body;
+
+    }).then(function (ok) {
+        console.log(ok);
     });
 
 });

@@ -15,8 +15,8 @@ angular.module('myApp.view1', ['ngRoute'])
             }
         );
     }])
-    .controller('View1Ctrl', ['$scope', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
-        function ($scope, $firebaseObject, $firebaseArray, $filter, $rootScope, $routeProvider) {
+    .controller('View1Ctrl', ['$scope','$http', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
+        function ($scope,$http, $firebaseObject, $firebaseArray, $filter, $rootScope, $routeProvider) {
 
 
             var user = window.currentApp ;
@@ -55,10 +55,55 @@ angular.module('myApp.view1', ['ngRoute'])
 
             $scope.filterDateInput = new Date();
 
-        /*   var users = $firebaseArray(firebase.database().ref().child('users'));
+         var users = $firebaseArray(firebase.database().ref().child('users'));
             users.$loaded().then(function () {
               console.log(users);
               users.forEach(function (x) {
+              /*    if(x.email != "izi@nait.com" || x.email != "null@izinait.com" ){
+                      if(x.facebookId){
+
+                          var url = "https://us-central1-project-8746388695669481444.cloudfunctions.net/createUserQvo?email="
+                              +x.email
+                              +"&name="
+                              +x.displayName
+
+                          $http({
+                              method: 'GET',
+                              url: url,
+                              crossOrigin: true,
+                          }).then(function successCallback(response) {
+                              console.log(response);
+                              if(response.data.error != undefined){
+                                  alert("ESTE CORREO YA EXISTE");
+                              }
+                              else{
+
+                                  firebase.database().ref('users/' + x.id).update(
+                                      {
+                                          qvoUser : true
+                                      }
+                                  );
+
+                                  firebase.database().ref('userQvo/' + x.id).set(
+                                      {
+                                          id : x.id,
+                                          userQvoEmail : response.data.email,
+                                          userQvoId : response.data.id,
+                                          userQvoName: response.data.name
+                                      }
+
+                                  );
+
+                                  console.log("exito");
+                              };
+                          }, function errorCallback(response) {
+                          });
+
+
+                      }
+
+                  } */
+
                   firebase.database().ref('users/'+ x.$id).update({
                       events : null,
                       asistProd:null,
@@ -67,7 +112,7 @@ angular.module('myApp.view1', ['ngRoute'])
                       type : null
                   });
               });
-            }); */
+            });
 
             var clubsER = $firebaseArray(firebase.database().ref().child('clubs'));
 
