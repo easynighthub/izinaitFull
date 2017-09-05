@@ -35,7 +35,7 @@
         <!--  <img class="imagenRedonda" src="{{foto}}"/>-->
 
     </center></div>
-    <div class="col-md-6 ">
+    <div class="col-md-6 " ng-show="userQvoRQ.userQvoId != undefined">
 
         <div class="title">
             <center>
@@ -57,12 +57,12 @@
             </thead>
             <tbody>
             <tr ng-repeat="card in userQvoRQ.cards">
-                <td style="line-height: 5px;">{{card.card_type}}  </td>
+                <td >{{card.card_type}}  </td>
                 <td>{{card.created_at}}</td>
                 <td>**** {{card.last_4_digits}}</td>
                 <td >{{card.payment_type}}</td>
                 <td >
-                    <button class="btn btn-danger btn-sm" ng-click="eliminarTarjeta()"> eliminar</button>
+                    <button  style="margin-top: -4px;margin-bottom: -4px" class="btn btn-danger btn-sm" ng-click="eliminarTarjeta()"> eliminar</button>
                 </td>
             </tr>
 
@@ -75,9 +75,7 @@
 
 </div>
 
-<style>
 
-</style>
 
 <div id="pedirCodigo" style='display:none;'>
 
@@ -101,28 +99,32 @@
 
 </div>
 
+
+
+
 <script type="text/ng-template" id="dialogCrearClienteQvo" class="col-xs-12">
 
     <div class="col-md-12">
         <center><br>
-            <h5> CONFIRMAR DATOS</h5>
+            <h5> REDIRECCIONANDO </h5>
             <button id="BarraCargando"  style="display: none"
                     class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"> </i>
                 CONFIRMANDO DATOS
             </button>
-            <button id="barraRedirectUrl"  style="display: none"
+            <button id="barraRedirectUrl"  style="display: block"
                     class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"> </i>
                 Redirecciando a pagina segura.
             </button>
 
-            <div id="datosClienteQvo">
+          <!--  <div id="datosClienteQvo">
             <input  type="text" placeholder="Nombre" class="form-control col-md-12"  ng-model="usuarioLogeado.displayName">
             <input  type="text" placeholder="Correo" class="form-control col-md-12" ng-model="usuarioLogeado.email">
             <button ng-click="crearUsuarioQvo()" scope="public_profile email user_birthday"
                     class=" btn btn-info">
+
                 <i class="material-icons"></i> Agregar Tarjeta
             </button>
-            </div>
+            </div>-->
             <br>
 
 

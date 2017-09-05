@@ -329,88 +329,84 @@
 
     <div class="col-xs-12 col-md-12">
 
-        <h6> Bienvenido {{usuarioLogeado.displayName}}</h6>
-        <div class="text-center">
-            <p class="description">
+        <h6  class="col-md-12 col-xs-12 text-center"> Bienvenido {{usuarioLogeado.displayName}}</h6>
+        <div class="text-center col-md-12">
+            <p class="btn btn-sm btn-info col-md-12">
+                $ {{eventsService.precio}}
+            </p>
+
+            <p class="description col-md-4">
                 {{eventsService.desc}}
             </p>
-            <p class="btn btn-sm btn-info">
-                $ {{eventsService.precio}}
-
-            </p>
-            <p class="description">
+            <p class="description col-md-4">
                 {{ eventsService.fechaFin |date : 'hh:mm / dd MMMM yyyy '}}
             </p>
-            <p class="description">
+            <p class="description col-md-4">
                 Entradas Maximas {{eventsService.maxEntradas}}
             </p>
 
         </div>
         <br>
-        <p class="description">¿Cantidad que deseas adquirir?</p>
-        <md-select class="col-md-12" name="ticketQty" ng-model="cantidadDeCompra"
-                   placeholder=" - ">
+        <p class="description col-md-4">¿Cantidad que deseas adquirir?</p>
+        <md-select class="col-md-4" style="margin-top: -7px" name="ticketQty" ng-model="cantidadDeCompra"
+                   placeholder="0">
+            <md-option selected ng-value="0">
+                0
+            </md-option>
             <md-option
                     ng-repeat="entrada in maxEntradas track by entrada.id"
                     ng-value="entrada.id">
                 {{entrada.name}}
             </md-option>
         </md-select>
-        <p class="col-md-12"  ng-show="cantidadDeCompra != undefined"  > Total : $ {{cantidadDeCompra*eventsService.precio}}</p>
+        <p class="col-md-4"  ng-show="cantidadDeCompra != undefined"  > Total : $ {{cantidadDeCompra*eventsService.precio}}</p>
         <center>
-            <p>METODO DE PAGO </p>
-            <md-radio-group ng-model="metodoDePagoSelect">
 
-            <md-radio-button  ng-show="userQvoRQ.cards" value="oneClick">
+            <p class="col-md-12"> METODO DE PAGO </p>
+<div class="col-md-12">
+
+            <button class="btn btn-primary btn-sm col-md-6 text-center" ng-show="userQvoRQ.creditCardDefault == undefined"> AGREGAR TARJETA DE CREDITO </button>
+
+</div>
+
+            <md-radio-group class="col-md-12 text-center" ng-model="metodoDePagoSelect">
+
+            <md-radio-button class="col-md-6"  ng-show="userQvoRQ.creditCardDefault" value="oneClick">
                 OneClick
             </md-radio-button>
-                <md-radio-button  ng-show="userQvoRQ.cards" value="webPayPlus">
+
+                <md-radio-button class="col-md-6" ng-show="userQvoRQ.userQvoId" value="webPayPlus">
                     WebPay Plus
                 </md-radio-button>
-
             </md-radio-group>
 
-
-
-            <table class="text-center">
-                <tr>
-                    <th>
-                        <p class="description"><i class="material-icons" style="vertical-align: middle;">email</i>
-                        </p>
-                    </th>
-                    <th>
-                        &nbsp;&nbsp;
-                    </th>
-                    <th>
-                        <div style="margin-top: 1px" class="form-group label-floating " id="agregarCorrecto2">
-                            <input type="text" class="form-control" placeholder="Ingresa Email" ng-model="email"/>
-                            <span class="form-control-feedback">
+            <div  class="form-group label-floating col-md-6">
+                <i class="material-icons col-md-2" style="margin-top: 5px">email</i>
+                <div class="col-md-10">
+                <input type="text" class="form-control" placeholder="Ingresa Email" ng-model="email"/>
+                <span class="form-control-feedback">
 			                <i class="material-icons">done</i>
+
 		</span>
-                        </div>
-                    </th>
-                </tr>
-                <tr>
-                    <th>
-                        <p class="description"><i class="material-icons" style="vertical-align: middle;">call</i> +569
-                        </p>
-                    </th>
-                    <th>
-                        &nbsp;&nbsp;
-                    </th>
-                    <th>
-                        <div style="margin-top: 1px" class="form-group label-floating " id="agregarCorrecto">
-                            <input type="number" class="form-control" placeholder="Ingresa Celular" ng-model="celular"/>
-                            <span class="form-control-feedback">
+                </div>
+            </div>
+
+            <div class="form-group label-floating  col-md-6" >
+                <i class="material-icons col-md-2" style="margin-top: 5px">call</i>
+
+                <div class="col-md-10">
+                <input type="number" class="form-control" placeholder="Ingresa Celular" ng-model="celular"/>
+                <span class="form-control-feedback">
 			<i class="material-icons">done</i>
 		</span>
-                        </div>
-                    </th>
-                </tr>
-            </table>
+                </div>
+            </div>
+
+
+
         </center>
 
-        <div class="text-right">
+        <div class="text-right col-md-12">
             <button ng-click="hide()" class="btn  btn-sm"> Cancelar</button>
             <button ng-click="adquirir(cantidadDeCompra,celular,metodoDePagoSelect)" class="btn btn-info btn-sm "> Adquirir</button>
         </div>

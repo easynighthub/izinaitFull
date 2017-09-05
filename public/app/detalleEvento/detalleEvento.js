@@ -35,6 +35,9 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     usersLocal.$loaded().then(function () {
                         usuarioLogeado = usersLocal;
                         console.log(usuarioLogeado);
+
+                        $scope.confirmarCorreo(usuarioLogeado);
+
                         $('.nombreUsuario').text(usuarioLogeado.displayName);
                         //  $('.user-header .imagen').text(usersLocal.picture);
                         $('.codigoAcceder').text("Tú Codigo");
@@ -463,6 +466,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 $scope.foto = $scope.usuarioLogeado.picture;
                                 $scope.email = $scope.usuarioLogeado.email;
 
+                                $scope.confirmarCorreo($scope.usuarioLogeado);
+
                                 $('.nombreUsuario').text($scope.usuarioLogeado.displayName);
                                 $('.codigoAcceder').text("Tú Codigo");
                                 console.log("obvtuve la foto y el correo");
@@ -489,6 +494,9 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 $scope.email = $scope.usuarioLogeado.email;
                                 $scope.foto = $scope.usuarioLogeado.picture;
                                 $scope.email = $scope.usuarioLogeado.email;
+
+                                $scope.confirmarCorreo($scope.usuarioLogeado);
+
                                 $('.nombreUsuario').text($scope.usuarioLogeado.displayName);
                                 $('.codigoAcceder').text("Tú Codigo");
                                 console.log("obvtuve la foto y el correo");
@@ -578,6 +586,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     console.log(celular.toString().length);
                     if(celular.toString().length > 7){
                         if(metodoDePagoSelect == "oneClick"){
+                            // creditCardDefaulf if sino redireccionar a agregar tarjeta de credito
 
                             var url  = "https://us-central1-project-8746388695669481444.cloudfunctions.net/cobrarTarjetaDeCredito" +
                                 "?userQvo=" + $scope.userQvoRQ.userQvoId +
@@ -671,6 +680,30 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
                         }
 
+                        if(metodoDePagoSelect =="webPayPlus"){
+
+                            var url ="https://us-central1-project-8746388695669481444.cloudfunctions.net/cobrarConWebPayPlus?" +
+                                "userQvo=" + $scope.userQvoRQ.userQvoId +
+                                "&" +
+                                "cobroTotal=" + $scope.eventsService.precio * cantidadDeCompra;
+
+                            $http({
+                                method: 'GET',
+                                url: url,
+                                crossOrigin: true,
+                            }).then(function successCallback(response) {
+                                console.log(response);
+                                location.href = response.data.redirect_url;
+
+                                // this callback will be called asynchronously
+                                // when the response is available
+                            }, function errorCallback(response) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                            });
+
+                        }
+
                     }else{
                         alert('INGRESA UN NUMERO VALIDO');
                     };
@@ -689,6 +722,85 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
                 };
 
+
+            };
+
+
+            $scope.confirmarCorreo = function (user) {
+
+                if(user.email == "null@izinait.com"){
+                    // Appending dialog to document.body to cover sidenav in docs app
+                    var confirm = $mdDialog.prompt()
+                        .title('Confirmanos tu correo')
+                        .textContent('Recuerda colocar un correo valido')
+                        .placeholder('Correo Electronico')
+                        .ariaLabel('Correo Electronico')
+                        .initialValue('')
+                        .ok('Confirmar!')
+                        .cancel('');
+                    $mdDialog.show(confirm).then(function(result) {
+                            //validar que este correo no exista en la bd
+                        firebase.database().ref('users/' + user.$id).update({
+                            email: result
+                        });
+                        location.reload();
+
+                    }, function() {
+                        alert("TIENES QUE CONFIRMARNOS TU CORREO");
+                        location.reload();
+                    });
+                }else{
+
+                    var userQvo = firebase.database().ref('/userQvo/').child(user.$id);
+                    var userQvoRQ = $firebaseObject(userQvo);
+                    userQvoRQ.$loaded().then(function () {
+                        console.log(userQvoRQ);
+                        $scope.userQvoRQ = userQvoRQ;
+                        if($scope.userQvoRQ.userQvoId != undefined){
+                            // el usuario esta perfect.
+                            console.log("EL USUARIO ESTA PERFECT");
+                        }else{
+
+                            var url = "https://us-central1-project-8746388695669481444.cloudfunctions.net/createUserQvo?email="
+                                +user.email
+                                +"&name="
+                                +user.displayName
+
+                            $http({
+                                method: 'GET',
+                                url: url,
+                                crossOrigin: true,
+                            }).then(function successCallback(response) {
+                                console.log(response);
+                                if(response.data.error != undefined){
+                                    alert("ESTE CORREO YA EXISTE");
+
+                                }
+                                else{
+                                    firebase.database().ref('userQvo/' + user.$id).set(
+                                        {
+                                            id :user.$id,
+                                            userQvoEmail : response.data.email,
+                                            userQvoId : response.data.id,
+                                            userQvoName: response.data.name
+                                        }
+                                    );
+                                };
+
+                                // this callback will be called asynchronously
+                                // when the response is available
+                            }, function errorCallback(response) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                            });
+
+
+                        }
+                    });
+
+
+
+                }
 
             };
 
