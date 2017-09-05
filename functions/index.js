@@ -97,7 +97,6 @@ exports.agregarTarjetaUsuarioQvo = functions.https.onRequest((req, res) => {
 
 });
 
-
 exports.obtenerUnaInscripcionDeTarjeta = functions.https.onRequest((req, res) => {
     // Grab the current value of what was written to the Realtime Database.
     const userQvo = req.query.userQvo;
@@ -119,6 +118,36 @@ exports.obtenerUnaInscripcionDeTarjeta = functions.https.onRequest((req, res) =>
         res.status(200).send(body);
         //return res.redirect(303, body.redirect_url);
 
+    });
+
+});
+
+exports.cobrarTarjetaDeCredito = functions.https.onRequest((req, res) => {
+    // Grab the current value of what was written to the Realtime Database.
+    const userQvo = req.query.userQvo;
+    const tarjetaCredito = req.query.tarjetaCredito;
+    const cobroTotal = req.query.cobroTotal;
+
+    fetch('https://playground.qvo.cl/customers/' + userQvo + '/cards/' + tarjetaCredito + '/charge', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Token ' + functions.config().qvo.token,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            amount: cobroTotal
+        })
+    }).then(function (response) {
+        console.log(response)
+        return response.json();
+    }).then(function (body) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        console.log(body);
+        res.status(200).send(body);
+        return body;
+
+    }).then(function (ok) {
+        console.log(ok);
     });
 
 });
@@ -156,7 +185,29 @@ exports.cobrarConWebPayPlus = functions.https.onRequest((req, res) => {
 
 });
 
+exports.consultarUsuarioQvo = functions.https.onRequest((req, res) => {
+    // Grab the current value of what was written to the Realtime Database.
+    const userQvo = req.query.userQvo;
 
+    fetch('https://playground.qvo.cl/customers/' + userQvo, {
+        headers: {
+            'Authorization': 'Token ' + functions.config().qvo.token,
+            'Content-Type': 'application/json'
+        }
+    }).then(function (res) {
+        return res.json();
+        console.log(res.json());
+        console.log("NETRE AL RES");
+    }).then(function (body) {
+        console.log(body);
+        res.status(200).send(body);
+        return body
+    }).then(function (ok) {
+        console.log("ok");
+    });
+});
+
+/*
 exports.crearUsuarioQvo = functions.database.ref('/userQvo/{userId}')
     .onWrite(event => {
         // Grab the current value of what was written to the Realtime Database.
@@ -185,65 +236,17 @@ exports.crearUsuarioQvo = functions.database.ref('/userQvo/{userId}')
         }).then(function (ok) {
             console.log("ok");
         });
-    });
-
-
-exports.consultarUsuarioQvo = functions.https.onRequest((req, res) => {
-    // Grab the current value of what was written to the Realtime Database.
-    const userQvo = req.query.userQvo;
-
-    fetch('https://playground.qvo.cl/customers/' + userQvo, {
-        headers: {
-            'Authorization': 'Token ' + functions.config().qvo.token,
-            'Content-Type': 'application/json'
-        }
-    }).then(function (res) {
-        return res.json();
-        console.log(res.json());
-        console.log("NETRE AL RES");
-    }).then(function (body) {
-        console.log(body);
-        res.status(200).send(body);
-        return body
-    }).then(function (ok) {
-        console.log("ok");
-    });
-});
+    }); */
 
 
 
 
-exports.cobrarTarjetaDeCredito = functions.https.onRequest((req, res) => {
-    // Grab the current value of what was written to the Realtime Database.
-    const userQvo = req.query.userQvo;
-    const tarjetaCredito = req.query.tarjetaCredito;
-    const cobroTotal = req.query.cobroTotal;
-
-    fetch('https://playground.qvo.cl/customers/' + userQvo + '/cards/' + tarjetaCredito + '/charge', {
-        method: 'POST',
-        headers: {
-            'Authorization': 'Token ' + functions.config().qvo.token,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            amount: cobroTotal
-        })
-    }).then(function (response) {
-        console.log(response)
-        return response.json();
-    }).then(function (body) {
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        console.log(body);
-        res.status(200).send(body);
-        return body;
-
-    }).then(function (ok) {
-        console.log(ok);
-    });
-
-});
 
 
+
+
+
+/*
 exports.addMessagess = functions.https.onRequest((req, res) => {
     // Grab the text parameter.
     const original = req.query.text;
@@ -252,7 +255,9 @@ exports.addMessagess = functions.https.onRequest((req, res) => {
         // Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
         res.redirect(303, snapshot.ref);
     });
-});
+}); */
+
+/*
 
 exports.agregarTarjeta = functions.database.ref('/userQvo/{userId}/tarjeta')
     .onWrite(event => {
@@ -283,7 +288,9 @@ exports.agregarTarjeta = functions.database.ref('/userQvo/{userId}/tarjeta')
         });
 
     });
+*/
 
+/*
 exports.addMessagess2 = functions.https.onRequest((req, res) => {
     // Grab the text parameter.
     const idUser = req.query.idUser;
@@ -304,7 +311,7 @@ exports.addMessagess2 = functions.https.onRequest((req, res) => {
     });
 // Push the new message into the Realtime Database using the Firebase Admin SDK.
 
-});
+}); */
 
 
 exports.sendWelcomeEmail = functions.database.ref('/tickets/{eventId}/{userId}').onWrite(event => {
@@ -327,7 +334,7 @@ exports.sendWelcomeEmail = functions.database.ref('/tickets/{eventId}/{userId}')
     return sendWelcomeEmail(email, displayName);
 });
 
-
+/*
 exports.makeUppercase = functions.database.ref('/messages/{pushId}/email')
     .onWrite(event => {
         // Grab the current value of what was written to the Realtime Database.
@@ -350,9 +357,10 @@ exports.makeUppercase = functions.database.ref('/messages/{pushId}/email')
             }).then(function (json) {
             console.log(json);
         });
-    });
+    }); */
 
 
+/*
 exports.obtenerCliente = functions.database.ref('/messages/{pushId}/email2')
     .onWrite(event => {
         // Grab the current value of what was written to the Realtime Database.
@@ -375,6 +383,10 @@ exports.obtenerCliente = functions.database.ref('/messages/{pushId}/email2')
 
     });
 
+    */
+
+/*
+
 exports.obtenerClienteQvo = functions.https.onRequest((req, res) => {
     // Grab the text parameter.
     const id = req.query.idQvo;
@@ -389,6 +401,8 @@ exports.obtenerClienteQvo = functions.https.onRequest((req, res) => {
     });
 
 });
+
+*/
 
 
 //funciones !
