@@ -1,55 +1,90 @@
-<center>
-	<button id="BarraCargando" class="btn btn-primary btn-lg "><i class="fa fa-circle-o-notch fa-spin"></i>
-		CARGANDO DOORMANS
-	</button>
-</center>
-
-
-<div id="panelPrincipal" style="display: none">
-<center>
-	<a class="btn btn-primary" ng-click="agregarDoorman()">
-		AGREGAR DOORMAN
-	</a>
-	<div class="col-md-12">
+<!--<div class="row">
+	<div class="col-md-4"
+		 ng-repeat="event in events | orderBy:'date' "
+		 ng-show="event.visible"
+	>
 		<div class="card">
-			<div class="card-header" data-background-color="purple">
-				<h4 class="title">DOORMAN HABILITADOS</h4>
-				<p class="category">Acá podras agregar las personas habilitadas para administrar tus eventos</p>
+
+			<div class="card-header card-chart" data-background-color="green" style="background: url('{{event.image}}') center center">
+				&lt;!&ndash;  <i class="material-icons " style="vertical-align: middle;">event</i>   &ndash;&gt;
+				<center>    <a class="btn btn-sm" style="background-color: #FE0072 ; margin-top: -10px">{{event.date | date:"EEEE d', 'MMMM " }}</a>
+				</center>
 			</div>
+			<div class="card-content ">
+				<h6 style="margin-top: -10px" class="title text-center"> <strong>{{event.name}}</strong></h6>
 
-			<div class="card-content table-responsive">
-				<table class="table">
-					<thead class="text-primary">
-					<th>Nombre</th>
-					<th>Correo</th>
-					<th>Accion</th>
-					<th>Habilitado</th>
-					</thead>
-					<tbody>
-					<tr ng-repeat="doorman in doormans">
-						<td>{{doorman.name}}</td>
-						<td>{{doorman.email}}</td>
-						<td>
-							<i ng-click="borrarDoormandelClub(doorman)" ng-show="!doorman.bloqueado" class="fa fa-close"> </i>
-							<p ng-show="doorman.bloqueado"></p>
-						</td>
-						<td>
-							<md-checkbox
-									ng-disabled="doorman.bloqueado"
-									ng-model="doorman.visible"
-									aria-label="Checkbox 1"
-									ng-click="accionVisibleDoorman(doorman)">
 
-							</md-checkbox>
-						</td>
-					</tr>
 
-					</tbody>
-				</table>
+
+			</div>
+			<div class="card-footer text-right" style="margin-top: -10px; ">
+				<div class="stats text-center">
+					<p class="btn  text-center btn-info" ng-click="administrar(event)"> ADMINISTRAR</p>
+				</div>
+
+
 
 			</div>
 		</div>
 	</div>
 
-</center>
+
+
+
+</div>-->
+
+<div class="row">
+	<div class="col-md-4" ng-repeat="event in eventsWithServices | orderBy:'date'" ng-show="event.toHour > eventosFuturoFecha">
+		<div class="card card-product" ng-click="administrar(event)">
+			<div class="card-image">
+				<img class="img" src="{{event.image}}">
+			</div>
+			<div class="card-content">
+
+				<h4 class="card-title text-capitalize text-primary " style="font-weight: bolder;">
+					{{event.name}}
+				</h4>
+				<div class="">
+					<div class="row" style="margin:0px!important" ng-repeat="reserva in event.reservas"
+						 ng-show="event.ReservaCantidad >= 1">
+						<div class="stats pull-left">
+                                    <span id="iconoReserva" class="category text-capitalize">
+                                        <i style="color: #4caf50" ng-show="reserva.tipo == 'MESA'"
+										   class="fa fa-star"></i>
+                                        <i style="color: #f44336" ng-show="reserva.tipo == 'PREVENTA'"
+										   class="fa fa-ticket "></i>
+                                        <i style="color: #c8c8c8" ng-show="reserva.tipo == 'VIP'"
+										   class="fa fa-diamond"></i>
+                                        <i style="color: #ff9800" ng-show="reserva.tipo == 'ESPECIAL'"
+										   class="fa fa-certificate"></i>
+                                        <i style="color: #00bcd4" ng-show="reserva.tipo == 'BOTELLAS'"
+										   class="fa fa-glass"></i>
+                                        <span>{{reserva.tipo }}</span>
+                                    </span>
+						</div>
+						<span class="stats pull-right">
+                                    {{reserva.utilizados}}
+                                </span>
+					</div>
+					<div ng-show="event.ReservaCantidad < 1">
+						<p class="category text-center">Sin ventas</p>
+					</div>
+				</div>
+			</div>
+			<div class="card-footer">
+				<div class="stats">
+					<p class="category">
+						<i class="material-icons">event</i>
+						{{event.date | date:"EEEE dd','MMMM" }}
+					</p>
+				</div>
+				<div class="stats pull-right">
+					<p class="category">
+						<i class="material-icons">alarm</i>
+						{{event.date | date:"HH:mm" }} - {{event.toHour | date:"HH:mm" }}
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

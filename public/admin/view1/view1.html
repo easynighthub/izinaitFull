@@ -8,92 +8,84 @@
 </center>
 
 
+<div class="row">
+    <div class="col-md-4" ng-repeat="event in eventsWithServices | orderBy:'date'" ng-show="event.toHour > eventosFuturoFecha">
+        <div class="card card-product">
+            <div class="card-image" data-header-animation="true">
 
+                <img class="img" src="{{event.image}}">
 
-
-<div class="col-md-12">
-    <div class="row">
-
-        <div class="row"
-           >
-
-
-            <div class="col-md-4"   ng-repeat="event in eventsWithServices | orderBy:'date'"
-
-                 ng-show="event.toHour > eventosFuturoFecha">
-                <div class="card card-product">
-                    <div class="card-image" data-header-animation="true">
-
-                        <img class="img" src="{{event.image}}">
-
-                    </div>
-                    <div class="card-content">
-                        <div class="card-actions">
-                            <button type="button" ng-click="goToEventDetails(event)" class="btn btn-default btn-simple" rel="tooltip"
-                                    data-placement="bottom" title="Informe">
-                                <i class="material-icons">timeline</i>
-                            </button>
-                            <button type="button" ng-click="editEvent(event)" class="btn btn-default btn-simple" rel="tooltip"
-                                    data-placement="bottom" title="Editar">
-                                <i class="material-icons">edit</i>
-                            </button>
-                            <button type="button" ng-click="duplicateEvent(event)" class="btn btn-default btn-simple" rel="tooltip"
-                                    data-placement="bottom" title="Duplicar">
-                                <i class="material-icons">content_copy</i>
-                            </button>
-                            <button type="button" ng-click="verEvento(event)"  target="_blank" class="btn btn-default btn-simple" rel="tooltip"
-                                    data-placement="bottom" title="Ver">
-                                <i class="fa fa-eye actionIcon"></i>
-                            </button>
-                        </div>
-                        <h4 class="card-title text-capitalize text-primary " style="font-weight: bolder;">
-                           {{event.name}}
-                        </h4>
-                        <div class="">
-                            <div class="row" style="margin:0px!important" ng-repeat="reserva in event.reservas"
-                                 ng-show="event.ReservaCantidad >= 1">
-                                <div class="stats pull-left">
+            </div>
+            <div class="card-content">
+                <div class="card-actions">
+                    <button type="button" ng-click="goToEventDetails(event)" class="btn btn-default btn-simple"
+                            rel="tooltip"
+                            data-placement="bottom" title="Informe">
+                        <i class="material-icons">timeline</i>
+                    </button>
+                    <button type="button" ng-click="editEvent(event)" class="btn btn-default btn-simple" rel="tooltip"
+                            data-placement="bottom" title="Editar">
+                        <i class="material-icons">edit</i>
+                    </button>
+                    <button type="button" ng-click="duplicateEvent(event)" class="btn btn-default btn-simple"
+                            rel="tooltip"
+                            data-placement="bottom" title="Duplicar">
+                        <i class="material-icons">content_copy</i>
+                    </button>
+                    <button type="button" ng-click="verEvento(event)" target="_blank" class="btn btn-default btn-simple"
+                            rel="tooltip"
+                            data-placement="bottom" title="Ver">
+                        <i class="fa fa-eye actionIcon"></i>
+                    </button>
+                </div>
+                <h4 class="card-title text-capitalize text-primary " style="font-weight: bolder;">
+                    {{event.name}}
+                </h4>
+                <div class="">
+                    <div class="row" style="margin:0px!important" ng-repeat="reserva in event.reservas"
+                         ng-show="event.ReservaCantidad >= 1">
+                        <div class="stats pull-left">
                                     <span id="iconoReserva" class="category text-capitalize">
-                                        <i style="color: #4caf50" ng-show="reserva.tipo == 'MESA'" class="fa fa-star"></i>
-                                        <i style="color: #f44336" ng-show="reserva.tipo == 'PREVENTA'" class="fa fa-ticket "></i>
-                                        <i style="color: #c8c8c8" ng-show="reserva.tipo == 'VIP'" class="fa fa-diamond"></i>
-                                        <i style="color: #ff9800" ng-show="reserva.tipo == 'ESPECIAL'" class="fa fa-certificate"></i>
-                                        <i style="color: #00bcd4" ng-show="reserva.tipo == 'BOTELLAS'" class="fa fa-glass"></i>
+                                        <i style="color: #4caf50" ng-show="reserva.tipo == 'MESA'"
+                                           class="fa fa-star"></i>
+                                        <i style="color: #f44336" ng-show="reserva.tipo == 'PREVENTA'"
+                                           class="fa fa-ticket "></i>
+                                        <i style="color: #c8c8c8" ng-show="reserva.tipo == 'VIP'"
+                                           class="fa fa-diamond"></i>
+                                        <i style="color: #ff9800" ng-show="reserva.tipo == 'ESPECIAL'"
+                                           class="fa fa-certificate"></i>
+                                        <i style="color: #00bcd4" ng-show="reserva.tipo == 'BOTELLAS'"
+                                           class="fa fa-glass"></i>
                                         <span>{{reserva.tipo }}</span>
                                     </span>
-                                </div>
-                                <span class="stats pull-right">
+                        </div>
+                        <span class="stats pull-right">
                                     {{reserva.utilizados}}
                                 </span>
-                            </div>
-                            <div ng-show="event.ReservaCantidad < 1">
-                                <p class="category text-center">Sin ventas</p>
-                            </div>
-                        </div>
                     </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <p class="category">
-                                <i class="material-icons">event</i>
-                                {{event.date | date:"EEEE dd','MMMM" }}
-                            </p>
-                        </div>
-                        <div class="stats pull-right">
-                            <p class="category">
-                                <i class="material-icons">alarm</i>
-                                {{event.date | date:"HH:mm" }} - {{event.toHour | date:"HH:mm" }}
-                            </p>
-                        </div>
+                    <div ng-show="event.ReservaCantidad < 1">
+                        <p class="category text-center">Sin ventas</p>
                     </div>
                 </div>
             </div>
-
-
+            <div class="card-footer">
+                <div class="stats">
+                    <p class="category">
+                        <i class="material-icons">event</i>
+                        {{event.date | date:"EEEE dd','MMMM" }}
+                    </p>
+                </div>
+                <div class="stats pull-right">
+                    <p class="category">
+                        <i class="material-icons">alarm</i>
+                        {{event.date | date:"HH:mm" }} - {{event.toHour | date:"HH:mm" }}
+                    </p>
+                </div>
+            </div>
         </div>
-
-
     </div>
 </div>
+
 
 <script id="dialogSelecionarClub" type="text/ng-template">
     <div class="col-md-12">

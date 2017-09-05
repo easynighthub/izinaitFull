@@ -24,6 +24,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
             $(verEventosFuturos).removeClass("active");
             $(sideClientes).removeClass("active");
             $(sideRrpp).addClass("active");
+            $(sideDoorman).removeClass("active");
 
             var admin = window.currentAdmin;
             var adminLogeado = "";
@@ -39,6 +40,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
+                        $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
                         if (adminLogeado.idClubWork == false) {
                             ObtenerClub(adminLogeado);
                         } else {

@@ -17,6 +17,7 @@ angular.module('myApp', [
     'ngMaterial',
     'myApp.view1',
     'myApp.doorman',
+    'myApp.event',
     'myApp.rrpps',
     'myApp.crearEvento',
     'myApp.selectClub',
@@ -35,12 +36,15 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
             var patt = new RegExp('firebase:authUser:');
             if(patt.test(str)){
                 window.currentAdmin = JSON.parse(localStorage.getItem(str));
+                window.currentDoorman = JSON.parse(localStorage.getItem(str));
 
                 return true;
             }
         }
         return false;
     }
+
+
 
 
     if(validateUser()) {

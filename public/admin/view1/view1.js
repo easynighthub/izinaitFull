@@ -32,6 +32,7 @@ angular.module('myApp.view1', ['ngRoute'])
             $(verEventosFuturos).addClass("active");
             $(sideClientes).removeClass("active");
             $(sideRrpp).removeClass("active");
+            $(sideDoorman).removeClass("active");
 
             firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);

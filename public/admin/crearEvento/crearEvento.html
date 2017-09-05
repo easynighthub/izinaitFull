@@ -22,12 +22,15 @@
             <!--  titulo evento  -->
             <div class="col-md-10 col-md-offset-1">
                 <div class="form-group label-floating">
-                    <label class="">
-                        Titulo del Evento
-                    </label>
-                    <input data-ng-model="newEvent.name" required="true" type="text" class="form-control col-md-10">
+                    <label class="">Título del evento</label>
+                    <input data-ng-model="newEvent.name" required="true" placeholder="Elige un nombre distintivo." class="form-control ">
+
                 </div>
             </div>
+
+            <br>
+            <br>
+            <br>
 
 
             <!--  imagen  -->
@@ -296,8 +299,8 @@
 
                         <div class="form-group  is-empty">
                             <label class="label-on-left label-floating">Valor Puerta</label>
-                            <input ng-model="newEvent.entryValue" required="true" type="number"
-                                   class="form-control">
+                            <input id="valorEntrada" ng-model="newEvent.entryValue" required="true" type="number"
+                                   class="form-control text-right ">
 
                             <span class="help-block">Valor entrada en puerta dia del evento.</span>
 
@@ -350,7 +353,7 @@
                            data-target=".dropdown-end-parent1">
                             <div class="input-group date">
                                 <input type="text" class="form-control"
-                                       placeholder="Limite horario gratuito"
+                                       placeholder="Límite horario gratuito"
                                        data-ng-model="newEvent.freemiumHour">
                                 <span class="input-group-addon"><i
                                         class="glyphicon glyphicon-calendar"></i></span>
@@ -462,7 +465,7 @@
                                 <div class="input-group date">
                                     <input type="text" class="form-control" required="true"
                                            data-ng-model="servicioEvent.fechaFin"
-                                           placeholder="Horario Limite Promoción">
+                                           placeholder="Horario Límite Promoción">
                                     <span class="input-group-addon">
                                             <i class="glyphicon glyphicon-calendar"></i>
                                         </span>

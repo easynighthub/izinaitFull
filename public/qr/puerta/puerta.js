@@ -13,8 +13,8 @@ angular.module('myApp.puerta', ['ngRoute'])
             controller: 'viewpuerta'
         });
     }])
-    .controller('viewpuerta', ['$scope', '$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope','$mdDialog',
-        function ($scope, $routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope,$mdDialog) {
+    .controller('viewpuerta', ['$scope', '$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope', '$mdDialog',
+        function ($scope, $routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope, $mdDialog) {
 
             var doorman = window.currentDoorman;
             var doormanLogeado = "";
@@ -24,14 +24,12 @@ angular.module('myApp.puerta', ['ngRoute'])
             console.log(eventIdSelect);
             var eventId = $routeParams.id || eventIdSelect; // id del evento entregador por url
             var eventoCompleto = [];
-            firebase.database().ref('events/').child(eventId).once('value', function(snapshot) {
-                eventoCompleto = snapshot.val() ;
+            firebase.database().ref('events/').child(eventId).once('value', function (snapshot) {
+                eventoCompleto = snapshot.val();
             });
 
 
-
-
-            firebase.database().ref('doormans/').child(doorman.$id || doorman.uid || 'offline').once('value', function(snapshot) {
+            firebase.database().ref('doormans/').child(doorman.$id || doorman.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
                 console.log(exists);
 
@@ -42,14 +40,12 @@ angular.module('myApp.puerta', ['ngRoute'])
                         doormanLogeado = doormLocal;
                         console.log(doormanLogeado);
 
-                        var rrpps = $firebaseArray(firebase.database().ref('/events/'+eventIdSelect+'/rrpps'));
+                        var rrpps = $firebaseArray(firebase.database().ref('/events/' + eventIdSelect + '/rrpps'));
                         rrpps.$loaded().then(function () {
-                                $scope.rrpps = rrpps;
-                                console.log($scope.rrpps);
+                            $scope.rrpps = rrpps;
+                            console.log($scope.rrpps);
 
                         });
-
-
 
 
                     });
@@ -57,31 +53,24 @@ angular.module('myApp.puerta', ['ngRoute'])
                     window.currentDoorman = "";
                     doormanLogeado = "";
                     console.log(window.currentDoorman + " NO ENTRE");
-                };
+                }
+                ;
 
             });
 
 
-
-
-
-
-
-
-
-            $scope.AgregarPersonas = function (index,rrppSelect) {
-             console.log(index + "  "+ rrppSelect);
-
+            $scope.AgregarPersonas = function (index, rrppSelect) {
+                console.log(index + "  " + rrppSelect);
 
 
                 $mdDialog.show({
                     controller: ControllerdialogAgregarPersonas,
                     templateUrl: 'dialogAgregarPersonas',
                     parent: angular.element(document.body),
-                    clickOutsideToClose:true,
-                    locals : {
-                        rrppSelect : rrppSelect,
-                        index : index
+                    clickOutsideToClose: true,
+                    locals: {
+                        rrppSelect: rrppSelect,
+                        index: index
                     }
                 });
 
@@ -91,20 +80,21 @@ angular.module('myApp.puerta', ['ngRoute'])
             // var element = document.querySelector('meta[property="og:image"]');
             // var content = element && element.getAttribute("content");
 
-            function ControllerdialogAgregarPersonas($scope, $mdDialog,$timeout, $q, $log, rrppSelect,index) {
-                if(index == 'noRRPP'){
+            function ControllerdialogAgregarPersonas($scope, $mdDialog, $timeout, $q, $log, rrppSelect, index) {
+                if (index == 'noRRPP') {
                     $scope.rrppSelect = [];
                     $scope.rrppSelect.uid = 'noRRPP';
 
-                    firebase.database().ref('events/' + eventId + '/rrpps/'+index).update({
-                        name : 'Sin RRPP',
-                        uid : index,
-                        email : 'sinrrpp@izinait.com'
+                    firebase.database().ref('events/' + eventId + '/rrpps/' + index).update({
+                        name: 'Sin RRPP',
+                        uid: index,
+                        email: 'sinrrpp@izinait.com'
                     });
 
-                }else{
+                } else {
                     $scope.rrppSelect = rrppSelect;
-                };
+                }
+                ;
                 console.log(index);
                 console.log($scope.rrppSelect.uid);
                 $scope.gratisHombre = 0;
@@ -121,8 +111,7 @@ angular.module('myApp.puerta', ['ngRoute'])
                 $scope.valorVipMujer = 0;
 
                 $scope.aumentargratisHombre = function (gratisHombre) {
-                    if(gratisHombre >= 0)
-                    {
+                    if (gratisHombre >= 0) {
                         console.log("funciona")
                         $scope.gratisHombre += 1;
                     }
@@ -130,17 +119,16 @@ angular.module('myApp.puerta', ['ngRoute'])
                 };
 
                 $scope.disminuirgratisHombre = function (gratisHombre) {
-                    if(gratisHombre == 0){
+                    if (gratisHombre == 0) {
                         console.log("no se puede disminiur menos");
-                    }else {
+                    } else {
                         console.log("funciona")
                         $scope.gratisHombre -= 1;
                     }
                 };
 
                 $scope.aumentargratisMujer = function (gratisMujer) {
-                    if(gratisMujer >= 0)
-                    {
+                    if (gratisMujer >= 0) {
                         console.log("funciona")
                         $scope.gratisMujer += 1;
                     }
@@ -148,17 +136,16 @@ angular.module('myApp.puerta', ['ngRoute'])
                 };
 
                 $scope.disminuirgratisgratisMujer = function (gratisMujer) {
-                    if(gratisMujer == 0){
+                    if (gratisMujer == 0) {
                         console.log("no se puede disminiur menos");
-                    }else {
+                    } else {
                         console.log("funciona")
                         $scope.gratisMujer -= 1;
                     }
                 };
 
                 $scope.aumentarExtraMujer = function (extraMujer) {
-                    if(extraMujer >= 0)
-                    {
+                    if (extraMujer >= 0) {
                         console.log("funciona")
                         $scope.extraMujer += 1;
                     }
@@ -166,17 +153,16 @@ angular.module('myApp.puerta', ['ngRoute'])
                 };
 
                 $scope.disminuirExtraMujer = function (extraMujer) {
-                    if(extraMujer == 0){
+                    if (extraMujer == 0) {
                         console.log("no se puede disminiur menos");
-                    }else {
+                    } else {
                         console.log("funciona")
                         $scope.extraMujer -= 1;
                     }
                 };
 
                 $scope.aumentarExtraHombre = function (extraHombre) {
-                    if(extraHombre >= 0)
-                    {
+                    if (extraHombre >= 0) {
                         console.log("funciona")
                         $scope.extraHombre += 1;
                     }
@@ -184,17 +170,16 @@ angular.module('myApp.puerta', ['ngRoute'])
                 };
 
                 $scope.disminuirExtraHombre = function (extraHombre) {
-                    if(extraHombre == 0){
+                    if (extraHombre == 0) {
                         console.log("no se puede disminiur menos");
-                    }else {
+                    } else {
                         console.log("funciona")
                         $scope.extraHombre -= 1;
                     }
                 };
 
                 $scope.aumentarVipHombre = function (vipHombre) {
-                    if(vipHombre >= 0)
-                    {
+                    if (vipHombre >= 0) {
                         console.log("funciona")
                         $scope.vipHombre += 1;
                     }
@@ -202,17 +187,16 @@ angular.module('myApp.puerta', ['ngRoute'])
                 };
 
                 $scope.disminuirVipHombre = function (vipHombre) {
-                    if(vipHombre == 0){
+                    if (vipHombre == 0) {
                         console.log("no se puede disminiur menos");
-                    }else {
+                    } else {
                         console.log("funciona")
                         $scope.vipHombre -= 1;
                     }
                 };
 
                 $scope.aumentarVipMujer = function (vipMujer) {
-                    if(vipMujer >= 0)
-                    {
+                    if (vipMujer >= 0) {
                         console.log("funciona")
                         $scope.vipMujer += 1;
                     }
@@ -220,18 +204,13 @@ angular.module('myApp.puerta', ['ngRoute'])
                 };
 
                 $scope.disminuirVipMujer = function (vipMujer) {
-                    if(vipMujer == 0){
+                    if (vipMujer == 0) {
                         console.log("no se puede disminiur menos");
-                    }else {
+                    } else {
                         console.log("funciona")
                         $scope.vipMujer -= 1;
                     }
                 };
-
-
-
-
-
 
 
                 $scope.guardar = function () {
@@ -239,31 +218,31 @@ angular.module('myApp.puerta', ['ngRoute'])
 
                     var puertaTicket =
                         {
-                            gratisHombre : $scope.gratisHombre,
-                            valorGratisHombre : $scope.valorGratisHombre,
-                            gratisMujer :  $scope.gratisMujer,
-                            valorGratisMujer : $scope.valorGratisMujer,
-                            extraHombre : $scope.extraHombre,
-                            valorExtraHombre : $scope.valorExtraHombre ,
-                            extraMujer : $scope.extraMujer,
-                            valorExtraMujer :  $scope.valorExtraMujer,
-                            vipHombre : $scope.vipHombre,
-                            valorVipHombre :  $scope.valorVipHombre,
-                            vipMujer :  $scope.vipMujer,
-                            valorVipMujer : $scope.valorVipMujer,
-                            rrppId :  $scope.rrppSelect.uid,
-                            date : new Date().getTime()
+                            gratisHombre: $scope.gratisHombre,
+                            valorGratisHombre: $scope.valorGratisHombre,
+                            gratisMujer: $scope.gratisMujer,
+                            valorGratisMujer: $scope.valorGratisMujer,
+                            extraHombre: $scope.extraHombre,
+                            valorExtraHombre: $scope.valorExtraHombre,
+                            extraMujer: $scope.extraMujer,
+                            valorExtraMujer: $scope.valorExtraMujer,
+                            vipHombre: $scope.vipHombre,
+                            valorVipHombre: $scope.valorVipHombre,
+                            vipMujer: $scope.vipMujer,
+                            valorVipMujer: $scope.valorVipMujer,
+                            rrppId: $scope.rrppSelect.uid,
+                            date: new Date().getTime()
                         };
                     console.log(puertaTicket);
 
-                    firebase.database().ref('events/' + eventId + '/puertaTickets/'+newIdPuerta).set(puertaTicket);
+                    firebase.database().ref('events/' + eventId + '/puertaTickets/' + newIdPuerta).set(puertaTicket);
 
-                    var rrppsCapturados = $firebaseObject(firebase.database().ref('events/'+eventIdSelect+'/rrpps'));
+                    var rrppsCapturados = $firebaseObject(firebase.database().ref('events/' + eventIdSelect + '/rrpps'));
                     rrppsCapturados.$loaded().then(function () {
                         $scope.rrppsCapturado = rrppsCapturados;
                         $scope.rrppsCapturado.forEach(function (lk) {
                             if (lk.uid == $scope.rrppSelect.uid) {
-                                if(!lk.numeroTotal){
+                                if (!lk.numeroTotal) {
                                     lk.numeroTotal = 0;
                                 }
                                 console.log(lk);
@@ -287,20 +266,17 @@ angular.module('myApp.puerta', ['ngRoute'])
                 };
 
 
-
-                $scope.hide = function() {
+                $scope.hide = function () {
                     $mdDialog.hide();
                 };
 
-                $scope.cancel = function() {
+                $scope.cancel = function () {
                     $mdDialog.cancel();
 
                 };
 
 
             };
-
-
 
 
         }]);

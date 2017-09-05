@@ -39,6 +39,7 @@ angular.module('myApp.clientes', ['ngRoute'])
             $(verEventosFuturos).removeClass("active");
             $(sideClientes).addClass("active");
             $(sideRrpp).removeClass("active");
+            $(sideDoorman).removeClass("active");
 
             firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
@@ -48,6 +49,8 @@ angular.module('myApp.clientes', ['ngRoute'])
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
+                        $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
+
                         //console.log(adminLogeado);
                         if (adminLogeado.idClubWork == false) {
                         } else {

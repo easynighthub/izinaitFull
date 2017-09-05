@@ -16,6 +16,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             $(verEventosFuturos).removeClass("active");
             $(sideClientes).removeClass("active");
             $(sideRrpp).removeClass("active");
+            $(sideDoorman).removeClass("active");
 
 
             var admin = window.currentAdmin;
@@ -213,6 +214,18 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             $scope.startDateBeforeRender = startDateBeforeRender;
             $scope.startDateOnSetTime = startDateOnSetTime;
 
+            function dtListas() {
+
+
+                $("#valorEntrada").digits();
+            }
+
+            $.fn.digits = function () {
+                return this.each(function () {
+                    $(this).text($(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+                })
+            }
+
             function startDateOnSetTime() {
                 $scope.$broadcast('start-date-changed');
             }
@@ -330,10 +343,10 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             };
 
 
-            ////////////////////////////// controla el pick image ////////////////////////
+////////////////////////////// controla el pick image ////////////////////////
 
 
-            ////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
             var environmentER = firebase.database().ref().child('environmentEvent');
             $scope.environmentER = $firebaseArray(environmentER);
             var clothingER = firebase.database().ref().child('clothing');
@@ -530,8 +543,10 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     } else {
                         subirImagen();
                         demo.showSwal('success-message');
-                    };
-                };
+                    }
+                    ;
+                }
+                ;
 
                 console.log($scope.newEvent);
 
@@ -698,4 +713,5 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             };
 
 
-        }]);
+        }])
+;

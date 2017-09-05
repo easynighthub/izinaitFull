@@ -1,0 +1,495 @@
+<div>
+    <div class="nav-center">
+        <ul class="nav nav-pills nav-pills-rose nav-pills-icons row" role="tablist">
+            <!--
+color-classes: "nav-pills-primary", "nav-pills-info", "nav-pills-success", "nav-pills-warning","nav-pills-danger"
+-->
+            <li class="active col-md-3">
+                <a href="#tabVentas" target="_blank" role="tab" data-toggle="tab">Reservas</a>
+            </li>
+            <li class="col-md-3">
+                <a href="#tabPuerta" target="_blank" role="tab" data-toggle="tab">RR.PP</a>
+            </li>
+            <li class="col-md-3">
+                <a href="#tabListaGratis" target="_blank" role="tab" data-toggle="tab">LISTA</a>
+            </li>
+            <li class="pull-right">
+                <p>120</p>
+                <p><small>Total asistentes</small></p>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tabVentas">
+            <div class="card">
+                <div class="card-header" data-background-color="purple">
+                    <h4 class="card-title">VENTAS
+                        <button data-ng-click="abrirLectorQr()"
+                                style="float: right; margin: 0px 0px!important; top: 2px;"
+                                class="btn btn-sm btn-success ">Leer QR
+                        </button>
+                    </h4>
+                    <p class="category"></p>
+                </div>
+                <div class="card-content table-responsive">
+                    <table class="table">
+                        <thead class="text-primary">
+                        <th class="col-xs-6">NOMBRE</th>
+                        <th style="margin-right: 100px">CANTIDAD</th>
+
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="ticketObtenido in ticketsObtenidos"
+                            data-ng-click="cobrarServicio(ticketObtenido)">
+
+                            <td>
+                                {{ticketObtenido.firstName}}<br>
+                                {{ticketObtenido.lastName}}
+                                <br>
+                                <p class="description">{{ticketObtenido.tipoEventservices}} </p></td>
+                            <td>
+                                {{ticketObtenido.cantidadUtilizada}} / {{ticketObtenido.cantidadDeCompra}}
+                                <br>
+                                <button ng-show="!ticketObtenido.paidOut"
+                                        class="btn btn-sm btn-info">
+                                    $
+                                    {{(ticketObtenido.totalAPagar/ticketObtenido.cantidadDeCompra)*(ticketObtenido.cantidadDeCompra-ticketObtenido.cantidadUtilizada)}}
+                                </button>
+                                <button ng-show="ticketObtenido.paidOut"
+                                        class="btn btn-sm btn-info">
+                                    PAGADO
+                                </button>
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="tabPuerta">
+            <div class="card">
+                <div class="card-header" data-background-color="purple">
+                    <h4 class="card-title">RR.PP
+                        <button data-ng-click="AgregarPersonas('noRRPP','noRRPP')"
+                                style="float: right; margin: 0px 0px!important; top: 2px;"
+                                class="btn btn-sm btn-success ">BOLETERIA
+                        </button>
+                    </h4>
+                    <p class="category"></p>
+                </div>
+                <div class="card-content table-responsive">
+                    <table class="table">
+                        <thead class="text-primary">
+                        <th>NOMBRE</th>
+                        <th>AGREGAR</th>
+                        <th>N°</th>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="rrpp in rrpps">
+                            <td>{{rrpp.name}}</td>
+                            <td class="text-primary">
+                                <p ng-click="AgregarPersonas($index,rrpp)" class="btn btn-sm btn-info">
+                                    <i class="material-icons">add</i>
+                                </p>
+                            </td>
+                            <td>
+                                {{rrpp.numeroTotal}}
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="tabListaGratis">
+            <div class="card">
+                <div class="card-header" data-background-color="purple">
+                    <h4 class="title">Lista Gratis
+
+                        <button data-ng-click="abrirLectorQr()"
+                                style="float: right; margin: 0px 0px!important; top: 2px;"
+                                class="btn btn-sm btn-success ">Leer QR
+                        </button>
+
+
+                    </h4>
+                    <p class="category"></p>
+                </div>
+                <div class="card-content table-responsive">
+                    <table class="table">
+                        <thead class="text-primary">
+                        <th class="col-xs-6">NOMBRE</th>
+                        <th style="margin-right: 100px">CANTIDAD</th>
+
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="user in listaGratis" data-ng-click="abrirListaGratis(user)">
+
+                            <td>
+                                {{user.displayName}}
+                                <br>
+                                <p class="description">LISTA GRATIS </p></td>
+                            <td>
+                                {{user.totalAsist}} / {{user.totalList}}
+                                <br>
+                                <button
+                                        class="btn btn-sm btn-info">
+                                    GRATIS
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script id="dialogAbrirCode" type="text/ng-template">
+    <md-dialog aria-label="Confirmar Check In">
+        <center>
+            <table class="table text-center">
+                <thead class="text-primary text-center">
+                <th>Tipo</th>
+                <th>Valor</th>
+                <th>Cantidad</th>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-primary">Gratis H.</td>
+                    <td>
+                        $ 0
+                    </td>
+                    <td>
+                        <i ng-click="disminuir(product)" class="text-primary material-icons"
+                           style="vertical-align: middle;">remove</i>
+                        <font>&nbsp;&nbsp;0&nbsp;&nbsp;</font>
+                        <i ng-click="aumentar(product)" class="text-primary material-icons"
+                           style="vertical-align: middle;">add</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-primary">Gratis M.</td>
+                    <td>
+                        $ 0
+                    </td>
+                    <td>
+                        <i ng-click="disminuir(product)" class="text-primary material-icons"
+                           style="vertical-align: middle;">remove</i>
+                        <font>&nbsp;&nbsp;0&nbsp;&nbsp;</font>
+                        <i ng-click="aumentar(product)" class="text-primary material-icons"
+                           style="vertical-align: middle;">add</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-primary">extra H.</td>
+                    <td>
+                        $ 0
+                    </td>
+                    <td>
+                        <i ng-click="disminuir(product)" class="text-primary material-icons"
+                           style="vertical-align: middle;">remove</i>
+                        <font>&nbsp;&nbsp;0&nbsp;&nbsp;</font>
+                        <i ng-click="aumentar(product)" class="text-primary material-icons"
+                           style="vertical-align: middle;">add</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-primary">extra M.</td>
+                    <td>
+                        $ 0
+                    </td>
+                    <td>
+                        <i ng-click="disminuir(product)" class="text-primary material-icons"
+                           style="vertical-align: middle;">remove</i>
+                        <font>&nbsp;&nbsp;0&nbsp;&nbsp;</font>
+                        <i ng-click="aumentar(product)" class="text-primary material-icons"
+                           style="vertical-align: middle;">add</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-primary">VIP H.</td>
+                    <td>
+                        $ 0
+                    </td>
+                    <td>
+                        <i ng-click="disminuir(product)" class="text-primary material-icons"
+                           style="vertical-align: middle;">remove</i>
+                        <font>&nbsp;&nbsp;0&nbsp;&nbsp;</font>
+                        <i ng-click="aumentar(product)" class="text-primary material-icons"
+                           style="vertical-align: middle;">add</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-primary">VIP M.</td>
+                    <td>
+                        $ 0
+                    </td>
+                    <td>
+                        <i ng-click="disminuir(product)" class="text-primary material-icons"
+                           style="vertical-align: middle;">remove</i>
+                        <font>&nbsp;&nbsp;0&nbsp;&nbsp;</font>
+                        <i ng-click="aumentar(product)" class="text-primary material-icons"
+                           style="vertical-align: middle;">add</i>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <button class="btn  "> X</button>
+            <button class="btn btn-info "> GUARDAR</button>
+        </center>
+    </md-dialog>
+
+</script>
+
+<script id="dialogCobrarServicio" type="text/ng-template">
+    <md-dialog aria-label="Confirmar Check In">
+
+        <center>
+            <br>
+            <img class="fotoPerfilCodigo text-center" src="{{user.picture}}">
+            <br>
+            <h5>{{user.displayName}} </h5>
+            <p>tickets Utilizados : {{ticketObtenido.cantidadUtilizada}}</p>
+            <p> Habilitados : {{ingresosRestantes}} x {{ticketObtenido.tipoEventservices}} = $
+                {{ingresosRestantes*precioIndividual}}</p>
+
+            <i class="fa fa-mars"></i>
+            <button class="btn btn-sm btn-info" data-ng-click="disminuirEntradasHombre(entradasHombre)">
+                -
+            </button>
+            {{entradasHombre}}
+            <button class="btn btn-sm btn-info" data-ng-click="aumentarEntradasHombre(entradasHombre,entradasMujer)">
+                +
+            </button>
+            <br>
+            <i class="fa fa-venus"></i>
+            <button class="btn btn-sm btn-info" data-ng-click="disminuirEntradasMujer(entradasMujer)">
+                -
+            </button>
+            {{entradasMujer}}
+            <button class="btn btn-sm btn-info" data-ng-click="aumentarEntradasMujer(entradasHombre,entradasMujer)">
+                +
+            </button>
+            <br>
+
+
+            <div data-ng-show="!ticketObtenido.paidOut">
+                total a pagar : {{(entradasMujer +entradasHombre)*precioIndividual}}
+                <br>
+                <md-checkbox ng-click="obtenerTipoDePago('tarjeta')" ng-disabled="efectivo" ng-model="tarjeta"
+                             aria-label="Checkbox 1">
+                    TARJETA
+                </md-checkbox>
+                <md-checkbox ng-click="obtenerTipoDePago('efectivo')" ng-disabled="tarjeta" ng-model="efectivo"
+                             aria-label="Checkbox 1">
+                    EFECTIVO
+                </md-checkbox>
+            </div>
+            <div data-ng-show="ticketObtenido.paidOut">
+                ESTE TICKET YA ESTA PAGADO.
+            </div>
+
+        </center>
+
+        <div class="text-right col-xs-offset-1">
+            <button data-ng-click="cancel()" class="btn btn-default btn-sm  col-xs-3"> x</button>
+            <button data-ng-click="guardarEntrada()" class="btn btn-primary  btn-sm  col-xs-8"> APLICAR</button>
+
+        </div>
+
+
+    </md-dialog>
+
+    <style>
+
+        .fotoPerfilCodigo {
+            width: 90px;
+            height: 90px;
+            border: 1px solid #fe0072;
+            box-shadow: 1px 1px 5px 0 rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+    </style>
+
+</script>
+
+
+<script id="dialogAgregarPersonas" type="text/ng-template">
+    <md-dialog aria-label="Confirmar Check In">
+        <center>
+            <table class="table text-center">
+                <thead class="text-primary text-center">
+                <th>Tipo</th>
+                <th>Valor</th>
+                <th>Cantidad</th>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-primary">Gratis H.</td>
+                    <td>
+                        <input type="number" class="form-control " disabled placeholder="cobro"
+                               ng-model="valorGratisHombre"/>
+                    </td>
+                    <td>
+                        <i ng-click="disminuirgratisHombre(gratisHombre)" class="text-primary material-icons"
+                           style="vertical-align: middle;">remove</i>
+                        <font>&nbsp;&nbsp;{{gratisHombre}}&nbsp;&nbsp;</font>
+                        <i ng-click="aumentargratisHombre(gratisHombre)" class="text-primary material-icons"
+                           style="vertical-align: middle;">add</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-primary">Gratis M.</td>
+                    <td>
+                        <input type="number" class="form-control " disabled placeholder="cobro"
+                               ng-model="valorGratisMujer"/>
+                    </td>
+                    <td>
+
+                        <i ng-click="disminuirgratisgratisMujer(gratisMujer)" class="text-primary material-icons"
+                           style="vertical-align: middle;">remove</i>
+
+                        <font>&nbsp;&nbsp;{{gratisMujer}}&nbsp;&nbsp;</font>
+
+                        <i ng-click="aumentargratisMujer(gratisMujer)" class="text-primary material-icons"
+                           style="vertical-align: middle;">add</i>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-primary">extra H.</td>
+                    <td class="col-xs-3">
+                        <input type="number" class="form-control " placeholder="cobro"
+                               ng-model="valorExtraHombre"/>
+                    </td>
+                    <td>
+                        <i ng-click="disminuirExtraHombre(extraHombre)" class="text-primary material-icons"
+                           style="vertical-align: middle;">remove</i>
+                        <font>&nbsp;&nbsp;{{extraHombre}}&nbsp;&nbsp;</font>
+                        <i ng-click="aumentarExtraHombre(extraHombre)" class="text-primary material-icons"
+                           style="vertical-align: middle;">add</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-primary">extra M.</td>
+                    <td>
+                        <input type="number" class="form-control " placeholder="cobro"
+                               ng-model="valorExtraMujer"/>
+                    </td>
+                    <td>
+                        <i ng-click="disminuirExtraMujer(extraMujer)" class="text-primary material-icons"
+                           style="vertical-align: middle;">remove</i>
+                        <font>&nbsp;&nbsp;{{extraMujer}}&nbsp;&nbsp;</font>
+                        <i ng-click="aumentarExtraMujer(extraMujer)" class="text-primary material-icons"
+                           style="vertical-align: middle;">add</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-primary">VIP H.</td>
+                    <td>
+                        <input type="number" class="form-control " placeholder="cobro"
+                               ng-model="valorVipHombre"/>
+                    </td>
+                    <td>
+                        <i ng-click="disminuirVipHombre(vipHombre)" class="text-primary material-icons"
+                           style="vertical-align: middle;">remove</i>
+                        <font>&nbsp;&nbsp;{{vipHombre}}&nbsp;&nbsp;</font>
+                        <i ng-click="aumentarVipHombre(vipHombre)" class="text-primary material-icons"
+                           style="vertical-align: middle;">add</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-primary">VIP M.</td>
+                    <td>
+                        <input type="number" class="form-control " placeholder="cobro"
+                               ng-model="valorVipMujer"/>
+                    </td>
+                    <td>
+                        <i ng-click="disminuirVipMujer(vipMujer)" class="text-primary material-icons"
+                           style="vertical-align: middle;">remove</i>
+                        <font>&nbsp;&nbsp;{{vipMujer}}&nbsp;&nbsp;</font>
+                        <i ng-click="aumentarVipMujer(vipMujer)" class="text-primary material-icons"
+                           style="vertical-align: middle;">add</i>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <button data-ng-click="cancel()" class="btn"> X</button>
+            <button data-ng-click="guardar()" class="btn btn-info "> GUARDAR</button>
+
+
+        </center>
+    </md-dialog>
+
+</script>
+
+<script id="dialogAbrirListaGratis" type="text/ng-template">
+    <md-dialog aria-label="Confirmar Check In">
+
+        <center>
+            <br>
+            <img class="fotoPerfilCodigo text-center" src="{{user.picture}}">
+            <br>
+            <h5>{{user.displayName}} </h5>
+            <p>Total lista Utilizada : {{userCapturado.totalAsist}}</p>
+            <p> Lista restante : ilimitada.</p>
+
+            <i class="fa fa-mars"></i>
+            <button class="btn btn-sm btn-info" data-ng-click="disminuirEntradasHombre(entradasHombre)">
+                -
+            </button>
+            {{entradasHombre}}
+            <button class="btn btn-sm btn-info" data-ng-click="aumentarEntradasHombre(entradasHombre,entradasMujer)">
+                +
+            </button>
+            <br>
+            <i class="fa fa-venus"></i>
+            <button class="btn btn-sm btn-info" data-ng-click="disminuirEntradasMujer(entradasMujer)">
+                -
+            </button>
+            {{entradasMujer}}
+            <button class="btn btn-sm btn-info" data-ng-click="aumentarEntradasMujer(entradasHombre,entradasMujer)">
+                +
+            </button>
+            <br>
+
+
+            <div>
+                ESTA LISTA ES GRATIS
+            </div>
+
+        </center>
+
+        <div class="text-right col-xs-offset-1">
+            <button data-ng-click="cancel()" class="btn btn-default btn-sm  col-xs-3"> x</button>
+            <button data-ng-click="guardarEntrada()" class="btn btn-primary  btn-sm  col-xs-8"> APLICAR</button>
+
+        </div>
+
+
+    </md-dialog>
+
+    <style>
+
+        .fotoPerfilCodigo {
+            width: 90px;
+            height: 90px;
+            border: 1px solid #fe0072;
+            box-shadow: 1px 1px 5px 0 rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+    </style>
+
+</script>

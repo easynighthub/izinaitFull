@@ -27,6 +27,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             $(verEventosFuturos).addClass("active");
             $(sideClientes).removeClass("active");
             $(sideRrpp).removeClass("active");
+            $(sideDoorman).removeClass("active");
 
 
             var admin = window.currentAdmin;
@@ -51,6 +52,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
+                        $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
                         if (adminLogeado.idClubWork == false) {
                             ObtenerClub(adminLogeado);
                         } else {
