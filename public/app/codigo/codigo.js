@@ -279,7 +279,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                             $scope.email = $scope.usuarioLogeado.email;
                             $scope.foto = $scope.usuarioLogeado.picture;
 
-                            $.ajax({
+                          /*  $.ajax({
                                 url: 'http://www.abcs.cl/correo/contact_me.php',
                                 type: "POST",
                                 data: {
@@ -295,7 +295,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                                 error: function() {
                                     console.log("noooooooooooooooooooooo");
                                 },
-                            });
+                            }); */
 
                             document.getElementById('codigoVisibile').style.display = 'block';
                             document.getElementById('pedirCodigo').style.display = 'none';
@@ -394,10 +394,7 @@ angular.module('myApp.codigo', ['ngRoute'])
 
                 $scope.crearUsuarioQvo = function () {
 
-
-
-
-                 if($scope.userQvoRQ.userQvoId != undefined){
+                    if($scope.userQvoRQ.userQvoId != undefined){
 
                      document.getElementById('BarraCargando').style.display = 'none';
                      document.getElementById('datosClienteQvo').style.display = 'none';
@@ -447,7 +444,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                                      userQvoName: response.data.name
                                  }
                              );
-                         }
+                         };
 
                          // this callback will be called asynchronously
                          // when the response is available

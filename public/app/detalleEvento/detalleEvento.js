@@ -616,7 +616,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
                                     firebase.database().ref('tickets/' + eventId + '/'  + $scope.newTicket.ticketId).set($scope.newTicket).then(
                                         function (s) {
-                                            console.log('se guardaron bien el tickets ');
+                                            console.log('se guardaron bien el tickets');
                                             firebase.database().ref('ticketsCreate/' + $scope.newTicket.ticketId).set(true);
 
                                             //  firebase.database().ref('users/' + $scope.usuarioLogeado.$id + '/events/'+ $scope.event.admin+'/' + eventId).set(true);
