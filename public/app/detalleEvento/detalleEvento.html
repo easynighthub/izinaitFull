@@ -324,31 +324,32 @@
     }
 </script>
 
-<script id="dialogAdquirirServicio" type="text/ng-template" style="margin: auto; width: 100%;" >
-    <div class="col-md-12" >
+<script id="dialogAdquirirServicio" type="text/ng-template"  >
+    <div   id="panelPrincipal"  style="display: block">
 
     <div class="col-xs-12 col-md-12">
 
-        <h6  class="col-md-12 col-xs-12 text-center"> Bienvenido {{usuarioLogeado.displayName}}</h6>
+        <h4  class="col-md-12 col-xs-12 text-center"> Bienvenido {{usuarioLogeado.displayName}}</h4>
         <div class="text-center col-md-12">
-            <p class="btn btn-sm btn-info col-md-12">
+
+            <p class="btn btn-sm btn-info col-md-12 col-xs-12">
                 $ {{eventsService.precio}}
             </p>
 
-            <p class="description col-md-4">
+            <p class="description col-md-4 col-xs-12">
                 {{eventsService.desc}}
             </p>
-            <p class="description col-md-4">
+            <p class="description col-md-4 col-xs-12">
                 {{ eventsService.fechaFin |date : 'hh:mm / dd MMMM yyyy '}}
             </p>
-            <p class="description col-md-4">
+            <p class="description col-md-4 col-xs-12">
                 Entradas Maximas {{eventsService.maxEntradas}}
             </p>
 
         </div>
         <br>
-        <p class="description col-md-4">¿Cantidad que deseas adquirir?</p>
-        <md-select class="col-md-4" style="margin-top: -7px" name="ticketQty" ng-model="cantidadDeCompra"
+        <p class="description col-md-4 col-xs-12 text-center">¿Cantidad que deseas adquirir?</p>
+        <md-select class="col-md-4 col-xs-12 text-center" style="margin-top: -7px" name="ticketQty" ng-model="cantidadDeCompra"
                    placeholder="0">
             <md-option selected ng-value="0">
                 0
@@ -359,30 +360,34 @@
                 {{entrada.name}}
             </md-option>
         </md-select>
-        <p class="col-md-4"  ng-show="cantidadDeCompra != undefined"  > Total : $ {{cantidadDeCompra*eventsService.precio}}</p>
+        <p class="col-md-4 col-xs-12 text-center"  ng-show="cantidadDeCompra != undefined"  > Total : $ {{cantidadDeCompra*eventsService.precio}}</p>
         <center>
 
-            <p class="col-md-12"> METODO DE PAGO </p>
-<div class="col-md-12">
+            <p class="col-md-12 col-xs-12"> <strong>METODO DE PAGO </strong> </p>
+
+<div class="col-md-12 col-xs-12">
 
             <button class="btn btn-primary btn-sm col-md-6 text-center" ng-show="userQvoRQ.creditCardDefault == undefined"> AGREGAR TARJETA DE CREDITO </button>
 
 </div>
 
-            <md-radio-group class="col-md-12 text-center" ng-model="metodoDePagoSelect">
+            <md-radio-group class="col-md-12 col-xs-12 text-center" ng-model="metodoDePagoSelect" >
 
-            <md-radio-button class="col-md-6"  ng-show="userQvoRQ.creditCardDefault" value="oneClick">
-                OneClick
+            <md-radio-button class="col-md-6 col-xs-12"  ng-show="userQvoRQ.creditCardDefault" value="oneClick">
+                OneClick<br>
+                <img src="./image/contenido_productos_webpay_oneclick.jpg" height="70" />
+
             </md-radio-button>
 
-                <md-radio-button class="col-md-6" ng-show="userQvoRQ.userQvoId" value="webPayPlus">
-                    WebPay Plus
+                <md-radio-button class="col-md-6  col-xs-12" ng-show="userQvoRQ.userQvoId" value="webPayPlus">
+                    WebPay Plus<br>
+                    <img src="./image/webpay.png" height="70" />
                 </md-radio-button>
             </md-radio-group>
 
-            <div  class="form-group label-floating col-md-6">
-                <i class="material-icons col-md-2" style="margin-top: 5px">email</i>
-                <div class="col-md-10">
+            <div  class="form-group label-floating col-md-6 col-xs-12">
+                <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">email</i>
+                <div class="col-md-10 col-xs-10">
                 <input type="text" class="form-control" placeholder="Ingresa Email" ng-model="email"/>
                 <span class="form-control-feedback">
 			                <i class="material-icons">done</i>
@@ -391,10 +396,10 @@
                 </div>
             </div>
 
-            <div class="form-group label-floating  col-md-6" >
-                <i class="material-icons col-md-2" style="margin-top: 5px">call</i>
+            <div class="form-group label-floating  col-md-6 col-xs-12" >
+                <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">call</i>
 
-                <div class="col-md-10">
+                <div class="col-md-10 col-xs-10">
                 <input type="number" class="form-control" placeholder="Ingresa Celular" ng-model="celular"/>
                 <span class="form-control-feedback">
 			<i class="material-icons">done</i>
@@ -411,6 +416,26 @@
             <button ng-click="adquirir(cantidadDeCompra,celular,metodoDePagoSelect)" class="btn btn-info btn-sm "> Adquirir</button>
         </div>
     </div>
+    </div>
+
+    <div id="panelDireccionando" class="col-md-12" style="display: none">
+        <center>
+        <div class="col-md-12">
+            <div class="info">
+                <div class="icon icon-success">
+                    <i class="material-icons">verified_user</i>
+                </div>
+                <h4 class="info-title">Redireccionando a pagina segura. no cierre el navegador porfavor.</h4>
+
+                    <md-progress-circular   class=" md-hue-1"  md-diameter="50"></md-progress-circular>
+
+
+
+
+
+            </div>
+        </div>
+        </center>
     </div>
 
 
