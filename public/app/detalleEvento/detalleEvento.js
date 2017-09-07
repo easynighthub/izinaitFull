@@ -776,6 +776,9 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
                         if(metodoDePagoSelect =="webPayPlus"){
 
+                            document.getElementById('panelPrincipal').style.display = 'none';
+                            document.getElementById('panelDireccionando').style.display = 'block';
+
                             var url ="https://us-central1-project-8746388695669481444.cloudfunctions.net/cobrarConWebPayPlus?" +
                                 "userQvo=" + $scope.userQvoRQ.userQvoId +
                                 "&" +
