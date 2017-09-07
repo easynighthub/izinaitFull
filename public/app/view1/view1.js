@@ -170,7 +170,7 @@ angular.module('myApp.view1', ['ngRoute'])
                     var clubKey = Object.keys(club)[0];
                     return $filter('filter')(clubsER, {$id: clubKey})[0].name;
                 }
-            }
+            };
 
 
         }]);
