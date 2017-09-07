@@ -22,6 +22,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
             $(crearEventos).removeClass("active");
 
             $(verEventosFuturos).removeClass("active");
+            $(verEventosPasados).removeClass("active");
             $(sideClientes).removeClass("active");
             $(sideRrpp).addClass("active");
             $(sideDoorman).removeClass("active");

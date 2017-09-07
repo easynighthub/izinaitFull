@@ -38,6 +38,7 @@ angular.module('myApp.clientes', ['ngRoute'])
             $(crearEventos).removeClass("active");
 
             $(verEventosFuturos).removeClass("active");
+            $(verEventosPasados).removeClass("active");
             $(sideClientes).addClass("active");
             $(sideRrpp).removeClass("active");
             $(sideDoorman).removeClass("active");
@@ -75,42 +76,44 @@ angular.module('myApp.clientes', ['ngRoute'])
                         firebase.database().ref('admins/' + adminLogeado.$id + '/clients').child(adminLogeado.idClubWork).once('value', function (snapshot) {
                             ////console.log(snapshot.val());
                             clientes = snapshot.val();
+                            console.log(clientes);
                             if (clientes != null) {
-                                var contador = clientes.length;
+                                $scope.cantidadDeClientesPorClub = 0;
+                                $scope.cantidadDeHombres = 0;
+                                $scope.cantidadDeMujeres = 0;
+                                $scope.sumaEdadClientes = 0;
+
+
                                 angular.forEach(Object.keys(clientes), function (client) {
                                     var clientesRequest = $firebaseObject(firebase.database().ref('/users/' + client));
                                     clientesRequest.$loaded().then(function () {
-                                        adminLogeado.idClubWork;
+                                        $scope.cantidadDeClientesPorClub += 1;
+                                       var fechaActual = new Date().getTime();
+                                       var edadClient = ((fechaActual - (new Date(clientesRequest.birthday).getTime()))/ 31556926000);
+                                        clientesRequest.edad = edadClient;
 
-                                        ////console.log([clientesRequest.events[adminLogeado.$id]]);
-                                        angular.forEach([clientesRequest.events[adminLogeado.$id]], function (asistencias) {
-                                            ////console.log(Object.keys(asistencias));
-                                            if (asistencias == adminLogeado.idClubWork) {
-                                                ////console.log("hooola");
-                                            }
+                                        $scope.sumaEdadClientes +=edadClient;
 
-
-                                        });
-
+                                        if(clientesRequest.gender == "female"){
+                                            $scope.cantidadDeMujeres +=1;
+                                        }else{
+                                            $scope.cantidadDeHombres += 1;
+                                        };
+                                        $scope.porcentajeHombres = (($scope.cantidadDeHombres+$scope.cantidadDeMujeres)/$scope.cantidadDeHombres*100);
+                                        $scope.porcentajeMujeres = (($scope.cantidadDeHombres+$scope.cantidadDeMujeres)/$scope.cantidadDeMujeres*100);
+                                        if($scope.cantidadDeMujeres == 0){
+                                            $scope.porcentajeMujeres = 0;
+                                        };
+                                        if($scope.cantidadDeHombres == 0){
+                                            $scope.porcentajeHombres = 0;
+                                        }
 
                                         getLastEvent(clientesRequest);
-                                        contador = contador - 1;
-                                        console.log('aun no entro' + contador);
-                                        if (contador == 0) {
-                                            console.log('entro' + contador);
-                                            $('#dtClientes').DataTable(
-                                                {
-                                                    "pagingType": "simple_numbers"
-                                                    , "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
-                                                    , responsive: true
-                                                    ,buttons: ['csv']
-                                                    ,language: {search: "_INPUT_", searchPlaceholder: "Buscar"}
-                                                }
-                                            )
 
-                                        }
+
                                     });
                                 });
+
                             }
 
                         })
@@ -128,21 +131,26 @@ angular.module('myApp.clientes', ['ngRoute'])
 
             var getLastEvent = function (client) {
 
-                var lastDate = 971146800000;
+                var lastDate = 1;
+                var EventAsists = 0;
                 //console.log(client);
 
+                firebase.database().ref('users/').child(client.$id+'/events/'+adminLogeado.$id+'/'+adminLogeado.idClubWork).once('value', function (snapshot) {
+                    var events = snapshot.val();
+                    angular.forEach(events, function (event) {
+                        if (event > lastDate) {
+                            lastDate = event;
+                            EventAsists += 1;
+                        }
+                    });
+                    client.lastDate = lastDate;
+                    client.EventAsists = EventAsists;
+                    $scope.clientes.push(client);
+                    //console.log($scope.clientes);
 
-                var events = client.events[adminLogeado.$id];
-                //console.log(events);
-                angular.forEach(events, function (event) {
-                    //console.log(event);
-                    if (event > lastDate) {
-                        lastDate = event;
-                    }
                 });
-                client.lastDate = lastDate;
-                $scope.clientes.push(client);
-                //console.log($scope.clientes);
+
+
             };
 
 

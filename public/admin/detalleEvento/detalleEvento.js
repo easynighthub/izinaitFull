@@ -25,6 +25,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             $(crearEventos).removeClass("active");
 
             $(verEventosFuturos).addClass("active");
+            $(verEventosPasados).removeClass("active");
             $(sideClientes).removeClass("active");
             $(sideRrpp).removeClass("active");
             $(sideDoorman).removeClass("active");
@@ -53,6 +54,15 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
+                        $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
+
+                        var rrppsAdmin = firebase.database().ref('admins/' + adminLogeado.$id  +'/rrpps');
+                        var rrppsAdminRQ = $firebaseArray(rrppsAdmin);
+                        rrppsAdminRQ.$loaded().then(function () {
+                            console.log(rrppsAdminRQ);
+                            $scope.rrppsAdminRQ = rrppsAdminRQ;
+                        });
+
                         $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
                         if (adminLogeado.idClubWork == false) {
                             ObtenerClub(adminLogeado);
@@ -228,7 +238,20 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
                 });
 
-            }
+            };
+
+
+
+
+            $scope.getNombreRRPP = function (idRRPP) {
+                if (idRRPP) {
+                    var rrppKey = idRRPP;
+                    console.log(idRRPP);
+                    return $filter('filter')($scope.rrppsAdminRQ,  {$id :rrppKey})[0].name;
+                };
+
+
+            };
 
 
         }])

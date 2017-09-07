@@ -14,10 +14,10 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             $(sideEventos).addClass("active");
             $(crearEventos).addClass("active");
             $(verEventosFuturos).removeClass("active");
+            $(verEventosPasados).removeClass("active");
             $(sideClientes).removeClass("active");
             $(sideRrpp).removeClass("active");
             $(sideDoorman).removeClass("active");
-            $(contenido).css("padding-top", "30px ");
 
 
             var admin = window.currentAdmin;
@@ -26,7 +26,78 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             $scope.serviciosEvent = [];
 
 
-            var eventId = $routeParams.id;
+            var eventId = $routeParams.id ;
+
+            if(eventId != null){
+
+                firebase.database().ref('events/').child(eventId).once('value', function (snapshot) {
+                    var event = snapshot.val();
+                    console.log(event);
+
+                        var eventServices = firebase.database().ref('/eventServices/' + event.id);
+                        var eventServicesRQ = $firebaseArray(eventServices);
+                        eventServicesRQ.$loaded().then(function () {
+                            event.reservas = eventServicesRQ;
+                            console.log(event.reservas);
+                            $scope.serviciosEvent = event.reservas;
+                            $scope.serviciosEvent.forEach(function (serv) {
+                                    serv.fechaFin = null;
+
+                                if (serv.tipo == "ESPECIAL") {
+                                    serv.color = "#ff9800";
+
+                                }
+                                ;
+                                if (serv.tipo == "PREVENTA") {
+                                    serv.color = "#f44336";
+                                }
+                                ;
+                                if (serv.tipo == "MESA") {
+                                    serv.color = "#4caf50";
+                                }
+                                ;
+                                if (serv.tipo == "BOTELLAS") {
+                                    serv.color = "#00bcd4";
+                                }
+                                ;
+                                if (serv.tipo == "VIP") {
+                                    serv.color = "#c8c8c8";
+                                }
+                                ;
+
+
+                            });
+
+                            $scope.newEvent.eventDetails = event.eventDetails;
+                            $scope.newEvent.djs = event.djs;
+                            $scope.newEvent.name = event.name;
+                            $scope.newEvent.entryValue = event.entryValue;
+
+                            console.log($scope.newEvent);
+                            if (event.freemiumHour != event.date) {
+                                $scope.activarHoraGratis = true;
+                            };
+
+
+                           document.getElementById("clothing").value = event.clothing;
+                            $("#clothing").val(event.clothing);
+
+                            $scope.newEvent.clothing = event.clothing;
+
+                            $scope.newEvent.ageRangeFemale = event.ageRangeFemale;
+                            $scope.newEvent.ageRangeMale = event.ageRangeMale;
+
+
+
+
+                            $scope.newEvent.eventEnvironmentSelect = event.eventEnvironmentSelect;
+                            $scope.newEvent.musicGenresSelect = event.musicGenresSelect;
+
+                                                });
+
+                });
+
+            };
 
             if ($rootScope.eventEdit != null) {
 
@@ -40,24 +111,24 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     var myDate = new Date(serv.fechaFin);
                     serv.fechaFin = myDate.toGMTString();
 
-                    if (serv.tipo == "Especial") {
+                    if (serv.tipo == "ESPECIAL") {
                         serv.color = "#ff9800";
 
                     }
                     ;
-                    if (serv.tipo == "Preventa") {
+                    if (serv.tipo == "PREVENTA") {
                         serv.color = "#f44336";
                     }
                     ;
-                    if (serv.tipo == "Mesa") {
+                    if (serv.tipo == "MESA") {
                         serv.color = "#4caf50";
                     }
                     ;
-                    if (serv.tipo == "Botella") {
+                    if (serv.tipo == "BOTELLAS") {
                         serv.color = "#00bcd4";
                     }
                     ;
-                    if (serv.tipo == "Vip") {
+                    if (serv.tipo == "VIP") {
                         serv.color = "#c8c8c8";
                     }
                     ;
@@ -76,51 +147,10 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             ;
 
             if ($rootScope.eventToRepet != null) {
-                $scope.serviciosEvent = $rootScope.eventToRepet.reservas;
-                $scope.serviciosEvent.forEach(function (serv) {
-                    if (serv.tipo == "Especial") {
-                        serv.color = "#ff9800";
-                    }
-                    ;
-                    if (serv.tipo == "Preventa") {
-                        serv.color = "#f44336";
-                    }
-                    ;
-                    if (serv.tipo == "Mesa") {
-                        serv.color = "#4caf50";
-                    }
-                    ;
-                    if (serv.tipo == "Botella") {
-                        serv.color = "#00bcd4";
-                    }
-                    ;
-                    if (serv.tipo == "Vip") {
-                        serv.color = "#c8c8c8";
-                    }
-                    ;
-
-
-                });
-
-
-                $scope.serviciosEvent.forEach(function (s) {
-                    s.fechaFin = null;
-                });
-                $scope.newEvent.eventDetails = $rootScope.eventToRepet.eventDetails;
-                $scope.newEvent.ageRangeFemale = $rootScope.eventToRepet.ageRangeFemale;
-                $scope.newEvent.ageRangeMale = $rootScope.eventToRepet.ageRangeMale;
-                $scope.newEvent.clothing = $rootScope.eventToRepet.clothing;
-                $scope.newEvent.entryValue = $rootScope.eventToRepet.entryValue;
-                $scope.newEvent.djs = $rootScope.eventToRepet.djs;
-                $scope.newEvent.name = $rootScope.eventToRepet.name;
-                if ($rootScope.eventToRepet.freemiumHour != $rootScope.eventToRepet.date) {
-                    $scope.activarHoraGratis = true;
-                }
+                console.log($rootScope.eventToRepet);
+                 location.href = "#!/crearEvento?id=" + $rootScope.eventToRepet.$id;
                 ;
-                $scope.newEvent.eventEnvironmentSelect = $rootScope.eventToRepet.eventEnvironmentSelect;
-                $scope.newEvent.musicGenresSelect = $rootScope.eventToRepet.musicGenresSelect;
-
-
+                location.reload();
             }
             ;
 
@@ -158,12 +188,10 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                                         $scope.newEvent.lat = x.latitude;
                                         $scope.newEvent.lng = x.longitude;
                                         $scope.newEvent.admin = adminLogeado.$id;
-                                        if ($rootScope.eventEdit != undefined) {
-                                            $scope.newEvent.id = eventId;
-                                        } else {
+
                                             $scope.newEvent.id = firebase.database().ref().child('events/').push().key;
-                                        }
-                                        $scope.newEvent.evenUrl = 'http://izinait.com/user/app/#!/detalleEvento?id=' + $scope.newEvent.id;
+
+                                        $scope.newEvent.evenUrl = 'http://izinait.com/app/#!/detalleEvento?id=' + $scope.newEvent.id;
                                         $scope.newEvent.visible = adminLogeado.clubs[x.$id].validado;
                                         $scope.newEvent.descOutHour = 0;
                                         $scope.newEvent.premiumCover = 0;
@@ -291,18 +319,18 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
 
             $scope.addNewChoicePREVENTA = function () {
-                var newItemNo = $scope.Preventa;
+                var newItemNo = $scope.PREVENTA;
                 $scope.serviciosEvent.push({
-                        tipo: "Preventa",
+                        tipo: "PREVENTA",
                         color: '#f44336'
                     }
                 );
             };
 
             $scope.addNewChoiceMESA = function () {
-                var newItemNo = $scope.Mesa;
+                var newItemNo = $scope.MESA;
                 $scope.serviciosEvent.push({
-                        tipo: "Mesa",
+                        tipo: "MESA",
                         color: '#4caf50'
 
                     }
@@ -310,9 +338,9 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             };
 
             $scope.addNewChoiceBOTELLAS = function () {
-                var newItemNo = $scope.Botella;
+                var newItemNo = $scope.BOTELLAS;
                 $scope.serviciosEvent.push({
-                        tipo: "Botella",
+                        tipo: "BOTELLAS",
                         color: '#00bcd4'
 
                     }
@@ -320,18 +348,18 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             };
 
             $scope.addNewChoiceVIP = function () {
-                var newItemNo = $scope.Vip;
+                var newItemNo = $scope.VIP;
                 $scope.serviciosEvent.push({
-                        tipo: "Vip",
+                        tipo: "VIP",
                         color: '#c8c8c8'
                     }
                 );
             };
 
             $scope.addNewChoiceESPECIAL = function () {
-                var newItemNo = $scope.Especial;
+                var newItemNo = $scope.ESPECIAL;
                 $scope.serviciosEvent.push({
-                        tipo: "Especial",
+                        tipo: "ESPECIAL",
                         color: '#ff9800'
                     }
                 );
