@@ -349,6 +349,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             $scope.dialogAdquirirServicio = function (eventsService) {
 
                 if (usuarioLogeado == "") {
+
                     $mdDialog.show({
                         controller: dialogControllerAccederConFacebook,
                         templateUrl: 'dialogAccederConFacebook',
@@ -376,6 +377,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             };
             function dialogControllerAccederConFacebook($scope, $mdDialog, $timeout, $q, $log, eventsService) {
                 var eventsService = eventsService;
+
                 var token;
                 $scope.usuarioLogeado = usuarioLogeado;
 
@@ -472,6 +474,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 $('.codigoAcceder').text("Tú Codigo");
                                 console.log("obvtuve la foto y el correo");
                                 $mdDialog.hide();
+                                $scope.dialogAdquirirServicio(eventsService);
 
 
                             });
@@ -501,6 +504,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 $('.codigoAcceder').text("Tú Codigo");
                                 console.log("obvtuve la foto y el correo");
                                 $mdDialog.hide();
+                                $scope.dialogAdquirirServicio(eventsService);
 
 
                             });
@@ -549,7 +553,83 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     fjs.parentNode.insertBefore(js, fjs);
                 }(document, 'script', 'facebook-jssdk'));
 
+                $scope.confirmarCorreo = function (user) {
 
+                    if(user.email == "null@izinait.com"){
+                        // Appending dialog to document.body to cover sidenav in docs app
+                        var confirm = $mdDialog.prompt()
+                            .title('Confirmanos tu correo')
+                            .textContent('Recuerda colocar un correo valido')
+                            .placeholder('Correo Electronico')
+                            .ariaLabel('Correo Electronico')
+                            .initialValue('')
+                            .ok('Confirmar!')
+                            .cancel('');
+                        $mdDialog.show(confirm).then(function(result) {
+                            //validar que este correo no exista en la bd
+                            firebase.database().ref('users/' + user.$id).update({
+                                email: result
+                            });
+                            location.reload();
+
+                        }, function() {
+                            alert("TIENES QUE CONFIRMARNOS TU CORREO");
+                            location.reload();
+                        });
+                    }else{
+
+                        var userQvo = firebase.database().ref('/userQvo/').child(user.$id);
+                        var userQvoRQ = $firebaseObject(userQvo);
+                        userQvoRQ.$loaded().then(function () {
+                            console.log(userQvoRQ);
+                            $scope.userQvoRQ = userQvoRQ;
+                            if($scope.userQvoRQ.userQvoId != undefined){
+                                // el usuario esta perfect.
+                                console.log("EL USUARIO ESTA PERFECT");
+                            }else{
+
+                                var url = "https://us-central1-project-8746388695669481444.cloudfunctions.net/createUserQvo?email="
+                                    +user.email
+                                    +"&name="
+                                    +user.displayName
+
+                                $http({
+                                    method: 'GET',
+                                    url: url,
+                                    crossOrigin: true,
+                                }).then(function successCallback(response) {
+                                    console.log(response);
+                                    if(response.data.error != undefined){
+                                        alert("ESTE CORREO YA EXISTE");
+
+                                    }
+                                    else{
+                                        firebase.database().ref('userQvo/' + user.$id).set(
+                                            {
+                                                id :user.$id,
+                                                userQvoEmail : response.data.email,
+                                                userQvoId : response.data.id,
+                                                userQvoName: response.data.name
+                                            }
+                                        );
+                                    };
+
+                                    // this callback will be called asynchronously
+                                    // when the response is available
+                                }, function errorCallback(response) {
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                });
+
+
+                            }
+                        });
+
+
+
+                    }
+
+                };
             };
 
             function dialogControllerAdquirirServicio($scope, $mdDialog, $timeout, $q, $log, $http, eventsService,userQvoRQ ) {
@@ -585,7 +665,15 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 $scope.adquirir = function (cantidadDeCompra, celular,metodoDePagoSelect) {
                     console.log(celular.toString().length);
                     if(celular.toString().length > 7){
+                        if(cantidadDeCompra >1 )
+                        {
+
+
                         if(metodoDePagoSelect == "oneClick"){
+
+                            document.getElementById('panelPrincipal').style.display = 'none';
+                            document.getElementById('panelDireccionando').style.display = 'block';
+
                             // creditCardDefaulf if sino redireccionar a agregar tarjeta de credito
 
                             var url  = "https://us-central1-project-8746388695669481444.cloudfunctions.net/cobrarTarjetaDeCredito" +
@@ -602,6 +690,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                             }).then(function successCallback(response) {
                                 console.log(response);
                                 if(response.data.status == "successful"){
+
                                     console.log(response.data.status);
 
                                     $scope.newTicket.email = $scope.usuarioLogeado.email;
@@ -622,6 +711,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                     $scope.newTicket.eventId = eventId;
                                     $scope.newTicket.userId = $scope.usuarioLogeado.$id;
                                     $scope.newTicket.ticketId = firebase.database().ref().child('ticketsCreate/').push().key;
+                                    $scope.newTicket.idTransaccion = response.data.id;
 
                                     firebase.database().ref('tickets/' + eventId + '/'  + $scope.newTicket.ticketId).set($scope.newTicket).then(
                                         function (s) {
@@ -632,6 +722,10 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
                                             firebase.database().ref('users/' + $scope.usuarioLogeado.$id).update(
                                                 {celular: $scope.newTicket.celular});
+
+                                            firebase.database().ref('userQvo/' + $scope.usuarioLogeado.$id +'/charges/'+ response.data.id)
+                                                .update(response.data);
+
                                             $mdDialog.hide();
 
                                             /*      $scope.getClub = function (club) {
@@ -678,9 +772,12 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                             });
 
 
-                        }
+                        };
 
                         if(metodoDePagoSelect =="webPayPlus"){
+
+                            document.getElementById('panelPrincipal').style.display = 'none';
+                            document.getElementById('panelDireccionando').style.display = 'block';
 
                             var url ="https://us-central1-project-8746388695669481444.cloudfunctions.net/cobrarConWebPayPlus?" +
                                 "userQvo=" + $scope.userQvoRQ.userQvoId +
@@ -694,7 +791,6 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                             }).then(function successCallback(response) {
                                 console.log(response);
                                 location.href = response.data.redirect_url;
-
                                 // this callback will be called asynchronously
                                 // when the response is available
                             }, function errorCallback(response) {
@@ -703,9 +799,11 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                             });
 
                         }
-
+                        }else{
+                            alert('INGRESA CANTIDAD DE COMPRA DISTINCA A 0 ');
+                        }
                     }else{
-                        alert('INGRESA UN NUMERO VALIDO');
+                        alert('INGRESA UN NUMERO CELULAR VALIDO');
                     };
 
 
