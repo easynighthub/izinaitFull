@@ -1,11 +1,16 @@
+/**
+ * Created by andro on 07-09-2017.
+ */
+
+
 'use strict';
 
-angular.module('myApp.view1', ['ngRoute'])
+angular.module('myApp.tickets', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
 
-                $routeProvider.when('/view1', {
-                templateUrl: 'view1/view1.html',
-                controller: 'View1Ctrl',
+        $routeProvider.when('/tickets', {
+                templateUrl: 'tickets/tickets.html',
+                controller: 'ticketsCtrl',
                 data: {
                     meta: {
                         'title': 'hola',
@@ -15,12 +20,13 @@ angular.module('myApp.view1', ['ngRoute'])
             }
         );
     }])
-    .controller('View1Ctrl', ['$scope','$http', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
+    .controller('ticketsCtrl', ['$scope','$http', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
         function ($scope,$http, $firebaseObject, $firebaseArray, $filter, $rootScope, $routeProvider) {
 
 
             var user = window.currentApp ;
             var usuarioLogeado = "";
+            $scope.hola ="no se que pasa"
 
             firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
@@ -31,11 +37,28 @@ angular.module('myApp.view1', ['ngRoute'])
                     var usersLocal = $firebaseObject(ref);
                     usersLocal.$loaded().then(function () {
                         usuarioLogeado = usersLocal;
-                        console.log(usuarioLogeado);
+                        $scope.ticketsAll = [];
+                       console.log(Object.keys(usuarioLogeado.tickets));
+                            angular.forEach(usuarioLogeado.tickets, function (x) {
+
+                                var ticketsRQ = $firebaseObject( firebase.database().ref('tickets/').child(x.eventId +'/'+ x.ticketId));
+                                ticketsRQ.$loaded().then(function () {
+
+                                    $scope.ticketsAll.push(ticketsRQ);
+                                    console.log($scope.ticketsAll);
+
+                                });
+
+
+
+                        });
+
+                        document.getElementById('BarraCargando').style.display = 'none';
+
                         //  $('.user-header .imagen').text(usersLocal.picture);
                         $('.codigoAcceder').text("Tú Codigo");
                         $('.pruebacon').removeClass("contenedor");
-                      //  $('.codigoAcceder').prepend($('<img>',{id:'theImg',src:usuarioLogeado.picture}))
+                        //  $('.codigoAcceder').prepend($('<img>',{id:'theImg',src:usuarioLogeado.picture}))
                         console.log(window.currentApp + " ENTRE");
                         $(navigationexample).removeClass("in");
                     });
@@ -55,66 +78,66 @@ angular.module('myApp.view1', ['ngRoute'])
 
             $scope.filterDateInput = new Date();
 
-      /*   var users = $firebaseArray(firebase.database().ref().child('users'));
-            users.$loaded().then(function () {
-              console.log(users);
-              users.forEach(function (x) {
-              /*    if(x.email != "izi@nait.com" || x.email != "null@izinait.com" ){
-                      if(x.facebookId){
+            /*   var users = $firebaseArray(firebase.database().ref().child('users'));
+             users.$loaded().then(function () {
+             console.log(users);
+             users.forEach(function (x) {
+             /*    if(x.email != "izi@nait.com" || x.email != "null@izinait.com" ){
+             if(x.facebookId){
 
-                          var url = "https://us-central1-project-8746388695669481444.cloudfunctions.net/createUserQvo?email="
-                              +x.email
-                              +"&name="
-                              +x.displayName
+             var url = "https://us-central1-project-8746388695669481444.cloudfunctions.net/createUserQvo?email="
+             +x.email
+             +"&name="
+             +x.displayName
 
-                          $http({
-                              method: 'GET',
-                              url: url,
-                              crossOrigin: true,
-                          }).then(function successCallback(response) {
-                              console.log(response);
-                              if(response.data.error != undefined){
-                                  alert("ESTE CORREO YA EXISTE");
-                              }
-                              else{
+             $http({
+             method: 'GET',
+             url: url,
+             crossOrigin: true,
+             }).then(function successCallback(response) {
+             console.log(response);
+             if(response.data.error != undefined){
+             alert("ESTE CORREO YA EXISTE");
+             }
+             else{
 
-                                  firebase.database().ref('users/' + x.id).update(
-                                      {
-                                          qvoUser : true
-                                      }
-                                  );
+             firebase.database().ref('users/' + x.id).update(
+             {
+             qvoUser : true
+             }
+             );
 
-                                  firebase.database().ref('userQvo/' + x.id).set(
-                                      {
-                                          id : x.id,
-                                          userQvoEmail : response.data.email,
-                                          userQvoId : response.data.id,
-                                          userQvoName: response.data.name
-                                      }
+             firebase.database().ref('userQvo/' + x.id).set(
+             {
+             id : x.id,
+             userQvoEmail : response.data.email,
+             userQvoId : response.data.id,
+             userQvoName: response.data.name
+             }
 
-                                  );
+             );
 
-                                  console.log("exito");
-                              };
-                          }, function errorCallback(response) {
-                          });
+             console.log("exito");
+             };
+             }, function errorCallback(response) {
+             });
 
 
-                      }
+             }
 
-                  }
+             }
 
-                  firebase.database().ref('users/'+ x.$id).update({
-                      events : null,
-                      asistProd:null,
-                      history : null,
-                      provider: null,
-                      type : null
-                  });
-              });
-            }); */
+             firebase.database().ref('users/'+ x.$id).update({
+             events : null,
+             asistProd:null,
+             history : null,
+             provider: null,
+             type : null
+             });
+             });
+             }); */
 
-            var clubsER = $firebaseArray(firebase.database().ref().child('clubs'));
+        /*    var clubsER = $firebaseArray(firebase.database().ref().child('clubs'));
 
             var currentDay = new Date().getTime();
             clubsER.$loaded().then(function () {
@@ -123,10 +146,9 @@ angular.module('myApp.view1', ['ngRoute'])
                     console.log(eventsRequest);
                     $scope.Allvents = eventsRequest;
                     $scope.events = $scope.Allvents;
-                    document.getElementById('BarraCargando').style.display = 'none';
-                    document.getElementById('BarraBuscador').style.display = 'block';
+
                 });
-            });
+            }); */
 
 
             $scope.filterEventsByText = function () {
@@ -170,7 +192,7 @@ angular.module('myApp.view1', ['ngRoute'])
                     var clubKey = Object.keys(club)[0];
                     return $filter('filter')(clubsER, {$id: clubKey})[0].name;
                 }
-            }
+            };
 
 
         }]);

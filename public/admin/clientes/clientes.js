@@ -170,5 +170,10 @@ angular.module('myApp.clientes', ['ngRoute'])
 
              })*/
 
+            $("#buttonExportar").click(function(){
+                $("#dtClientes").table2excel({
+                    filename: "lista de clientes "+adminLogeado.displayName
+                });
+            });
 
         }]);

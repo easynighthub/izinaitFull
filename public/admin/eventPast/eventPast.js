@@ -91,13 +91,16 @@ angular.module('myApp.eventPast', ['ngRoute'])
                             } else {
                                 $('.no-js').removeClass('nav-open');
                                 $scope.tickets = [];
+
                                 $scope.Allvents.forEach(function (x) {
                                     var eventServices = firebase.database().ref('/eventServices/' + x.$id);
                                     var eventServicesRQ = $firebaseArray(eventServices);
                                     eventServicesRQ.$loaded().then(function () {
                                         x.reservas = eventServicesRQ;
                                         x.ReservaCantidad = eventServicesRQ.length;
+                                        x.ingresosTotales = 0;
                                         x.reservas.forEach(function (j) {
+
                                             j.utilizados = 0;
                                             var ticketServices = firebase.database().ref('/tickets/' + x.$id);
                                             var ticketServiceRQ = $firebaseArray(ticketServices);
@@ -105,6 +108,7 @@ angular.module('myApp.eventPast', ['ngRoute'])
                                                 //console.log(ticketServiceRQ);
                                                 $scope.tickets = ticketServiceRQ;
                                                 $scope.tickets.forEach(function (k) {
+                                                    x.ingresosTotales += k.cantidadUtilizada;
                                                     if (j.$id == k.ideventservices) {
                                                         j.utilizados = j.utilizados + k.cantidadDeCompra;
                                                     }
