@@ -47,7 +47,7 @@
 					<div class="row" style="margin:0px!important" ng-repeat="reserva in event.reservas"
 						 ng-show="event.ReservaCantidad >= 1">
 						<div class="stats pull-left">
-                                    <span id="iconoReserva" class="category text-capitalize">
+                                    <span id="iconoReserva" class="category">
                                         <i style="color: #4caf50" ng-show="reserva.tipo == 'Mesa'"
 										   class="fa fa-star"></i>
                                         <i style="color: #f44336" ng-show="reserva.tipo == 'Preventa'"
@@ -58,7 +58,7 @@
 										   class="fa fa-certificate"></i>
                                         <i style="color: #00bcd4" ng-show="reserva.tipo == 'Botella'"
 										   class="fa fa-glass"></i>
-                                        <span>{{reserva.tipo }}</span>
+                                        <span class="text-capitalize">{{reserva.tipo }}</span>
                                     </span>
 						</div>
 						<span class="stats pull-right">
