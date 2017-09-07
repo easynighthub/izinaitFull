@@ -28,6 +28,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             $(sideClientes).removeClass("active");
             $(sideRrpp).removeClass("active");
             $(sideDoorman).removeClass("active");
+            $(contenido).css("padding-top", "30px ");
 
 
             var admin = window.currentAdmin;

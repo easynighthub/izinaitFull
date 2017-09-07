@@ -25,6 +25,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
             $(sideClientes).removeClass("active");
             $(sideRrpp).addClass("active");
             $(sideDoorman).removeClass("active");
+            $(contenido).css("padding-top", "30px ");
 
             var admin = window.currentAdmin;
             var adminLogeado = "";

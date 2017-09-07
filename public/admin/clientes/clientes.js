@@ -31,6 +31,7 @@ angular.module('myApp.clientes', ['ngRoute'])
             $('.tituloIziboss').text("Clientes");
             $('.no-js').removeClass('nav-open');
             document.getElementById('BarraCargando').style.display = 'none';
+            $(contenido).css("padding-top", "30px ");
 
 
             $(sideEventos).removeClass("active");

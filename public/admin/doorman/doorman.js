@@ -24,6 +24,7 @@ angular.module('myApp.doorman', ['ngRoute'])
             var currentDay = new Date().getTime();
             $('.tituloIziboss').text("Gestor Acceso");
             $('.no-js').removeClass('nav-open');
+            $(contenido).css("padding-top", "30px ");
 
             var admin = window.currentAdmin;
             var adminLogeado = "";

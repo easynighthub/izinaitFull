@@ -17,6 +17,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             $(sideClientes).removeClass("active");
             $(sideRrpp).removeClass("active");
             $(sideDoorman).removeClass("active");
+            $(contenido).css("padding-top", "30px ");
 
 
             var admin = window.currentAdmin;
@@ -39,24 +40,24 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     var myDate = new Date(serv.fechaFin);
                     serv.fechaFin = myDate.toGMTString();
 
-                    if (serv.tipo == "ESPECIAL") {
+                    if (serv.tipo == "Especial") {
                         serv.color = "#ff9800";
 
                     }
                     ;
-                    if (serv.tipo == "PREVENTA") {
+                    if (serv.tipo == "Preventa") {
                         serv.color = "#f44336";
                     }
                     ;
-                    if (serv.tipo == "MESA") {
+                    if (serv.tipo == "Mesa") {
                         serv.color = "#4caf50";
                     }
                     ;
-                    if (serv.tipo == "BOTELLAS") {
+                    if (serv.tipo == "Botella") {
                         serv.color = "#00bcd4";
                     }
                     ;
-                    if (serv.tipo == "VIP") {
+                    if (serv.tipo == "Vip") {
                         serv.color = "#c8c8c8";
                     }
                     ;
@@ -77,23 +78,23 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             if ($rootScope.eventToRepet != null) {
                 $scope.serviciosEvent = $rootScope.eventToRepet.reservas;
                 $scope.serviciosEvent.forEach(function (serv) {
-                    if (serv.tipo == "ESPECIAL") {
+                    if (serv.tipo == "Especial") {
                         serv.color = "#ff9800";
                     }
                     ;
-                    if (serv.tipo == "PREVENTA") {
+                    if (serv.tipo == "Preventa") {
                         serv.color = "#f44336";
                     }
                     ;
-                    if (serv.tipo == "MESA") {
+                    if (serv.tipo == "Mesa") {
                         serv.color = "#4caf50";
                     }
                     ;
-                    if (serv.tipo == "BOTELLAS") {
+                    if (serv.tipo == "Botella") {
                         serv.color = "#00bcd4";
                     }
                     ;
-                    if (serv.tipo == "VIP") {
+                    if (serv.tipo == "Vip") {
                         serv.color = "#c8c8c8";
                     }
                     ;
@@ -290,18 +291,18 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
 
             $scope.addNewChoicePREVENTA = function () {
-                var newItemNo = $scope.PREVENTA;
+                var newItemNo = $scope.Preventa;
                 $scope.serviciosEvent.push({
-                        tipo: "PREVENTA",
+                        tipo: "Preventa",
                         color: '#f44336'
                     }
                 );
             };
 
             $scope.addNewChoiceMESA = function () {
-                var newItemNo = $scope.MESA;
+                var newItemNo = $scope.Mesa;
                 $scope.serviciosEvent.push({
-                        tipo: "MESA",
+                        tipo: "Mesa",
                         color: '#4caf50'
 
                     }
@@ -309,9 +310,9 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             };
 
             $scope.addNewChoiceBOTELLAS = function () {
-                var newItemNo = $scope.BOTELLAS;
+                var newItemNo = $scope.Botella;
                 $scope.serviciosEvent.push({
-                        tipo: "BOTELLAS",
+                        tipo: "Botella",
                         color: '#00bcd4'
 
                     }
@@ -319,18 +320,18 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             };
 
             $scope.addNewChoiceVIP = function () {
-                var newItemNo = $scope.VIP;
+                var newItemNo = $scope.Vip;
                 $scope.serviciosEvent.push({
-                        tipo: "VIP",
+                        tipo: "Vip",
                         color: '#c8c8c8'
                     }
                 );
             };
 
             $scope.addNewChoiceESPECIAL = function () {
-                var newItemNo = $scope.ESPECIAL;
+                var newItemNo = $scope.Especial;
                 $scope.serviciosEvent.push({
-                        tipo: "ESPECIAL",
+                        tipo: "Especial",
                         color: '#ff9800'
                     }
                 );
