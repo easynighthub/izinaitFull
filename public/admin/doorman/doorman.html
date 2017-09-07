@@ -37,27 +37,26 @@
 	<div class="col-md-4" ng-repeat="event in eventsWithServices | orderBy:'date'" ng-show="event.toHour > eventosFuturoFecha">
 		<div class="card card-product" ng-click="administrar(event)">
 			<div class="card-image">
-				<img class="img" src="{{event.image}}">
+				<img class="img" style="height: 150px; transform: perspective(1350px);" src="{{event.image}}">
+				<div class="card-title jvectormap-legend-tick-text">
+					{{event.name}}
+				</div>
 			</div>
 			<div class="card-content">
-
-				<h4 class="card-title text-capitalize text-primary " style="font-weight: bolder;">
-					{{event.name}}
-				</h4>
 				<div class="">
 					<div class="row" style="margin:0px!important" ng-repeat="reserva in event.reservas"
 						 ng-show="event.ReservaCantidad >= 1">
 						<div class="stats pull-left">
                                     <span id="iconoReserva" class="category text-capitalize">
-                                        <i style="color: #4caf50" ng-show="reserva.tipo == 'MESA'"
+                                        <i style="color: #4caf50" ng-show="reserva.tipo == 'Mesa'"
 										   class="fa fa-star"></i>
-                                        <i style="color: #f44336" ng-show="reserva.tipo == 'PREVENTA'"
+                                        <i style="color: #f44336" ng-show="reserva.tipo == 'Preventa'"
 										   class="fa fa-ticket "></i>
-                                        <i style="color: #c8c8c8" ng-show="reserva.tipo == 'VIP'"
+                                        <i style="color: #c8c8c8" ng-show="reserva.tipo == 'Vip'"
 										   class="fa fa-diamond"></i>
-                                        <i style="color: #ff9800" ng-show="reserva.tipo == 'ESPECIAL'"
+                                        <i style="color: #ff9800" ng-show="reserva.tipo == 'Especial'"
 										   class="fa fa-certificate"></i>
-                                        <i style="color: #00bcd4" ng-show="reserva.tipo == 'BOTELLAS'"
+                                        <i style="color: #00bcd4" ng-show="reserva.tipo == 'Botella'"
 										   class="fa fa-glass"></i>
                                         <span>{{reserva.tipo }}</span>
                                     </span>
@@ -75,7 +74,7 @@
 				<div class="stats">
 					<p class="category">
 						<i class="material-icons">event</i>
-						{{event.date | date:"EEEE dd','MMMM" }}
+						{{event.date | date:"EEEE dd','MMMM"}}
 					</p>
 				</div>
 				<div class="stats pull-right">

@@ -1,155 +1,111 @@
-<div>
-    <div class="nav-center">
-        <ul class="nav nav-pills nav-pills-rose nav-pills-icons row" role="tablist">
-            <!--
-color-classes: "nav-pills-primary", "nav-pills-info", "nav-pills-success", "nav-pills-warning","nav-pills-danger"
--->
-            <li class="active col-md-3">
-                <a href="#tabVentas" target="_blank" role="tab" data-toggle="tab">Reservas</a>
+<div class="card">
+
+    <div class="card-header card-header-tabs   text-center navbar-fixed-top" data-background-color="purple" style="
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-left: 0px;
+    padding-right: 0px;
+    position: sticky;
+    background: #191919;
+    box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+
+">
+        <p class="category"> total asistentes</p>
+
+        <ul class="nav nav-tabs nav-tabs-navigation " role="tablist">
+
+            <li class="active col-md-4 col-xs-4"">
+                <a href="#tabVentas" target="#tabVentas" role="tab" data-toggle="tab">Reservas</a>
             </li>
-            <li class="col-md-3">
-                <a href="#tabPuerta" target="_blank" role="tab" data-toggle="tab">RR.PP</a>
+            <li class="col-md-4 col-xs-4">
+                <a href="#tabPuerta" target="#tabPuerta" role="tab" data-toggle="tab">RR.PP</a>
             </li>
-            <li class="col-md-3">
-                <a href="#tabListaGratis" target="_blank" role="tab" data-toggle="tab">LISTA</a>
-            </li>
-            <li class="pull-right">
-                <p>120</p>
-                <p><small>Total asistentes</small></p>
+            <li class="col-md-4 col-xs-4">
+                <a href="#tabListaGratis" target="#tabListaGratis"  role="tab" data-toggle="tab">LISTA</a>
             </li>
         </ul>
+
     </div>
-    <div class="tab-content">
-        <div class="tab-pane active" id="tabVentas">
-            <div class="card">
-                <div class="card-header" data-background-color="purple">
-                    <h4 class="card-title">VENTAS
-                        <button data-ng-click="abrirLectorQr()"
-                                style="float: right; margin: 0px 0px!important; top: 2px;"
-                                class="btn btn-sm btn-success ">Leer QR
-                        </button>
-                    </h4>
-                    <p class="category"></p>
-                </div>
-                <div class="card-content table-responsive">
-                    <table class="table">
-                        <thead class="text-primary">
-                        <th class="col-xs-6">NOMBRE</th>
-                        <th style="margin-right: 100px">CANTIDAD</th>
+    <div class="card-content">
+        <div class="tab-content table-responsive">
+            <div class="tab-pane active" id="tabVentas">
+                <table id="dtVentas" class="table table-striped">
+                    <tbody>
+                    <tr ng-repeat="ticketObtenido in ticketsObtenidos"
+                        data-ng-click="cobrarServicio(ticketObtenido)">
+                        <td>
+                            {{ticketObtenido.firstName}} {{ticketObtenido.lastName}}
+                            <p class="description">{{ticketObtenido.tipoEventservices}}</p>
+                        </td>
+                        <td class="text-right">
+                            {{ticketObtenido.cantidadUtilizada}} / {{ticketObtenido.cantidadDeCompra}}
+                        </td>
+                        <td class="text-right">
+                            <a ng-show="!ticketObtenido.paidOut" class="btn btn-sm btn-info">
+                                ${{(ticketObtenido.totalAPagar/ticketObtenido.cantidadDeCompra)*(ticketObtenido.cantidadDeCompra-ticketObtenido.cantidadUtilizada)}}
+                            </a>
+                            <a ng-show="ticketObtenido.paidOut"
+                               class="btn btn-sm btn-info">
+                                PAGADO
+                            </a>
+                        </td>
 
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="ticketObtenido in ticketsObtenidos"
-                            data-ng-click="cobrarServicio(ticketObtenido)">
+                    </tr>
 
-                            <td>
-                                {{ticketObtenido.firstName}}<br>
-                                {{ticketObtenido.lastName}}
-                                <br>
-                                <p class="description">{{ticketObtenido.tipoEventservices}} </p></td>
-                            <td>
-                                {{ticketObtenido.cantidadUtilizada}} / {{ticketObtenido.cantidadDeCompra}}
-                                <br>
-                                <button ng-show="!ticketObtenido.paidOut"
-                                        class="btn btn-sm btn-info">
-                                    $
-                                    {{(ticketObtenido.totalAPagar/ticketObtenido.cantidadDeCompra)*(ticketObtenido.cantidadDeCompra-ticketObtenido.cantidadUtilizada)}}
-                                </button>
-                                <button ng-show="ticketObtenido.paidOut"
-                                        class="btn btn-sm btn-info">
-                                    PAGADO
-                                </button>
-                            </td>
-
-                        </tr>
-
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
-        </div>
-        <div class="tab-pane" id="tabPuerta">
-            <div class="card">
-                <div class="card-header" data-background-color="purple">
-                    <h4 class="card-title">RR.PP
-                        <button data-ng-click="AgregarPersonas('noRRPP','noRRPP')"
-                                style="float: right; margin: 0px 0px!important; top: 2px;"
-                                class="btn btn-sm btn-success ">BOLETERIA
-                        </button>
-                    </h4>
-                    <p class="category"></p>
-                </div>
-                <div class="card-content table-responsive">
-                    <table class="table">
-                        <thead class="text-primary">
-                        <th>NOMBRE</th>
-                        <th>AGREGAR</th>
-                        <th>N°</th>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="rrpp in rrpps">
-                            <td>{{rrpp.name}}</td>
-                            <td class="text-primary">
-                                <p ng-click="AgregarPersonas($index,rrpp)" class="btn btn-sm btn-info">
-                                    <i class="material-icons">add</i>
-                                </p>
-                            </td>
-                            <td>
-                                {{rrpp.numeroTotal}}
-                            </td>
-                        </tr>
+            <div class="tab-pane" id="tabPuerta">
+                <table class="table">
+                    <thead class="text-primary">
+                    <th>NOMBRE</th>
+                    <th>AGREGAR</th>
+                    <th>N°</th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="rrpp in rrpps">
+                        <td>{{rrpp.name}}</td>
+                        <td class="text-primary">
+                            <p ng-click="AgregarPersonas($index,rrpp)" class="btn btn-sm btn-info">
+                                <i class="material-icons">add</i>
+                            </p>
+                        </td>
+                        <td>
+                            {{rrpp.numeroTotal}}
+                        </td>
+                    </tr>
 
-                        </tbody>
-                    </table>
-
-                </div>
+                    </tbody>
+                </table>
             </div>
-        </div>
-        <div class="tab-pane" id="tabListaGratis">
-            <div class="card">
-                <div class="card-header" data-background-color="purple">
-                    <h4 class="title">Lista Gratis
+            <div class="tab-pane" id="tabListaGratis">
+                <table class="table">
+                    <thead class="text-primary">
+                    <th class="col-xs-6">NOMBRE</th>
+                    <th style="margin-right: 100px">CANTIDAD</th>
 
-                        <button data-ng-click="abrirLectorQr()"
-                                style="float: right; margin: 0px 0px!important; top: 2px;"
-                                class="btn btn-sm btn-success ">Leer QR
-                        </button>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="user in listaGratis" data-ng-click="abrirListaGratis(user)">
 
+                        <td>
+                            {{user.displayName}}
+                            <br>
+                            <p class="description">LISTA GRATIS </p></td>
+                        <td>
+                            {{user.totalAsist}} / {{user.totalList}}
+                            <br>
+                            <button
+                                    class="btn btn-sm btn-info">
+                                GRATIS
+                            </button>
 
-                    </h4>
-                    <p class="category"></p>
-                </div>
-                <div class="card-content table-responsive">
-                    <table class="table">
-                        <thead class="text-primary">
-                        <th class="col-xs-6">NOMBRE</th>
-                        <th style="margin-right: 100px">CANTIDAD</th>
+                        </td>
 
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="user in listaGratis" data-ng-click="abrirListaGratis(user)">
+                    </tr>
 
-                            <td>
-                                {{user.displayName}}
-                                <br>
-                                <p class="description">LISTA GRATIS </p></td>
-                            <td>
-                                {{user.totalAsist}} / {{user.totalList}}
-                                <br>
-                                <button
-                                        class="btn btn-sm btn-info">
-                                    GRATIS
-                                </button>
-
-                            </td>
-
-                        </tr>
-
-                        </tbody>
-                    </table>
-
-
-                </div>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -270,7 +226,8 @@ color-classes: "nav-pills-primary", "nav-pills-info", "nav-pills-success", "nav-
                 -
             </button>
             {{entradasHombre}}
-            <button class="btn btn-sm btn-info" data-ng-click="aumentarEntradasHombre(entradasHombre,entradasMujer)">
+            <button class="btn btn-sm btn-info"
+                    data-ng-click="aumentarEntradasHombre(entradasHombre,entradasMujer)">
                 +
             </button>
             <br>
@@ -451,7 +408,8 @@ color-classes: "nav-pills-primary", "nav-pills-info", "nav-pills-success", "nav-
                 -
             </button>
             {{entradasHombre}}
-            <button class="btn btn-sm btn-info" data-ng-click="aumentarEntradasHombre(entradasHombre,entradasMujer)">
+            <button class="btn btn-sm btn-info"
+                    data-ng-click="aumentarEntradasHombre(entradasHombre,entradasMujer)">
                 +
             </button>
             <br>
@@ -493,3 +451,4 @@ color-classes: "nav-pills-primary", "nav-pills-info", "nav-pills-success", "nav-
     </style>
 
 </script>
+
