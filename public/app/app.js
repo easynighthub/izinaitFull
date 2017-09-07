@@ -13,6 +13,7 @@ angular.module('myApp', [
     'myApp.detalleClub',
     'myApp.codigo',
     'myApp.rrpp',
+    'myApp.tickets',
     'myApp.version'
 ]).config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider, ngMetaProvider) {
     $locationProvider.hashPrefix('!');

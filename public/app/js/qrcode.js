@@ -1691,3 +1691,8 @@ var update_qrcode = function () {
     document.getElementById('qr').innerHTML = create_qrcode(text);
 };
 
+var ticketsQr = function (qrId) {
+    var text = qrId;
+    document.getElementById('ticketQr').innerHTML = create_qrcode(text);
+};
+

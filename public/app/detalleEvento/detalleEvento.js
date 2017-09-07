@@ -723,6 +723,14 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                             firebase.database().ref('users/' + $scope.usuarioLogeado.$id).update(
                                                 {celular: $scope.newTicket.celular});
 
+                                            firebase.database().ref('users/' + $scope.usuarioLogeado.$id + '/tickets/'+ $scope.newTicket.ticketId).set(
+                                                {
+                                                    ticketId : $scope.newTicket.ticketId,
+                                                    eventId : $scope.newTicket.eventId,
+
+                                                }
+                                            );
+
                                             firebase.database().ref('userQvo/' + $scope.usuarioLogeado.$id +'/charges/'+ response.data.id)
                                                 .update(response.data);
 

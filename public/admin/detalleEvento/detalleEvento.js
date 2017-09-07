@@ -93,10 +93,13 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 serviciosEventRQ.$loaded().then(function () {
                                     $.when($scope.ticketsEvent = ticketsRQ).then(function dtServicios() {
                                         $('#dtServicios').DataTable(
+
                                             {
                                                 "pagingType": "simple_numbers"
                                                 , "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
-                                                , responsive: true
+                                                ,
+
+                                                responsive: true
                                                 ,buttons: ['csv']
                                                 , language: {
                                                 search: "_INPUT_"
@@ -137,14 +140,15 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 $.when($scope.listaGratis = listaGratisRQ).then(function dtListas() {
                                     $('#dtListas').DataTable(
                                         {
-                                            "pagingType": "simple_numbers"
-                                            , "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
-                                            , responsive: true
-                                            , language: {
-                                            search: "_INPUT_"
-                                            , searchPlaceholder: "Buscar"
+                                            "pagingType": "simple_numbers",
+                                            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+                                            responsive: true,
+                                            language:
+                                                {
+                                                search: "_INPUT_",
+                                                searchPlaceholder: "Buscar"
+                                                },
 
-                                        }
                                         }
                                     )
 
@@ -252,6 +256,9 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
 
             };
+
+
+
 
 
         }])

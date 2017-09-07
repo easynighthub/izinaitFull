@@ -28,7 +28,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
             var eventId = $routeParams.id ;
 
-            if(eventId != null){
+            if(eventId != null && eventId !="nuevoEvento"){
 
                 firebase.database().ref('events/').child(eventId).once('value', function (snapshot) {
                     var event = snapshot.val();
