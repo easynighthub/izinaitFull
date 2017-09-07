@@ -151,6 +151,7 @@
                             <option value="R&B">R&B</option>
                             <option value="Salsa">Salsa</option>
                             <option value="Techno">Techno</option>
+                            <option value="Trap">Trap</option>
                         </select>
                     </div>
 
@@ -237,7 +238,7 @@
 
                         <!--  <i style="float: left;" class="fa fa-venus" aria-hidden="true"></i>  -->
 
-                        <select ng-model="newEvent.clothing" required="true" class="selectpicker"
+                        <select data-ng-model="newEvent.clothing" id="clothing"  required="true" class="selectpicker"
                                 data-style="select-with-transition"
                                 title="Codigo de Vestimenta" data-size="7">
                             <option disabled>Codigo de vestimenta</option>
