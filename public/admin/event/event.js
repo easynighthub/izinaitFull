@@ -13,14 +13,15 @@ angular.module('myApp.event', ['ngRoute'])
         function ($scope, $routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope, $mdDialog) {
 
 
-
-
-
-
-
             var doorman = window.currentDoorman;
             var doormanLogeado = "";
             var rrppsCapturados = [];
+
+
+            $scope.filtroVenta = true;
+            $scope.filtroRrpp = false;
+            $scope.filtroLista = false;
+
             $scope.rrpps = [];
             var eventIdSelect = localStorage.getItem('eventIdSelect');
             //console.log(eventIdSelect);
@@ -66,50 +67,36 @@ angular.module('myApp.event', ['ngRoute'])
                         doormanLogeado = doormLocal;
                         //console.log(doormanLogeado);
 
-                        var listaGratis = $firebaseArray(firebase.database().ref('/events/'+ eventId+'/asist'));
+                        var listaGratis = $firebaseArray(firebase.database().ref('/events/' + eventId + '/asist'));
                         listaGratis.$loaded().then(function () {
                             $scope.AllListaGratis = listaGratis;
                             //console.log($scope.AllListaGratis);
                             $scope.listaGratis = $scope.AllListaGratis;
 
-                            if($scope.code != ""){
+                            if ($scope.code != "") {
                                 $scope.listaGratis = $filter('filter')($scope.AllListaGratis, {$id: $scope.code});
                                 //console.log($scope.code);
-                            };
+                            }
+                            ;
                         });
 
                         var tickets = $firebaseArray(firebase.database().ref('/tickets/' + eventId));
-                        $.when(tickets.$loaded().then(function () {
+                        tickets.$loaded().then(function () {
                             $scope.AllticketsObtenidos = tickets;
 
                             $scope.ticketsObtenidos = $scope.AllticketsObtenidos;
 
                             var rrpps = $firebaseArray(firebase.database().ref('/events/' + eventIdSelect + '/rrpps'));
                             rrpps.$loaded().then(function () {
-                                $scope.rrpps = rrpps;
-                                //console.log($scope.rrpps);
-
-                            });
+                                $scope.Allrrpps = rrpps
+                                $scope.rrpps = $scope.Allrrpps;
+                            })
 
                             if ($scope.code != "") {
                                 $scope.ticketsObtenidos = $filter('filter')($scope.AllticketsObtenidos, {userId: $scope.code});
                                 ////console.log($scope.code);
                             }
                             ;
-                        })).then(function dtReservas() {
-                            $('#dtVentas').DataTable(
-                                {
-                                    "pagingType": "simple_numbers"
-                                    , "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
-                                    , responsive: true
-                                    ,buttons: ['csv']
-                                    , language: {
-                                    search: "_INPUT_"
-                                    , searchPlaceholder: "Buscar"
-                                }
-                                }
-                            )
-
                         })
 
 
@@ -128,9 +115,41 @@ angular.module('myApp.event', ['ngRoute'])
                 location.href = $scope.url;
             };
 
-            $scope.filterEventsByText = function () {
-                ////console.log("adsadasdsa");
-                $scope.ticketsObtenidos = $filter('filter')($scope.AllticketsObtenidos, {displayName: $scope.filterNameInput});
+
+            $scope.verBoton = function (tab) {
+                switch (tab) {
+                    case 'tab1':
+                        $scope.filtroVenta = true;
+                        $scope.filtroRrpp = false;
+                        $scope.filtroLista = false;
+                        break;
+                    case 'tab2':
+                        $scope.filtroVenta = false;
+                        $scope.filtroRrpp = true;
+                        $scope.filtroLista = false;
+                        break;
+                    case 'tab3':
+                        $scope.filtroVenta = false;
+                        $scope.filtroRrpp = false;
+                        $scope.filtroLista = true;
+                        break;
+                    default:
+                }
+            }
+
+            $scope.filterEventsByText = function (filtro) {
+                switch (filtro) {
+                    case 'venta':
+                        $scope.ticketsObtenidos = $filter('filter')($scope.AllticketsObtenidos, {displayName: $scope.filterVentaInput});
+                        break;
+                    case 'rrpp':
+                        $scope.rrpps = $filter('filter')($scope.Allrrpps, {name: $scope.filterRrppInput});
+                        break;
+                    case 'lista':
+                        $scope.listaGratis = $filter('filter')($scope.AllListaGratis, {displayName: $scope.filterListaInput});
+                        break;
+                    default:
+                }
             }
 
 
@@ -143,7 +162,11 @@ angular.module('myApp.event', ['ngRoute'])
                     }
                     ;
                     if (ticketObtenido.cantidadUtilizada == ticketObtenido.cantidadDeCompra) {
-                        alert("TICKET FULL");
+                        swal({
+                            title: "Cobrado!",
+                            buttonsStyling: false,
+                            confirmButtonClass: "btn btn-success"
+                        });
                     } else {
                         $mdDialog.show({
                             controller: ControllerdialogCobrarServicio,
@@ -518,23 +541,23 @@ angular.module('myApp.event', ['ngRoute'])
             $scope.abrirListaGratis = function (userCapturado) {
                 var user = [];
                 //console.log(userCapturado);
-                firebase.database().ref('users/').child(userCapturado.$id).once('value', function(snapshot) {
+                firebase.database().ref('users/').child(userCapturado.$id).once('value', function (snapshot) {
                     var exists = (snapshot.val() !== null);
-                    if(exists){
+                    if (exists) {
                         user = snapshot.val();
-                    };
+                    }
+                    ;
 
                     $mdDialog.show({
                         controller: ControllerdialogAbrirListaGratis,
                         templateUrl: 'dialogAbrirListaGratis',
                         parent: angular.element(document.body),
-                        clickOutsideToClose:true,
-                        locals : {
-                            userCapturado : userCapturado,
-                            user : user
+                        clickOutsideToClose: true,
+                        locals: {
+                            userCapturado: userCapturado,
+                            user: user
                         }
                     });
-
 
 
                 });
@@ -543,7 +566,7 @@ angular.module('myApp.event', ['ngRoute'])
             };
 
 
-            function ControllerdialogAbrirListaGratis($scope, $mdDialog,$timeout, $q, $log, userCapturado,user) {
+            function ControllerdialogAbrirListaGratis($scope, $mdDialog, $timeout, $q, $log, userCapturado, user) {
                 //console.log(userCapturado);
                 $scope.doormanLogeado = doormanLogeado;
                 //console.log(user);
@@ -554,17 +577,17 @@ angular.module('myApp.event', ['ngRoute'])
                 $scope.entradasMujer = 0;
 
                 $scope.disminuirEntradasHombre = function (entradasHombre) {
-                    if(entradasHombre == 0){
+                    if (entradasHombre == 0) {
                         //console.log("no se puede disminiur mas");
-                    }else {
+                    } else {
                         //console.log("funciona")
                         $scope.entradasHombre -= 1;
                     }
                 };
                 $scope.disminuirEntradasMujer = function (entradasMujer) {
-                    if(entradasMujer == 0){
+                    if (entradasMujer == 0) {
                         //console.log("no se puede disminiur mas");
-                    }else {
+                    } else {
                         //console.log("funciona")
                         $scope.entradasMujer -= 1;
                     }
@@ -581,45 +604,43 @@ angular.module('myApp.event', ['ngRoute'])
                     $scope.entradasMujer += 1;
 
 
-
                 };
 
                 $scope.guardarEntrada = function () {
                     var total = $scope.userCapturado.totalAsist + $scope.entradasHombre + $scope.entradasMujer;
-                    var nuevoIngreso = firebase.database().ref('events/' + eventId  +'/asist'+$scope.userCapturado.$id +'/ingresos').push().key;
+                    var nuevoIngreso = firebase.database().ref('events/' + eventId + '/asist' + $scope.userCapturado.$id + '/ingresos').push().key;
 
 
-                    firebase.database().ref('events/' + eventId  +'/asist/'+$scope.userCapturado.$id).update({
-                        totalAsist : total
+                    firebase.database().ref('events/' + eventId + '/asist/' + $scope.userCapturado.$id).update({
+                        totalAsist: total
                     });
 
-                    firebase.database().ref('events/' + eventId  +'/asist/'+$scope.userCapturado.$id +'/ingresos/'+nuevoIngreso).update({
-                        cantidadHombres : $scope.entradasHombre,
-                        cantidadMujer : $scope.entradasMujer,
-                        fechaIngreso : new Date().getTime(),
-                        gratis : true,
+                    firebase.database().ref('events/' + eventId + '/asist/' + $scope.userCapturado.$id + '/ingresos/' + nuevoIngreso).update({
+                        cantidadHombres: $scope.entradasHombre,
+                        cantidadMujer: $scope.entradasMujer,
+                        fechaIngreso: new Date().getTime(),
+                        gratis: true,
 
                     });
 
                     var idClub = Object.keys(eventoCompleto.clubs)[0];
-                    var GuardarCliente='admins/'+eventoCompleto.admin+'/clients/'+idClub+'/'+$scope.userCapturado.userId;
+                    var GuardarCliente = 'admins/' + eventoCompleto.admin + '/clients/' + idClub + '/' + $scope.userCapturado.userId;
                     firebase.database().ref(GuardarCliente).set(true);
 
-                    firebase.database().ref('users/' + $scope.userCapturado.userId + '/events/' +eventoCompleto.admin+'/'+idClub+'/'+ eventId).set(new Date().getTime());
+                    firebase.database().ref('users/' + $scope.userCapturado.userId + '/events/' + eventoCompleto.admin + '/' + idClub + '/' + eventId).set(new Date().getTime());
 
 
                     $mdDialog.hide();
 
 
-
                 };
 
 
-                $scope.hide = function() {
+                $scope.hide = function () {
                     $mdDialog.hide();
                 };
 
-                $scope.cancel = function() {
+                $scope.cancel = function () {
                     $mdDialog.cancel();
 
                 };
@@ -630,7 +651,7 @@ angular.module('myApp.event', ['ngRoute'])
             // var element = document.querySelector('meta[property="og:image"]');
             // var content = element && element.getAttribute("content");
 
-            function ControllerdialogAbrirCode($scope, $mdDialog,$timeout, $q, $log, code) {
+            function ControllerdialogAbrirCode($scope, $mdDialog, $timeout, $q, $log, code) {
                 $scope.code = code;
 
             };
