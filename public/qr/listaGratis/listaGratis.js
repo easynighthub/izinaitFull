@@ -75,7 +75,7 @@ angular.module('myApp.listaGratis', ['ngRoute'])
             };
 
             $scope.filterEventsByText = function () {
-                console.log("adsadasdsa");
+                //console.log("adsadasdsa");
                 $scope.listaGratis = $filter('filter')($scope.AllListaGratis, {displayName: $scope.filterNameInput});
             }
 

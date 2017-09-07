@@ -47,6 +47,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
 
 
+    $('.main-panel').perfectScrollbar('update');
 
     if(validateUser()) {
         $routeProvider.otherwise({redirectTo: '/view1'});

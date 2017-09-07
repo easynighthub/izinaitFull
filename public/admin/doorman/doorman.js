@@ -39,6 +39,7 @@ angular.module('myApp.doorman', ['ngRoute'])
             $(sideClientes).removeClass("active");
             $(sideRrpp).removeClass("active");
             $(sideDoorman).addClass("active");
+            $('.main-panel').perfectScrollbar('update');
 
             firebase.database().ref('doormans/').child(doorman.$id || doorman.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);

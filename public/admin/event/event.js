@@ -122,16 +122,19 @@ angular.module('myApp.event', ['ngRoute'])
                         $scope.filtroVenta = true;
                         $scope.filtroRrpp = false;
                         $scope.filtroLista = false;
+                        $('.main-panel').perfectScrollbar('update');
                         break;
                     case 'tab2':
                         $scope.filtroVenta = false;
                         $scope.filtroRrpp = true;
                         $scope.filtroLista = false;
+                        $('.main-panel').perfectScrollbar('update');
                         break;
                     case 'tab3':
                         $scope.filtroVenta = false;
                         $scope.filtroRrpp = false;
                         $scope.filtroLista = true;
+                        $('.main-panel').perfectScrollbar('update');
                         break;
                     default:
                 }
