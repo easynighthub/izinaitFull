@@ -1,29 +1,39 @@
-<div class="card">
+<div class="card"  onload="$(this).scrollTop(0)">
 
-    <div class="card-header card-header-tabs   text-center navbar-fixed-top" data-background-color="purple" style="
+    <div class="card-header card-header-tabs  text-center navbar-fixed-top" data-background-color="purple" style="
     margin-left: -15px;
     margin-right: -15px;
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-bottom: 60px;
     position: sticky;
     background: #191919;
     box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 
 ">
-        <p class="category"> total asistentes</p>
 
-        <ul class="nav nav-tabs nav-tabs-navigation " role="tablist">
 
-            <li class="active col-md-4 col-xs-4"">
+        <ul class="nav nav-tabs pull-left" role="tablist" style="width: 85%;">
+
+
+            <li style="width: 33%;float: left">
                 <a href="#tabVentas" target="#tabVentas" role="tab" data-toggle="tab">Reservas</a>
             </li>
-            <li class="col-md-4 col-xs-4">
+            <li style="width: 33%;float: left">
                 <a href="#tabPuerta" target="#tabPuerta" role="tab" data-toggle="tab">RR.PP</a>
             </li>
-            <li class="col-md-4 col-xs-4">
-                <a href="#tabListaGratis" target="#tabListaGratis"  role="tab" data-toggle="tab">LISTA</a>
+            <li style="width: 33%;float: left">
+                <a href="#tabListaGratis" target="#tabListaGratis" role="tab" data-toggle="tab">LISTA</a>
             </li>
+
         </ul>
+        <div style="width: 15%; float:left;     padding-top: 5px;">
+            <div class="top-right-2 va-top inline-block text-center grey-70-c">
+                <p class="text-warning text-right">120</p>
+                <p class="smalltext text-right" style="font-size: 12px;line-height: 10px; margin-top: -10px">
+                    <small>Asistentes</small>
+                </p>
+            </div>
+        </div>
+
 
     </div>
     <div class="card-content">
