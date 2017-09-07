@@ -38,6 +38,7 @@ angular.module('myApp.clientes', ['ngRoute'])
             $(crearEventos).removeClass("active");
 
             $(verEventosFuturos).removeClass("active");
+            $(verEventosPasados).removeClass("active");
             $(sideClientes).addClass("active");
             $(sideRrpp).removeClass("active");
             $(sideDoorman).removeClass("active");

@@ -1,10 +1,15 @@
+/**
+ * Created by andro on 07-09-2017.
+ */
+
+
 'use strict';
 
-angular.module('myApp.view1', ['ngRoute'])
+angular.module('myApp.eventPast', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/view1', {
-                templateUrl: 'view1/view1.html',
-                controller: 'View1Ctrl',
+        $routeProvider.when('/eventPast', {
+                templateUrl: 'eventPast/eventPast.html',
+                controller: 'eventPastCtrl',
                 data: {
                     meta: {
                         'title': 'Home page',
@@ -16,21 +21,23 @@ angular.module('myApp.view1', ['ngRoute'])
     }])
 
 
-    .controller('View1Ctrl', ['$scope', '$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope', '$mdDialog',
+    .controller('eventPastCtrl', ['$scope', '$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope', '$mdDialog',
         function ($scope, $routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope, $mdDialog) {
 
 
             var admin = window.currentAdmin;
             var adminLogeado = "";
-            $scope.eventosFuturoFecha = new Date().getTime();
+            $scope.eventosPasadosFecha = new Date().getTime();
+
             $scope.eventsWithServices = [];
 
 
             $(sideEventos).addClass("active");
             $(crearEventos).removeClass("active");
 
-            $(verEventosFuturos).addClass("active");
-            $(verEventosPasados).removeClass("active");
+            $(verEventosFuturos).removeClass("active");
+            $(verEventosPasados).addClass("active");
+
             $(sideClientes).removeClass("active");
             $(sideRrpp).removeClass("active");
             $(sideDoorman).removeClass("active");
@@ -106,6 +113,7 @@ angular.module('myApp.view1', ['ngRoute'])
                                             });
                                         });
 
+
                                         $scope.eventsWithServices.push(x);
                                         //console.log($scope.eventsWithServices);
                                     });
@@ -135,9 +143,10 @@ angular.module('myApp.view1', ['ngRoute'])
                 // var currentDay = new Date().getTime();
                 var date = new Date().getTime();
                 // if (currentDay < value.toHour){
-                if ($scope.eventosFuturoFecha < value.toHour) {
+
+                if ($scope.eventosPasadosFecha > value.toHour) {
+
                     if (Object.keys(value.clubs) == adminLogeado.idClubWork) {
-                        console.log(Object.keys(value.clubs));
                         return true;
                     }
                 }
@@ -283,4 +292,3 @@ angular.module('myApp.view1', ['ngRoute'])
 
 
         }]);
-
