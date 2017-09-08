@@ -24,6 +24,7 @@ angular.module('myApp', [
     'myApp.detalleEvento',
     'myApp.clientes',
     'myApp.eventPast',
+    'myApp.perfil',
     'ui.bootstrap.datetimepicker'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {

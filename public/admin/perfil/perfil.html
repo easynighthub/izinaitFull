@@ -1,0 +1,106 @@
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header card-header-icon" data-background-color="rose">
+                <i class="material-icons">perm_identity</i>
+            </div>
+            <div class="card-content">
+                <h4 class="card-title">Editar Perfil -
+                    <small class="category">Complete su perfil</small>
+                </h4>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Nombre</label>
+                                <input type="text" class="form-control" ng-model="adminLogeado.firstName" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Nombre</label>
+                                <input type="text" class="form-control" ng-model="adminLogeado.lastName" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Correo Electronico</label>
+                                <input type="email" class="form-control" ng-model="adminLogeado.email" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group label-floating">
+                                <label class="control-label">NickName</label>
+                                <input type="email" class="form-control" ng-model="adminLogeado.nickName">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button  class="btn btn-rose pull-right">ACTUALIZAR</button>
+                    <div class="clearfix"></div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card card-profile">
+            <div class="card-avatar">
+                <a href="#pablo">
+                    <img class="img" src="{{adminLogeado.picture}}" />
+                </a>
+            </div>
+            <div class="card-content">
+                <h6 class="category text-gray">Productor</h6>
+                <h4 class="card-title">Clubs en los que trabajas</h4>
+                <p class="description" ng-repeat="club in adminLogeado.clubs">
+                    {{club.nombre}} -eliminar-
+
+                </p>
+                <a href="#pablo" class="btn btn-rose btn-round">Agregar Club</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header card-header-icon" data-background-color="rose">
+                <i class="material-icons">perm_identity</i>
+            </div>
+            <div class="card-content">
+                <h4 class="card-title">Cuenta Bancaria -
+                    <small class="category">Complete su cuenta bancarea para realizar los depositos</small>
+                </h4>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group label-floating">
+                            <label class="control-label">Nombre</label>
+                            <input type="text" class="form-control" ng-model="adminLogeado.firstName" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group label-floating">
+                            <label class="control-label">Nombre</label>
+                            <input type="text" class="form-control" ng-model="adminLogeado.lastName" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group label-floating">
+                            <label class="control-label">Correo Electronico</label>
+                            <input type="email" class="form-control" ng-model="adminLogeado.email" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group label-floating">
+                            <label class="control-label">NickName</label>
+                            <input type="email" class="form-control" ng-model="adminLogeado.nickName">
+                        </div>
+                    </div>
+                </div>
+
+                <button  class="btn btn-rose pull-right">ACTUALIZAR</button>
+                <div class="clearfix"></div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -28,6 +28,7 @@ angular.module('myApp.event', ['ngRoute'])
             var eventId = $routeParams.id || eventIdSelect; // id del evento entregador por url
             var eventoCompleto = [];
             $scope.code = '';
+
             if ($routeParams.code) {
                 $scope.code = $routeParams.code;
             }
