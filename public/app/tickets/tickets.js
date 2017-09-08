@@ -21,12 +21,11 @@ angular.module('myApp.tickets', ['ngRoute'])
         );
     }])
     .controller('ticketsCtrl', ['$scope','$http', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
-        function ($scope,$http, $firebaseObject, $firebaseArray, $filter, $rootScope, $routeProvider) {
+        function ($scope,$http, $firebaseObject, $firebaseArray, $filter, $rootScope) {
 
 
             var user = window.currentApp ;
             var usuarioLogeado = "";
-            $scope.hola ="no se que pasa"
 
             firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
@@ -192,6 +191,27 @@ angular.module('myApp.tickets', ['ngRoute'])
                     var clubKey = Object.keys(club)[0];
                     return $filter('filter')(clubsER, {$id: clubKey})[0].name;
                 }
+            };
+
+
+
+
+            var eventsRequest = $firebaseArray(firebase.database().ref().child('events'));
+            eventsRequest.$loaded().then(function () {
+                console.log(eventsRequest);
+                $scope.Allvents = eventsRequest;
+                $scope.events = $scope.Allvents;
+
+            });
+
+            $scope.getNombreEvento = function (idEvent) {
+                if (idEvent) {
+                    var eventoKey = idEvent;
+                    console.log(eventoKey);
+                    return $filter('filter')($scope.events,  {$id :eventoKey})[0].name;
+                };
+
+
             };
 
 
