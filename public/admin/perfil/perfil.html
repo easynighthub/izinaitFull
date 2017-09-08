@@ -67,32 +67,44 @@
             </div>
             <div class="card-content">
                 <h4 class="card-title">Cuenta Bancaria -
-                    <small class="category">Complete su cuenta bancarea para realizar los depositos</small>
+                    <small class="category">Complete su cuenta bancarea para realizar los depositosrfil</small>
                 </h4>
+
+
 
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group label-floating">
-                            <label class="control-label">Nombre</label>
-                            <input type="text" class="form-control" ng-model="adminLogeado.firstName" disabled>
-                        </div>
+                        <select class="selectpicker" data-style="select-with-transition" title="Seleccionar Banco" data-size="7">
+                            <option disabled> Seleccionar banco</option>
+                            <option value="2">Banco Estado </option>
+                            <option value="3">Banco BBVA</option>
+                            <option value="4">Banco Santander</option>
+                        </select>
                     </div>
                     <div class="col-md-6">
+                        <select class="selectpicker" data-style="select-with-transition" title="Tipo de cuenta" data-size="7">
+                            <option disabled> Tipo de cuenta</option>
+                            <option value="2">Cuenta Corriente </option>
+                            <option value="3">Cuenta Vista</option>
+                            <option value="4">Cuenta RUT</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group label-floating">
-                            <label class="control-label">Nombre</label>
-                            <input type="text" class="form-control" ng-model="adminLogeado.lastName" disabled>
+                            <label class="control-label">Nombre completo</label>
+                            <input type="text" class="form-control" ng-model="" >
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group label-floating">
-                            <label class="control-label">Correo Electronico</label>
-                            <input type="email" class="form-control" ng-model="adminLogeado.email" disabled>
+                            <label class="control-label">Numero de cuenta</label>
+                            <input type="email" class="form-control" ng-model="" >
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group label-floating">
-                            <label class="control-label">NickName</label>
-                            <input type="email" class="form-control" ng-model="adminLogeado.nickName">
+                            <label class="control-label">Rut</label>
+                            <input type="email" class="form-control" ng-model="">
                         </div>
                     </div>
                 </div>
