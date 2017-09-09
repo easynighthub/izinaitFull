@@ -7,14 +7,8 @@
     position: sticky;
     z-index: 9999;
     background: #191919;
-    box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
-
-">
-
-
+    box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);">
         <ul class="nav nav-tabs pull-left" role="tablist" style="width: 85%;">
-
-
             <li style="width: 33%;float: left" class="active">
                 <a href="#tabVentas" target="#tabVentas" ng-click="verBoton('tab1')" role="tab" data-toggle="tab">Reservas</a>
             </li>
@@ -36,8 +30,6 @@
                 </p>
             </div>
         </div>
-
-
     </div>
     <div class="card-content" style="padding-top: 0px">
         <div id="filtroVenta" class="card-content navbar-fixed-top"
@@ -77,7 +69,8 @@
                         </td>
                         <td class="text-right">
                             <a ng-show="!ticketObtenido.paidOut">
-                                ${{(ticketObtenido.totalAPagar/ticketObtenido.cantidadDeCompra)*(ticketObtenido.cantidadDeCompra-ticketObtenido.cantidadUtilizada)}}
+                                ${{(ticketObtenido.totalAPagar/ticketObtenido.cantidadDeCompra)*(ticketObtenido.cantidadDeCompra-ticketObtenido.cantidadUtilizada)
+                                | number:0}}
                             </a>
                             <a ng-show="ticketObtenido.paidOut">
                                 Pagado
@@ -127,424 +120,166 @@
 </div>
 
 
-<script id="dialogAbrirCode" type="text/ng-template">
-    <md-dialog aria-label="Confirmar Check In">
-        <center>
-            <table class="table text-center">
-                <thead class="text-primary text-center">
-                <th>Tipo</th>
-                <th>Valor</th>
-                <th>Cantidad</th>
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="text-primary">Gratis H.</td>
-                    <td>
-                        $ 0
-                    </td>
-                    <td>
-                        <i ng-click="disminuir(product)" class="text-primary material-icons"
-                           style="vertical-align: middle;">remove</i>
-                        <font>&nbsp;&nbsp;0&nbsp;&nbsp;</font>
-                        <i ng-click="aumentar(product)" class="text-primary material-icons"
-                           style="vertical-align: middle;">add</i>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-primary">Gratis M.</td>
-                    <td>
-                        $ 0
-                    </td>
-                    <td>
-                        <i ng-click="disminuir(product)" class="text-primary material-icons"
-                           style="vertical-align: middle;">remove</i>
-                        <font>&nbsp;&nbsp;0&nbsp;&nbsp;</font>
-                        <i ng-click="aumentar(product)" class="text-primary material-icons"
-                           style="vertical-align: middle;">add</i>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-primary">extra H.</td>
-                    <td>
-                        $ 0
-                    </td>
-                    <td>
-                        <i ng-click="disminuir(product)" class="text-primary material-icons"
-                           style="vertical-align: middle;">remove</i>
-                        <font>&nbsp;&nbsp;0&nbsp;&nbsp;</font>
-                        <i ng-click="aumentar(product)" class="text-primary material-icons"
-                           style="vertical-align: middle;">add</i>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-primary">extra M.</td>
-                    <td>
-                        $ 0
-                    </td>
-                    <td>
-                        <i ng-click="disminuir(product)" class="text-primary material-icons"
-                           style="vertical-align: middle;">remove</i>
-                        <font>&nbsp;&nbsp;0&nbsp;&nbsp;</font>
-                        <i ng-click="aumentar(product)" class="text-primary material-icons"
-                           style="vertical-align: middle;">add</i>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-primary">VIP H.</td>
-                    <td>
-                        $ 0
-                    </td>
-                    <td>
-                        <i ng-click="disminuir(product)" class="text-primary material-icons"
-                           style="vertical-align: middle;">remove</i>
-                        <font>&nbsp;&nbsp;0&nbsp;&nbsp;</font>
-                        <i ng-click="aumentar(product)" class="text-primary material-icons"
-                           style="vertical-align: middle;">add</i>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-primary">VIP M.</td>
-                    <td>
-                        $ 0
-                    </td>
-                    <td>
-                        <i ng-click="disminuir(product)" class="text-primary material-icons"
-                           style="vertical-align: middle;">remove</i>
-                        <font>&nbsp;&nbsp;0&nbsp;&nbsp;</font>
-                        <i ng-click="aumentar(product)" class="text-primary material-icons"
-                           style="vertical-align: middle;">add</i>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <button class="btn  "> X</button>
-            <button class="btn btn-info "> GUARDAR</button>
-        </center>
-    </md-dialog>
-
-</script>
-
 <script id="dialogCobrarServicio" type="text/ng-template">
     <md-dialog aria-label="Confirmar Check In">
+        <div class="content text-center">
+            <img class="foto text-center" src="{{user.picture}}">
+            <h5 style="font-weight: 900;font-style: italic;margin-bottom: 0px;">{{user.displayName}} </h5>
+            <div>
+                <div class="col-md-6 col-xs-6">
+                    <span class="description"><i class="fa fa-address-card-o grey"></i></span>
+                    <span>{{userEdad}} <small>Años</small></span>
 
-        <center>
-            <br>
-            <img class="fotoPerfilCodigo text-center" src="{{user.picture}}">
-            <br>
-            <h5>{{user.displayName}} </h5>
-            <p>tickets Utilizados : {{ticketObtenido.cantidadUtilizada}}</p>
-            <p> Habilitados : {{ingresosRestantes}} x {{ticketObtenido.tipoEventservices}} = $
-                {{ingresosRestantes*precioIndividual}}</p>
-
-            <i class="fa fa-mars"></i>
-            <button class="btn btn-sm btn-info" data-ng-click="disminuirEntradasHombre(entradasHombre)">
-                -
-            </button>
-            {{entradasHombre}}
-            <button class="btn btn-sm btn-info"
-                    data-ng-click="aumentarEntradasHombre(entradasHombre,entradasMujer)">
-                +
-            </button>
-            <br>
-            <i class="fa fa-venus"></i>
-            <button class="btn btn-sm btn-info" data-ng-click="disminuirEntradasMujer(entradasMujer)">
-                -
-            </button>
-            {{entradasMujer}}
-            <button class="btn btn-sm btn-info" data-ng-click="aumentarEntradasMujer(entradasHombre,entradasMujer)">
-                +
-            </button>
-            <br>
-
-
-            <div data-ng-show="!ticketObtenido.paidOut">
-                total a pagar : {{(entradasMujer +entradasHombre)*precioIndividual}}
-                <br>
-                <md-checkbox ng-click="obtenerTipoDePago('tarjeta')" ng-disabled="efectivo" ng-model="tarjeta"
-                             aria-label="Checkbox 1">
-                    TARJETA
-                </md-checkbox>
-                <md-checkbox ng-click="obtenerTipoDePago('efectivo')" ng-disabled="tarjeta" ng-model="efectivo"
-                             aria-label="Checkbox 1">
-                    EFECTIVO
-                </md-checkbox>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                    <span><i ng-show="user.gender == 'male'" class="fa fa-mars description"><span class="txt-white"> Hombre</span></i><i
+                            ng-show="user.female == 'female'" class="fa fa-venus description"><span class="txt-white"> Mujer</i>
+                    </span>
+                </div>
             </div>
-            <div data-ng-show="ticketObtenido.paidOut">
-                ESTE TICKET YA ESTA PAGADO.
+            <div class="col-md-12 col-xs-12" style="margin-top: 20px;">
+                <p style="font-size: 18px;">{{ingresosRestantes}} <span class="description">x</span>
+                    {{ticketObtenido.tipoEventservices}}
+                    <span class="description"> - $ </span>{{ingresosRestantes*precioIndividual | number:0}}</p>
+                <span class="description col-md-12">Cobrados : <span
+                        class="txt-white">{{ticketObtenido.cantidadUtilizada}}</span></span>
             </div>
 
-        </center>
 
-        <div class="text-right col-xs-offset-1">
-            <button data-ng-click="cancel()" class="btn btn-default btn-sm  col-xs-3"> x</button>
-            <button data-ng-click="guardarEntrada()" class="btn btn-primary  btn-sm  col-xs-8"> APLICAR</button>
+            <div class="col-md-12 col-xs-12 text-center zeroPadLados">
 
-        </div>
+                <div class="col-md-6 col-xs-6 zeroPadLados">
+                    <div style="border: 1px solid #fe0072; border-radius: 6px;margin-right: 5px;margin-left: 5px;">
 
 
-    </md-dialog>
-
-    <style>
-
-        .fotoPerfilCodigo {
-            width: 90px;
-            height: 90px;
-            border: 1px solid #fe0072;
-            box-shadow: 1px 1px 5px 0 rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-    </style>
-
-</script>
-
-
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-login">
-        <div class="modal-content">
-            <div class="card card-signup card-plain">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
-
-                    <div class="header header-primary text-center">
-                        <h4 class="card-title">Log in</h4>
-                        <div class="social-line">
-                            <a href="#pablo" class="btn btn-just-icon btn-simple">
-                                <i class="fa fa-facebook-square"></i>
-                            </a>
-                            <a href="#pablo" class="btn btn-just-icon btn-simple">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-                            <a href="#pablo" class="btn btn-just-icon btn-simple">
-                                <i class="fa fa-google-plus"></i>
-                            </a>
+                        <div class=" zeroPadLados padTopBot15">
+                            <button data-ng-click="disminuirEntradasHombre(entradasHombre)" type="button"
+                                    class="btn btn-info btn-round btn-fab btn-fab-mini">
+                                <i class="fa fa-minus" aria-hidden="true"></i>
+                            </button>
+                            <P style="margin-bottom: -10px;">
+                                <i class="fa fa-mars description" style="font-size: 18px; margin: 10px;"></i>
+                                <span style="font-size: 22px;">{{entradasHombre}}</span>
+                            <p class="description" style="margin-top: -10px;">Hombres</p>
+                            </P>
+                            <button data-ng-click="aumentarEntradasHombre(entradasHombre,entradasMujer)" type="button"
+                                    class="btn btn-info  btn-round btn-fab btn-fab-mini">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="modal-body">
-                    <form class="form" method="" action="">
-                        <p class="description text-center">Or Be Classical</p>
-                        <div class="card-content">
 
-                            <div class="input-group">
-								<span class="input-group-addon">
-									<i class="material-icons">face</i>
-								</span>
-                                <div class="form-group is-empty"><input type="text" class="form-control" placeholder="First Name..."><span class="material-input"></span></div>
-                            </div>
 
-                            <div class="input-group">
-								<span class="input-group-addon">
-									<i class="material-icons">email</i>
-								</span>
-                                <div class="form-group is-empty"><input type="text" class="form-control" placeholder="Email..."><span class="material-input"></span></div>
-                            </div>
+                <div class="col-md-6 col-xs-6 zeroPadLados">
+                    <div style="border: 1px solid #fe0072; border-radius: 6px;margin-right: 5px;margin-left: 5px;">
 
-                            <div class="input-group">
-								<span class="input-group-addon">
-									<i class="material-icons">lock_outline</i>
-								</span>
-                                <div class="form-group is-empty"><input type="password" placeholder="Password..." class="form-control"><span class="material-input"></span></div>
-                            </div>
 
-                            <!-- If you want to add a checkbox to this form, uncomment this code
-
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="optionsCheckboxes" checked>
-                                    Subscribe to newsletter
-                                </label>
-                            </div> -->
+                        <div class="zeroPadLados padTopBot15">
+                            <button data-ng-click="disminuirEntradasMujer(entradasMujer)" type="button"
+                                    class="btn btn-info btn-round btn-fab btn-fab-mini">
+                                <i class="fa fa-minus" aria-hidden="true"></i>
+                            </button>
+                            <P style="margin-bottom: -10px;">
+                                <i class="fa fa-venus description" style="font-size: 18px; margin: 10px;"></i>
+                                <span style="font-size: 22px;">{{entradasMujer}}</span>
+                            <p class="description" style="margin-top: -10px;">Mujeres</p>
+                            </P>
+                            <button data-ng-click="aumentarEntradasMujer(entradasHombre,entradasMujer)" type="button"
+                                    class="btn btn-info btn-round btn-fab btn-fab-mini">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
                         </div>
-                    </form>
+                    </div>
                 </div>
-                <div class="modal-footer text-center">
-                    <a href="#pablo" class="btn btn-primary btn-simple btn-wd btn-lg">Get Started</a>
+            </div>
+
+
+            <div class="col-md-12 col-xs-12 txt-white" style="padding-top: 10px" data-ng-show="!ticketObtenido.paidOut">
+                <div class="col-md-6 col-xs-6">
+                    <md-checkbox class="dotted" ng-click="obtenerTipoDePago('tarjeta')" ng-disabled="efectivo"
+                                 ng-model="tarjeta"
+                                 aria-label="Checkbox 1">
+                        Tarjeta
+                    </md-checkbox>
                 </div>
+                <div dir="rtl" class="col-md-6 col-xs-6">
+                    <md-checkbox class="dotted" ng-click="obtenerTipoDePago('efectivo')" ng-disabled="tarjeta"
+                                 ng-model="efectivo"
+                                 aria-label="Checkbox 1">
+                        Efectivo
+                    </md-checkbox>
+                </div>
+
+            </div>
+
+            <div data-ng-show="ticketObtenido.paidOut">
+                Ya ha sido cancelado.
             </div>
         </div>
-    </div>
-</div>
-
-
-<script id="dialogAgregarPersonas" type="text/ng-template">
-    <md-dialog aria-label="Confirmar Check In">
-        <center>
-            <table class="table text-center">
-                <thead class="text-primary text-center">
-                <th>Tipo</th>
-                <th>Valor</th>
-                <th>Cantidad</th>
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="text-primary">Gratis H.</td>
-                    <td>
-                        <input type="number" class="form-control " disabled placeholder="cobro"
-                               ng-model="valorGratisHombre"/>
-                    </td>
-                    <td>
-                        <i ng-click="disminuirgratisHombre(gratisHombre)" class="text-primary material-icons"
-                           style="vertical-align: middle;">remove</i>
-                        <font>&nbsp;&nbsp;{{gratisHombre}}&nbsp;&nbsp;</font>
-                        <i ng-click="aumentargratisHombre(gratisHombre)" class="text-primary material-icons"
-                           style="vertical-align: middle;">add</i>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-primary">Gratis M.</td>
-                    <td>
-                        <input type="number" class="form-control " disabled placeholder="cobro"
-                               ng-model="valorGratisMujer"/>
-                    </td>
-                    <td>
-
-                        <i ng-click="disminuirgratisgratisMujer(gratisMujer)" class="text-primary material-icons"
-                           style="vertical-align: middle;">remove</i>
-
-                        <font>&nbsp;&nbsp;{{gratisMujer}}&nbsp;&nbsp;</font>
-
-                        <i ng-click="aumentargratisMujer(gratisMujer)" class="text-primary material-icons"
-                           style="vertical-align: middle;">add</i>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-primary">extra H.</td>
-                    <td class="col-xs-3">
-                        <input type="number" class="form-control " placeholder="cobro"
-                               ng-model="valorExtraHombre"/>
-                    </td>
-                    <td>
-                        <i ng-click="disminuirExtraHombre(extraHombre)" class="text-primary material-icons"
-                           style="vertical-align: middle;">remove</i>
-                        <font>&nbsp;&nbsp;{{extraHombre}}&nbsp;&nbsp;</font>
-                        <i ng-click="aumentarExtraHombre(extraHombre)" class="text-primary material-icons"
-                           style="vertical-align: middle;">add</i>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-primary">extra M.</td>
-                    <td>
-                        <input type="number" class="form-control " placeholder="cobro"
-                               ng-model="valorExtraMujer"/>
-                    </td>
-                    <td>
-                        <i ng-click="disminuirExtraMujer(extraMujer)" class="text-primary material-icons"
-                           style="vertical-align: middle;">remove</i>
-                        <font>&nbsp;&nbsp;{{extraMujer}}&nbsp;&nbsp;</font>
-                        <i ng-click="aumentarExtraMujer(extraMujer)" class="text-primary material-icons"
-                           style="vertical-align: middle;">add</i>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-primary">VIP H.</td>
-                    <td>
-                        <input type="number" class="form-control " placeholder="cobro"
-                               ng-model="valorVipHombre"/>
-                    </td>
-                    <td>
-                        <i ng-click="disminuirVipHombre(vipHombre)" class="text-primary material-icons"
-                           style="vertical-align: middle;">remove</i>
-                        <font>&nbsp;&nbsp;{{vipHombre}}&nbsp;&nbsp;</font>
-                        <i ng-click="aumentarVipHombre(vipHombre)" class="text-primary material-icons"
-                           style="vertical-align: middle;">add</i>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-primary">VIP M.</td>
-                    <td>
-                        <input type="number" class="form-control " placeholder="cobro"
-                               ng-model="valorVipMujer"/>
-                    </td>
-                    <td>
-                        <i ng-click="disminuirVipMujer(vipMujer)" class="text-primary material-icons"
-                           style="vertical-align: middle;">remove</i>
-                        <font>&nbsp;&nbsp;{{vipMujer}}&nbsp;&nbsp;</font>
-                        <i ng-click="aumentarVipMujer(vipMujer)" class="text-primary material-icons"
-                           style="vertical-align: middle;">add</i>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <button data-ng-click="cancel()" class="btn"> X</button>
-            <button data-ng-click="guardar()" class="btn btn-info "> GUARDAR</button>
-
-
-        </center>
-    </md-dialog>
-
-</script>
-
-<script id="dialogAbrirListaGratis" type="text/ng-template">
-    <md-dialog aria-label="Confirmar Check In">
-
-        <center>
-            <br>
-            <img class="fotoPerfilCodigo text-center" src="{{user.picture}}">
-            <br>
-            <h5>{{user.displayName}} </h5>
-            <p>Total lista Utilizada : {{userCapturado.totalAsist}}</p>
-            <p> Lista restante : ilimitada.</p>
-
-            <i class="fa fa-mars"></i>
-            <button class="btn btn-sm btn-info" data-ng-click="disminuirEntradasHombre(entradasHombre)">
-                -
-            </button>
-            {{entradasHombre}}
-            <button class="btn btn-sm btn-info"
-                    data-ng-click="aumentarEntradasHombre(entradasHombre,entradasMujer)">
-                +
-            </button>
-            <br>
-            <i class="fa fa-venus"></i>
-            <button class="btn btn-sm btn-info" data-ng-click="disminuirEntradasMujer(entradasMujer)">
-                -
-            </button>
-            {{entradasMujer}}
-            <button class="btn btn-sm btn-info" data-ng-click="aumentarEntradasMujer(entradasHombre,entradasMujer)">
-                +
-            </button>
-            <br>
-
-
-            <div>
-                ESTA LISTA ES GRATIS
-            </div>
-
-        </center>
+        <span class="description" style="font-size: 18px;">Total : $ <span class="txt-white">{{(entradasMujer +entradasHombre)*precioIndividual | number:0}}</span></span>
 
         <div class="text-right col-xs-offset-1">
-            <button data-ng-click="cancel()" class="btn btn-default btn-sm  col-xs-3"> x</button>
-            <button data-ng-click="guardarEntrada()" class="btn btn-primary  btn-sm  col-xs-8"> APLICAR</button>
+            <button data-ng-click="cancel()" class="btn btn-default btn-sm col-md-3  col-xs-3">
+                <span class="btn-label">
+                    <i class="material-icons">close</i>
+                </span>
+
+            </button>
+            <button data-ng-click="guardarEntrada()" class="btn btn-success  btn-sm col-md-8 col-xs-8">
+                <span class="btn-label">
+                    <i class="material-icons">check</i>
+                </span>
+                Confirmar
+            </button>
 
         </div>
-
-
     </md-dialog>
 
     <style>
 
-        .fotoPerfilCodigo {
-            width: 90px;
-            height: 90px;
-            border: 1px solid #fe0072;
-            box-shadow: 1px 1px 5px 0 rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
+        .foto {
+            top: 0px;
+            max-width: 130px;
+            max-height: 130px;
+            margin: -80px auto 0;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px -12px rgba(254, 0, 114, 0.42), 0 4px 25px 0px rgba(254, 0, 114, 0.12), 0 8px 10px -5px rgba(254, 0, 114, 0.2);
+        }
+
+        .overflow {
+            overflow: visible;
+            box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+            border-radius: 12px;
+            padding: 0px 30px 30px 30px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 10px;
+            background: #191919;
+            color: #fff;
+            text-align: center;
+        }
+
+        .zeroPadLados {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        .padTopBot15 {
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        md-checkbox.dotted .md-icon {
+            border-color: #fe0072;
         }
     </style>
 
 </script>
 
-<div id="botonQR" style="
-    float: right;
-    position: sticky;
-    bottom: 20px;
-    right: 20px;">
-    <button id="codemodalshow" class="btn btn-rose btn-round relative text-center"
-            style="
-   width: 60px;
-   padding: 0px;
-   height: 60px;">
+<div id="botonQR" style="float: right;position: sticky;bottom: 30px;right: 20px;">
+    <button id="codemodalshow" data-ng-click="abrirLectorQr()" class="btn btn-rose btn-round relative text-center"
+            style="width: 60px;padding: 0px;height: 60px;">
         <i class="material-icons text-center txt-white" style="font-size: 40px;">fullscreen</i>
     </button>
 </div>
