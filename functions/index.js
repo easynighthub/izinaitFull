@@ -207,6 +207,49 @@ exports.consultarUsuarioQvo = functions.https.onRequest((req, res) => {
     });
 });
 
+
+exports.detalleEvento = functions.https.onRequest((req, res) => {
+   // const hours = (new Date().getHours() % 12) + 1 // london is UTC + 1hr;
+    const eventId = req.query.eventId;
+
+    console.log(res);
+
+    return admin.database().ref(`/events/${eventId}`).once('value').then(snapshot => {
+        const eventCapturado = snapshot.val();
+        console.log(eventCapturado);
+
+        res.status(200).send(`<!doctype html>
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title> ${eventCapturado.name}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="index, follow">
+
+
+    <meta property="og:site_name" content="${eventCapturado.name}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://izinait.com/bigben">
+    <meta property="og:image" content="${eventCapturado.image}">
+    <meta property="fb:app_id" content="1138664439526562">
+    <meta property="og:description"
+          content="${eventCapturado.name}"/>
+    <meta property="og:title" content="${eventCapturado.name}"/>
+    <link rel="canonical" href="https://izinait.com/bigben">
+    <link rel="alternate" hreflang="x-default" href="https://izinait.com/bigben">
+    </head>
+    <body>
+     
+    </body>
+  </html>`);
+    });
+
+
+
+
+});
+
 /*
 exports.crearUsuarioQvo = functions.database.ref('/userQvo/{userId}')
     .onWrite(event => {
