@@ -44,6 +44,10 @@ angular.module('myApp.clientes', ['ngRoute'])
             $(sideRrpp).removeClass("active");
             $(sideDoorman).removeClass("active");
 
+
+
+
+
             firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
                 //console.log(exists);
@@ -89,23 +93,25 @@ angular.module('myApp.clientes', ['ngRoute'])
                                     var clientesRequest = $firebaseObject(firebase.database().ref('/users/' + client));
                                     clientesRequest.$loaded().then(function () {
                                         $scope.cantidadDeClientesPorClub += 1;
-                                       var fechaActual = new Date().getTime();
-                                       var edadClient = ((fechaActual - (new Date(clientesRequest.birthday).getTime()))/ 31556926000);
+                                        var fechaActual = new Date().getTime();
+                                        var edadClient = ((fechaActual - (new Date(clientesRequest.birthday).getTime())) / 31556926000);
                                         clientesRequest.edad = edadClient;
 
-                                        $scope.sumaEdadClientes +=edadClient;
+                                        $scope.sumaEdadClientes += edadClient;
 
-                                        if(clientesRequest.gender == "female"){
-                                            $scope.cantidadDeMujeres +=1;
-                                        }else{
+                                        if (clientesRequest.gender == "female") {
+                                            $scope.cantidadDeMujeres += 1;
+                                        } else {
                                             $scope.cantidadDeHombres += 1;
-                                        };
-                                        $scope.porcentajeHombres = (($scope.cantidadDeHombres+$scope.cantidadDeMujeres)/$scope.cantidadDeHombres*100);
-                                        $scope.porcentajeMujeres = (($scope.cantidadDeHombres+$scope.cantidadDeMujeres)/$scope.cantidadDeMujeres*100);
-                                        if($scope.cantidadDeMujeres == 0){
+                                        }
+                                        ;
+                                        $scope.porcentajeHombres = (($scope.cantidadDeHombres + $scope.cantidadDeMujeres) / $scope.cantidadDeHombres * 100);
+                                        $scope.porcentajeMujeres = (($scope.cantidadDeHombres + $scope.cantidadDeMujeres) / $scope.cantidadDeMujeres * 100);
+                                        if ($scope.cantidadDeMujeres == 0) {
                                             $scope.porcentajeMujeres = 0;
-                                        };
-                                        if($scope.cantidadDeHombres == 0){
+                                        }
+                                        ;
+                                        if ($scope.cantidadDeHombres == 0) {
                                             $scope.porcentajeHombres = 0;
                                         }
 
@@ -136,7 +142,7 @@ angular.module('myApp.clientes', ['ngRoute'])
                 var EventAsists = 0;
                 //console.log(client);
 
-                firebase.database().ref('users/').child(client.$id+'/events/'+adminLogeado.$id+'/'+adminLogeado.idClubWork).once('value', function (snapshot) {
+                firebase.database().ref('users/').child(client.$id + '/events/' + adminLogeado.$id + '/' + adminLogeado.idClubWork).once('value', function (snapshot) {
                     var events = snapshot.val();
                     angular.forEach(events, function (event) {
                         if (event > lastDate) {
@@ -171,9 +177,9 @@ angular.module('myApp.clientes', ['ngRoute'])
 
              })*/
 
-            $("#buttonExportar").click(function(){
+            $("#buttonExportar").click(function () {
                 $("#dtClientes").table2excel({
-                    filename: "lista de clientes "+adminLogeado.displayName
+                    filename: "lista de clientes " + adminLogeado.displayName
                 });
             });
 

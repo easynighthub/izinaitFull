@@ -43,24 +43,24 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                             $scope.serviciosEvent.forEach(function (serv) {
                                     serv.fechaFin = null;
 
-                                if (serv.tipo == "Especial") {
+                                if (serv.tipo == "Esp") {
                                     serv.color = "#ff9800";
 
                                 }
                                 ;
-                                if (serv.tipo == "Preventa") {
+                                if (serv.tipo == "PREVENTA") {
                                     serv.color = "#f44336";
                                 }
                                 ;
-                                if (serv.tipo == "Mesa") {
+                                if (serv.tipo == "MESA") {
                                     serv.color = "#4caf50";
                                 }
                                 ;
-                                if (serv.tipo == "Botella") {
+                                if (serv.tipo == "BOTELLAS") {
                                     serv.color = "#00bcd4";
                                 }
                                 ;
-                                if (serv.tipo == "Vip") {
+                                if (serv.tipo == "VIP") {
                                     serv.color = "#c8c8c8";
                                 }
                                 ;
@@ -111,24 +111,24 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     var myDate = new Date(serv.fechaFin);
                     serv.fechaFin = myDate.toGMTString();
 
-                    if (serv.tipo == "Especial") {
+                    if (serv.tipo == "ESPECIAL") {
                         serv.color = "#ff9800";
 
                     }
                     ;
-                    if (serv.tipo == "Preventa") {
+                    if (serv.tipo == "PREVENTA") {
                         serv.color = "#f44336";
                     }
                     ;
-                    if (serv.tipo == "Mesa") {
+                    if (serv.tipo == "MESA") {
                         serv.color = "#4caf50";
                     }
                     ;
-                    if (serv.tipo == "Botella") {
+                    if (serv.tipo == "BOTELLAS") {
                         serv.color = "#00bcd4";
                     }
                     ;
-                    if (serv.tipo == "Vip") {
+                    if (serv.tipo == "VIP") {
                         serv.color = "#c8c8c8";
                     }
                     ;
@@ -321,7 +321,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             $scope.addNewChoicePREVENTA = function () {
                 var newItemNo = $scope.PREVENTA;
                 $scope.serviciosEvent.push({
-                        tipo: "Preventa",
+                        tipo: "PREVENTA",
                         color: '#f44336'
                     }
                 );
@@ -330,7 +330,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             $scope.addNewChoiceMESA = function () {
                 var newItemNo = $scope.MESA;
                 $scope.serviciosEvent.push({
-                        tipo: "Mesa",
+                        tipo: "MESA",
                         color: '#4caf50'
 
                     }
@@ -340,7 +340,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             $scope.addNewChoiceBOTELLAS = function () {
                 var newItemNo = $scope.BOTELLAS;
                 $scope.serviciosEvent.push({
-                        tipo: "Botella",
+                        tipo: "BOTELLAS",
                         color: '#00bcd4'
 
                     }
@@ -350,7 +350,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             $scope.addNewChoiceVIP = function () {
                 var newItemNo = $scope.VIP;
                 $scope.serviciosEvent.push({
-                        tipo: "Vip",
+                        tipo: "VIP",
                         color: '#c8c8c8'
                     }
                 );
@@ -359,7 +359,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             $scope.addNewChoiceESPECIAL = function () {
                 var newItemNo = $scope.ESPECIAL;
                 $scope.serviciosEvent.push({
-                        tipo: "Especial",
+                        tipo: "ESPECIAL",
                         color: '#ff9800'
                     }
                 );
