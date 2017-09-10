@@ -36,7 +36,7 @@ angular.module('myApp.view1', ['ngRoute'])
             $(sideDoorman).removeClass("active");
             $(contenido).css("padding-top", "30px ");
             $('.main-panel').perfectScrollbar('update');
-
+            $('.smartbanner').addClass('hide');
 
             firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);

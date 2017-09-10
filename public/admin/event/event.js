@@ -21,6 +21,9 @@ angular.module('myApp.event', ['ngRoute'])
             $scope.filtroVenta = true;
             $scope.filtroRrpp = false;
             $scope.filtroLista = false;
+            var admin = window.currentAdmin;
+
+            var adminLogeado = "";
 
             $scope.rrpps = [];
             var eventIdSelect = localStorage.getItem('eventIdSelect');
@@ -46,6 +49,27 @@ angular.module('myApp.event', ['ngRoute'])
             $(sideClientes).removeClass("active");
             $(sideRrpp).removeClass("active");
             $(sideDoorman).addClass("active");
+
+            firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function (snapshot) {
+                var exists = (snapshot.val() !== null);
+
+                if (exists == true) {
+                    var ref = firebase.database().ref('/admins/').child(admin.$id || admin.uid);
+                    var adminLocal = $firebaseObject(ref);
+                    adminLocal.$loaded().then(function () {
+                        adminLogeado = adminLocal;
+                        $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
+                        ////console.log(adminLogeado);
+
+                    });
+                } else {
+                    window.currentAdmin = "";
+                    $scope.adminLogeado = "";
+                    window.location = "https://www.izinait.com/admin.html";
+                }
+                ;
+
+            });
 
 
             firebase.database().ref('events/').child(eventId).once('value', function (snapshot) {
@@ -180,10 +204,10 @@ angular.module('myApp.event', ['ngRoute'])
                                 $('._md').addClass('overflow');
                             },
                             parent: angular.element(document.body),
-                            clickOutsideToClose:true,
-                            locals : {
-                                ticketObtenido : ticketObtenido,
-                                user : user
+                            clickOutsideToClose: true,
+                            locals: {
+                                ticketObtenido: ticketObtenido,
+                                user: user
                             }
                         });
                     }
@@ -195,8 +219,7 @@ angular.module('myApp.event', ['ngRoute'])
             };
 
 
-
-            function ControllerdialogCobrarServicio($scope, $mdDialog,$timeout, $q, $log, ticketObtenido,user) {
+            function ControllerdialogCobrarServicio($scope, $mdDialog, $timeout, $q, $log, ticketObtenido, user) {
                 console.log(ticketObtenido);
                 $scope.doormanLogeado = doormanLogeado;
                 console.log(user);
@@ -208,45 +231,45 @@ angular.module('myApp.event', ['ngRoute'])
                 console.log($scope.precioIndividual);
                 $scope.entradasHombre = 0;
                 $scope.entradasMujer = 0;
-                var tipoDePago ;
+                var tipoDePago;
 
                 var fechaActual = new Date().getTime();
-                var edadClient = ((fechaActual - (new Date(user.birthday).getTime()))/ 31556926000);
+                var edadClient = ((fechaActual - (new Date(user.birthday).getTime())) / 31556926000);
 
 
                 $scope.userEdad = Math.floor(edadClient);
                 $scope.disminuirEntradasHombre = function (entradasHombre) {
-                    if(entradasHombre == 0){
+                    if (entradasHombre == 0) {
                         console.log("no se puede disminiur mas");
-                    }else {
+                    } else {
                         console.log("funciona")
                         $scope.entradasHombre -= 1;
                     }
                 };
                 $scope.disminuirEntradasMujer = function (entradasMujer) {
-                    if(entradasMujer == 0){
+                    if (entradasMujer == 0) {
                         console.log("no se puede disminiur mas");
-                    }else {
+                    } else {
                         console.log("funciona")
                         $scope.entradasMujer -= 1;
                     }
 
                 };
-                $scope.aumentarEntradasHombre = function (entradasHombre,entradasMujer) {
-                    if(entradasHombre + entradasMujer < $scope.ingresosRestantes){
+                $scope.aumentarEntradasHombre = function (entradasHombre, entradasMujer) {
+                    if (entradasHombre + entradasMujer < $scope.ingresosRestantes) {
                         console.log("funciona")
                         $scope.entradasHombre += 1;
-                    }else{
+                    } else {
                         console.log("no se puede aumentar mas ");
                     }
 
                 };
-                $scope.aumentarEntradasMujer = function (entradasHombre,entradasMujer) {
-                    if(entradasHombre + entradasMujer < $scope.ingresosRestantes){
+                $scope.aumentarEntradasMujer = function (entradasHombre, entradasMujer) {
+                    if (entradasHombre + entradasMujer < $scope.ingresosRestantes) {
                         console.log("funciona")
                         $scope.entradasMujer += 1;
 
-                    }else {
+                    } else {
                         console.log("no se puede aumentar mas ");
                     }
 
@@ -254,44 +277,41 @@ angular.module('myApp.event', ['ngRoute'])
 
                 $scope.guardarEntrada = function () {
                     var total = $scope.ticketObtenido.cantidadUtilizada + $scope.entradasHombre + $scope.entradasMujer;
-                    var nuevoIngreso = firebase.database().ref('tickets/' + eventId  +'/'+$scope.ticketObtenido.$id +'/ingresos').push().key;
+                    var nuevoIngreso = firebase.database().ref('tickets/' + eventId + '/' + $scope.ticketObtenido.$id + '/ingresos').push().key;
 
                     var idClub = Object.keys(eventoCompleto.clubs)[0];
-                    var GuardarCliente='admins/'+eventoCompleto.admin+'/clients/'+idClub+'/'+ $scope.ticketObtenido.userId;
+                    var GuardarCliente = 'admins/' + eventoCompleto.admin + '/clients/' + idClub + '/' + $scope.ticketObtenido.userId;
                     firebase.database().ref(GuardarCliente).set(true);
-                    firebase.database().ref('users/' + $scope.ticketObtenido.userId + '/events/' +eventoCompleto.admin+'/'+idClub +'/'+ eventId).set(new Date().getTime());
+                    firebase.database().ref('users/' + $scope.ticketObtenido.userId + '/events/' + eventoCompleto.admin + '/' + idClub + '/' + eventId).set(new Date().getTime());
 
-                    if( $scope.ticketObtenido.paidOut)
-                    {
-                        firebase.database().ref('tickets/' + eventId  +'/'+$scope.ticketObtenido.$id).update({
-                            cantidadUtilizada : total,
-                            redeemed:true
+                    if ($scope.ticketObtenido.paidOut) {
+                        firebase.database().ref('tickets/' + eventId + '/' + $scope.ticketObtenido.$id).update({
+                            cantidadUtilizada: total,
+                            redeemed: true
                         });
 
 
-
-
-                        firebase.database().ref('tickets/' + eventId  +'/'+$scope.ticketObtenido.$id +'/ingresos/'+nuevoIngreso).update({
-                            cantidadHombres : $scope.entradasHombre,
-                            cantidadMujer : $scope.entradasMujer,
-                            fechaIngreso : new Date().getTime(),
-                            pagoTotal : 0,
-                            medioDePago : 'pagado'
+                        firebase.database().ref('tickets/' + eventId + '/' + $scope.ticketObtenido.$id + '/ingresos/' + nuevoIngreso).update({
+                            cantidadHombres: $scope.entradasHombre,
+                            cantidadMujer: $scope.entradasMujer,
+                            fechaIngreso: new Date().getTime(),
+                            pagoTotal: 0,
+                            medioDePago: 'pagado'
 
                         });
                         $mdDialog.hide();
-                    }else{
+                    } else {
 
-                        firebase.database().ref('tickets/' + eventId  +'/'+$scope.ticketObtenido.$id).update({
-                            cantidadUtilizada : total,
-                            redeemed:true
+                        firebase.database().ref('tickets/' + eventId + '/' + $scope.ticketObtenido.$id).update({
+                            cantidadUtilizada: total,
+                            redeemed: true
                         });
-                        firebase.database().ref('tickets/' + eventId  +'/'+$scope.ticketObtenido.$id +'/ingresos/'+nuevoIngreso).update({
-                            cantidadHombres : $scope.entradasHombre,
-                            cantidadMujer : $scope.entradasMujer,
-                            fechaIngreso : new Date().getTime(),
-                            pagoTotal : ($scope.entradasHombre + $scope.entradasMujer)*$scope.precioIndividual,
-                            medioDePago : tipoDePago
+                        firebase.database().ref('tickets/' + eventId + '/' + $scope.ticketObtenido.$id + '/ingresos/' + nuevoIngreso).update({
+                            cantidadHombres: $scope.entradasHombre,
+                            cantidadMujer: $scope.entradasMujer,
+                            fechaIngreso: new Date().getTime(),
+                            pagoTotal: ($scope.entradasHombre + $scope.entradasMujer) * $scope.precioIndividual,
+                            medioDePago: tipoDePago
 
                         });
 
@@ -299,24 +319,24 @@ angular.module('myApp.event', ['ngRoute'])
                     }
 
 
-
                 };
 
                 $scope.obtenerTipoDePago = function (tipoPagoSelecionado) {
-                    if(tipoDePago == tipoPagoSelecionado){
+                    if (tipoDePago == tipoPagoSelecionado) {
                         tipoDePago = "";
                         console.log(tipoDePago);
-                    }else{
+                    } else {
                         tipoDePago = tipoPagoSelecionado;
                         console.log(tipoDePago);
-                    };
+                    }
+                    ;
                 }
 
-                $scope.hide = function() {
+                $scope.hide = function () {
                     $mdDialog.hide();
                 };
 
-                $scope.cancel = function() {
+                $scope.cancel = function () {
                     $mdDialog.cancel();
 
                 };
