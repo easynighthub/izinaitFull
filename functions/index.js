@@ -49,7 +49,7 @@ exports.createUserQvo = functions.https.onRequest((req, res) => {
     fetch('https://playground.qvo.cl/customers', {
         method: 'POST',
         headers: {
-            'Authorization': 'Token ' + functions.config().qvo.token,
+            'Authorization': 'Bearer ' + functions.config().qvo.token,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -77,7 +77,7 @@ exports.agregarTarjetaUsuarioQvo = functions.https.onRequest((req, res) => {
     fetch('https://playground.qvo.cl/customers/' + userQvo + '/cards/inscriptions', {
         method: 'POST',
         headers: {
-            'Authorization': 'Token ' + functions.config().qvo.token,
+            'Authorization': 'Bearer ' + functions.config().qvo.token,
             'Content-Type': 'application/json'
 
         },
@@ -105,7 +105,7 @@ exports.obtenerUnaInscripcionDeTarjeta = functions.https.onRequest((req, res) =>
     fetch('https://playground.qvo.cl/customers/' + userQvo + '/cards/inscriptions/'+inscription_uid, {
         method: 'GET',
         headers: {
-            'Authorization': 'Token ' + functions.config().qvo.token,
+            'Authorization': 'Bearer ' + functions.config().qvo.token,
             'Content-Type': 'application/json'
 
         }
@@ -131,7 +131,7 @@ exports.cobrarTarjetaDeCredito = functions.https.onRequest((req, res) => {
     fetch('https://playground.qvo.cl/customers/' + userQvo + '/cards/' + tarjetaCredito + '/charge', {
         method: 'POST',
         headers: {
-            'Authorization': 'Token ' + functions.config().qvo.token,
+            'Authorization': 'Bearer ' + functions.config().qvo.token,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -161,7 +161,7 @@ exports.cobrarConWebPayPlus = functions.https.onRequest((req, res) => {
     fetch('https://playground.qvo.cl/webpay_plus/charge', {
         method: 'POST',
         headers: {
-            'Authorization': 'Token ' + functions.config().qvo.token,
+            'Authorization': 'Bearer ' + functions.config().qvo.token,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -191,7 +191,7 @@ exports.consultarUsuarioQvo = functions.https.onRequest((req, res) => {
 
     fetch('https://playground.qvo.cl/customers/' + userQvo, {
         headers: {
-            'Authorization': 'Token ' + functions.config().qvo.token,
+            'Authorization': 'Bearer ' + functions.config().qvo.token,
             'Content-Type': 'application/json'
         }
     }).then(function (res) {
@@ -210,39 +210,199 @@ exports.consultarUsuarioQvo = functions.https.onRequest((req, res) => {
 
 exports.detalleEvento = functions.https.onRequest((req, res) => {
    // const hours = (new Date().getHours() % 12) + 1 // london is UTC + 1hr;
-    const eventId = req.query.eventId;
+    const id = req.query.eventId;
+    const friend = req.query.friend;
 
-    console.log(res);
 
-    return admin.database().ref(`/events/${eventId}`).once('value').then(snapshot => {
+    var url = "";
+
+    console.log(id +" " + friend);
+
+
+    return admin.database().ref(`/events/${id}`).once('value').then(snapshot => {
         const eventCapturado = snapshot.val();
-        console.log(eventCapturado);
+        var rrppSelect = "";
 
-        res.status(200).send(`<!doctype html>
+        console.log(eventCapturado);
+        if(friend != undefined){
+            admin.database().ref(`/rrpps/${friend}`).once('value').then(snapshot => {
+                const rrppCapturado = snapshot.val();
+
+                if(rrppCapturado.name == undefined){rrppSelect = "izinait";
+                    url = "https://izinait.com/app/#!/detalleEvento?id=" + id;
+
+                    var title = eventCapturado.name + " te invita " + rrppSelect;
+                    var description = eventCapturado.eventDetails;
+
+                    res.status(200).send(
+                        `<!doctype html>
     <head>
      <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title> ${eventCapturado.name}</title>
+     
+    <title> ${title}</title>
+    
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="robots" content="index, follow">
+    <meta name='keywords' content='fiesta, santiago, ${eventCapturado.musicGenres}'>
+    <meta name='description' content='${description}'>
+    <meta name='subject' content='your website's subject'>
+    <meta name='copyright' content='IZINAIT '>
+    <meta name='language' content='ES'>
+    <meta name='Classification' content='eventos'>
+    <meta name='author' content='izinait, contacto@izinait.com'>
+    <meta name='url' content='https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1'>
+    <meta name='subtitle' content='This is my subtitle'>
 
-
-    <meta property="og:site_name" content="${eventCapturado.name}">
+    <meta property="og:site_name" content="${title}">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://izinait.com/bigben">
-    <meta property="og:image" content="${eventCapturado.image}">
+    <meta property="og:url" content="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
+    <meta property="og:image" itemprop="image"  content="${eventCapturado.image}">
+    <meta property="og:image:type"  content="image/jpeg">
+    <meta name="twitter:image:src" content="${eventCapturado.image}">
     <meta property="fb:app_id" content="1138664439526562">
-    <meta property="og:description"
-          content="${eventCapturado.name}"/>
-    <meta property="og:title" content="${eventCapturado.name}"/>
-    <link rel="canonical" href="https://izinait.com/bigben">
-    <link rel="alternate" hreflang="x-default" href="https://izinait.com/bigben">
+    <meta property="og:description" content="${description}"/>
+    <meta property="og:title" content="${title}"/>
+    
+    <link rel="canonical" href="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
+    <link rel="alternate" hreflang="x-default" href="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
+    
+    <META HTTP-EQUIV="REFRESH" CONTENT="1;URL=${url}"> 
     </head>
     <body>
-     
+     <link itemprop="thumbnailUrl" href="${eventCapturado.image}"> 
+      <span itemprop="thumbnail" itemscope itemtype="http://schema.org/ImageObject"> 
+      <link itemprop="url" href="${eventCapturado.image}"> 
+      </span>   
+    <script>
     </body>
-  </html>`);
+  </html>`
+
+                    );
+
+                }else{
+
+
+                console.log(rrppCapturado);
+                rrppSelect = rrppCapturado.name;
+                url = "https://izinait.com/app/#!/detalleEvento?id=" + id +"&friend=" + rrppCapturado.uid;
+
+                var title = eventCapturado.name + " te invita " + rrppSelect;
+                var description = eventCapturado.eventDetails;
+
+                res.status(200).send(
+                    `<!doctype html>
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=utf-8">
+     
+    <title> ${title}</title>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="index, follow">
+    <meta name='keywords' content='fiesta, santiago, ${eventCapturado.musicGenres}'>
+    <meta name='description' content='${description}'>
+    <meta name='subject' content='your website's subject'>
+    <meta name='copyright' content='IZINAIT '>
+    <meta name='language' content='ES'>
+    <meta name='Classification' content='eventos'>
+    <meta name='author' content='izinait, contacto@izinait.com'>
+    <meta name='url' content='https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1'>
+    <meta name='subtitle' content='This is my subtitle'>
+
+    <meta property="og:site_name" content="${title}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
+    <meta property="og:image" itemprop="image"  content="${eventCapturado.image}">
+    <meta property="og:image:type"  content="image/jpeg">
+    <meta name="twitter:image:src" content="${eventCapturado.image}">
+    <meta property="fb:app_id" content="1138664439526562">
+    <meta property="og:description" content="${description}"/>
+    <meta property="og:title" content="${title}"/>
+    
+    <link rel="canonical" href="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
+    <link rel="alternate" hreflang="x-default" href="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
+    
+    <META HTTP-EQUIV="REFRESH" CONTENT="1;URL=${url}"> 
+    </head>
+    <body>
+     <link itemprop="thumbnailUrl" href="${eventCapturado.image}"> 
+      <span itemprop="thumbnail" itemscope itemtype="http://schema.org/ImageObject"> 
+      <link itemprop="url" href="${eventCapturado.image}"> 
+      </span>   
+    <script>
+    </body>
+  </html>`
+
+                );   }
+
+            });
+
+        }else{
+            rrppSelect = "izinait";
+            url = "https://izinait.com/app/#!/detalleEvento?id=" + id;
+
+            var title = eventCapturado.name + " te invita " + rrppSelect;
+            var description = eventCapturado.eventDetails;
+
+            res.status(200).send(
+                `<!doctype html>
+    <head>
+     <meta http-equiv="content-type" content="text/html; charset=utf-8">
+     
+    <title> ${title}</title>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="index, follow">
+    <meta name='keywords' content='fiesta, santiago, ${eventCapturado.musicGenres}'>
+    <meta name='description' content='${description}'>
+    <meta name='subject' content='your website's subject'>
+    <meta name='copyright' content='IZINAIT '>
+    <meta name='language' content='ES'>
+    <meta name='Classification' content='eventos'>
+    <meta name='author' content='izinait, contacto@izinait.com'>
+    <meta name='url' content='https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1'>
+    <meta name='subtitle' content='This is my subtitle'>
+
+    <meta property="og:site_name" content="${title}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
+    <meta property="og:image" itemprop="image"  content="${eventCapturado.image}">
+    <meta property="og:image:type"  content="image/jpeg">
+    <meta name="twitter:image:src" content="${eventCapturado.image}">
+    <meta property="fb:app_id" content="1138664439526562">
+    <meta property="og:description" content="${description}"/>
+    <meta property="og:title" content="${title}"/>
+    
+    <link rel="canonical" href="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
+    <link rel="alternate" hreflang="x-default" href="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
+    
+    <META HTTP-EQUIV="REFRESH" CONTENT="1;URL=${url}"> 
+    </head>
+    <body>
+     <link itemprop="thumbnailUrl" href="${eventCapturado.image}"> 
+      <span itemprop="thumbnail" itemscope itemtype="http://schema.org/ImageObject"> 
+      <link itemprop="url" href="${eventCapturado.image}"> 
+      </span>   
+    <script>
+    </body>
+  </html>`
+
+            );
+        };
+
+
+
+
+
+
+
+
+
     });
 
 
@@ -374,7 +534,7 @@ exports.sendWelcomeEmail = functions.database.ref('/tickets/{eventId}/{userId}')
     const displayName = "andro ostoic"; // The display name of the user.
 // [END eventAttributes]
 
-    return sendWelcomeEmail(email, displayName);
+  //  return sendWelcomeEmail(email, displayName);
 });
 
 /*

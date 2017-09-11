@@ -5,6 +5,7 @@
 
 angular.module('myApp.clientes', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
+
         $routeProvider.when('/clientes', {
                 templateUrl: 'clientes/clientes.html',
                 controller: 'clientesCtrl',
@@ -15,6 +16,7 @@ angular.module('myApp.clientes', ['ngRoute'])
                     }
                 }
             }
+
         );
     }])
 
