@@ -364,6 +364,12 @@ angular.module('myApp.event', ['ngRoute'])
                 //console.log(index + "  " + rrppSelect);
 
 
+                if(rrppSelect.uid == "noRRPP")
+                {
+                    index = "noRRPP";
+                };
+
+
                 $mdDialog.show({
                     controller: ControllerdialogAgregarPersonas,
                     templateUrl: 'dialogAgregarPersonas',

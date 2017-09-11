@@ -60,7 +60,13 @@ angular.module('myApp.puerta', ['ngRoute'])
 
 
             $scope.AgregarPersonas = function (index, rrppSelect) {
-                console.log(index + "  " + rrppSelect);
+                console.log(index);
+                console.log(rrppSelect);
+
+                if(rrppSelect.uid == "noRRPP")
+                {
+                    index = "noRRPP";
+                };
 
 
                 $mdDialog.show({
@@ -81,6 +87,7 @@ angular.module('myApp.puerta', ['ngRoute'])
             // var content = element && element.getAttribute("content");
 
             function ControllerdialogAgregarPersonas($scope, $mdDialog, $timeout, $q, $log, rrppSelect, index) {
+
                 if (index == 'noRRPP') {
                     $scope.rrppSelect = [];
                     $scope.rrppSelect.uid = 'noRRPP';
