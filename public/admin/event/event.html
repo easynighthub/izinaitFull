@@ -544,6 +544,73 @@
 </script>
 <!--dialogo agregar Persona-->
 
+<!--dialogo lista gratis-->
+<script id="dialogAbrirListaGratis" type="text/ng-template" >
+    <md-dialog   aria-label="Confirmar Check In"  >
+
+        <center>
+            <br>
+            <img  class="fotoPerfilCodigo text-center" src="{{user.picture}}">
+            <br>
+            <h5>{{user.displayName}} </h5>
+            <p>Total lista Utilizada : {{userCapturado.totalAsist}}</p>
+            <p> Lista restante : ilimitada.</p>
+
+            <i  class="fa fa-mars"></i>
+            <button class="btn btn-sm btn-info" data-ng-click="disminuirEntradasHombre(entradasHombre)">
+                -
+            </button>
+            {{entradasHombre}}
+            <button class="btn btn-sm btn-info" data-ng-click="aumentarEntradasHombre(entradasHombre,entradasMujer)">
+                +
+            </button>
+            <br>
+            <i class="fa fa-venus"></i>
+            <button class="btn btn-sm btn-info" data-ng-click="disminuirEntradasMujer(entradasMujer)">
+                -
+            </button>
+            {{entradasMujer}}
+            <button class="btn btn-sm btn-info" data-ng-click="aumentarEntradasMujer(entradasHombre,entradasMujer)">
+                +
+            </button>
+            <br>
+
+
+            <div>
+                ESTA LISTA ES GRATIS
+            </div>
+
+        </center>
+
+        <div class="text-right col-xs-offset-1">
+            <button  data-ng-click="cancel()" class="btn btn-default btn-sm  col-xs-3"> x </button>
+            <button data-ng-click="guardarEntrada()" class="btn btn-primary  btn-sm  col-xs-8"> APLICAR </button>
+
+        </div>
+
+
+
+
+
+
+
+
+    </md-dialog>
+
+    <style>
+
+        .fotoPerfilCodigo {
+            width: 90px;
+            height: 90px;
+            border: 1px solid #fe0072;
+            box-shadow: 1px 1px 5px 0 rgba(255,255,255,0.1);
+            border-radius: 4px;
+        }
+    </style>
+
+</script>
+<!--dialogo lista gratis-->
+
 <!--boton leer qr reservas-->
 <div id="botonQR" style="float: right;position: sticky;bottom: 30px;right: 20px;">
     <button id="codemodalshow" data-ng-click="abrirLectorQr()" class="btn btn-rose btn-round relative text-center"

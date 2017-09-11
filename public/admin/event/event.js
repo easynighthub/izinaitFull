@@ -235,8 +235,6 @@ angular.module('myApp.event', ['ngRoute'])
 
                 var fechaActual = new Date().getTime();
                 var edadClient = ((fechaActual - (new Date(user.birthday).getTime())) / 31556926000);
-
-
                 $scope.userEdad = Math.floor(edadClient);
                 $scope.disminuirEntradasHombre = function (entradasHombre) {
                     if (entradasHombre == 0) {

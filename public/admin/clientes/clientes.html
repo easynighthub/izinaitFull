@@ -87,19 +87,17 @@
                 <th>Correo</th>
                 <th>Celular</th>
                 <th>Último evento</th>
-                <th>Clumpleaños</th>
-                <th>Eventos asistidos</th>
+                <!--<th>Clumpleaños</th>-->
+                <th class="text-right">Eventos asistidos</th>
                 </thead>
                 <tbody>
                 <tr ng-repeat="cliente in clientes">
                     <td>{{cliente.displayName}}</td>
                     <td>{{cliente.email}}</td>
-                    <td>
-                        {{cliente.celular}}
-                    </td>
+                    <td>{{cliente.celular}}</td>
                     <td>{{cliente.lastDate | date : 'shortDate' }}</td>
-                    <td>{{cliente.birthday}}</td>
-                    <td>{{cliente.EventAsists}}</td>
+                    <!--<td>{{cliente.birthday | date : 'DD/MM/YYYY'}}</td>-->
+                    <td class="text-right">{{cliente.EventAsists}}</td>
                 </tr>
 
                 </tbody>

@@ -1,4 +1,26 @@
+<div class="card col-md-12 col-xs12" style="
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url({{eventQliao.image}}) center center;
+    background-size: cover;
+    max-height: 250px;
+    min-height: 180px;
+    transform: perspective(1350px);
+">
+    <div style="top: 60%;
+    position: absolute;
+    bottom: 15px;
+    left: 10px;
+    color: #fff;
+    font-size: 1.3em;
+    text-shadow: 0 2px 5px rgba(33, 33, 33, 0.5);">
+        <h4 class="txt-white text-capitalize" style="font-weight: 400;">{{eventQliao.name}}</h4>
+        <h6 class="txt-white text-capitalize category" style="margin-top: -15px;"><i class="material-icons description">event</i> {{eventQliao.date | date:"EEEE dd', 'MMMM"}} <i class="material-icons description">alarm</i> {{eventQliao.date | date:"HH:mm" }} - {{eventQliao.toHour | date:"HH:mm" }}</h6>
+    </div>
+
+</div>
+
+
 <div id="detalleEvento">
+
 
     <div class="col-lg-3 col-md-6 col-sm-6 ">
         <div class="card card-stats">
