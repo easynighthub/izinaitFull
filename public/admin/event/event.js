@@ -299,6 +299,7 @@ angular.module('myApp.event', ['ngRoute'])
                             medioDePago: 'pagado'
 
                         });
+
                         $mdDialog.hide();
                     } else {
 
@@ -314,6 +315,7 @@ angular.module('myApp.event', ['ngRoute'])
                             medioDePago: tipoDePago
 
                         });
+
 
                         $mdDialog.hide();
                     }
@@ -366,6 +368,9 @@ angular.module('myApp.event', ['ngRoute'])
                     controller: ControllerdialogAgregarPersonas,
                     templateUrl: 'dialogAgregarPersonas',
                     parent: angular.element(document.body),
+                    onComplete: function () {
+                        $('._md').addClass('cuadroRRPP');
+                    },
                     clickOutsideToClose: true,
                     locals: {
                         rrppSelect: rrppSelect,
@@ -392,6 +397,8 @@ angular.module('myApp.event', ['ngRoute'])
 
                 } else {
                     $scope.rrppSelect = rrppSelect;
+                    $scope.rrppSelectElejido = rrppSelect;
+                    console.log($scope.rrppSelectElejido);
                 }
                 ;
                 //console.log(index);
@@ -401,9 +408,9 @@ angular.module('myApp.event', ['ngRoute'])
                 $scope.gratisMujer = 0;
                 $scope.valorGratisMujer = 0;
                 $scope.extraHombre = 0;
-                $scope.valorExtraHombre = 0;
+                $scope.valorExtraHombre = "";
                 $scope.extraMujer = 0;
-                $scope.valorExtraMujer = 0;
+                $scope.valorExtraMujer = "";
                 $scope.vipHombre = 0;
                 $scope.valorVipHombre = 0;
                 $scope.vipMujer = 0;

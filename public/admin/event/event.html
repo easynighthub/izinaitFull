@@ -1,5 +1,5 @@
 <div class="card">
-
+    <!--cabecera tablas-->
     <div class="card-header card-header-tabs  text-center navbar-fixed-top" data-background-color="purple" style="
     margin-left: -15px;
     margin-right: -15px;
@@ -8,6 +8,7 @@
     z-index: 9999;
     background: #191919;
     box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);">
+
         <ul class="nav nav-tabs pull-left" role="tablist" style="width: 85%;">
             <li style="width: 33%;float: left" class="active">
                 <a href="#tabVentas" target="#tabVentas" ng-click="verBoton('tab1')" role="tab" data-toggle="tab">Reservas</a>
@@ -31,7 +32,11 @@
             </div>
         </div>
     </div>
+    <!--cabecera tablas-->
+
+
     <div class="card-content" style="padding-top: 0px">
+        <!--filtros-->
         <div id="filtroVenta" class="card-content navbar-fixed-top"
              style="
               position: sticky;
@@ -52,9 +57,12 @@
                    ng-keyup="filterEventsByText('lista')"
                    ng-model="filterListaInput"/>
         </div>
+        <!--filtros-->
 
+        <!--contenidos tablas-->
         <div class="tab-content table-responsive">
 
+            <!--tabla reservas-->
             <div class="tab-pane active" id="tabVentas">
                 <table id="dtVentas" class="table table-hover">
                     <tbody>
@@ -84,6 +92,9 @@
                     </tbody>
                 </table>
             </div>
+            <!--tabla reservas-->
+
+            <!--tabla puerta-->
             <div class="tab-pane" id="tabPuerta">
                 <table id="dtPuerta" class="table  table-hover" style="width: 100%!important;">
                     <tbody>
@@ -101,6 +112,9 @@
                     </tbody>
                 </table>
             </div>
+            <!--tabla puerta-->
+
+            <!--tabla lista-->
             <div class="tab-pane" id="tabListaGratis">
                 <table class="table  table-hover">
                     <tbody>
@@ -115,11 +129,14 @@
                     </tbody>
                 </table>
             </div>
+            <!--tabla lista-->
         </div>
+        <!--contenidos tablas-->
     </div>
+    <!--contenidos tablas-->
 </div>
 
-
+<!--dialogo cobrar evento-->
 <script id="dialogCobrarServicio" type="text/ng-template">
     <md-dialog aria-label="Confirmar Check In">
         <div class="content text-center">
@@ -161,7 +178,9 @@
                             <P style="margin-bottom: -10px;">
                                 <i class="fa fa-mars description" style="font-size: 18px; margin: 10px;"></i>
                                 <span style="font-size: 22px;">{{entradasHombre}}</span>
-                            <p class="description" style="margin-top: -10px;"><small>Hombres</small></p>
+                            <p class="description" style="margin-top: -10px;">
+                                <small>Hombres</small>
+                            </p>
                             </P>
                             <button data-ng-click="disminuirEntradasHombre(entradasHombre)" type="button"
                                     class="btn btn-info btn-round btn-fab btn-fab-mini">
@@ -186,7 +205,9 @@
                             <P style="margin-bottom: -10px;">
                                 <i class="fa fa-venus description" style="font-size: 18px; margin: 10px;"></i>
                                 <span style="font-size: 22px;">{{entradasMujer}}</span>
-                            <p class="description" style="margin-top: -10px;"><small>Mujeres</small></p>
+                            <p class="description" style="margin-top: -10px;">
+                                <small>Mujeres</small>
+                            </p>
                             </P>
                             <button data-ng-click="disminuirEntradasMujer(entradasMujer)" type="button"
                                     class="btn btn-info btn-round btn-fab btn-fab-mini">
@@ -280,14 +301,255 @@
     </style>
 
 </script>
+<!--dialogo cobrar evento-->
 
+<!--dialogo agregar Persona-->
+<script id="dialogAgregarPersonas" type="text/ng-template">
+    <md-dialog aria-label="Confirmar Check In" width>
+        <div class="text-center">
+            <div>
+                <h5 style="font-weight: 900;font-style: italic;margin-bottom: 0px;">{{rrppSelectElejido.name}}</h5>
+            </div>
+            <div class="text-center col-md-12 col-xs-12">
+                <div class="col-md-12 col-xs-12">
+                    <span>Gratis</span>
+                </div>
+
+                <div style="float: left;padding: 0 10px;width: 50%">
+                    <div style="position: relative;border: 1px solid #fe0072;;border-radius: 6px;overflow: hidden;margin: 10px 0;color: #fff;padding: 6px 12px;">
+
+                        <div>
+
+                            <div>
+                                <P style="margin-bottom: -10px;">
+                                    <i class="fa fa-mars description" style="font-size: 18px; margin: 10px;"></i>
+                                    <span style="font-size: 22px;">{{gratisHombre}}</span>
+                                <p class="description" style="margin-top: -10px;margin-bottom: 0px;">
+                                    <small>Hombres</small>
+                                </p>
+                            </div>
+                            <button class="presion col-md-6 col-xs-6">
+                                <i ng-click="disminuirgratisHombre(gratisHombre)"
+                                   class="text-info material-icons"
+                                   style="vertical-align: middle; font-size: 30px;">remove_circle_outline</i>
+                            </button>
+                            <button class="presion col-md-6 col-xs-6">
+                                <i ng-click="aumentargratisHombre(gratisHombre)"
+                                   class="text-info material-icons"
+                                   style="vertical-align: middle; font-size: 30px;">add_circle_outline</i>
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+                <div style="float: left;padding: 0 10px;width: 50%">
+                    <div style="position: relative;border: 1px solid #fe0072;;border-radius: 6px;overflow: hidden;margin: 10px 0;color: #fff;padding: 6px 12px;">
+
+                        <div>
+
+                            <div>
+                                <P style="margin-bottom: -10px;">
+                                    <i class="fa fa-venus description" style="font-size: 18px; margin: 10px;"></i>
+                                    <span style="font-size: 22px;">{{gratisMujer}}</span>
+                                <p class="description" style="margin-top: -10px;margin-bottom: 0px;">
+                                    <small>Mujeres</small>
+                                </p>
+                            </div>
+                            <button class="presion col-md-6 col-xs-6">
+                                <i ng-click="disminuirgratisgratisMujer(gratisMujer)"
+                                   class="text-info material-icons"
+                                   style="vertical-align: middle; font-size: 30px;">remove_circle_outline</i>
+                            </button>
+                            <button class="presion col-md-6 col-xs-6">
+                                <i ng-click="aumentargratisMujer(gratisMujer)"
+                                   class="text-info material-icons"
+                                   style="vertical-align: middle; font-size: 30px;">add_circle_outline</i>
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center col-md-12 col-xs-12">
+                <div class="col-md-12 col-xs-12">
+                    <span>Extra</span>
+                </div>
+                <div style="float: left;padding: 0 10px;width: 50%">
+                    <div style="position: relative;border: 1px solid #fe0072;;border-radius: 6px;overflow: hidden;margin: 10px 0;color: #fff;padding: 6px 12px;">
+                        <div>
+                            <div>
+                                <P style="margin-bottom: -10px;">
+                                    <i class="fa fa-mars description" style="font-size: 18px; margin: 10px;"></i>
+                                    <span style="font-size: 22px;">{{extraHombre}}</span>
+                                <p class="description" style="margin-top: -10px;margin-bottom: 0px;">
+                                    <small>Hombres</small>
+                                </p>
+                                <div class="input-group"><span class="input-group-addon txt-white text-left"
+                                                               style="font-size: 22px">
+                                        $
+                                    </span>
+                                    <input type="number" class="form-control text-right txt-white"
+                                           placeholder="Valor"
+                                           ng-model="valorExtraMujer"/>
+                                </div>
+                            </div>
+                            <button class="presion col-md-6 col-xs-6">
+                                <i ng-click="disminuirExtraHombre(extraHombre)"
+                                   class="text-info material-icons"
+                                   style="vertical-align: middle; font-size: 30px;">remove_circle_outline</i>
+                            </button>
+                            <button class="presion col-md-6 col-xs-6">
+                                <i ng-click="aumentarExtraHombre(extraHombre)"
+                                   class="text-info material-icons"
+                                   style="vertical-align: middle; font-size: 30px;">add_circle_outline</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div style="float: left;padding: 0 10px;width: 50%">
+                    <div style="position: relative;border: 1px solid #fe0072;;border-radius: 6px;overflow: hidden;margin: 10px 0;color: #fff;padding: 6px 12px;">
+                        <div>
+                            <div>
+                                <P style="margin-bottom: -10px;">
+                                    <i class="fa fa-venus description" style="font-size: 18px; margin: 10px;"></i>
+                                    <span style="font-size: 22px;">{{extraMujer}}</span>
+                                <p class="description" style="margin-top: -10px;margin-bottom: 0px;">
+                                    <small>Mujeres</small>
+                                </p>
+                                <div class="input-group"><span class="input-group-addon txt-white text-left"
+                                                               style="font-size: 22px">
+                                        $
+                                    </span>
+                                    <input type="number" class="form-control text-right txt-white"
+                                           placeholder="Valor"
+                                           ng-model="valorExtraMujer"/>
+                                </div>
+                            </div>
+                            <button class="presion col-md-6 col-xs-6">
+                                <i ng-click="disminuirExtraMujer(extraMujer)"
+                                   class="text-info material-icons"
+                                   style="vertical-align: middle; font-size: 30px;">remove_circle_outline</i>
+                            </button>
+                            <button class="presion col-md-6 col-xs-6">
+                                <i ng-click="aumentarExtraMujer(extraMujer)"
+                                   class="text-info material-icons"
+                                   style="vertical-align: middle; font-size: 30px;">add_circle_outline</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center col-md-12 col-xs-12">
+                <div class="col-md-12 col-xs-12">
+                    <span>V.I.P</span>
+                </div>
+                <div style="float: left;padding: 0 10px;width: 50%">
+                    <div style="position: relative;border: 1px solid #fe0072;;border-radius: 6px;overflow: hidden;margin: 10px 0;color: #fff;padding: 6px 12px;">
+                        <div>
+                            <div>
+                                <P style="margin-bottom: -10px;">
+                                    <i class="fa fa-mars description" style="font-size: 18px; margin: 10px;"></i>
+                                    <span style="font-size: 22px;">{{vipHombre}}</span>
+                                <p class="description" style="margin-top: -10px;margin-bottom: 0px;">
+                                    <small>Hombres</small>
+                                </p>
+                            </div>
+                            <button class="presion col-md-6 col-xs-6">
+                                <i ng-click="disminuirVipHombre(vipHombre)"
+                                   class="text-info material-icons"
+                                   style="vertical-align: middle; font-size: 30px;">remove_circle_outline</i>
+                            </button>
+                            <button class="presion col-md-6 col-xs-6">
+                                <i ng-click="aumentarVipHombre(vipHombre)"
+                                   class="text-info material-icons"
+                                   style="vertical-align: middle; font-size: 30px;">add_circle_outline</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="float: left;padding: 0 10px; width: 50%">
+                    <div style="position: relative;border: 1px solid #fe0072;;border-radius: 6px;overflow: hidden;margin: 10px 0;color: #fff;padding: 6px 12px;">
+                        <div>
+                            <div>
+                                <P style="margin-bottom: -10px;">
+                                    <i class="fa fa-venus description" style="font-size: 18px; margin: 10px;"></i>
+                                    <span style="font-size: 22px;">{{vipMujer}}</span>
+                                <p class="description" style="margin-top: -10px;margin-bottom: 0px;">
+                                    <small>Mujeres</small>
+                                </p>
+                            </div>
+                            <button class="presion col-md-6 col-xs-6">
+                                <i ng-click="disminuirVipMujer(vipMujer)"
+                                   class="text-info material-icons"
+                                   style="vertical-align: middle; font-size: 30px;">remove_circle_outline</i>
+                            </button>
+                            <button class="presion col-md-6 col-xs-6">
+                                <i ng-click="aumentarVipMujer(vipMujer)"
+                                   class="text-info material-icons"
+                                   style="vertical-align: middle; font-size: 30px;">add_circle_outline</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="text-right col-xs-offset-1">
+                    <button data-ng-click="cancel()" class="btn btn-default btn-sm col-md-3  col-xs-3">
+                        <span class="btn-label">
+                            <i class="material-icons">close</i>
+                        </span>
+                    </button>
+                    <button data-ng-click="guardar()" class="btn btn-success  btn-sm col-md-8 col-xs-8">
+                        <span class="btn-label">
+                            <i class="material-icons">check</i>
+                        </span>
+                        Confirmar
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </md-dialog>
+
+    <style>
+        .cuadroRRPP {
+
+            background: #191919;
+            color: #fff;
+            text-align: center;
+            max-width: 90%;
+            max-height: 95%;
+            box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+            border-radius: 12px;
+        }
+
+        .icono {
+            font-size: 18px;
+            margin: 10px;
+        }
+
+        .presion {
+            float: left;
+            padding: 8px 0;
+            height: 40px;
+            display: block;
+            border: 0;
+            background: 0;
+        }
+    </style>
+
+</script>
+<!--dialogo agregar Persona-->
+
+<!--boton leer qr reservas-->
 <div id="botonQR" style="float: right;position: sticky;bottom: 30px;right: 20px;">
     <button id="codemodalshow" data-ng-click="abrirLectorQr()" class="btn btn-rose btn-round relative text-center"
             style="width: 60px;padding: 0px;height: 60px;">
         <i class="material-icons text-center txt-white" style="font-size: 40px;">fullscreen</i>
     </button>
 </div>
-
-
 
 
