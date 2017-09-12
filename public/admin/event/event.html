@@ -1,3 +1,4 @@
+<!--contenido-->
 <div class="card">
     <!--cabecera tablas-->
     <div class="card-header card-header-tabs  text-center navbar-fixed-top" data-background-color="purple" style="
@@ -9,6 +10,7 @@
     background: #191919;
     box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);">
 
+        <!--navegacion-->
         <ul class="nav nav-tabs pull-left" role="tablist" style="width: 85%;">
             <li style="width: 33%;float: left" class="active">
                 <a href="#tabVentas" target="#tabVentas" ng-click="verBoton('tab1')" role="tab" data-toggle="tab">Reservas</a>
@@ -23,6 +25,8 @@
             </li>
 
         </ul>
+        <!--navegacion-->
+
         <div style="width: 15%; float:left;     padding-top: 5px;">
             <div class="top-right-2 va-top inline-block text-center grey-70-c">
                 <p class="text-warning text-right">120</p>
@@ -35,6 +39,7 @@
     <!--cabecera tablas-->
 
 
+    <!--tablas-->
     <div class="card-content" style="padding-top: 0px">
         <!--filtros-->
         <div id="filtroVenta" class="card-content navbar-fixed-top"
@@ -99,7 +104,7 @@
                 <table id="dtPuerta" class="table  table-hover" style="width: 100%!important;">
                     <tbody>
                     <tr ng-repeat="rrpp in rrpps">
-                        <td>{{rrpp.name}}</td>
+                        <td  ng-style="{{rrpp.name}} == 'izinait' || {'color': '#fe0072'}">{{rrpp.name}}</td>
                         <td class="text-primary">
                             <p ng-click="AgregarPersonas($index,rrpp)" class="btn btn-sm btn-info">
                                 <i class="material-icons">add</i>
@@ -133,8 +138,10 @@
         </div>
         <!--contenidos tablas-->
     </div>
-    <!--contenidos tablas-->
+    <!--tablas-->
 </div>
+<!--contenido-->
+
 
 <!--dialogo cobrar evento-->
 <script id="dialogCobrarServicio" type="text/ng-template">
@@ -585,7 +592,8 @@
                 </div>
             </div>
             <div class="col-md-12 col-xs-12" style="margin-top: 20px;">
-                <p style="font-size: 18px;">{{userCapturado.totalAsist}}<span class="description">/</span>{{userCapturado.totalList}}</p>
+                <p style="font-size: 18px;">{{userCapturado.totalAsist}}<span class="description">/</span>{{userCapturado.totalList}}
+                </p>
             </div>
 
 

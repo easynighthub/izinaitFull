@@ -394,7 +394,7 @@ angular.module('myApp.event', ['ngRoute'])
                     $scope.rrppSelect.uid = 'noRRPP';
 
                     firebase.database().ref('events/' + eventId + '/rrpps/' + index).update({
-                        name: 'Sin RRPP',
+                        name: 'Sin RR.PP',
                         uid: index,
                         email: 'sinrrpp@izinait.com'
                     });
