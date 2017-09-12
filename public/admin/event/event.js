@@ -416,9 +416,9 @@ angular.module('myApp.event', ['ngRoute'])
                 $scope.extraMujer = 0;
                 $scope.valorExtraMujer = "";
                 $scope.vipHombre = 0;
-                $scope.valorVipHombre = 0;
+                $scope.valorVipHombre = "";
                 $scope.vipMujer = 0;
-                $scope.valorVipMujer = 0;
+                $scope.valorVipMujer = "";
 
                 $scope.aumentargratisHombre = function (gratisHombre) {
                     if (gratisHombre >= 0) {
@@ -602,6 +602,9 @@ angular.module('myApp.event', ['ngRoute'])
                         controller: ControllerdialogAbrirListaGratis,
                         templateUrl: 'dialogAbrirListaGratis',
                         parent: angular.element(document.body),
+                        onComplete: function () {
+                            $('._md').addClass('overflow');
+                        },
                         clickOutsideToClose: true,
                         locals: {
                             userCapturado: userCapturado,
@@ -617,14 +620,18 @@ angular.module('myApp.event', ['ngRoute'])
 
 
             function ControllerdialogAbrirListaGratis($scope, $mdDialog, $timeout, $q, $log, userCapturado, user) {
-                //console.log(userCapturado);
+                console.log(userCapturado);
                 $scope.doormanLogeado = doormanLogeado;
-                //console.log(user);
+                console.log(user);
                 $scope.user = user;
                 $scope.userCapturado = userCapturado;
                 //console.log($scope.userCapturado);
                 $scope.entradasHombre = 0;
                 $scope.entradasMujer = 0;
+
+                var fechaActual = new Date().getTime();
+                var edadClient = ((fechaActual - (new Date(user.birthday).getTime())) / 31556926000);
+                $scope.userEdad = Math.floor(edadClient);
 
                 $scope.disminuirEntradasHombre = function (entradasHombre) {
                     if (entradasHombre == 0) {

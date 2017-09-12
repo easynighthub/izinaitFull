@@ -46,22 +46,20 @@
                          ng-show="event.ReservaCantidad >= 1">
                         <div class="stats pull-left">
                                     <span id="iconoReserva" class="category text-capitalize">
-                                        <i style="color: #4caf50" ng-show="reserva.tipo == 'MESA'"
+                                        <i style="color: #4caf50" ng-show="reserva.tipo == 'Mesa'"
                                            class="fa fa-star"></i>
-                                        <i style="color: #f44336" ng-show="reserva.tipo == 'PREVENTA'"
+                                        <i style="color: #f44336" ng-show="reserva.tipo == 'Preventa'"
                                            class="fa fa-ticket "></i>
-                                        <i style="color: #c8c8c8" ng-show="reserva.tipo == 'VIP'"
+                                        <i style="color: #c8c8c8" ng-show="reserva.tipo == 'Vip'"
                                            class="fa fa-diamond"></i>
-                                        <i style="color: #ff9800" ng-show="reserva.tipo == 'ESPECIAL'"
+                                        <i style="color: #ff9800" ng-show="reserva.tipo == 'Especial'"
                                            class="fa fa-certificate"></i>
-                                        <i style="color: #00bcd4" ng-show="reserva.tipo == 'BOTELLA'"
+                                        <i style="color: #00bcd4" ng-show="reserva.tipo == 'Botella'"
                                            class="fa fa-glass"></i>
-                                        <span class="text-lowercase">{{reserva.ingresosTotales }}</span>
+                                        <span class="text-lowercase">{{reserva.ingresosTotales}}</span>
                                     </span>
                         </div>
-                        <span class="stats pull-right">
-                                    {{reserva.utilizados}}
-                                </span>
+                        <span class="stats pull-right">{{reserva.utilizados}}</span>
                     </div>
                     <div ng-show="event.ReservaCantidad < 1">
                         <p class="category text-center">Sin ventas</p>

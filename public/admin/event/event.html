@@ -389,7 +389,8 @@
                                                                style="font-size: 22px;padding-left: 0px;padding-right: 0px;">
                                         $
                                     </span>
-                                    <input type="number"  style="font-size: 22px" class="form-control text-right txt-white"
+                                    <input type="number" style="font-size: 22px"
+                                           class="form-control text-right txt-white"
                                            placeholder="Valor"
                                            ng-model="valorExtraHombre"/>
                                 </div>
@@ -421,7 +422,8 @@
                                                                style="font-size: 22px;padding-right: 0px;padding-left: 0px;">
                                         $
                                     </span>
-                                    <input type="number" style="font-size: 22px" class="form-control text-right txt-white"
+                                    <input type="number" style="font-size: 22px"
+                                           class="form-control text-right txt-white"
                                            placeholder="Valor"
                                            ng-model="valorExtraMujer"/>
                                 </div>
@@ -455,6 +457,15 @@
                                 <p class="description" style="margin-top: -10px;margin-bottom: 0px;">
                                     <small>Hombres</small>
                                 </p>
+                                <div class="input-group"><span class="input-group-addon txt-white text-left"
+                                                               style="font-size: 22px;padding-right: 0px;padding-left: 0px;">
+                                        $
+                                    </span>
+                                    <input type="number" style="font-size: 22px"
+                                           class="form-control text-right txt-white"
+                                           placeholder="Valor"
+                                           ng-model="valorVipHombre"/>
+                                </div>
                             </div>
                             <button class="presion col-md-6 col-xs-6">
                                 <i ng-click="disminuirVipHombre(vipHombre)"
@@ -480,6 +491,15 @@
                                 <p class="description" style="margin-top: -10px;margin-bottom: 0px;">
                                     <small>Mujeres</small>
                                 </p>
+                                <div class="input-group"><span class="input-group-addon txt-white text-left"
+                                                               style="font-size: 22px;padding-right: 0px;padding-left: 0px;">
+                                        $
+                                    </span>
+                                    <input type="number" style="font-size: 22px"
+                                           class="form-control text-right txt-white"
+                                           placeholder="Valor"
+                                           ng-model="valorVipMujer"/>
+                                </div>
                             </div>
                             <button class="presion col-md-6 col-xs-6">
                                 <i ng-click="disminuirVipMujer(vipMujer)"
@@ -545,66 +565,146 @@
 <!--dialogo agregar Persona-->
 
 <!--dialogo lista gratis-->
-<script id="dialogAbrirListaGratis" type="text/ng-template" >
-    <md-dialog   aria-label="Confirmar Check In"  >
-
-        <center>
-            <br>
-            <img  class="fotoPerfilCodigo text-center" src="{{user.picture}}">
-            <br>
-            <h5>{{user.displayName}} </h5>
-            <p>Total lista Utilizada : {{userCapturado.totalAsist}}</p>
-            <p> Lista restante : ilimitada.</p>
-
-            <i  class="fa fa-mars"></i>
-            <button class="btn btn-sm btn-info" data-ng-click="disminuirEntradasHombre(entradasHombre)">
-                -
-            </button>
-            {{entradasHombre}}
-            <button class="btn btn-sm btn-info" data-ng-click="aumentarEntradasHombre(entradasHombre,entradasMujer)">
-                +
-            </button>
-            <br>
-            <i class="fa fa-venus"></i>
-            <button class="btn btn-sm btn-info" data-ng-click="disminuirEntradasMujer(entradasMujer)">
-                -
-            </button>
-            {{entradasMujer}}
-            <button class="btn btn-sm btn-info" data-ng-click="aumentarEntradasMujer(entradasHombre,entradasMujer)">
-                +
-            </button>
-            <br>
+<script id="dialogAbrirListaGratis" type="text/ng-template">
 
 
+    <md-dialog aria-label="Confirmar Check In">
+        <div class="content text-center">
+            <img class="foto text-center" src="{{user.picture}}">
+            <h5 style="font-weight: 900;font-style: italic;margin-bottom: 0px;">{{user.displayName}} </h5>
             <div>
-                ESTA LISTA ES GRATIS
+                <div class="col-md-6 col-xs-6">
+                    <span class="description"><i class="fa fa-address-card-o grey"></i></span>
+                    <span>{{userEdad}} <small>Años</small></span>
+
+                </div>
+                <div class="col-md-6 col-xs-6">
+                    <span><i ng-show="user.gender == 'male'" class="fa fa-mars description"><span class="txt-white"> Hombre</span></i><i
+                            ng-show="user.female == 'female'" class="fa fa-venus description"><span class="txt-white"> Mujer</i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" style="margin-top: 20px;">
+                <p style="font-size: 18px;">{{userCapturado.totalAsist}}<span class="description">/</span>{{userCapturado.totalList}}</p>
             </div>
 
-        </center>
 
-        <div class="text-right col-xs-offset-1">
-            <button  data-ng-click="cancel()" class="btn btn-default btn-sm  col-xs-3"> x </button>
-            <button data-ng-click="guardarEntrada()" class="btn btn-primary  btn-sm  col-xs-8"> APLICAR </button>
+            <div class="col-md-12 col-xs-12 text-center zeroPadLados">
 
-        </div>
+                <div class="col-md-6 col-xs-6 zeroPadLados">
+                    <div style="border: 1px solid #fe0072; border-radius: 6px;margin-right: 5px;margin-left: 5px;">
 
 
+                        <div class=" zeroPadLados padTopBot15">
+
+                            <button data-ng-click="aumentarEntradasHombre(entradasHombre,entradasMujer)" type="button"
+                                    class="btn btn-info  btn-round btn-fab btn-fab-mini">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                            <P style="margin-bottom: -10px;">
+                                <i class="fa fa-mars description" style="font-size: 18px; margin: 10px;"></i>
+                                <span style="font-size: 22px;">{{entradasHombre}}</span>
+                            <p class="description" style="margin-top: -10px;">
+                                <small>Hombres</small>
+                            </p>
+                            </P>
+                            <button data-ng-click="disminuirEntradasHombre(entradasHombre)" type="button"
+                                    class="btn btn-info btn-round btn-fab btn-fab-mini">
+                                <i class="fa fa-minus" aria-hidden="true"></i>
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
 
 
+                <div class="col-md-6 col-xs-6 zeroPadLados">
+                    <div style="border: 1px solid #fe0072; border-radius: 6px;margin-right: 5px;margin-left: 5px;">
 
 
+                        <div class="zeroPadLados padTopBot15">
 
+                            <button data-ng-click="aumentarEntradasMujer(entradasHombre,entradasMujer)" type="button"
+                                    class="btn btn-info btn-round btn-fab btn-fab-mini">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                            <P style="margin-bottom: -10px;">
+                                <i class="fa fa-venus description" style="font-size: 18px; margin: 10px;"></i>
+                                <span style="font-size: 22px;">{{entradasMujer}}</span>
+                            <p class="description" style="margin-top: -10px;">
+                                <small>Mujeres</small>
+                            </p>
+                            </P>
+                            <button data-ng-click="disminuirEntradasMujer(entradasMujer)" type="button"
+                                    class="btn btn-info btn-round btn-fab btn-fab-mini">
+                                <i class="fa fa-minus" aria-hidden="true"></i>
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-12 col-xs-12 txt-white" style="padding-top: 10px" data-ng-show="!ticketObtenido.paidOut">
+                <span class="description" style="font-size: 18px;">Gratis Hasta: $ <span class="txt-white">{{(entradasMujer +entradasHombre)*precioIndividual | number:0}}</span></span>
+
+            </div>
+
+            <div class="text-right col-xs-offset-1">
+                <button data-ng-click="cancel()" class="btn btn-default btn-sm col-md-3  col-xs-3">
+                <span class="btn-label">
+                    <i class="material-icons">close</i>
+                </span>
+
+                </button>
+                <button data-ng-click="guardarEntrada()" class="btn btn-success  btn-sm col-md-8 col-xs-8">
+                <span class="btn-label">
+                    <i class="material-icons">check</i>
+                </span>
+                    Confirmar
+                </button>
+
+            </div>
 
     </md-dialog>
 
     <style>
 
-        .fotoPerfilCodigo {
-            width: 90px;
-            height: 90px;
-            border: 1px solid #fe0072;
-            box-shadow: 1px 1px 5px 0 rgba(255,255,255,0.1);
-            border-radius: 4px;
+        .foto {
+            top: 0px;
+            max-width: 130px;
+            max-height: 130px;
+            margin: -80px auto 0;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px -12px rgba(254, 0, 114, 0.42), 0 4px 25px 0px rgba(254, 0, 114, 0.12), 0 8px 10px -5px rgba(254, 0, 114, 0.2);
+        }
+
+        .overflow {
+            overflow: visible;
+            box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+            border-radius: 12px;
+            padding: 0px 30px 30px 30px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 10px;
+            background: #191919;
+            color: #fff;
+            text-align: center;
+        }
+
+        .zeroPadLados {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        .padTopBot15 {
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        md-checkbox.dotted .md-icon {
+            border-color: #fe0072;
         }
     </style>
 
