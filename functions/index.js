@@ -210,7 +210,7 @@ exports.consultarUsuarioQvo = functions.https.onRequest((req, res) => {
 
 exports.detalleEvento = functions.https.onRequest((req, res) => {
    // const hours = (new Date().getHours() % 12) + 1 // london is UTC + 1hr;
-    const id = req.query.eventId;
+    const id = req.query.id;
     const friend = req.query.friend;
 
 

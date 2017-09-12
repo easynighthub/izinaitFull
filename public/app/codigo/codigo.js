@@ -460,11 +460,47 @@ angular.module('myApp.codigo', ['ngRoute'])
                         .ok('Confirmar!')
                         .cancel('');
                     $mdDialog.show(confirm).then(function(result) {
-//validar que este correo no exista en la bd
-                        firebase.database().ref('users/' + user.$id).update({
-                            email: result
+                        //validar que este correo no exista en la bd
+                        var usersTodos = firebase.database().ref('/users/');
+                        var usersTodosRQ = $firebaseArray(usersTodos);
+                        usersTodosRQ.$loaded().then(function () {
+
+                            console.log(usersTodosRQ);
+                            var contador = 0;
+                            var existe = false ;
+                            angular.forEach(usersTodosRQ ,function (usersRecorridos) {
+                                if(usersRecorridos.email == result){
+                                    existe = true;
+                                };
+                                contador+=1;
+                                console.log(contador + " es igual a " + usersTodosRQ.length);
+
+                            });
+
+                            if(contador == usersTodosRQ.length)
+                            {
+                                if(existe != true){
+                                    console.log("no existe este correo");
+                                    firebase.database().ref('users/' + user.$id).update({
+                                     email: result
+                                    });
+                                    location.reload();
+
+                                }else{
+                                    alert("este correo ya existe");
+                                    location.reload();
+                                }
+                            };
+
+
                         });
-                        location.reload();
+
+
+
+
+
+
+
 
                     }, function() {
                         alert("TIENES QUE CONFIRMARNOS TU CORREO");

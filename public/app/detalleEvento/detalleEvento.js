@@ -98,7 +98,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
 
             $scope.shareButtonFacebook = function () {
-                var longUrl = 'izinait.com/app/#!/detalleEvento?id=' + eventId + '&friend=' + Rrpp;
+                var longUrl = 'izinait.com/detalleEvento?id=' + eventId + '&friend=' + Rrpp;
                 var request = gapi.client.urlshortener.url.insert({
                     'resource': {
                         'longUrl': longUrl
@@ -122,7 +122,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             }
 
             $scope.shareButtonTw = function () {
-                var longUrl = 'izinait.com/app/#!/detalleEvento?id=' + eventId + '&friend=' + Rrpp;
+                var longUrl = 'izinait.com/detalleEvento?id=' + eventId + '&friend=' + Rrpp;
                 var request = gapi.client.urlshortener.url.insert({
                     'resource': {
                         'longUrl': longUrl
@@ -147,7 +147,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             }
 
             $scope.shareButtonWhatsapp = function () {
-                var longUrl = 'izinait.com/app/#!/detalleEvento?id=' + eventId + '&friend=' + Rrpp;
+                var longUrl = 'izinait.com/detalleEvento?id=' + eventId + '&friend=' + Rrpp;
                 var request = gapi.client.urlshortener.url.insert({
                     'resource': {
                         'longUrl': longUrl
@@ -345,7 +345,9 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             });
             });
 
-
+           var  dialogAdquirirServicio = function(eventsService){
+               $scope.dialogAdquirirServicio(eventsService);
+           };
             $scope.dialogAdquirirServicio = function (eventsService) {
 
                 if (usuarioLogeado == "") {
@@ -474,7 +476,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 $('.codigoAcceder').text("Tú Codigo");
                                 console.log("obvtuve la foto y el correo");
                                 $mdDialog.hide();
-                                $scope.dialogAdquirirServicio(eventsService);
+                                //location.reload();
+                                //dialogAdquirirServicio(eventsService);
 
 
                             });
@@ -566,11 +569,41 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                             .ok('Confirmar!')
                             .cancel('');
                         $mdDialog.show(confirm).then(function(result) {
-                            //validar que este correo no exista en la bd
-                            firebase.database().ref('users/' + user.$id).update({
-                                email: result
+
+
+
+                            var usersTodos = firebase.database().ref('/users/');
+                            var usersTodosRQ = $firebaseArray(usersTodos);
+                            usersTodosRQ.$loaded().then(function () {
+
+                                console.log(usersTodosRQ);
+                                var contador = 0;
+                                var existe = false;
+                                angular.forEach(usersTodosRQ, function (usersRecorridos) {
+                                    if (usersRecorridos.email == result) {
+                                        existe = true;
+                                    }
+                                    ;
+                                    contador += 1;
+                                    console.log(contador + " es igual a " + usersTodosRQ.length);
+
+                                });
+
+                                if (contador == usersTodosRQ.length) {
+                                    if (existe != true) {
+                                        console.log("no existe este correo");
+                                        firebase.database().ref('users/' + user.$id).update({
+                                            email: result
+                                        });
+                                        location.reload();
+
+                                    } else {
+                                        alert("este correo ya existe");
+                                        location.reload();
+                                    }
+                                }
+                                ;
                             });
-                            location.reload();
 
                         }, function() {
                             alert("TIENES QUE CONFIRMARNOS TU CORREO");
@@ -723,8 +756,6 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                             firebase.database().ref('users/' + $scope.usuarioLogeado.$id).update(
                                                 {celular: $scope.newTicket.celular});
 
-                                            firebase.database().ref('users/' + $scope.usuarioLogeado.$id + '/e').update(
-                                                {celular: $scope.newTicket.celular});
 
                                             firebase.database().ref('userQvo/' + $scope.usuarioLogeado.$id +'/charges/'+ response.data.id)
                                                 .update(response.data);
