@@ -111,24 +111,24 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     var myDate = new Date(serv.fechaFin);
                     serv.fechaFin = myDate.toGMTString();
 
-                    if (serv.tipo == "ESPECIAL") {
+                    if (serv.tipo == "Especial") {
                         serv.color = "#ff9800";
 
                     }
                     ;
-                    if (serv.tipo == "PREVENTA") {
+                    if (serv.tipo == "Preventa") {
                         serv.color = "#f44336";
                     }
                     ;
-                    if (serv.tipo == "MESA") {
+                    if (serv.tipo == "Mesa") {
                         serv.color = "#4caf50";
                     }
                     ;
-                    if (serv.tipo == "BOTELLAS") {
+                    if (serv.tipo == "Botella") {
                         serv.color = "#00bcd4";
                     }
                     ;
-                    if (serv.tipo == "VIP") {
+                    if (serv.tipo == "Vip") {
                         serv.color = "#c8c8c8";
                     }
                     ;

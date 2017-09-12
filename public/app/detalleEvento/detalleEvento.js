@@ -1,9 +1,19 @@
 'use strict';
+
+
 angular.module('myApp.detalleEvento', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
+        var URLactual =location.href.split('#!/')[1];
         $routeProvider.when('/detalleEvento', {
             templateUrl: 'detalleEvento/detalleEvento.html',
-            controller: 'viewdetalleEvento'
+            controller: 'viewdetalleEvento',
+            data: {
+                meta: {
+                    'title': 'hola',
+                    'description': 'Home page description',
+                    'url': 'https://izinait.com/'+URLactual
+                }
+            }
         });
     }])
     .controller('viewdetalleEvento', ['$scope', '$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope', '$mdDialog',

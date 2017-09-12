@@ -215,6 +215,7 @@ exports.detalleEvento = functions.https.onRequest((req, res) => {
 
 
     var url = "";
+    var urlTest = "";
 
     console.log(id +" " + friend);
 
@@ -228,11 +229,13 @@ exports.detalleEvento = functions.https.onRequest((req, res) => {
             admin.database().ref(`/rrpps/${friend}`).once('value').then(snapshot => {
                 const rrppCapturado = snapshot.val();
 
-                if(rrppCapturado.name == undefined){rrppSelect = "izinait";
-                    url = "https://izinait.com/app/#!/detalleEvento?id=" + id;
+                if(rrppCapturado.name == undefined){
+                    rrppSelect = "izinait";
+                    urlTest = "https://izinait.com/detalleEvento?id=" + id +"&friend=MD18DcCzYMXPhOQb8U61bWfgzRg2";
+                    url = "https://izinait.com/app/#!/detalleEvento?id=" + id +"&friend=MD18DcCzYMXPhOQb8U61bWfgzRg2";
 
                     var title = eventCapturado.name + " te invita " + rrppSelect;
-                    var description = eventCapturado.eventDetails;
+                    var description = (eventCapturado.eventDetails).toString();;
 
                     res.status(200).send(
                         `<!doctype html>
@@ -252,12 +255,12 @@ exports.detalleEvento = functions.https.onRequest((req, res) => {
     <meta name='language' content='ES'>
     <meta name='Classification' content='eventos'>
     <meta name='author' content='izinait, contacto@izinait.com'>
-    <meta name='url' content='https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1'>
+    <meta name='url' content='${urlTest}'>
     <meta name='subtitle' content='This is my subtitle'>
 
     <meta property="og:site_name" content="${title}">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
+    <meta property="og:url" content="${urlTest}">
     <meta property="og:image" itemprop="image"  content="${eventCapturado.image}">
     <meta property="og:image:type"  content="image/jpeg">
     <meta name="twitter:image:src" content="${eventCapturado.image}">
@@ -265,8 +268,8 @@ exports.detalleEvento = functions.https.onRequest((req, res) => {
     <meta property="og:description" content="${description}"/>
     <meta property="og:title" content="${title}"/>
     
-    <link rel="canonical" href="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
-    <link rel="alternate" hreflang="x-default" href="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
+    <link rel="canonical" href="${urlTest}">
+    <link rel="alternate" hreflang="x-default" href="${urlTest}">
     
     <META HTTP-EQUIV="REFRESH" CONTENT="1;URL=${url}"> 
     </head>
@@ -286,10 +289,11 @@ exports.detalleEvento = functions.https.onRequest((req, res) => {
 
                 console.log(rrppCapturado);
                 rrppSelect = rrppCapturado.name;
+                    urlTest = "https://izinait.com/detalleEvento?id=" + id +"&friend=" + rrppCapturado.uid;
                 url = "https://izinait.com/app/#!/detalleEvento?id=" + id +"&friend=" + rrppCapturado.uid;
 
                 var title = eventCapturado.name + " te invita " + rrppSelect;
-                var description = eventCapturado.eventDetails;
+                var description = (eventCapturado.eventDetails).toString();;
 
                 res.status(200).send(
                     `<!doctype html>
@@ -309,12 +313,12 @@ exports.detalleEvento = functions.https.onRequest((req, res) => {
     <meta name='language' content='ES'>
     <meta name='Classification' content='eventos'>
     <meta name='author' content='izinait, contacto@izinait.com'>
-    <meta name='url' content='https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1'>
+    <meta name='url' content='${urlTest}'>
     <meta name='subtitle' content='This is my subtitle'>
 
     <meta property="og:site_name" content="${title}">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
+    <meta property="og:url" content="${urlTest}">
     <meta property="og:image" itemprop="image"  content="${eventCapturado.image}">
     <meta property="og:image:type"  content="image/jpeg">
     <meta name="twitter:image:src" content="${eventCapturado.image}">
@@ -322,8 +326,8 @@ exports.detalleEvento = functions.https.onRequest((req, res) => {
     <meta property="og:description" content="${description}"/>
     <meta property="og:title" content="${title}"/>
     
-    <link rel="canonical" href="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
-    <link rel="alternate" hreflang="x-default" href="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
+    <link rel="canonical" href="${urlTest}">
+    <link rel="alternate" hreflang="x-default" href="${urlTest}">
     
     <META HTTP-EQUIV="REFRESH" CONTENT="1;URL=${url}"> 
     </head>
@@ -342,10 +346,11 @@ exports.detalleEvento = functions.https.onRequest((req, res) => {
 
         }else{
             rrppSelect = "izinait";
-            url = "https://izinait.com/app/#!/detalleEvento?id=" + id;
+            urlTest = "https://izinait.com/detalleEvento?id=" + id +"&friend=MD18DcCzYMXPhOQb8U61bWfgzRg2";
+            url = "https://izinait.com/app/#!/detalleEvento?id=" + id +"&friend=MD18DcCzYMXPhOQb8U61bWfgzRg2";
 
             var title = eventCapturado.name + " te invita " + rrppSelect;
-            var description = eventCapturado.eventDetails;
+            var description = (eventCapturado.eventDetails).toString();
 
             res.status(200).send(
                 `<!doctype html>
@@ -365,12 +370,12 @@ exports.detalleEvento = functions.https.onRequest((req, res) => {
     <meta name='language' content='ES'>
     <meta name='Classification' content='eventos'>
     <meta name='author' content='izinait, contacto@izinait.com'>
-    <meta name='url' content='https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1'>
+    <meta name='url' content='${urlTest}'>
     <meta name='subtitle' content='This is my subtitle'>
 
     <meta property="og:site_name" content="${title}">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
+    <meta property="og:url" content="${urlTest}">
     <meta property="og:image" itemprop="image"  content="${eventCapturado.image}">
     <meta property="og:image:type"  content="image/jpeg">
     <meta name="twitter:image:src" content="${eventCapturado.image}">
@@ -378,8 +383,8 @@ exports.detalleEvento = functions.https.onRequest((req, res) => {
     <meta property="og:description" content="${description}"/>
     <meta property="og:title" content="${title}"/>
     
-    <link rel="canonical" href="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
-    <link rel="alternate" hreflang="x-default" href="https://izinait.com/detalleEvento?eventId=-KrDnJZW0vFau1JUkzzJ&friend=JknNMVfUWwadGOwvYgNv52scrFp1">
+    <link rel="canonical" href="${urlTest}">
+    <link rel="alternate" hreflang="x-default" href="${urlTest}">
     
     <META HTTP-EQUIV="REFRESH" CONTENT="1;URL=${url}"> 
     </head>
