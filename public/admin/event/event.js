@@ -101,28 +101,32 @@ angular.module('myApp.event', ['ngRoute'])
                             if ($scope.code != "") {
                                 $scope.listaGratis = $filter('filter')($scope.AllListaGratis, {$id: $scope.code});
                                 //console.log($scope.code);
-                            }
-                            ;
+                            };
+
+                            var tickets = $firebaseArray(firebase.database().ref('/tickets/' + eventId));
+                            tickets.$loaded().then(function () {
+                                $scope.AllticketsObtenidos = tickets;
+
+                                $scope.ticketsObtenidos = $scope.AllticketsObtenidos;
+
+                                var rrpps = $firebaseArray(firebase.database().ref('/events/' + eventIdSelect + '/rrpps'));
+                                rrpps.$loaded().then(function () {
+                                    $scope.Allrrpps = rrpps
+                                    $scope.rrpps = $scope.Allrrpps;
+                                    calcularAsistenciasTotales();
+                                });
+
+                                if ($scope.code != "") {
+                                    $scope.ticketsObtenidos = $filter('filter')($scope.AllticketsObtenidos, {userId: $scope.code});
+                                    ////console.log($scope.code);
+                                }
+                                ;
+                            });
+
+
                         });
 
-                        var tickets = $firebaseArray(firebase.database().ref('/tickets/' + eventId));
-                        tickets.$loaded().then(function () {
-                            $scope.AllticketsObtenidos = tickets;
 
-                            $scope.ticketsObtenidos = $scope.AllticketsObtenidos;
-
-                            var rrpps = $firebaseArray(firebase.database().ref('/events/' + eventIdSelect + '/rrpps'));
-                            rrpps.$loaded().then(function () {
-                                $scope.Allrrpps = rrpps
-                                $scope.rrpps = $scope.Allrrpps;
-                            })
-
-                            if ($scope.code != "") {
-                                $scope.ticketsObtenidos = $filter('filter')($scope.AllticketsObtenidos, {userId: $scope.code});
-                                ////console.log($scope.code);
-                            }
-                            ;
-                        })
 
 
                     });
@@ -299,6 +303,7 @@ angular.module('myApp.event', ['ngRoute'])
                         });
 
                         $mdDialog.hide();
+                        calcularAsistenciasTotales();
                     } else {
 
                         firebase.database().ref('tickets/' + eventId + '/' + $scope.ticketObtenido.$id).update({
@@ -316,6 +321,7 @@ angular.module('myApp.event', ['ngRoute'])
 
 
                         $mdDialog.hide();
+                        calcularAsistenciasTotales();
                     }
 
 
@@ -568,10 +574,9 @@ angular.module('myApp.event', ['ngRoute'])
                             }
                             ;
                         });
-
+                        $mdDialog.hide();
+                        calcularAsistenciasTotales();
                     });
-                    $mdDialog.hide();
-
 
                 };
 
@@ -621,6 +626,7 @@ angular.module('myApp.event', ['ngRoute'])
 
             function ControllerdialogAbrirListaGratis($scope, $mdDialog, $timeout, $q, $log, userCapturado, user) {
                 console.log(userCapturado);
+                $scope.fechaFin = eventoCompleto.freemiumHour;
                 $scope.doormanLogeado = doormanLogeado;
                 console.log(user);
                 $scope.user = user;
@@ -664,7 +670,9 @@ angular.module('myApp.event', ['ngRoute'])
                 };
 
                 $scope.guardarEntrada = function () {
+
                     var total = $scope.userCapturado.totalAsist + $scope.entradasHombre + $scope.entradasMujer;
+                    console.log($scope.userCapturado);
                     var nuevoIngreso = firebase.database().ref('events/' + eventId + '/asist' + $scope.userCapturado.$id + '/ingresos').push().key;
 
 
@@ -681,15 +689,15 @@ angular.module('myApp.event', ['ngRoute'])
                     });
 
                     var idClub = Object.keys(eventoCompleto.clubs)[0];
-                    var GuardarCliente = 'admins/' + eventoCompleto.admin + '/clients/' + idClub + '/' + $scope.userCapturado.userId;
+                    var GuardarCliente = 'admins/' + eventoCompleto.admin + '/clients/' + idClub + '/' + $scope.userCapturado.$id;
                     firebase.database().ref(GuardarCliente).set(true);
 
-                    firebase.database().ref('users/' + $scope.userCapturado.userId + '/events/' + eventoCompleto.admin + '/' + idClub + '/' + eventId).set(new Date().getTime());
+                    firebase.database().ref('users/' + $scope.userCapturado.$id + '/events/' + eventoCompleto.admin + '/' + idClub + '/' + eventId).set(new Date().getTime());
 
 
                     $mdDialog.hide();
 
-
+                    calcularAsistenciasTotales();
                 };
 
 
@@ -717,6 +725,27 @@ angular.module('myApp.event', ['ngRoute'])
                 $scope.code = '';
                 location.href = "#!/event";
             };
+
+            $scope.asistenciasTotales =0;
+            var calcularAsistenciasTotales = function () {
+                $scope.asistenciasTotales =0;
+                 console.log($scope.listaGratis);
+                console.log($scope.Allrrpps);   console.log($scope.ticketsObtenidos);
+
+                $scope.listaGratis.forEach(function (x) {
+                    $scope.asistenciasTotales += x.totalAsist;
+                });
+
+                $scope.Allrrpps.forEach(function (j) {
+                    $scope.asistenciasTotales += j.numeroTotal;
+                });
+                $scope.ticketsObtenidos.forEach(function (d) {
+                    $scope.asistenciasTotales += d.cantidadUtilizada;
+                });
+
+
+            };
+
 
 
         }]);

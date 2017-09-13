@@ -2,9 +2,9 @@
   "hosting": {
     "public": "public",
     "rewrites":
-      [{
-    "source": "/detalleEvento", "function": "detalleEvento"
-     }],
+    [{
+      "source": "/detalleEvento", "function": "detalleEvento"
+    }],
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -24,3 +24,4 @@
     "rules": "database.rules.json"
   }
 }
+

@@ -21,13 +21,21 @@ angular.module('myApp.perfil', ['ngRoute'])
 
     .controller('perfilCtrl', ['$scope', '$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope', '$mdDialog',
         function ($scope, $routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope, $mdDialog) {
+            $scope.data = {
+                model: null,
+                availableOptions: [
+                    {id: '1', name: 'Option A'},
+                    {id: '2', name: 'Option B'},
+                    {id: '3', name: 'Option C'}
+                ]
+            };
 
 
             var admin = window.currentAdmin;
             var adminLogeado = "";
             $scope.eventosFuturoFecha = new Date().getTime();
             $scope.eventsWithServices = [];
-
+            $scope.cuentaBancaria = {};
 
             $(sideEventos).addClass("active");
             $(crearEventos).removeClass("active");
@@ -51,6 +59,8 @@ angular.module('myApp.perfil', ['ngRoute'])
                         adminLogeado = adminLocal;
                         console.log(adminLogeado);
                         $scope.adminLogeado = adminLogeado;
+
+                        $scope.cuentaBancaria = $scope.adminLogeado.cuentaBancaria;
                         $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
                         //console.log(adminLogeado);
 
@@ -205,4 +215,6 @@ angular.module('myApp.perfil', ['ngRoute'])
 
 
 
-        }]);
+        }]).controller('ExampleController', ['$scope', function($scope) {
+
+}]);;

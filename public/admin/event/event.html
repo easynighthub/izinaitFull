@@ -29,7 +29,7 @@
 
         <div style="width: 15%; float:left;     padding-top: 5px;">
             <div class="top-right-2 va-top inline-block text-center grey-70-c">
-                <p class="text-warning text-right">120</p>
+                <p class="text-warning text-right">{{asistenciasTotales}}</p>
                 <p class="smalltext text-right" style="font-size: 12px;line-height: 10px; margin-top: -10px">
                     <small>Asistentes</small>
                 </p>
@@ -662,7 +662,7 @@
 
 
             <div class="col-md-12 col-xs-12 txt-white" style="padding-top: 10px" data-ng-show="!ticketObtenido.paidOut">
-                <span class="description" style="font-size: 18px;">Gratis Hasta: $ <span class="txt-white">{{(entradasMujer +entradasHombre)*precioIndividual | number:0}}</span></span>
+                <span class="description" style="font-size: 18px;">Gratis Hasta: {{fechaFin | date : 'HH:mm a'}} <span class="txt-white">{{(entradasMujer +entradasHombre)*precioIndividual | number:0}}</span></span>
 
             </div>
 

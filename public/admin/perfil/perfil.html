@@ -1,3 +1,4 @@
+
 <div class="row">
     <div class="col-md-8">
         <div class="card">
@@ -74,42 +75,49 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <select class="selectpicker" data-style="select-with-transition" title="Seleccionar Banco" data-size="7">
+                        <select class="selectpicker" data-style="select-with-transition" ng-model="cuentaBancaria.banco"  title="Seleccionar Banco" data-size="7">
                             <option disabled> Seleccionar banco</option>
-                            <option value="2">Banco Estado </option>
+                            <option ng-value="bancoEstado">Banco Estado </option>
                             <option value="3">Banco BBVA</option>
                             <option value="4">Banco Santander</option>
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <select class="selectpicker" data-style="select-with-transition" title="Tipo de cuenta" data-size="7">
+                        <select class="selectpicker" data-style="select-with-transition"  name="singleSelect" ng-model="cuentaBancaria.tipoDeCuenta" title="Tipo de cuenta" data-size="7">
                             <option disabled> Tipo de cuenta</option>
-                            <option value="2">Cuenta Corriente </option>
-                            <option value="3">Cuenta Vista</option>
-                            <option value="4">Cuenta RUT</option>
+                            <option value="cuentaCorriente">Cuenta Corriente </option>
+                            <option value="cuentaRut">Cuenta Rut</option>
+                            <option value="CuentaVista">Cuenta Vista</option>
                         </select>
+
+
+
+
+
+
+
                     </div>
                     <div class="col-md-4">
                         <div class="form-group label-floating">
                             <label class="control-label">Nombre completo</label>
-                            <input type="text" class="form-control" ng-model="" >
+                            <input type="text" class="form-control" ng-model="cuentaBancaria.nombre" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group label-floating">
                             <label class="control-label">Numero de cuenta</label>
-                            <input type="email" class="form-control" ng-model="" >
+                            <input type="email" class="form-control" ng-model="cuentaBancaria.numeroCuenta" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group label-floating">
                             <label class="control-label">Rut</label>
-                            <input type="email" class="form-control" ng-model="">
+                            <input type="email" class="form-control" ng-model="cuentaBancaria.rut">
                         </div>
                     </div>
                 </div>
 
-                <button  class="btn btn-rose pull-right">ACTUALIZAR</button>
+                <button  class="btn btn-rose pull-right" data-ng-click="actualizarClub()">ACTUALIZAR</button>
                 <div class="clearfix"></div>
 
             </div>
