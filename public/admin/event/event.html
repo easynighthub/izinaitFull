@@ -104,7 +104,7 @@
                 <table id="dtPuerta" class="table  table-hover" style="width: 100%!important;">
                     <tbody>
                     <tr ng-repeat="rrpp in rrpps">
-                        <td  ng-style="{{rrpp.name}} == 'izinait' || {'color': '#fe0072'}">{{rrpp.name}}</td>
+                        <td ng-style="{{rrpp.name}} == 'izinait' || {'color': '#fe0072'}">{{rrpp.name}}</td>
                         <td class="text-primary">
                             <p ng-click="AgregarPersonas($index,rrpp)" class="btn btn-sm btn-info">
                                 <i class="material-icons">add</i>
@@ -165,33 +165,30 @@
                 <p style="font-size: 18px;">{{ingresosRestantes}} <span class="description">x</span>
                     {{ticketObtenido.tipoEventservices}}
                     <span class="description"> - $ </span>{{ingresosRestantes*precioIndividual | number:0}}</p>
-                <span class="description col-md-12">Cobrados : <span
-                        class="txt-white">{{ticketObtenido.cantidadUtilizada}}</span></span>
+                <span class="description col-md-12">Cobrados : <span class="txt-white">{{ticketObtenido.cantidadUtilizada}}</span></span>
             </div>
-
-
             <div class="col-md-12 col-xs-12 text-center zeroPadLados">
+                <div style="float: left;padding: 0 10px;width: 50%">
+                    <div style="position: relative;border: 1px solid #fe0072;;border-radius: 6px;overflow: hidden;margin: 10px 0;color: #fff;padding: 6px 12px;">
 
-                <div class="col-md-6 col-xs-6 zeroPadLados">
-                    <div style="border: 1px solid #fe0072; border-radius: 6px;margin-right: 5px;margin-left: 5px;">
-
-
-                        <div class=" zeroPadLados padTopBot15">
-
-                            <button data-ng-click="aumentarEntradasHombre(entradasHombre,entradasMujer)" type="button"
-                                    class="btn btn-info  btn-round btn-fab btn-fab-mini">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
+                        <div>
+                            <div>
+                                <P style="margin-bottom: -10px;">
+                                    <i class="fa fa-mars description" style="font-size: 18px; margin: 10px;"></i>
+                                    <span style="font-size: 22px;">{{entradasHombre}}</span>
+                                <p class="description" style="margin-top: -10px;margin-bottom: 0px;">
+                                    <small>Hombres</small>
+                                </p>
+                            </div>
+                            <button class="presion col-md-6 col-xs-6">
+                                <i ng-click="disminuirEntradasHombre(entradasHombre)"
+                                   class="text-info material-icons"
+                                   style="vertical-align: middle; font-size: 30px;">remove_circle_outline</i>
                             </button>
-                            <P style="margin-bottom: -10px;">
-                                <i class="fa fa-mars description" style="font-size: 18px; margin: 10px;"></i>
-                                <span style="font-size: 22px;">{{entradasHombre}}</span>
-                            <p class="description" style="margin-top: -10px;">
-                                <small>Hombres</small>
-                            </p>
-                            </P>
-                            <button data-ng-click="disminuirEntradasHombre(entradasHombre)" type="button"
-                                    class="btn btn-info btn-round btn-fab btn-fab-mini">
-                                <i class="fa fa-minus" aria-hidden="true"></i>
+                            <button class="presion col-md-6 col-xs-6">
+                                <i ng-click="aumentarEntradasHombre(entradasHombre,entradasMujer)"
+                                   class="text-info material-icons"
+                                   style="vertical-align: middle; font-size: 30px;">add_circle_outline</i>
                             </button>
 
                         </div>
@@ -199,28 +196,28 @@
                 </div>
 
 
-                <div class="col-md-6 col-xs-6 zeroPadLados">
-                    <div style="border: 1px solid #fe0072; border-radius: 6px;margin-right: 5px;margin-left: 5px;">
+                <div style="float: left;padding: 0 10px;width: 50%">
+                    <div style="position: relative;border: 1px solid #fe0072;;border-radius: 6px;overflow: hidden;margin: 10px 0;color: #fff;padding: 6px 12px;">
 
-
-                        <div class="zeroPadLados padTopBot15">
-
-                            <button data-ng-click="aumentarEntradasMujer(entradasHombre,entradasMujer)" type="button"
-                                    class="btn btn-info btn-round btn-fab btn-fab-mini">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
+                        <div>
+                            <div>
+                                <P style="margin-bottom: -10px;">
+                                    <i class="fa fa-mars description" style="font-size: 18px; margin: 10px;"></i>
+                                    <span style="font-size: 22px;">{{entradasMujer}}</span>
+                                <p class="description" style="margin-top: -10px;margin-bottom: 0px;">
+                                    <small>Mujeres</small>
+                                </p>
+                            </div>
+                            <button class="presion col-md-6 col-xs-6">
+                                <i ng-click="disminuirEntradasMujer(entradasMujer)"
+                                   class="text-info material-icons"
+                                   style="vertical-align: middle; font-size: 30px;">remove_circle_outline</i>
                             </button>
-                            <P style="margin-bottom: -10px;">
-                                <i class="fa fa-venus description" style="font-size: 18px; margin: 10px;"></i>
-                                <span style="font-size: 22px;">{{entradasMujer}}</span>
-                            <p class="description" style="margin-top: -10px;">
-                                <small>Mujeres</small>
-                            </p>
-                            </P>
-                            <button data-ng-click="disminuirEntradasMujer(entradasMujer)" type="button"
-                                    class="btn btn-info btn-round btn-fab btn-fab-mini">
-                                <i class="fa fa-minus" aria-hidden="true"></i>
+                            <button class="presion col-md-6 col-xs-6">
+                                <i ng-click="aumentarEntradasMujer(entradasHombre,entradasMujer)"
+                                   class="text-info material-icons"
+                                   style="vertical-align: middle; font-size: 30px;">add_circle_outline</i>
                             </button>
-
                         </div>
                     </div>
                 </div>
@@ -275,6 +272,7 @@
             max-width: 130px;
             max-height: 130px;
             margin: -80px auto 0;
+            height: 68%!important;
             border-radius: 50%;
             box-shadow: 0 10px 30px -12px rgba(254, 0, 114, 0.42), 0 4px 25px 0px rgba(254, 0, 114, 0.12), 0 8px 10px -5px rgba(254, 0, 114, 0.2);
         }
@@ -300,6 +298,15 @@
         .padTopBot15 {
             padding-top: 15px;
             padding-bottom: 15px;
+        }
+
+        .presion {
+            float: left;
+            padding: 8px 0;
+            height: 40px;
+            display: block;
+            border: 0;
+            background: 0;
         }
 
         md-checkbox.dotted .md-icon {
@@ -345,7 +352,6 @@
                                    class="text-info material-icons"
                                    style="vertical-align: middle; font-size: 30px;">add_circle_outline</i>
                             </button>
-
                         </div>
                     </div>
                 </div>
@@ -549,6 +555,7 @@
             text-align: center;
             max-width: 90%;
             max-height: 95%;
+            height: auto!important;
             box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
             border-radius: 12px;
         }

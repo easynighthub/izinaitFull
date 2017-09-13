@@ -12,8 +12,8 @@
     color: #fff;
     font-size: 1.3em;
     text-shadow: 0 2px 5px rgba(33, 33, 33, 0.5);">
-        <h4 class="txt-white text-capitalize" style="font-weight: 400;">{{eventQliao.name}}</h4>
-        <h6 class="txt-white text-capitalize category" style="margin-top: -15px;"><i class="material-icons description">event</i> {{eventQliao.date | date:"EEEE dd', 'MMMM"}} <i class="material-icons description">alarm</i> {{eventQliao.date | date:"HH:mm" }} - {{eventQliao.toHour | date:"HH:mm" }}</h6>
+        <h4 class="txt-white text-capitalize" style="font-weight: 400;    text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">{{eventQliao.name}}</h4>
+        <h6 class="txt-white text-capitalize category" style="margin-top: -15px;    text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"><i class="material-icons description">event</i> {{eventQliao.date | date:"EEEE dd', 'MMMM"}} <i class="material-icons description">alarm</i> {{eventQliao.date | date:"HH:mm" }} - {{eventQliao.toHour | date:"HH:mm" }}</h6>
     </div>
 
 </div>
