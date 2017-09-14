@@ -276,8 +276,8 @@ angular.module('myApp.eventPast', ['ngRoute'])
             };
 
 
-            $scope.goToEventDetails = function (evento) {
-                document.location.href = '#!/detalleEvento?id=' + evento.$id;
+            $scope.goToEventPastDetails = function (evento) {
+                document.location.href = '#!/eventPast/eventPastDetalle?id=' + evento.$id;
             };
 
             $scope.verEvento = function (evento) {

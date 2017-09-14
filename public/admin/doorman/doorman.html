@@ -6,7 +6,7 @@
 		<div class="card card-product" ng-click="administrar(event)">
 			<div class="card-image">
 				<img class="img" style="height: 150px; transform: perspective(1350px);" src="{{event.image}}">
-				<div class="card-title jvectormap-legend-tick-text">
+				<div style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;" class="card-title jvectormap-legend-tick-text">
 					{{event.name}}
 				</div>
 			</div>

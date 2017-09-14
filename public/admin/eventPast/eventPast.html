@@ -1,6 +1,5 @@
 <center>
-    <button id="BarraCargando" class="btn btn-primary btn-lg "><i class="fa fa-circle-o-notch fa-spin"></i> CARGANDO
-        EVENTOS
+    <button id="BarraCargando" class="btn btn-primary btn-lg "><i class="fa fa-circle-o-notch fa-spin"></i>Cargando Eventos
     </button>
     <div style="display: none" id="noHayEventos">
         <p>Actualmente no hay eventos futuros.</p>
@@ -14,63 +13,48 @@
         <div class="card card-product">
             <div class="card-image" data-header-animation="true">
                 <img class="img" style="height: 150px; transform: perspective(1350px);" src="{{event.image}}">
-                <p class="card-title" style="text-overflow: ellipsis!important; text-transform: capitalize!important;">
-                    {{event.name}}
-                </p>
+                <p class="card-title" style="text-overflow: ellipsis!important; text-transform: capitalize!important;">{{event.name}}</p>
             </div>
             <div class="card-content">
                 <div class="card-actions">
-                    <button type="button" ng-click="goToEventDetails(event)" class="btn btn-default btn-simple"
+                    <button type="button" ng-click="goToEventPastDetails(event)" class="btn btn-default btn-simple hover"
                             rel="tooltip"
                             data-placement="bottom" title="Informe">
-                        <i class="material-icons">timeline</i>
+                        <i class="material-icons hover">timeline</i>
                     </button>
                     <!--  <button type="button" ng-click="editEvent(event)" class="btn btn-default btn-simple" rel="tooltip"
                               data-placement="bottom" title="Editar">
                           <i class="material-icons">edit</i>
                       </button> -->
-                    <button type="button" ng-click="duplicateEvent(event)" class="btn btn-default btn-simple"
+                    <button type="button" ng-click="duplicateEvent(event)" class="btn btn-default btn-simple hover"
                             rel="tooltip"
                             data-placement="bottom" title="Duplicar">
-                        <i class="material-icons">content_copy</i>
+                        <i class="material-icons hover">content_copy</i>
                     </button>
-                    <button type="button" ng-click="verEvento(event)" target="_blank" class="btn btn-default btn-simple"
+                    <button type="button" ng-click="verEvento(event)" target="_blank" class="btn btn-default btn-simple hover"
                             rel="tooltip"
                             data-placement="bottom" title="Ver">
-                        <i class="fa fa-eye actionIcon"></i>
+                        <i class="fa fa-eye actionIcon "></i>
                     </button>
                 </div>
 
                 <div class="">
-                    <div class="row" style="margin:0px!important" ng-repeat="reserva in event.reservas"
-                         ng-show="event.ReservaCantidad >= 1">
+                    <div class="row" style="margin:0px!important">
                         <div class="stats pull-left">
-                                    <span id="iconoReserva" class="category text-capitalize">
-                                        <i style="color: #4caf50" ng-show="reserva.tipo == 'Mesa'"
-                                           class="fa fa-star"></i>
-                                        <i style="color: #f44336" ng-show="reserva.tipo == 'Preventa'"
-                                           class="fa fa-ticket "></i>
-                                        <i style="color: #c8c8c8" ng-show="reserva.tipo == 'Vip'"
-                                           class="fa fa-diamond"></i>
-                                        <i style="color: #ff9800" ng-show="reserva.tipo == 'Especial'"
-                                           class="fa fa-certificate"></i>
-                                        <i style="color: #00bcd4" ng-show="reserva.tipo == 'Botella'"
-                                           class="fa fa-glass"></i>
-                                        <span class="text-lowercase">{{reserva.ingresosTotales}}</span>
+                                    <span id="iconoReserva" class="category">
+                                        <i class="fa fa-users" aria-hidden="true"></i>
+                                        <span>Total Asistentes</span>
                                     </span>
                         </div>
-                        <span class="stats pull-right">{{reserva.utilizados}}</span>
-                    </div>
-                    <div ng-show="event.ReservaCantidad < 1">
-                        <p class="category text-center">Sin ventas</p>
+                        <span class="stats pull-right" style="font-weight: 600">9999</span>
                     </div>
                 </div>
             </div>
             <div class="card-footer">
                 <div class="stats">
-                    <p class="category">
+                    <p class="category" style="text-transform: capitalize">
                         <i class="material-icons">event</i>
-                        {{event.date | date:"EEEE dd','MMMM"}}
+                        {{event.date | date:"EEEE dd', 'MMMM"}}
                     </p>
                 </div>
                 <div class="stats pull-right">
@@ -83,6 +67,13 @@
         </div>
     </div>
 </div>
+
+
+<style>
+    .hover:hover {
+        color: #fe0072!important;
+    }
+</style>
 
 
 

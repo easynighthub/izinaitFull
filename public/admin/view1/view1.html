@@ -14,30 +14,30 @@
         <div class="card card-product">
             <div class="card-image" data-header-animation="true">
                 <img class="img" style="height: 150px; transform: perspective(1350px);" src="{{event.image}}">
-                <p class="card-title" style="text-overflow: ellipsis!important; text-transform: capitalize!important;">
+                <p class="card-title" style=" text-overflow: ellipsis;white-space: nowrap;overflow: hidden; text-transform: capitalize!important;">
                     {{event.name}}
                 </p>
             </div>
             <div class="card-content">
                 <div class="card-actions">
-                    <button type="button" ng-click="goToEventDetails(event)" class="btn btn-default btn-simple"
+                    <button type="button" ng-click="goToEventDetails(event)" class="btn btn-default btn-simple hover"
                             rel="tooltip"
                             data-placement="bottom" title="Informe">
-                        <i class="material-icons">timeline</i>
+                        <i class="material-icons ">timeline</i>
                     </button>
                   <!--  <button type="button" ng-click="editEvent(event)" class="btn btn-default btn-simple" rel="tooltip"
                             data-placement="bottom" title="Editar">
                         <i class="material-icons">edit</i>
                     </button> -->
-                    <button type="button" ng-click="duplicateEvent(event)" class="btn btn-default btn-simple"
+                    <button type="button" ng-click="duplicateEvent(event)" class="btn btn-default btn-simple hover"
                             rel="tooltip"
                             data-placement="bottom" title="Duplicar">
-                        <i class="material-icons">content_copy</i>
+                        <i class="material-icons ">content_copy</i>
                     </button>
-                    <button type="button" ng-click="verEvento(event)" target="_blank" class="btn btn-default btn-simple"
+                    <button type="button" ng-click="verEvento(event)" target="_blank" class="btn btn-default btn-simple hover"
                             rel="tooltip"
                             data-placement="bottom" title="Ver">
-                        <i class="fa fa-eye actionIcon"></i>
+                        <i class="fa fa-eye actionIcon "></i>
                     </button>
                 </div>
 
@@ -70,9 +70,9 @@
             </div>
             <div class="card-footer">
                 <div class="stats">
-                    <p class="category">
+                    <p class="category" style="text-transform: capitalize">
                         <i class="material-icons">event</i>
-                        {{event.date | date:"EEEE dd','MMMM"}}
+                        {{event.date | date:"EEEE dd', 'MMMM"}}
                     </p>
                 </div>
                 <div class="stats pull-right">
@@ -121,3 +121,9 @@
 
 
 </script>
+
+<style>
+    .hover:hover {
+        color: #fe0072!important;
+    }
+</style>
