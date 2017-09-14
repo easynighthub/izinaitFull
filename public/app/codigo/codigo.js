@@ -45,6 +45,8 @@ angular.module('myApp.codigo', ['ngRoute'])
                         $scope.foto = $scope.usuarioLogeado.picture;
                         $scope.email = $scope.usuarioLogeado.email;
                         $scope.confirmarCorreo($scope.usuarioLogeado);
+
+
                         var userQvo = firebase.database().ref('/userQvo/').child( $scope.usuarioLogeado.$id);
                         var userQvoRQ = $firebaseObject(userQvo);
                         userQvoRQ.$loaded().then(function () {

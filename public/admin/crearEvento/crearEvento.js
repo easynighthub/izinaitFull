@@ -191,7 +191,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
                                             $scope.newEvent.id = firebase.database().ref().child('events/').push().key;
 
-                                        $scope.newEvent.evenUrl = 'http://izinait.com/app/#!/detalleEvento?id=' + $scope.newEvent.id;
+                                        $scope.newEvent.evenUrl = 'https://izinait.com/app/#!/detalleEvento?id=' + $scope.newEvent.id;
                                         $scope.newEvent.visible = adminLogeado.clubs[x.$id].validado;
                                         $scope.newEvent.descOutHour = 0;
                                         $scope.newEvent.premiumCover = 0;
