@@ -55,7 +55,8 @@ angular.module('myApp.codigo', ['ngRoute'])
 
 
 
-                            if(uidTarjetaDeCredito != ""){
+                            if(uidTarjetaDeCredito != "")
+                            {
 
                                 var url = "https://us-central1-project-8746388695669481444.cloudfunctions.net/obtenerUnaInscripcionDeTarjeta?" +
                                     "userQvo=" +
@@ -101,7 +102,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                                  }
                                  }); */
 
-                            }
+                            };
 
                         });
 
@@ -153,12 +154,9 @@ angular.module('myApp.codigo', ['ngRoute'])
                 });
 
 
-
-
             };
 
             $scope.crearCliente = function () {
-
 
                 var userQvoRQ =  $scope.userQvoRQ;
                 var usuarioLogeado =  $scope.usuarioLogeado;
@@ -186,7 +184,6 @@ angular.module('myApp.codigo', ['ngRoute'])
 
                     if($scope.userQvoRQ.userQvoId != undefined){
 
-
                      var url = "https://us-central1-project-8746388695669481444.cloudfunctions.net/agregarTarjetaUsuarioQvo?userQvo="
                          +$scope.userQvoRQ.userQvoId;
                      $http({
@@ -211,7 +208,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                      var url = "https://us-central1-project-8746388695669481444.cloudfunctions.net/createUserQvo?email="
                          +$scope.usuarioLogeado.email
                          +"&name="
-                         +$scope.usuarioLogeado.displayName
+                         +$scope.usuarioLogeado.displayName;
 
                      $http({
                          method: 'GET',
@@ -231,6 +228,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                                      userQvoName: response.data.name
                                  }
                              );
+                             location.reload();
                          };
 
                          // this callback will be called asynchronously

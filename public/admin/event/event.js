@@ -418,13 +418,13 @@ angular.module('myApp.event', ['ngRoute'])
                 $scope.gratisMujer = 0;
                 $scope.valorGratisMujer = 0;
                 $scope.extraHombre = 0;
-                $scope.valorExtraHombre = "";
+                $scope.valorExtraHombre = 0;
                 $scope.extraMujer = 0;
-                $scope.valorExtraMujer = "";
+                $scope.valorExtraMujer = 0;
                 $scope.vipHombre = 0;
-                $scope.valorVipHombre = "";
+                $scope.valorVipHombre = 0;
                 $scope.vipMujer = 0;
-                $scope.valorVipMujer = "";
+                $scope.valorVipMujer = 0;
 
                 $scope.aumentargratisHombre = function (gratisHombre) {
                     if (gratisHombre >= 0) {

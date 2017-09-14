@@ -19,25 +19,32 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group label-floating">
-                                <label class="control-label">Nombre</label>
+                                <label class="control-label">Apellido</label>
                                 <input type="text" class="form-control" ng-model="adminLogeado.lastName" disabled>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group label-floating">
                                 <label class="control-label">Correo Electronico</label>
                                 <input type="email" class="form-control" ng-model="adminLogeado.email" disabled>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                        <div class="form-group label-floating">
+                            <label class="control-label">NickName</label>
+                            <input type="email" class="form-control" ng-model="adminLogeado.nickName">
+                        </div>
+
+                    </div>
+                        <div class="col-md-4">
                             <div class="form-group label-floating">
-                                <label class="control-label">NickName</label>
-                                <input type="email" class="form-control" ng-model="adminLogeado.nickName">
+                                <label class="control-label">Celular</label>
+                                <input type="email" class="form-control" ng-model="adminLogeado.celular">
                             </div>
                         </div>
                     </div>
 
-                    <button  class="btn btn-rose pull-right">ACTUALIZAR</button>
+                    <button  class="btn btn-rose pull-right" ng-click="actualizarNickName()">ACTUALIZAR</button>
                     <div class="clearfix"></div>
 
             </div>
@@ -61,7 +68,66 @@
             </div>
         </div>
     </div>
-    <div class="col-md-8">
+
+    <div ng-show="adminLogeado.cuentaBancaria" class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-icon" data-background-color="rose">
+                <i class="material-icons">perm_identity</i>
+            </div>
+            <div class="card-content">
+                <h4 class="card-title">Cuenta Bancaria
+                    <small class="category"></small>
+                </h4>
+
+
+
+                <div class="row">
+
+                    <div class="col-md-2">
+                        <p class="description">
+                            {{cuentaBancaria.banco}}
+
+                        </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="description">
+                            {{cuentaBancaria.tipoDeCuenta}}
+
+                        </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="description">
+                            {{cuentaBancaria.rut}}
+
+                        </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="description">
+                            {{cuentaBancaria.numeroCuenta}}
+
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="description">
+                            {{cuentaBancaria.nombre}}
+
+                        </p>
+                    </div>
+
+                    <div class="col-md-1">
+                        <button  class="btn btn-rose pull-right" data-ng-click="actualizarClub()">ACTUALIZAR</button>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="!adminLogeado.cuentaBancaria " class="col-md-12">
         <div class="card">
             <div class="card-header card-header-icon" data-background-color="rose">
                 <i class="material-icons">perm_identity</i>
@@ -75,27 +141,21 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <select class="selectpicker" data-style="select-with-transition" ng-model="cuentaBancaria.banco"  title="Seleccionar Banco" data-size="7">
-                            <option disabled> Seleccionar banco</option>
-                            <option ng-value="bancoEstado">Banco Estado </option>
-                            <option value="3">Banco BBVA</option>
-                            <option value="4">Banco Santander</option>
+                        <select  class="col-md-12" ng-model="cuentaBancaria.banco">
+                            <option value=""> Seleccionar banco</option>
+                            <option value="Banco Estado">Banco Estado </option>
+                            <option value="Banco BBVA">Banco BBVA</option>
+                            <option value="Banco Santander">Banco Santander</option>
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <select class="selectpicker" data-style="select-with-transition"  name="singleSelect" ng-model="cuentaBancaria.tipoDeCuenta" title="Tipo de cuenta" data-size="7">
-                            <option disabled> Tipo de cuenta</option>
-                            <option value="cuentaCorriente">Cuenta Corriente </option>
-                            <option value="cuentaRut">Cuenta Rut</option>
-                            <option value="CuentaVista">Cuenta Vista</option>
+
+                        <select  class="col-md-12" ng-model="cuentaBancaria.tipoDeCuenta">
+                            <option value=""> Tipo de cuenta</option>
+                            <option value="Cuenta Corriente">Cuenta Corriente </option>
+                            <option value="Cuenta Rut">Cuenta Rut</option>
+                            <option value="Cuenta Vista">Cuenta Vista</option>
                         </select>
-
-
-
-
-
-
-
                     </div>
                     <div class="col-md-4">
                         <div class="form-group label-floating">
@@ -106,18 +166,19 @@
                     <div class="col-md-4">
                         <div class="form-group label-floating">
                             <label class="control-label">Numero de cuenta</label>
-                            <input type="email" class="form-control" ng-model="cuentaBancaria.numeroCuenta" >
+                            <input type="text" class="form-control" ng-model="cuentaBancaria.numeroCuenta" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group label-floating">
                             <label class="control-label">Rut</label>
-                            <input type="email" class="form-control" ng-model="cuentaBancaria.rut">
+                            <input type="text" class="form-control" ng-model="cuentaBancaria.rut">
                         </div>
                     </div>
                 </div>
+                {{cuentaBancaria}}
 
-                <button  class="btn btn-rose pull-right" data-ng-click="actualizarClub()">ACTUALIZAR</button>
+                <button  class="btn btn-rose pull-right" ng-click="actualizarPerfil()">ACTUALIZAR</button>
                 <div class="clearfix"></div>
 
             </div>

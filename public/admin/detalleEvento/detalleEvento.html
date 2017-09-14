@@ -1,5 +1,5 @@
 <div class="card col-md-12 col-xs12" style="
-    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url({{eventQliao.image}}) center center;
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url({{eventUrl.image}}) center center;
     background-size: cover;
     max-height: 250px;
     min-height: 180px;
@@ -14,11 +14,11 @@
     text-shadow: 0 2px 5px rgba(33, 33, 33, 0.5);">
         <h4 class="txt-white text-capitalize"
             style="font-weight: 400;    text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">
-            {{eventQliao.name}}</h4>
+            {{eventUrl.name}}</h4>
         <h6 class="txt-white text-capitalize category"
             style="margin-top: -15px;    text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"><i
-                class="material-icons description">event</i> {{eventQliao.date | date:"EEEE dd', 'MMMM"}} <i
-                class="material-icons description">alarm</i> {{eventQliao.date | date:"HH:mm" }} - {{eventQliao.toHour |
+                class="material-icons description">event</i> {{eventUrl.date | date:"EEEE dd', 'MMMM"}} <i
+                class="material-icons description">alarm</i> {{eventUrl.date | date:"HH:mm" }} - {{eventUrl.toHour |
             date:"HH:mm" }}</h6>
     </div>
 
@@ -191,7 +191,7 @@
                         <tr data-ng-repeat="user in listaGratis">
                             <td>{{user.displayName}}</td>
                             <td class="text-right"> {{user.totalList}}</td>
-                            <td> nombre rrpp</td>
+                            <td> {{getNombreRRPP(user.idRRPP)}}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -480,15 +480,15 @@
                     max-width: 100%;
                     word-break: break-all;
                     word-break: break-word;">
-                        {{eventQliao.evenUrl}}
+                        {{eventUrl.evenUrl}}
                     </span>
         <div class="share-icons" style="margin: 20px;margin-top: 0px;">
-            <a id="copy" class="btn btn-just-icon btn-round " data-copy="{{eventQliao.evenUrl}}">
+            <a id="copy" class="btn btn-just-icon btn-round " data-copy="{{eventUrl.evenUrl}}">
                 <i class="material-icons">content_copy</i>
                 <div class="ripple-container"></div>
             </a>
             <a class="btn btn-just-icon btn-round btn-facebook" target="_blank"
-               href="https://www.facebook.com/dialog/share?app_id=1138664439526562&amp;display=popup&amp;href={{eventQliao.evenUrl}}&amp;redirect_uri={{eventQliao.evenUrl}}&amp;mobile_iframe=true">
+               href="https://www.facebook.com/dialog/share?app_id=1138664439526562&amp;display=popup&amp;href={{eventUrl.evenUrl}}&amp;redirect_uri={{eventUrl.evenUrl}}&amp;mobile_iframe=true">
                 <i class="fa fa-facebook"> </i>
                 <div class="ripple-container"></div>
             </a>
@@ -496,7 +496,7 @@
                 <i class="fa fa-twitter"></i>
                 <div class="ripple-container"></div>
             </a>
-            <a target="_blank" href="https://plus.google.com/share?url={{eventQliao.evenUrl}}"
+            <a target="_blank" href="https://plus.google.com/share?url={{eventUrl.evenUrl}}"
                class="btn btn-just-icon btn-round btn-google">
                 <i class="fa fa-google"> </i>
                 <div class="ripple-container"></div>

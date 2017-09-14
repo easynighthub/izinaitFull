@@ -85,15 +85,19 @@ angular.module('myApp.eventPast', ['ngRoute'])
                             //console.log($scope.Allvents);
                             if ($scope.Allvents.length == 0) {
                                 document.getElementById('noHayEventos').style.display = 'block';
+                                document.getElementById('BarraCargando').style.display = 'none';
                             }
                             if (eventsAdminRequest == undefined) {
                                 $('.no-js').removeClass('nav-open');
                                 //console.log("no cargo nada");
                                 document.getElementById('noHayEventos').style.display = 'block';
+                                document.getElementById('BarraCargando').style.display = 'none';
+
                                 $('.tituloIziboss').text("Eventos Futuros");
                             } else {
                                 $('.no-js').removeClass('nav-open');
                                 $scope.tickets = [];
+                                document.getElementById('BarraCargando').style.display = 'none';
 
                                 $scope.Allvents.forEach(function (x) {
                                     var eventServices = firebase.database().ref('/eventServices/' + x.$id);
@@ -130,7 +134,6 @@ angular.module('myApp.eventPast', ['ngRoute'])
                             }
                             ;
 
-                            document.getElementById('BarraCargando').style.display = 'none';
                             $('.tituloIziboss').text("Eventos Futuros");
 
 

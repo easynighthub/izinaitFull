@@ -64,6 +64,19 @@ angular.module('myApp.perfil', ['ngRoute'])
                         $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
                         //console.log(adminLogeado);
 
+                        var buscarNickname = firebase.database().ref('/nickName');
+                        var buscarmeRequest = $firebaseArray(buscarNickname);
+                        buscarmeRequest.$loaded().then(function () {
+                            $scope.nickNameSelect = buscarmeRequest;
+                            $scope.nickNameSelect.forEach(function (x) {
+                                console.log(x);
+                                if(x.$id == $scope.adminLogeado.$id){
+                                    $scope.adminLogeado.nickName = x.nickName ;
+                                };
+
+                            });
+                        });
+
                         if (adminLogeado.idClubWork == false) {
                             location.href="#!/view1";
 
@@ -211,10 +224,42 @@ angular.module('myApp.perfil', ['ngRoute'])
 
             };
 
+            $scope.actualizarPerfil = function () {
+                console.log("llegue a guardar");
+                if($scope.cuentaBancaria.banco != ''){
+                    if($scope.cuentaBancaria.tipoDeCuenta != ''){
+                        if($scope.cuentaBancaria.nombre != ''){
+                            if($scope.cuentaBancaria.numeroCuenta != ''){
+                                if($scope.cuentaBancaria.rut != ''){
+                            console.log("llegue a guardar");
+                                    firebase.database().ref('admins/' + adminLogeado.$id + '/cuentaBancaria').set($scope.cuentaBancaria).then(
+                                        function (s) {
+                                            console.log('se guardaron bien los servicios ', s);
+                                            location.reload();
+                                        }, function (e) {
+                                            alert('Error, intente de nuevo');
+                                            console.log('se guardo mal ', e);
+                                        }
+                                    );
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+
+            };
+
+
+
+            $scope.actualizarNickName = function () {
+
+
+            };
 
 
 
 
-        }]).controller('ExampleController', ['$scope', function($scope) {
 
-}]);;
+        }]);

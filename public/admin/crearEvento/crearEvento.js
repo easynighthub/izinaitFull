@@ -191,7 +191,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
                                             $scope.newEvent.id = firebase.database().ref().child('events/').push().key;
 
-                                        $scope.newEvent.evenUrl = 'https://izinait.com/app/#!/detalleEvento?id=' + $scope.newEvent.id;
+                                        $scope.newEvent.evenUrl = 'https://izinait.com/detalleEvento?id=' + $scope.newEvent.id +"&friend="+$scope.newEvent.admin;
                                         $scope.newEvent.visible = adminLogeado.clubs[x.$id].validado;
                                         $scope.newEvent.descOutHour = 0;
                                         $scope.newEvent.premiumCover = 0;
@@ -705,7 +705,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
 
                 $scope.shareWithFacebook = 'https://www.facebook.com/share.php?u=' + $scope.newEvent.evenUrl;
-                $scope.shareWithTwiter = 'http://twitter.com/share?text=An%20Awesome%20Link&url=' + $scope.newEvent.evenUrl;
+                $scope.shareWithTwiter = 'https://twitter.com/share?text=An%20Awesome%20Link&url=' + $scope.newEvent.evenUrl;
 
                 $scope.newEvent = {};
 

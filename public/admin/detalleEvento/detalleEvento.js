@@ -43,10 +43,11 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             var eventCargadoRQ = $firebaseObject(eventCargado);
             eventCargadoRQ.$loaded().then(function () {
                 event = eventCargadoRQ;
+                $scope.eventUrl = eventCargadoRQ;
 
             })
 
-            $scope.eventQliao = eventCargadoRQ;
+
 
             firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
@@ -56,6 +57,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
+                        $scope.adminLogeado =adminLogeado;
                         $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
 
                         var rrppsAdmin = firebase.database().ref('admins/' + adminLogeado.$id  +'/rrpps');

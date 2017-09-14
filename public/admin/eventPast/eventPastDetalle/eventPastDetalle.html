@@ -35,7 +35,7 @@
             </div>
             <div class="card-content">
 
-                <h3 class="card-title">9999</h3>
+                <h3 class="card-title">{{asistenciasTotales}}</h3>
             </div>
             <div class="card-footer">
 
@@ -50,7 +50,7 @@
             </div>
             <div class="card-content">
 
-                <h3 class="card-title">9999</h3>
+                <h3 class="card-title">{{reservasCanjeadas}}</h3>
             </div>
             <div class="card-footer">
 
@@ -113,8 +113,8 @@
                             </a>
                         </li>
                         <li class="col-md-3 col-xs-6">
-                            <a href="#asignados" target="_blank" data-toggle="tab">
-                                <p class="card-title text-center">Anticipadas</p>
+                            <a href="#puerta" target="_blank" data-toggle="tab">
+                                <p class="card-title text-center">Puerta</p>
                                 <div class="ripple-container"></div>
                             </a>
                         </li>
@@ -191,7 +191,7 @@
                         <tr data-ng-repeat="user in listaGratis">
                             <td>{{user.displayName}}</td>
                             <td class="text-right"> {{user.totalList}}</td>
-                            <td> nombre rrpp</td>
+                            <td> {{getNombreRRPP(user.idRRPP)}}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -217,35 +217,34 @@
 
                     </table>
                 </div>
-                <div class="tab-pane table-responsive" id="asignados">
-                    <table class="table table-striped">
-                        <thead class="text-primary">
-                        <th>Tipo</th>
-                        <th class="text-right">Valor</th>
-                        <th class="text-right">Vendidas</th>
-
-                        <th class="">Finaliza</th>
-                        <th class="text-right">Estado</th>
+                <div class="tab-pane table-responsive" id="puerta">
+                    <table id="dtPuerta" class="table  table-hover" style="width: 100%!important;">
+                        <thead>
+                        <th>Hora</th>
+                        <th>Gratis </th>
+                        <th>Extra </th>
+                        <th>VIP </th>
+                        <th>RRPP</th>
+                        <th>$ Total </th>
                         </thead>
                         <tbody>
-                        <tr data-ng-repeat="servicioEvent in serviciosEvent">
-                            <td>
-                                        <span>{{servicioEvent.tipo}}
-                                            <p><small class="category">{{servicioEvent.desc}}</small></p>
-                                        </span>
-
-                            </td>
-                            <td class="text-right">$ {{servicioEvent.precio | number:0}}</td>
-                            <td class="text-right">{{servicioEvent.utilizados}}/{{servicioEvent.cantidad}}</td>
-                            <td class="">{{servicioEvent.fechaFin | date:"dd 'de' MMM', 'HH:mm" }}</td>
+                        <tr ng-repeat="ingreso in puerta" >
+                            <td>{{ingreso.date | date : 'HH:mm a'}}</td>
+                            <td>H. {{ingreso.gratisHombre}} <br>
+                                M. {{ingreso.gratisMujer}}</td>
+                            <td>H. {{ingreso.extraHombre}} <br>
+                                M. {{ingreso.extraMujer}}</td>
+                            <td>H. {{ingreso.vipHombre}} <br>
+                                M. {{ingreso.vipMujer}}</td>
+                            <td> {{getNombreRRPP(ingreso.rrppId)}} </td>
                             <td class="text-right">
-                                <md-switch class="pull-right" ng-click="accionVisible(servicioEvent)"
-                                           ng-model="servicioEvent.visible" aria-label="Switch 1">
-
-                                </md-switch>
-
+                                ${{
+                                (ingreso.extraHombre*ingreso.valorExtraHombre)+
+                                (ingreso.extraMujer*ingreso.valorExtraMujer)+
+                                (ingreso.vipHombre*ingreso.valorVipHombre)+
+                                (ingreso.vipMujer*ingreso.valorVipMujer)
+                                }}
                             </td>
-
                         </tr>
                         </tbody>
                     </table>

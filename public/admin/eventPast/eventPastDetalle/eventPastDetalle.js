@@ -7,7 +7,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/eventPast/eventPastDetalle', {
             templateUrl: 'eventPast/eventPastDetalle/eventPastDetalle.html',
-            controller: 'eventPastCtrl',
+            controller: 'detalleEventoPasadoCtrl',
         });
     }])
 
@@ -38,11 +38,11 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
             var event;
             $scope.totalListasGratis = 0;
             $scope.impresionesTotales = 0;
-
             var eventCargado = firebase.database().ref('/events/').child(eventId);
             var eventCargadoRQ = $firebaseObject(eventCargado);
             eventCargadoRQ.$loaded().then(function () {
-                event = eventCargadoRQ;
+                event =eventCargadoRQ;
+                             console.log(eventCargadoRQ);
 
             })
 
@@ -58,11 +58,12 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                         adminLogeado = adminLocal;
                         $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
 
-                        var rrppsAdmin = firebase.database().ref('admins/' + adminLogeado.$id  +'/rrpps');
+                        var rrppsAdmin = firebase.database().ref('events/' +  eventId +'/rrpps');
                         var rrppsAdminRQ = $firebaseArray(rrppsAdmin);
                         rrppsAdminRQ.$loaded().then(function () {
-                            //console.log(rrppsAdminRQ);
+                            console.log(rrppsAdminRQ);
                             $scope.rrppsAdminRQ = rrppsAdminRQ;
+
                         });
 
                         $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
@@ -87,31 +88,114 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                             var serviciosEventRQ = $firebaseArray(serviciosEvent);
                             var tickets = firebase.database().ref('/tickets/' + eventId);
                             var ticketsRQ = $firebaseArray(tickets);
+                            var listaGratis = firebase.database().ref('/events/' + eventId + '/asist');
+                            var listaGratisRQ = $firebaseObject(listaGratis);
 
-
+                            var impresiones = firebase.database().ref('/impresiones/' + eventId);
+                            var impresionesRQ = $firebaseArray(impresiones);
+                            var rrpps = $firebaseArray(firebase.database().ref('/events/' + eventId + '/rrpps'));
+                            var puerta = $firebaseArray(firebase.database().ref('/events/' + eventId + '/puertaTickets'));
+                            $scope.datosTotalesRRPP = [];
+                            $scope.sumaTicketsTotal = 0;
 
 
                             ticketsRQ.$loaded().then(function () {
                                 serviciosEventRQ.$loaded().then(function () {
-                                    $.when($scope.ticketsEvent = ticketsRQ).then(function dtServicios() {
-                                        $('#dtServicios').DataTable(
+                                    listaGratisRQ.$loaded().then(function () {
+                                        impresionesRQ.$loaded().then(function () {
+                                            rrpps.$loaded().then(function () {
+                                                puerta.$loaded().then(function () {
+                                                    console.log(puerta);
+                                                    $scope.puerta = puerta;
 
-                                            {
-                                                "pagingType": "simple_numbers"
-                                                , "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
-                                                ,
 
-                                                responsive: true
-                                                ,buttons: ['csv']
-                                                , language: {
-                                                search: "_INPUT_"
-                                                , searchPlaceholder: "Buscar"
-                                            }
-                                            }
-                                        )
+                                                $scope.Allrrpps = rrpps;
+                                                $scope.rrpps = $scope.Allrrpps;
 
-                                    })
-                                    $scope.serviciosEvent = serviciosEventRQ;
+                                                $scope.impresionesRRPP = impresionesRQ;
+
+                                                $scope.serviciosEvent = serviciosEventRQ;
+
+                                                $.when($scope.listaGratis = listaGratisRQ).then(function dtListas() {
+                                                    $('#dtListas').DataTable(
+                                                        {
+                                                            "pagingType": "simple_numbers",
+                                                            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+                                                            responsive: true,
+                                                            language:
+                                                                {
+                                                                    search: "_INPUT_",
+                                                                    searchPlaceholder: "Buscar"
+                                                                },
+
+                                                        }
+                                                    )
+
+                                                });
+                                                $scope.listaGratis.forEach(function (x) {
+
+                                                    $scope.totalListasGratis = $scope.totalListasGratis + x.totalList;
+                                                });
+                                                $.when($scope.ticketsEvent = ticketsRQ).then(function dtServicios() {
+                                                    $('#dtServicios').DataTable(
+
+                                                        {
+                                                            "pagingType": "simple_numbers"
+                                                            , "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
+                                                            ,
+
+                                                            responsive: true
+                                                            ,buttons: ['csv']
+                                                            , language: {
+                                                            search: "_INPUT_"
+                                                            , searchPlaceholder: "Buscar"
+                                                        }
+                                                        }
+                                                    )
+
+                                                });
+
+                                                angular.forEach(event.rrpps, function (rp) {
+                                                    if (rp.uid != 'noRRPP') {
+
+                                                        var rrpp = [];
+                                                        rrpp.listaTotal = 0;
+                                                        rrpp.openLink = 0;
+                                                        rrpp.ticketsTotal = 0;
+
+                                                        rrpp.nameRRPP = rp.name;
+
+                                                        $scope.listaGratis.forEach(function (x) {
+                                                            if (rp.uid == x.idRRPP) {
+                                                                rrpp.listaTotal = rrpp.listaTotal + x.totalList;
+                                                            }
+                                                        });
+
+                                                        $scope.ticketsEvent.forEach(function (t) {
+                                                            if (rp.uid == t.rrppid) {
+                                                                rrpp.ticketsTotal = rrpp.ticketsTotal + t.cantidadDeCompra;
+                                                                $scope.sumaTicketsTotal = $scope.sumaTicketsTotal + t.cantidadDeCompra;
+                                                            }
+
+
+                                                        });
+
+                                                        $scope.impresionesRRPP.forEach(function (j) {
+                                                            if (j.$id == rp.uid) {
+                                                                rrpp.openLink = j.openLink;
+                                                                $scope.impresionesTotales = $scope.impresionesTotales + j.openLink;
+                                                            }
+                                                        });
+                                                        $scope.datosTotalesRRPP.push(rrpp);
+                                                    }
+                                                });
+
+
+
+
+
+
+
                                     $scope.serviciosEvent.forEach(function (j) {
                                         j.utilizados = 0;
                                         $scope.ticketsEvent.forEach(function (x) {
@@ -129,80 +213,24 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                                          }
                                          });*/
 
+                                    });
 
+
+                                                calcularAsistenciasTotales();
+                                            });
+                                            });
+                                        });
                                     })
 
                                 })
                             })
 
 
-                            var listaGratis = firebase.database().ref('/events/' + eventId + '/asist');
-                            var listaGratisRQ = $firebaseObject(listaGratis);
-                            listaGratisRQ.$loaded().then(function () {
-                                $.when($scope.listaGratis = listaGratisRQ).then(function dtListas() {
-                                    $('#dtListas').DataTable(
-                                        {
-                                            "pagingType": "simple_numbers",
-                                            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
-                                            responsive: true,
-                                            language:
-                                                {
-                                                    search: "_INPUT_",
-                                                    searchPlaceholder: "Buscar"
-                                                },
-
-                                        }
-                                    )
-
-                                })
-                                $scope.listaGratis.forEach(function (x) {
-
-                                    $scope.totalListasGratis = $scope.totalListasGratis + x.totalList;
-                                });
-                            });
-                            $scope.datosTotalesRRPP = [];
-                            $scope.sumaTicketsTotal = 0;
-                            var impresiones = firebase.database().ref('/impresiones/' + eventId);
-                            var impresionesRQ = $firebaseArray(impresiones);
-                            impresionesRQ.$loaded().then(function () {
-                                ticketsRQ.$loaded().then(function () {
-                                    $scope.impresionesRRPP = impresionesRQ;
-                                    angular.forEach(event.rrpps, function (rp) {
-                                        if (rp.uid != 'noRRPP') {
-
-                                            var rrpp = [];
-                                            rrpp.listaTotal = 0;
-                                            rrpp.openLink = 0;
-                                            rrpp.ticketsTotal = 0;
-
-                                            rrpp.nameRRPP = rp.name;
-
-                                            $scope.listaGratis.forEach(function (x) {
-                                                if (rp.uid == x.idRRPP) {
-                                                    rrpp.listaTotal = rrpp.listaTotal + x.totalList;
-                                                }
-                                            });
-
-                                            $scope.ticketsEvent.forEach(function (t) {
-                                                if (rp.uid == t.rrppid) {
-                                                    rrpp.ticketsTotal = rrpp.ticketsTotal + t.cantidadDeCompra;
-                                                    $scope.sumaTicketsTotal = $scope.sumaTicketsTotal + t.cantidadDeCompra;
-                                                }
 
 
-                                            });
 
-                                            $scope.impresionesRRPP.forEach(function (j) {
-                                                if (j.$id == rp.uid) {
-                                                    rrpp.openLink = j.openLink;
-                                                    $scope.impresionesTotales = $scope.impresionesTotales + j.openLink;
-                                                }
-                                            });
-                                            $scope.datosTotalesRRPP.push(rrpp);
-                                        }
-                                    })
-                                })
-                            })
+
+
 
 
 
@@ -253,8 +281,32 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                 if (idRRPP) {
                     var rrppKey = idRRPP;
                     ////console.log(idRRPP);
-                    return $filter('filter')($scope.rrppsAdminRQ,  {$id :rrppKey})[0].name;
+                    return $filter('filter')($scope.rrppsAdminRQ,  {uid :rrppKey})[0].name;
                 };
+
+
+            };
+
+            $scope.asistenciasTotales =0;
+            $scope.reservasCanjeadas = 0;
+            var calcularAsistenciasTotales = function () {
+                $scope.asistenciasTotales =0;
+                console.log($scope.listaGratis);
+                console.log($scope.Allrrpps);   console.log($scope.ticketsEvent);
+
+                $scope.listaGratis.forEach(function (x) {
+                    $scope.asistenciasTotales += x.totalAsist;
+                });
+
+                $scope.Allrrpps.forEach(function (j) {
+                    $scope.asistenciasTotales += j.numeroTotal;
+                });
+                $scope.ticketsEvent.forEach(function (d) {
+                    $scope.asistenciasTotales += d.cantidadUtilizada;
+                    if(d.cantidadUtilizada >0){
+                        $scope.reservasCanjeadas++
+                    }
+                });
 
 
             };
