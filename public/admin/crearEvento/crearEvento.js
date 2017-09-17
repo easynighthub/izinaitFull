@@ -557,6 +557,9 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                         + ' | Dresscode '
                         + $scope.newEvent.clothing;
 
+                    $scope.newEvent.ageRangeFemale = parseInt($scope.newEvent.ageRangeFemale);
+                    $scope.newEvent.ageRangeMale =parseInt( $scope.newEvent.ageRangeMale);
+
                     $scope.newEvent.premiumHour = $scope.newEvent.freemiumHour;
 
                     $scope.newEvent.eventEnvironment = $scope.newEvent.eventEnvironmentSelect ? $scope.newEvent.eventEnvironmentSelect.join(', ') : '';
