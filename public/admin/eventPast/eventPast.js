@@ -106,23 +106,56 @@ angular.module('myApp.eventPast', ['ngRoute'])
                                         x.reservas = eventServicesRQ;
                                         x.ReservaCantidad = eventServicesRQ.length;
                                         x.ingresosTotales = 0;
-                                        x.reservas.forEach(function (j) {
+                                        x.dineroTotal = 0;
 
-                                            j.utilizados = 0;
+                                            angular.forEach(x.asist, function(lista){
+                                                x.ingresosTotales += lista.totalAsist;
+                                            });
+                                            angular.forEach(x.puertaTickets, function(puerta){
+                                                x.ingresosTotales += puerta.extraHombre;
+                                                x.ingresosTotales += puerta.extraMujer;
+                                                x.ingresosTotales += puerta.gratisHombre;
+                                                x.ingresosTotales += puerta.gratisMujer;
+                                                x.ingresosTotales += puerta.vipHombre;
+                                                x.ingresosTotales += puerta.vipMujer;
+
+                                                if(puerta.extraHombre != 0){
+                                                    x.dineroTotal += (puerta.extraHombre * puerta.valorExtraHombre );
+                                                };
+                                                if(puerta.extraMujer != 0){
+                                                    x.dineroTotal += (puerta.extraMujer * puerta.valorExtraMujer );
+                                                };
+                                                if(puerta.vipHombre != 0){
+                                                    x.dineroTotal += (puerta.vipHombre * puerta.valorVipHombre);
+                                                };
+                                                if(puerta.vipMujer != 0){
+                                                    x.dineroTotal += (puerta.vipMujer * puerta.valorVipMujer);
+                                                };
+
+                                            });
+
+
                                             var ticketServices = firebase.database().ref('/tickets/' + x.$id);
                                             var ticketServiceRQ = $firebaseArray(ticketServices);
                                             ticketServiceRQ.$loaded().then(function () {
+
                                                 //console.log(ticketServiceRQ);
                                                 $scope.tickets = ticketServiceRQ;
-                                                $scope.tickets.forEach(function (k) {
-                                                    x.ingresosTotales += k.cantidadUtilizada;
-                                                    if (j.$id == k.ideventservices) {
-                                                        j.utilizados = j.utilizados + k.cantidadDeCompra;
+                                                $scope.tickets.forEach(function (k){
+                                                    if(k.paidOut){
+                                                        x.dineroTotal +=  k.totalAPagar;
+                                                    }else{
+                                                        angular.forEach(x.ingresos,  function (ingreso) {
+                                                            x.dineroTotal += ingreso.pagoTotal;
+                                                        });
                                                     }
+
+
+                                                    x.ingresosTotales += k.cantidadUtilizada;
                                                     ;
                                                 });
                                             });
-                                        });
+
 
 
                                         $scope.eventsWithServices.push(x);
