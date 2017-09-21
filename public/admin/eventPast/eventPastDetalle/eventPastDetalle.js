@@ -150,10 +150,16 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                                                                 console.log("hola");
                                                                 rrpp.listaTotal = rrpp.listaTotal + x.totalAsist;
                                                                 rrpp.cantidadDeCheckIn += x.totalAsist;
+
                                                             }
                                                         });
 
                                                         $scope.ticketsEvent.forEach(function (t) {
+                                                            if(t.tipoEventservices == 'Preventa')
+                                                            {
+                                                                console.log(t);
+                                                            }
+
                                                             if (rp.uid == t.rrppid) {
                                                                 if(t.tipoEventservices == 'Mesa'){
                                                                     rrpp.cantidadDeMesas += t.cantidadDeCompra;
@@ -161,15 +167,17 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                                                                 if(t.tipoEventservices == 'Preventa'){
                                                                     rrpp.cantidadDePreventas += t.cantidadDeCompra;
                                                                 }
-                                                                rrpp.ticketsTotal = rrpp.ticketsTotal + t.cantidadDeCompra;
+
 
 
                                                                 if(t.paidOut){
                                                                     rrpp.cantidadDeCheckIn +=  t.cantidadDeCompra;
-                                                                    $scope.sumaTicketsTotal = $scope.sumaTicketsTotal + t.cantidadDeCompra;
+                                                                    $scope.sumaTicketsTotal +=  t.cantidadDeCompra;
+                                                                    rrpp.ticketsTotal = rrpp.ticketsTotal + t.cantidadDeCompra;
                                                                 }else{
                                                                     rrpp.cantidadDeCheckIn +=  t.cantidadUtilizada;
-                                                                    $scope.sumaTicketsTotal = $scope.sumaTicketsTotal + t.cantidadUtilizada;
+                                                                    $scope.sumaTicketsTotal += t.cantidadUtilizada;
+                                                                    rrpp.ticketsTotal = rrpp.ticketsTotal + t.cantidadUtilizada;
                                                                 };
                                                             };
                                                         });
@@ -209,15 +217,28 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
 
                                     $scope.ticketUtilizados = 0;
                                     $scope.serviciosEvent.forEach(function (j) {
+                                        console.log("tipo de servicio")
                                         j.utilizados = 0;
                                         $scope.ticketsEvent.forEach(function (x) {
 
                                             if (x.ideventservices == j.$id) {
-                                                j.utilizados = j.utilizados + x.cantidadDeCompra;
-                                                $scope.totalDineroServicios += x.totalAPagar;
-                                                if(x.cantidadUtilizada > 0){
-                                                    $scope.ticketUtilizados += 1;
-                                                };
+                                                if(x.paidOut  == true)
+                                                {
+                                                    j.utilizados = j.utilizados += x.cantidadDeCompra;
+
+                                                    $scope.totalDineroServicios += x.totalAPagar;
+                                                    if(x.cantidadUtilizada > 0){
+                                                        $scope.ticketUtilizados += 1;
+                                                    };
+                                                }else{
+                                                    j.utilizados = j.utilizados += x.cantidadUtilizada;
+                                                    $scope.totalDineroServicios += x.totalAPagar;
+                                                    if(x.cantidadUtilizada > 0){
+                                                        $scope.ticketUtilizados += 1;
+                                                    };
+
+                                                }
+
                                             }
 
                                         });

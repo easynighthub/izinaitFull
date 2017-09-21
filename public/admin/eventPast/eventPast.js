@@ -120,10 +120,10 @@ angular.module('myApp.eventPast', ['ngRoute'])
                                                 x.ingresosTotales += puerta.vipMujer;
 
                                                 if(puerta.extraHombre != 0){
-                                                    x.dineroTotal += (puerta.extraHombre * puerta.valorExtraHombre );
+                                                    x.dineroTotal += (puerta.extraHombre * puerta.valorExtraHombre);
                                                 };
                                                 if(puerta.extraMujer != 0){
-                                                    x.dineroTotal += (puerta.extraMujer * puerta.valorExtraMujer );
+                                                    x.dineroTotal += (puerta.extraMujer * puerta.valorExtraMujer);
                                                 };
                                                 if(puerta.vipHombre != 0){
                                                     x.dineroTotal += (puerta.vipHombre * puerta.valorVipHombre);
@@ -139,19 +139,27 @@ angular.module('myApp.eventPast', ['ngRoute'])
                                             var ticketServiceRQ = $firebaseArray(ticketServices);
                                             ticketServiceRQ.$loaded().then(function () {
 
+
                                                 //console.log(ticketServiceRQ);
                                                 $scope.tickets = ticketServiceRQ;
+
+                                                console.log($scope.tickets);
+
                                                 $scope.tickets.forEach(function (k){
                                                     if(k.paidOut){
                                                         x.dineroTotal +=  k.totalAPagar;
+                                                        x.ingresosTotales += k.cantidadDeCompra;
+
                                                     }else{
-                                                        angular.forEach(x.ingresos,  function (ingreso) {
+                                                        angular.forEach(k.ingresos,  function (ingreso) {
                                                             x.dineroTotal += ingreso.pagoTotal;
+                                                            x.ingresosTotales += k.cantidadUtilizada;
+
                                                         });
                                                     }
 
 
-                                                    x.ingresosTotales += k.cantidadUtilizada;
+
                                                     ;
                                                 });
                                             });
