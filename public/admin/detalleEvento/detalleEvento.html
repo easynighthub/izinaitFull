@@ -30,7 +30,7 @@
 
     <div class="col-lg-3 col-md-6 col-sm-6 ">
         <div class="card card-stats">
-            <div class="card-header col-md-6 col-xs-5" data-background-color="purple">
+            <div class="card-header col-md-6 col-xs-5" data-background-color="rose">
                 <p class="card-title">Lista Gratis</p>
             </div>
             <div class="card-content">
@@ -60,7 +60,7 @@
 
     <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="card card-stats">
-            <div class="card-header col-md-6 col-xs-5" data-background-color="purple">
+            <div class="card-header col-md-6 col-xs-5" data-background-color="rose">
                 <p class="card-title">Visitas</p>
             </div>
             <div class="card-content">
@@ -230,10 +230,20 @@
                         <tbody>
                         <tr data-ng-repeat="servicioEvent in serviciosEvent">
                             <td>
-                                        <span>{{servicioEvent.tipo}}
-                                            <p><small class="category">{{servicioEvent.desc}}</small></p>
-                                        </span>
-
+                                <span>
+                                    <span style="font-size: 20px">
+                                        <i style="color: #4caf50" ng-show="servicioEvent.tipo == 'Mesa'" class="fa fa-star"></i>
+                                        <i style="color: #f44336" ng-show="servicioEvent.tipo == 'Preventa'" class="fa fa-ticket "></i>
+                                        <i style="color: #c8c8c8" ng-show="servicioEvent.tipo == 'Vip'" class="fa fa-diamond"></i>
+                                        <i style="color: #ff9800" ng-show="servicioEvent.tipo == 'Especial'" class="fa fa-certificate"></i>
+                                        <i style="color: #00bcd4" ng-show="servicioEvent.tipo == 'Botella'" class="fa fa-glass"></i>
+                                    </span>
+                                    <span>{{servicioEvent.tipo}}
+                                        <p>
+                                            <small class="category">{{servicioEvent.desc}}</small>
+                                        </p>
+                                    </span>
+                                </span>
                             </td>
                             <td class="text-right">$ {{servicioEvent.precio | number:0}}</td>
                             <td class="text-right">{{servicioEvent.utilizados}}/{{servicioEvent.cantidad}}</td>
@@ -562,7 +572,7 @@
                 confirmButtonClass: "btn btn-success",
                 type: "success"
             });
-        } catch(e) {
+        } catch (e) {
             succeed = false;
         }
         // restore original focus

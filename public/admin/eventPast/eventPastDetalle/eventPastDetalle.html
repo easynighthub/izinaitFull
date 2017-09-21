@@ -35,7 +35,7 @@
             </div>
             <div class="card-content">
 
-                <h3 class="card-title">{{asistenciasTotales}}</h3>
+                <h3 class="card-title">9999</h3>
             </div>
             <div class="card-footer">
 
@@ -50,7 +50,7 @@
             </div>
             <div class="card-content">
 
-                <h3 class="card-title">{{reservasCanjeadas}}</h3>
+                <h3 class="card-title">9999</h3>
             </div>
             <div class="card-footer">
 
@@ -94,27 +94,21 @@
             <div class="nav-tabs-navigation">
                 <div class="nav-tabs-wrapper">
                     <ul class="nav nav-tabs" data-tabs="tabs">
-                        <li class="col-md-3 col-xs-6 active">
+                        <li class="col-md-4 col-xs-4 active">
                             <a href="#Servicios" target="_blank" data-toggle="tab">
                                 <p class="card-title text-center">Ventas</p>
                                 <div class="ripple-container"></div>
                             </a>
                         </li>
-                        <li class="col-md-3 col-xs-6">
-                            <a href="#listas" target="_blank" data-toggle="tab">
-                                <p class="card-title text-center">Lista</p>
-                                <div class="ripple-container"></div>
-                            </a>
-                        </li>
-                        <li class="col-md-3 col-xs-6">
+                        <li class="col-md-4 col-xs-4">
                             <a href="#rrpp" target="_blank" data-toggle="tab">
                                 <p class="card-title text-center">RR.PP</p>
                                 <div class="ripple-container"></div>
                             </a>
                         </li>
-                        <li class="col-md-3 col-xs-6">
-                            <a href="#puerta" target="_blank" data-toggle="tab">
-                                <p class="card-title text-center">Puerta</p>
+                        <li class="col-md-4 col-xs-4">
+                            <a href="#asignados" target="_blank" data-toggle="tab">
+                                <p class="card-title text-center">Asistentes</p>
                                 <div class="ripple-container"></div>
                             </a>
                         </li>
@@ -127,74 +121,52 @@
                 <div class="tab-pane active table-responsive" id="Servicios">
 
 
-                    <table id="dtServicios" class="table table-striped" style="width: 100%!important;">
+                    <table class="table table-striped">
                         <thead>
-                        <th>Nombre</th>
-                        <th>Contacto</th>
                         <th>Tipo</th>
-
-                        <th class="text-right">Cantidad</th>
-                        <th class="text-right">Pagado</th>
-                        <th>RR.PP</th>
+                        <th class="text-right">Valor</th>
+                        <th class="text-right">Vendida</th>
+                        <th class="text-right">Recaudación</th>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="ticketEvent in ticketsEvent">
-                            <td> {{ticketEvent.displayName}}</td>
-                            <td> {{ticketEvent.celular}}</td>
-                            <td>{{ticketEvent.tipoEventservices}}</td>
-
-                            <td class="text-right">
-                                {{ticketEvent.cantidadDeCompra}}
+                        <tr data-ng-repeat="servicioEvent in serviciosEvent">
+                            <td>
+                                <span>
+                                    <span style="font-size: 20px">
+                                        <i style="color: #4caf50" ng-show="servicioEvent.tipo == 'Mesa'" class="fa fa-star"></i>
+                                        <i style="color: #f44336" ng-show="servicioEvent.tipo == 'Preventa'" class="fa fa-ticket "></i>
+                                        <i style="color: #c8c8c8" ng-show="servicioEvent.tipo == 'Vip'" class="fa fa-diamond"></i>
+                                        <i style="color: #ff9800" ng-show="servicioEvent.tipo == 'Especial'" class="fa fa-certificate"></i>
+                                        <i style="color: #00bcd4" ng-show="servicioEvent.tipo == 'Botella'" class="fa fa-glass"></i>
+                                    </span>
+                                    <span>{{servicioEvent.tipo}}
+                                        <p>
+                                            <small class="category">{{servicioEvent.desc}}</small>
+                                        </p>
+                                    </span>
+                                </span>
                             </td>
-                            <td class="text-primary text-right">
-                                <div ng-show="!ticketEvent.paidOut">
-                                    ${{(ticketEvent.totalAPagar/ticketEvent.cantidadDeCompra)*ticketEvent.cantidadUtilizada
-                                    | number:0}}
-                                </div>
-                                <div ng-show="ticketEvent.paidOut">${{ticketEvent.totalAPagar | number:0}}</div>
-
-                            </td>
-                            <td>{{getNombreRRPP(ticketEvent.rrppid)}}</td>
+                            <td class="text-right">$ {{servicioEvent.precio | number:0}}</td>
+                            <td class="text-right">{{servicioEvent.utilizados}}</td>
+                            <td class="text-right">$999.999.999</td>
                         </tr>
-
-                        <!--    <tr>
-                                <td colspan="3"></td>
-                                <td>
-                                    Total Pagado
-                                </td>
-                                <td>
-                                    <small>&euro;</small>12,999
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3"></td>
-                                <td>
-                                    Total Pago en Puerta
-                                </td>
-                                <td>
-                                    <small>&euro;</small>12,999
-                                </td>
-                            </tr> -->
-
+                        <tr>
+                            <td colspan="2"></td>
+                            <td class="td-total">
+                                Total
+                            </td>
+                            <td class="td-price">
+                                <small>$</small>999.999.999
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
+
+
                 </div>
                 <div class="tab-pane table-responsive" id="listas">
-                    <table id="dtListas" class="table table-striped" style="width: 100%!important;">
-                        <thead>
-                        <th>Nombre</th>
-                        <th class="text-right">Cantidad</th>
-                        <th>RR.PP</th>
-                        </thead>
 
-                        <tbody>
-                        <tr data-ng-repeat="user in listaGratis">
-                            <td>{{user.displayName}}</td>
-                            <td class="text-right"> {{user.totalList}}</td>
-                            <td> {{getNombreRRPP(user.idRRPP)}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+
                 </div>
                 <div class="tab-pane table-responsive" id="rrpp">
                     <table id="dtRrpp" onchange="dtRrpp()" class="table table-striped">
@@ -203,6 +175,10 @@
                         <th>Visitas</th>
                         <th class="text-right">Lista</th>
                         <th class="text-right">Anticipadas</th>
+                        <th class="text-right">Check-in</th>
+                        <th class="text-right">Mesa</th>
+                        <th class="text-right">Preventa</th>
+                        <th class="text-right">Cuota del evento</th>
                         </thead>
                         <tbody>
                         <tr data-ng-repeat="rrpp in datosTotalesRRPP">
@@ -210,6 +186,10 @@
                             <td>{{rrpp.openLink}}</td>
                             <td class="text-right">{{rrpp.listaTotal}}</td>
                             <td class="text-right">{{rrpp.ticketsTotal}}</td>
+                            <td class="text-right">9999</td>
+                            <td class="text-right">9999</td>
+                            <td class="text-right">9999</td>
+                            <td class="text-right">99%</td>
                         </tr>
 
 
@@ -217,37 +197,8 @@
 
                     </table>
                 </div>
-                <div class="tab-pane table-responsive" id="puerta">
-                    <table id="dtPuerta" class="table  table-hover" style="width: 100%!important;">
-                        <thead>
-                        <th>Hora</th>
-                        <th>Gratis </th>
-                        <th>Extra </th>
-                        <th>VIP </th>
-                        <th>RRPP</th>
-                        <th>$ Total </th>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="ingreso in puerta" >
-                            <td>{{ingreso.date | date : 'HH:mm a'}}</td>
-                            <td>H. {{ingreso.gratisHombre}} <br>
-                                M. {{ingreso.gratisMujer}}</td>
-                            <td>H. {{ingreso.extraHombre}} <br>
-                                M. {{ingreso.extraMujer}}</td>
-                            <td>H. {{ingreso.vipHombre}} <br>
-                                M. {{ingreso.vipMujer}}</td>
-                            <td> {{getNombreRRPP(ingreso.rrppId)}} </td>
-                            <td class="text-right">
-                                ${{
-                                (ingreso.extraHombre*ingreso.valorExtraHombre)+
-                                (ingreso.extraMujer*ingreso.valorExtraMujer)+
-                                (ingreso.vipHombre*ingreso.valorVipHombre)+
-                                (ingreso.vipMujer*ingreso.valorVipMujer)
-                                }}
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div class="tab-pane table-responsive" id="asignados">
+
                 </div>
             </div>
         </div>
@@ -561,7 +512,7 @@
                 confirmButtonClass: "btn btn-success",
                 type: "success"
             });
-        } catch(e) {
+        } catch (e) {
             succeed = false;
         }
         // restore original focus

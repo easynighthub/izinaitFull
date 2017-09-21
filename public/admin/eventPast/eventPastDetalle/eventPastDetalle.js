@@ -18,18 +18,19 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
 
             //$(eventos).addClass( "active" );
             //$(configuracion).removeClass( "active" );
-            $('.tituloIziboss').text("Detalle Evento");
+            $('.tituloIziboss').text("Informe Evento");
             $('.no-js').removeClass('nav-open');
 
             $(sideEventos).addClass("active");
             $(crearEventos).removeClass("active");
 
-            $(verEventosFuturos).addClass("active");
-            $(verEventosPasados).removeClass("active");
+            $(verEventosFuturos).removeClass("active");
+            $(verEventosPasados).addClass("active");
             $(sideClientes).removeClass("active");
             $(sideRrpp).removeClass("active");
             $(sideDoorman).removeClass("active");
             $(contenido).css("padding-top", "30px ");
+
 
 
             var admin = window.currentAdmin;
@@ -136,6 +137,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
 
                                                     $scope.totalListasGratis = $scope.totalListasGratis + x.totalList;
                                                 });
+                                                console.log($scope.datosTotalesRRPP);
                                                 $.when($scope.ticketsEvent = ticketsRQ).then(function dtServicios() {
                                                     $('#dtServicios').DataTable(
 
@@ -291,8 +293,8 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
             $scope.reservasCanjeadas = 0;
             var calcularAsistenciasTotales = function () {
                 $scope.asistenciasTotales =0;
-                console.log($scope.listaGratis);
-                console.log($scope.Allrrpps);   console.log($scope.ticketsEvent);
+                //console.log($scope.listaGratis);
+                //console.log($scope.Allrrpps);   //console.log($scope.ticketsEvent);
 
                 $scope.listaGratis.forEach(function (x) {
                     $scope.asistenciasTotales += x.totalAsist;
