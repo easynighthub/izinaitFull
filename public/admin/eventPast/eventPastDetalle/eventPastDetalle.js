@@ -262,28 +262,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
             })
 
 
-            $scope.accionVisible = function (servicioEvent) {
 
-                var ref = firebase.database().ref().child("/eventServices/" + eventId).child(servicioEvent.$id);
-                ref.update({
-                    visible: !servicioEvent.visible
-                });
-                servicioEvent.visible = !servicioEvent.visible;
-
-                $scope.serviciosEvent.forEach(function (j) {
-                    j.utilizados = 0;
-                    $scope.ticketsEvent.forEach(function (x) {
-
-                        if (x.ideventservices == j.$id) {
-                            j.utilizados = j.utilizados + x.cantidadDeCompra;
-
-                        }
-
-                    });
-
-                });
-
-            };
 
 
 
@@ -298,29 +277,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
 
             };
 
-            $scope.asistenciasTotales =0;
-            $scope.reservasCanjeadas = 0;
-            var calcularAsistenciasTotales = function () {
-                $scope.asistenciasTotales =0;
-                //console.log($scope.listaGratis);
-                //console.log($scope.Allrrpps);   //console.log($scope.ticketsEvent);
 
-                $scope.listaGratis.forEach(function (x) {
-                    $scope.asistenciasTotales += x.totalAsist;
-                });
-
-                $scope.Allrrpps.forEach(function (j) {
-                    $scope.asistenciasTotales += j.numeroTotal;
-                });
-                $scope.ticketsEvent.forEach(function (d) {
-                    $scope.asistenciasTotales += d.cantidadUtilizada;
-                    if(d.cantidadUtilizada >0){
-                        $scope.reservasCanjeadas++
-                    }
-                });
-
-
-            };
 
 
 
