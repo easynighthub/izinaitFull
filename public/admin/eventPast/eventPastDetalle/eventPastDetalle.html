@@ -35,7 +35,7 @@
             </div>
             <div class="card-content">
 
-                <h3 class="card-title">9999</h3>
+                <h3 class="card-title">{{sumaTicketsTotal+totalListasGratis+cantidadPuertaIngresos}}</h3>
             </div>
             <div class="card-footer">
 
@@ -50,7 +50,7 @@
             </div>
             <div class="card-content">
 
-                <h3 class="card-title">9999</h3>
+                <h3 class="card-title">{{ticketUtilizados}}</h3>
             </div>
             <div class="card-footer">
 
@@ -79,7 +79,7 @@
             </div>
             <div class="card-content">
 
-                <h3 class="card-title" type="number">{{((sumaTicketsTotal+totalListasGratis)/impresionesTotales)*100 |
+                <h3 class="card-title" type="number">{{((sumaTicketsTotal+totalListasGratis+cantidadPuertaIngresos)/impresionesTotales)*100 |
                     number:0}}%</h3>
             </div>
             <div class="card-footer">
@@ -148,7 +148,7 @@
                             </td>
                             <td class="text-right">$ {{servicioEvent.precio | number:0}}</td>
                             <td class="text-right">{{servicioEvent.utilizados}}</td>
-                            <td class="text-right">$999.999.999</td>
+                            <td class="text-right">{{((servicioEvent.precio )*servicioEvent.utilizados) | number:0}}</td>
                         </tr>
                         <tr>
                             <td colspan="2"></td>
@@ -156,7 +156,16 @@
                                 Total
                             </td>
                             <td class="td-price">
-                                <small>$</small>999.999.999
+                                <small>$</small>{{totalDineroServicios | number:0}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td class="td-total">
+                                izinait
+                            </td>
+                            <td class="td-price">
+                                <small>$</small> - {{totalDineroServicios*0.08 | number:0}}
                             </td>
                         </tr>
                         </tbody>
@@ -186,10 +195,10 @@
                             <td>{{rrpp.openLink}}</td>
                             <td class="text-right">{{rrpp.listaTotal}}</td>
                             <td class="text-right">{{rrpp.ticketsTotal}}</td>
-                            <td class="text-right">9999</td>
-                            <td class="text-right">9999</td>
-                            <td class="text-right">9999</td>
-                            <td class="text-right">99%</td>
+                            <td class="text-right">{{rrpp.cantidadDeCheckIn}}</td>
+                            <td class="text-right">{{rrpp.cantidadDeMesas}}</td>
+                            <td class="text-right">{{rrpp.cantidadDePreventas}}</td>
+                            <td class="text-right">{{(rrpp.cantidadDeCheckIn /(sumaTicketsTotal+totalListasGratis+cantidadPuertaIngresos) *100) |  number:0}}%</td>
                         </tr>
 
 
