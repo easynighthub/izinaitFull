@@ -723,7 +723,8 @@ angular.module('myApp.event', ['ngRoute'])
 
             $scope.borrarQr = function () {
                 $scope.code = '';
-                location.href = "#!/event";
+                locatio
+                n.href = "#!/event";
             };
 
             $scope.asistenciasTotales =0;

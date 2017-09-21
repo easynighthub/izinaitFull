@@ -28,65 +28,9 @@
 <div id="detalleEvento">
 
 
-    <div class="col-lg-3 col-md-6 col-sm-6 ">
-        <div class="card card-stats">
-            <div class="card-header col-md-6 col-xs-5" data-background-color="purple">
-                <p class="card-title">Asistentes</p>
-            </div>
-            <div class="card-content">
 
-                <h3 class="card-title">{{sumaTicketsTotal+totalListasGratis+cantidadPuertaIngresos}}</h3>
-            </div>
-            <div class="card-footer">
 
-            </div>
-        </div>
-    </div>
 
-    <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card card-stats">
-            <div class="card-header col-md-6 col-xs-5" data-background-color="rose">
-                <p class="card-title">Reservas</p>
-            </div>
-            <div class="card-content">
-
-                <h3 class="card-title">{{ticketUtilizados}}</h3>
-            </div>
-            <div class="card-footer">
-
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card card-stats">
-            <div class="card-header col-md-6 col-xs-5" data-background-color="purple">
-                <p class="card-title">Visitas</p>
-            </div>
-            <div class="card-content">
-
-                <h3 class="card-title">{{impresionesTotales}}</h3>
-            </div>
-            <div class="card-footer">
-
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card card-stats">
-            <div class="card-header col-md-6 col-xs-5" data-background-color="rose">
-                <p class="card-title">Tasa Asistencia</p>
-            </div>
-            <div class="card-content">
-
-                <h3 class="card-title" type="number">{{((sumaTicketsTotal+totalListasGratis+cantidadPuertaIngresos)/impresionesTotales)*100 |
-                    number:0}}%</h3>
-            </div>
-            <div class="card-footer">
-
-            </div>
-        </div>
-    </div>
 
 
     <div class="card">
@@ -120,6 +64,37 @@
             <div class="tab-content table-responsive">
                 <div class="tab-pane active table-responsive" id="Servicios">
 
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="card card-stats">
+                            <div class="card-header col-md-6 col-xs-5" data-background-color="rose">
+                                <p class="card-title">Reservas</p>
+                            </div>
+                            <div class="card-content">
+
+                                <h3 class="card-title">{{ticketUtilizados}}</h3>
+                            </div>
+                            <div class="card-footer">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="card card-stats">
+                            <div class="card-header col-md-6 col-xs-5" data-background-color="rose">
+                                <p class="card-title">Total Venta</p>
+                            </div>
+                            <div class="card-content">
+
+                                <h3 class="card-title">$ {{totalDineroServicios | number:0}}</h3>
+                            </div>
+                            <div class="card-footer">
+
+                            </div>
+                        </div>
+                    </div>
+
+
 
                     <table class="table table-striped">
                         <thead>
@@ -148,25 +123,7 @@
                             </td>
                             <td class="text-right">$ {{servicioEvent.precio | number:0}}</td>
                             <td class="text-right">{{servicioEvent.utilizados}}</td>
-                            <td class="text-right">{{((servicioEvent.precio )*servicioEvent.utilizados) | number:0}}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"></td>
-                            <td class="td-total">
-                                Total
-                            </td>
-                            <td class="td-price">
-                                <small>$</small>{{totalDineroServicios | number:0}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"></td>
-                            <td class="td-total">
-                                izinait
-                            </td>
-                            <td class="td-price">
-                                <small>$</small> - {{totalDineroServicios*0.08 | number:0}}
-                            </td>
+                            <td class="text-right">$ {{((servicioEvent.precio )*servicioEvent.utilizados) | number:0}}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -178,6 +135,37 @@
 
                 </div>
                 <div class="tab-pane table-responsive" id="rrpp">
+
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="card card-stats">
+                            <div class="card-header col-md-6 col-xs-5" data-background-color="purple">
+                                <p class="card-title">Visitas Online</p>
+                            </div>
+                            <div class="card-content">
+
+                                <h3 class="card-title">{{impresionesTotales}}</h3>
+                            </div>
+                            <div class="card-footer">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="card card-stats">
+                            <div class="card-header col-md-6 col-xs-5" data-background-color="purple">
+                                <p class="card-title">Check-ins</p>
+                            </div>
+                            <div class="card-content">
+
+                                <h3 class="card-title">9999</h3>
+                            </div>
+                            <div class="card-footer">
+
+                            </div>
+                        </div>
+                    </div>
+
                     <table id="dtRrpp" onchange="dtRrpp()" class="table table-striped">
                         <thead>
                         <th>Nombre</th>
@@ -207,7 +195,89 @@
                     </table>
                 </div>
                 <div class="tab-pane table-responsive" id="asignados">
+                    <div class="col-lg-4 col-md-4 col-sm-4 ">
+                        <div class="card card-stats">
+                            <div class="card-header col-md-6 col-xs-5" data-background-color="purple">
+                                <p class="card-title">Asistentes</p>
+                            </div>
+                            <div class="card-content">
 
+                                <h3 class="card-title">{{sumaTicketsTotal+totalListasGratis+cantidadPuertaIngresos}}</h3>
+                            </div>
+                            <div class="card-footer">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-4 ">
+                        <div class="card card-stats">
+                            <div class="card-header col-md-6 col-xs-5" data-background-color="rose">
+                                <p class="card-title">Edad (media)</p>
+                            </div>
+                            <div class="card-content">
+
+                                <h3 class="card-title">{{sumaTicketsTotal+totalListasGratis+cantidadPuertaIngresos}}</h3>
+                            </div>
+                            <div class="card-footer">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="card card-stats">
+                            <div class="card-header col-md-6 col-xs-5" data-background-color="rose">
+                                <p class="card-title">Tasa Asistencia</p>
+                            </div>
+                            <div class="card-content">
+
+                                <h3 class="card-title" type="number">{{((sumaTicketsTotal+totalListasGratis+cantidadPuertaIngresos)/impresionesTotales)*100 |
+                                    number:0}}%</h3>
+                            </div>
+                            <div class="card-footer">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header card-header-icon" data-background-color="rose">
+                                <i class="material-icons">pie_chart</i>
+                            </div>
+                            <div class="card-content">
+                                <h4 class="card-title">Publico</h4>
+                            </div>
+
+                            <div id="chartPreferences" class="ct-chart"></div>
+                            <div class="card-footer">
+                                <i class="fa fa-circle text-info"></i> Hombres
+                                <i class="fa fa-circle text-warning"></i> Mujeres
+                            </div>
+                        </div>
+                    </div>
+                    <table id="dtClientes" class="table table-striped">
+                        <thead>
+                        <th>Nombre</th>
+                        <th>Reservas</th>
+                        <th>+#(ejem: +4)</th>
+                        <th>Hora Check-in</th>
+                        <!--<th>Clumpleaños</th>-->
+                        <th class="text-right">RR.PP</th>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="cliente in clientes">
+                            <td>{{cliente.displayName}}</td>
+                            <td>{{cliente.email}}</td>
+                            <td>{{cliente.celular}}</td>
+                            <td>{{cliente.lastDate | date : 'shortDate' }}</td>
+                            <!--<td>{{cliente.birthday | date : 'DD/MM/YYYY'}}</td>-->
+                            <td class="text-right">{{cliente.EventAsists}}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -538,6 +608,17 @@
         }
         return succeed;
     }
+
+    var dataPreferences = {
+        labels: ['45%', '55%'],
+        series: [450, 132]
+    };
+
+    var optionsPreferences = {
+        height: '230px'
+    };
+
+    Chartist.Pie('#chartPreferences', dataPreferences, optionsPreferences);
 </script>
 
 
