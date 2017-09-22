@@ -123,9 +123,33 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                                                     $scope.listaGratis = listaGratisRQ;
                                                     $scope.ticketsEvent = ticketsRQ;
                                                     $scope.rrpps = $scope.Allrrpps;
+                                                    $scope.checkInTotales = 0;
+                                                    $scope.clientes = [];
+
 
                                                 $scope.listaGratis.forEach(function (x) {
                                                     $scope.totalListasGratis = $scope.totalListasGratis + x.totalAsist;
+                                                    console.log(x);
+                                                    console.log(x.ingresos);
+                                                    var ultimoIngreso = 0;
+                                                    if(x.ingresos){
+                                                        angular.forEach(x.ingresos,function (ingreso) {
+                                                            ultimoIngreso = ingreso.fechaIngreso;
+                                                        });
+                                                    }
+                                                  var cliente = {
+                                                        nombre : x.displayName,
+                                                        reserva : 0,
+                                                        gratis : x.totalAsist,
+                                                        checkIn :ultimoIngreso,
+                                                        rrpp :x.idRRPP
+
+                                                }
+                                                if(ultimoIngreso != 0){
+                                                    $scope.clientes.push(cliente);
+                                                }
+
+
                                                 });
 
                                                 console.log($scope.datosTotalesRRPP);
@@ -141,6 +165,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                                                         rrpp.ticketsTotal = 0;
                                                         rrpp.cantidadDeCheckIn =0;
 
+
                                                         rrpp.nameRRPP = rp.name;
 
                                                     rrpp.cantidadDePreventas = 0;
@@ -150,6 +175,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                                                                 console.log("hola");
                                                                 rrpp.listaTotal = rrpp.listaTotal + x.totalAsist;
                                                                 rrpp.cantidadDeCheckIn += x.totalAsist;
+                                                                $scope.checkInTotales += x.totalAsist;
 
                                                             }
                                                         });
@@ -171,13 +197,55 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
 
 
                                                                 if(t.paidOut){
+
+
                                                                     rrpp.cantidadDeCheckIn +=  t.cantidadDeCompra;
+                                                                    $scope.checkInTotales += t.cantidadDeCompra;
                                                                     $scope.sumaTicketsTotal +=  t.cantidadDeCompra;
                                                                     rrpp.ticketsTotal = rrpp.ticketsTotal + t.cantidadDeCompra;
+
+                                                                    var ultimoIngreso = 0;
+                                                                    if(t.ingresos){
+                                                                        angular.forEach(t.ingresos,function (ingreso) {
+                                                                            ultimoIngreso = ingreso.fechaIngreso;
+                                                                        });
+                                                                    }
+                                                                  var cliente = {
+                                                                        nombre : t.displayName,
+                                                                        reserva : t.cantidadDeCompra,
+                                                                        gratis : 0,
+                                                                        checkIn :ultimoIngreso,
+                                                                        rrpp :t.rrppid
+
+                                                                    }
+                                                                    if(ultimoIngreso != 0){
+                                                                        $scope.clientes.push(cliente);
+                                                                    }
+
                                                                 }else{
                                                                     rrpp.cantidadDeCheckIn +=  t.cantidadUtilizada;
+                                                                    $scope.checkInTotales += t.cantidadUtilizada;
                                                                     $scope.sumaTicketsTotal += t.cantidadUtilizada;
                                                                     rrpp.ticketsTotal = rrpp.ticketsTotal + t.cantidadUtilizada;
+
+
+                                                                    var ultimoIngreso = 0;
+                                                                    if(t.ingresos){
+                                                                        angular.forEach(t.ingresos,function (ingreso) {
+                                                                            ultimoIngreso = ingreso.fechaIngreso;
+                                                                        });
+                                                                    }
+                                                                    var cliente = {
+                                                                        nombre : t.displayName,
+                                                                        reserva : t.cantidadUtilizada,
+                                                                        gratis : 0,
+                                                                        checkIn :ultimoIngreso,
+                                                                        rrpp :t.rrppid
+
+                                                                    }
+                                                                    if(ultimoIngreso != 0){
+                                                                        $scope.clientes.push(cliente);
+                                                                    }
                                                                 };
                                                             };
                                                         });
@@ -193,8 +261,28 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                                                                         puerta.vipMujer;
 
                                                                 rrpp.cantidadDeCheckIn += total;
+                                                                $scope.checkInTotales += total;
+
                                                                 $scope.cantidadPuertaIngresos += total;
 
+                                                                var conCobro = puerta.extraHombre +
+                                                                    puerta.extraMujer +
+                                                                    puerta.vipHombre  +
+                                                                    puerta.vipMujer;
+                                                                var sinCobro = puerta.gratisHombre +
+                                                                    puerta.gratisMujer ;
+
+
+
+                                                                var cliente = {
+                                                                    nombre : "SIN NOMBRE",
+                                                                    reserva : conCobro,
+                                                                    gratis : sinCobro,
+                                                                    checkIn :puerta.date,
+                                                                    rrpp :puerta.rrppId
+
+                                                                }
+                                                                $scope.clientes.push(cliente);
 
 
                                                             };
