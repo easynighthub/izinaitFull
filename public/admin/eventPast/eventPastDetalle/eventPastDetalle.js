@@ -96,8 +96,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                             var impresionesRQ = $firebaseArray(impresiones);
                             var rrppsRQ = $firebaseArray(firebase.database().ref('/events/' + eventId + '/rrpps'));
                             var puerta = $firebaseArray(firebase.database().ref('/events/' + eventId + '/puertaTickets'));
-
-
+                            var usersRQ = $firebaseArray(firebase.database().ref('/users/'));
 
 
                             $scope.datosTotalesRRPP = [];
@@ -111,6 +110,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                                         impresionesRQ.$loaded().then(function () {
                                             rrppsRQ.$loaded().then(function () {
                                                 puerta.$loaded().then(function () {
+                                                    usersRQ.$loaded().then(function () {
                                                     console.log(puerta);
                                                     $scope.puerta = puerta;
 
@@ -122,14 +122,34 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                                                     $scope.serviciosEvent = serviciosEventRQ;
                                                     $scope.listaGratis = listaGratisRQ;
                                                     $scope.ticketsEvent = ticketsRQ;
+                                                    $scope.users = usersRQ;
                                                     $scope.rrpps = $scope.Allrrpps;
                                                     $scope.checkInTotales = 0;
                                                     $scope.clientes = [];
 
+                                                    $scope.contadorEdades = 0;
+                                                    $scope.contadorPersonasEdades = 0;
+
+
+
+
+                                                        angular.forEach(Object.keys( $scope.listaGratis), function (gratis) {
+
+                                                            $scope.users.forEach(function (user) {
+                                                                if(gratis == user.$id){
+                                                                   // var edadClient = ((fechaActual - (new Date(clientesRequest.birthday).getTime())) / 31556926000);
+
+                                                                }
+
+                                                            })
+                                                        });
 
                                                 $scope.listaGratis.forEach(function (x) {
+
+
+
                                                     $scope.totalListasGratis = $scope.totalListasGratis + x.totalAsist;
-                                                    console.log(x);
+                                                    console.log( Object.keys(x));
                                                     console.log(x.ingresos);
                                                     var ultimoIngreso = 0;
                                                     if(x.ingresos){
@@ -332,7 +352,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                                         });
 
 
-
+                                    });
                                     });
 
 
