@@ -55,10 +55,22 @@ angular.module('myApp.view1', ['ngRoute'])
 
             $scope.filterDateInput = new Date();
 
-      /*   var users = $firebaseArray(firebase.database().ref().child('users'));
+     /*   var users = $firebaseArray(firebase.database().ref().child('users'));
             users.$loaded().then(function () {
               console.log(users);
               users.forEach(function (x) {
+
+       firebase.database().ref('users/'+ x.$id).update({
+       events : null,
+       asistProd:null,
+       history : null,
+       provider: null,
+       type : null,
+           tickets : null,
+
+       });
+
+
               /*    if(x.email != "izi@nait.com" || x.email != "null@izinait.com" ){
                       if(x.facebookId){
 
@@ -103,16 +115,10 @@ angular.module('myApp.view1', ['ngRoute'])
                       }
 
                   }
-
-                  firebase.database().ref('users/'+ x.$id).update({
-                      events : null,
-                      asistProd:null,
-                      history : null,
-                      provider: null,
-                      type : null
-                  });
+               */
+/*
               });
-            }); */
+            });  */
 
             var clubsER = $firebaseArray(firebase.database().ref().child('clubs'));
 
