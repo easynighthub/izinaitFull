@@ -11,7 +11,7 @@
 				</div>
 			</div>
 			<div class="card-content">
-				<div class="">
+				 <!-- <div class="">
 					<div class="row" style="margin:0px!important" ng-repeat="reserva in event.reservas"
 						 ng-show="event.ReservaCantidad >= 1">
 						<div class="stats pull-left">
@@ -36,21 +36,26 @@
 					<div ng-show="event.ReservaCantidad < 1">
 						<p class="category text-center">Sin ventas</p>
 					</div>
-				</div>
+				</div> -->
+
 			</div>
 			<div class="card-footer">
 				<div class="stats">
 					<p class="category">
 						<i class="material-icons">event</i>
 						{{event.date | date:"EEEE dd','MMMM"}}
-					</p>
-				</div>
-				<div class="stats pull-right">
-					<p class="category">
 						<i class="material-icons">alarm</i>
 						{{event.date | date:"HH:mm" }} - {{event.toHour | date:"HH:mm" }}
 					</p>
+
 				</div>
+				<div class="stats pull-right">
+
+
+					<button class="btn btn-sm btn-success">ingresar</button>
+
+				</div>
+
 			</div>
 		</div>
 	</div>
