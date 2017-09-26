@@ -708,7 +708,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 $scope.adquirir = function (cantidadDeCompra, celular,metodoDePagoSelect) {
                     console.log(celular.toString().length);
                     if(celular.toString().length > 7){
-                        if(cantidadDeCompra >1 )
+                        if(cantidadDeCompra >0 )
                         {
 
 
@@ -764,7 +764,15 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                             //  firebase.database().ref('users/' + $scope.usuarioLogeado.$id + '/events/'+ $scope.event.admin+'/' + eventId).set(true);
 
                                             firebase.database().ref('users/' + $scope.usuarioLogeado.$id).update(
-                                                {celular: $scope.newTicket.celular});
+                                                {
+                                                    celular: $scope.newTicket.celular,
+                                                });
+
+                                            firebase.database().ref('users/' + $scope.usuarioLogeado.$id + "/tickets/"+ $scope.newTicket.ticketId).update(
+                                             {
+                                                eventId: $scope.newTicket.ticketId,
+                                                ticketId :eventId
+                                                    });
 
 
                                             firebase.database().ref('userQvo/' + $scope.usuarioLogeado.$id +'/charges/'+ response.data.id)

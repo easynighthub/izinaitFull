@@ -92,6 +92,24 @@ angular.module('myApp.event', ['ngRoute'])
                         doormanLogeado = doormLocal;
                         //console.log(doormanLogeado);
 
+
+                        firebase.database().ref('events/').child(eventId + '/rrpps/noRRPP').once('value', function (snapshot) {
+                            var exists = (snapshot.val() !== null);
+
+                            console.log(snapshot.val());
+                            console.log(exists);
+                            if(!exists){
+                                console.log(exists);
+                                firebase.database().ref('events/' + eventId + '/rrpps/noRRPP').update({
+                                    name: 'Sin RR.PP',
+                                    uid: 'noRRPP',
+                                    email: 'sinrrpp@izinait.com',
+                                    numeroTotal : 0
+                                });
+                            }
+                        });
+
+
                         var listaGratis = $firebaseArray(firebase.database().ref('/events/' + eventId + '/asist'));
                         listaGratis.$loaded().then(function () {
                             $scope.AllListaGratis = listaGratis;
@@ -399,11 +417,7 @@ angular.module('myApp.event', ['ngRoute'])
                     $scope.rrppSelect = [];
                     $scope.rrppSelect.uid = 'noRRPP';
 
-                    firebase.database().ref('events/' + eventId + '/rrpps/' + index).update({
-                        name: 'Sin RR.PP',
-                        uid: index,
-                        email: 'sinrrpp@izinait.com'
-                    });
+
 
                 } else {
                     $scope.rrppSelect = rrppSelect;

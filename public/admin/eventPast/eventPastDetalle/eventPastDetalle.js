@@ -130,23 +130,23 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                                                     $scope.contadorEdades = 0;
                                                     $scope.contadorPersonasEdades = 0;
 
+                                                        var fechaActual = new Date().getTime();
 
 
-
-                                                        angular.forEach(Object.keys( $scope.listaGratis), function (gratis) {
+                                                        angular.forEach(Object.keys($scope.listaGratis), function (gratis) {
 
                                                             $scope.users.forEach(function (user) {
                                                                 if(gratis == user.$id){
-                                                                   // var edadClient = ((fechaActual - (new Date(clientesRequest.birthday).getTime())) / 31556926000);
+                                                                   var edadClient = ((fechaActual - (new Date(user.birthday).getTime())) / 31556926000);
+                                                                    $scope.contadorEdades += edadClient;
+                                                                    $scope.contadorPersonasEdades += 1;
 
                                                                 }
 
-                                                            })
+                                                            });
                                                         });
 
                                                 $scope.listaGratis.forEach(function (x) {
-
-
 
                                                     $scope.totalListasGratis = $scope.totalListasGratis + x.totalAsist;
                                                     console.log( Object.keys(x));
@@ -201,6 +201,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                                                         });
 
                                                         $scope.ticketsEvent.forEach(function (t) {
+
                                                             if(t.tipoEventservices == 'Preventa')
                                                             {
                                                                 console.log(t);
@@ -214,7 +215,15 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                                                                     rrpp.cantidadDePreventas += t.cantidadDeCompra;
                                                                 }
 
+                                                                $scope.users.forEach(function (user) {
+                                                                    if(t.$id == user.$id){
+                                                                        var edadClient = ((fechaActual - (new Date(user.birthday).getTime())) / 31556926000);
+                                                                        $scope.contadorEdades += edadClient;
+                                                                        $scope.contadorPersonasEdades += 1;
 
+                                                                    }
+
+                                                                });
 
                                                                 if(t.paidOut){
 
@@ -290,9 +299,16 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                                                                     puerta.vipHombre  +
                                                                     puerta.vipMujer;
                                                                 var sinCobro = puerta.gratisHombre +
-                                                                    puerta.gratisMujer ;
+                                                                    puerta.gratisMujer;
 
 
+
+                                                                var totalExtra = (puerta.extraHombre*puerta.valorExtraHombre)
+                                                                    +(puerta.extraMujer*puerta.valorExtraMujer);
+                                                                    var TotalVip = (puerta.vipHombre*puerta.valorVipHombre)
+                                                                        +(puerta.vipMujer*puerta.valorVipMujer);
+
+                                                                $scope.totalDineroServicios += TotalVip+totalExtra;
 
                                                                 var cliente = {
                                                                     nombre : "SIN NOMBRE",
@@ -408,7 +424,19 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
 
 
 
+            var dataPreferences = {
+                labels: ['45%', '55%'],
+                series: [450, 132]
+            };
 
+            var optionsPreferences = {
+                height: '230px'
+            };
+
+
+
+            var chartPreferences = new Chartist.Pie('#chartPreferences', dataPreferences, optionsPreferences);
+            md.startAnimationForLineChart(chartPreferences);
 
 
 

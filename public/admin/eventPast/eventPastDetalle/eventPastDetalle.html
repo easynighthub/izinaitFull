@@ -100,7 +100,7 @@
                         <thead>
                         <th>Tipo</th>
                         <th class="text-right">Valor</th>
-                        <th class="text-right">Vendida</th>
+                        <th class="text-right">Vendidas</th>
                         <th class="text-right">Recaudación</th>
                         </thead>
                         <tbody>
@@ -217,7 +217,7 @@
                             </div>
                             <div class="card-content">
 
-                                <h3 class="card-title">{{sumaTicketsTotal+totalListasGratis+cantidadPuertaIngresos}}</h3>
+                                <h3 class="card-title">{{ contadorEdades/contadorPersonasEdades |number:0}}</h3>
                             </div>
                             <div class="card-footer">
 
@@ -241,7 +241,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12">
+                  <!--  <div class="col-md-12">
                         <div class="card">
                             <div class="card-header card-header-icon" data-background-color="rose">
                                 <i class="material-icons">pie_chart</i>
@@ -256,12 +256,12 @@
                                 <i class="fa fa-circle text-warning"></i> Mujeres
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <table id="dtClientes" class="table table-striped">
                         <thead>
                         <th>Nombre</th>
                         <th>Reservas</th>
-                        <th>+#(ejem: +4)</th>
+                        <th>Gratis : + </th>
                         <th>Hora Check-in</th>
                         <!--<th>Clumpleaños</th>-->
                         <th class="text-right">RR.PP</th>
@@ -271,7 +271,7 @@
                             <td>{{cliente.nombre}}</td>
                             <td>{{cliente.reserva}}</td>
                             <td>{{cliente.gratis}}</td>
-                            <td>{{cliente.checkIn | date : 'shortDate' }}</td>
+                            <td>{{cliente.checkIn | date : 'shortTime' }}</td>
                             <!--<td>{{cliente.birthday | date : 'DD/MM/YYYY'}}</td>-->
                             <td class="text-right">{{getNombreRRPP(cliente.rrpp)}}</td>
                         </tr>
@@ -609,16 +609,7 @@
         return succeed;
     }
 
-    var dataPreferences = {
-        labels: ['45%', '55%'],
-        series: [450, 132]
-    };
 
-    var optionsPreferences = {
-        height: '230px'
-    };
-
-    Chartist.Pie('#chartPreferences', dataPreferences, optionsPreferences);
 </script>
 
 

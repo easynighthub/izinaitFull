@@ -53,14 +53,22 @@
 
             <input type="text" ng-show="filtroVenta" class="form-control" placeholder="Buscar"
                    ng-keyup="filterEventsByText('venta')"
-                   ng-model="filterVentaInput"/>
+                   ng-model="filterVentaInput"
+            />
 
             <input type="text" ng-show="filtroRrpp" class="form-control" placeholder="Buscar"
                    ng-keyup="filterEventsByText('rrpp')"
-                   ng-model="filterRrppInput"/>
+                   ng-model="filterRrppInput"
+            />
             <input type="text" ng-show="filtroLista" class="form-control" placeholder="Buscar"
                    ng-keyup="filterEventsByText('lista')"
-                   ng-model="filterListaInput"/>
+                   ng-model="filterListaInput"
+            />
+
+         <!--   <button ng-show="filtroRrpp"  data-ng-click="AgregarPersonas('noRRPP','noRRPP')" style="margin-top: 10px; margin-bottom: -10px"
+                    class="btn btn-sm btn-success  ">BOLETERIA
+            </button> -->
+
         </div>
         <!--filtros-->
 
@@ -104,7 +112,8 @@
                 <table id="dtPuerta" class="table  table-hover" style="width: 100%!important;">
                     <tbody>
                     <tr ng-repeat="rrpp in rrpps">
-                        <td ng-style="{{rrpp.name}} == 'izinait' || {'color': '#fe0072'}">{{rrpp.name}}</td>
+                        <td ng-show="rrpp.name == 'izinait' " style=" color: #fe0072">{{rrpp.name}}</td>
+                        <td ng-show="rrpp.name != 'izinait' " style="">{{rrpp.name}}</td>
                         <td class="text-primary">
                             <p ng-click="AgregarPersonas($index,rrpp)" class="btn btn-sm btn-info">
                                 <i class="material-icons">add</i>

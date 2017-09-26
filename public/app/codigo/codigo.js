@@ -76,7 +76,7 @@ angular.module('myApp.codigo', ['ngRoute'])
 
                                         firebase.database().ref('userQvo/' +$scope.usuarioLogeado.$id+'/cards/'+  response.data.card.id).set(
                                             response.data.card);
-                                        firebase.database().ref('userQvo/' +$scope.usuarioLogeado.$id).set(
+                                        firebase.database().ref('userQvo/' +$scope.usuarioLogeado.$id).update(
                                             { creditCardDefault: response.data.card.id}
                                         );
                                         location.href = "#!/codigo";
