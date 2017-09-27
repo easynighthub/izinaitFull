@@ -9,8 +9,6 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             controller: 'viewdetalleEvento',
             data: {
                 meta: {
-                    'title': 'hola',
-                    'description': 'Home page description',
                     'url': 'https://izinait.com/'+URLactual
                 }
             }

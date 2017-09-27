@@ -46,16 +46,16 @@
                                         <span>Total Asistentes</span>
                                     </span>
                         </div>
-                        <span class="stats pull-right" style="font-weight: 600">{{event.ingresosTotales}}</span>
+                        <span class="stats pull-right" ><span class="text-primary" style="font-weight: 500">{{event.ingresosTotales}}</span></span>
                     </div>
                     <div class="row" style="margin:0px!important">
                         <div class="stats pull-left">
                                     <span id="iconoDinero" class="category">
-                                        <i class="fa fa-users" aria-hidden="true"></i>
-                                        <span>Total Dinero</span>
+                                        <i class="fa fa-money" aria-hidden="true"></i>
+                                        <span>Recaudación Total</span>
                                     </span>
                         </div>
-                        <span class="stats pull-right" style="font-weight: 600"> ${{event.dineroTotal}}</span>
+                        <span class="stats pull-right text"> $ <span class="text-success" style="font-weight: 500">{{event.dineroTotal| number:0}}</span></span>
                     </div>
                 </div>
             </div>

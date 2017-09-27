@@ -4,36 +4,38 @@
 </a>
 </center>-->
 
-<img height="auto"
-     style=" box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+
+<div class="main-raised" style="margin-left: 0px;margin-right: 0px;">
+
+    <img
+            style="max-height: 450px;
+             transform: perspective(1350px);
+             border-radius: 5px;
+             box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
          display: block;
-         width: 100% !important;
-         margin-top: -10px;
+         width: 100% !important;"
+            class="height-auto full-width"
 
+            src="{{event.image}}">
 
-"
-     class="height-auto full-width"
+</div>
 
-     src="{{event.image}}">
 
 <title ng-bind="ngMeta.title"></title>
 
 <!-- Arbitrary tags -->
-<meta property="og:type" content="{{ngMeta['og:type']}}" />
-<meta property="og:locale" content="{{ngMeta['og:locale']}}" />
-<meta name="author" content="{{ngMeta['author']}}" />
+<meta property="og:type" content="{{ngMeta['og:type']}}"/>
+<meta property="og:locale" content="{{ngMeta['og:locale']}}"/>
+<meta name="author" content="{{ngMeta['author']}}"/>
 <!-- OR <meta name="author" content="{{ngMeta.author}}" /> -->
-<meta name="description" content="{{ngMeta.description}}" />
+<meta name="description" content="{{ngMeta.description}}"/>
 
 
 <button id="BarraCargando" class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"></i> CARGANDO EVENTO
 </button>
 
 
-<div onload="loadImage()" id="detalleEvento" style="display: none">
-
-
-
+<div id="detalleEvento" style="display: none">
 
 
     <div id="contact-buttons-bar" class="contact-buttons-bar.slide-on-scroll" data-top="120px" style="left: 0px;">
@@ -60,8 +62,10 @@
 
     <center>
 
+
+
         <div class=" date111 mdl-color-text--white mdl-cell "
-             style="color: white; margin-top: -25px; z-index: auto!important;">
+             style="color: white; margin-top: -25px; z-index: 3000!important;">
 
 
             <font size="4" class="nombreEvento "> {{event.date | date : 'fullDate'}} </font>
@@ -84,8 +88,10 @@
             <br>
 
             <br>
-            <p style="font-size: 20px;" class="teststyle"><i class="material-icons testico">monetization_on</i>
-                Valor en Puerta: CPL <strong>{{event.entryValue}}</strong>
+            <p style="font-size: 20px; vertical-align: middle" class="teststyle"><i class="fa fa-money"
+                                                                                    style="font-size: 28px"
+                                                                                    aria-hidden="true"></i>
+                Valor en Puerta: CPL <strong>$ {{event.entryValue | number:0}}</strong>
             </p>
 
 
@@ -99,15 +105,18 @@
         <div ng-show="event.freemiumHour != event.date"
              style="color: #340034"
              class=" teststyle">
-            <p style="font-size: 15px;" class="teststyle">
+            <p style="font-size: 22px;" class="teststyle">
                 <img src="image/guest-list.png"/>
                 <br>
                 <br>
-                Lista gratis hasta : <strong>{{event.freemiumHour | date : 'shortTime'}}</strong>
+                <span>Lista gratis hasta : <span><span style="font-weight: 400">{{event.freemiumHour | date : 'shortTime'}}<span>
             </p>
-            <div id="selectLista" ng-show="event.freemiumHour != event.date">
-                <span style="margin-top: 25px" class="title  col-xs-6">Ingresar lista + Amigos  :   </span>
-                <md-select ng-model="totalReserva" placeholder="Selecionar" class=" col-xs-6 ">
+
+            <br>
+            <br>
+            <div id="selectLista" ng-show="event.freemiumHour != event.date" class="col-md-6 col-md-offset-3">
+                <span style="margin-top: 25px; font-size: 20px;" class="col-md-6 col-xs-12"><bolder>Confirmar lista + Amigos: </bolder></span>
+                <md-select  ng-model="totalReserva" placeholder="Selecionar" class="col-xs-12 col-md-6" style="font-size: 20px">
                     <md-option ng-value="1">+1 Amigos</md-option>
                     <md-option ng-value="2">+2 Amigos</md-option>
                     <md-option ng-value="3">+3 Amigos</md-option>
@@ -120,23 +129,22 @@
                     <md-option ng-value="10">+10 Amigos</md-option>
                 </md-select>
             </div>
-            <div>
+            <div class="col-md-12">
                 <button id="botonAsistir" ng-click="guardarListaGratis()"
                         scope="public_profile email user_birthday"
                         ng-show="totalReserva != null"
-                        class="btn btn-info btn-sm">
+                        class="btn btn-info">
                     Enviar Lista
                 </button>
 
                 <button id="botonLista" ng-click="editarListaGratis()" style="display: none"
-                        class="btn btn-info btn-sm">
+                        class="btn btn-info">
                     <i class="material-icons testico">edit</i>
                     Ya Estas en Lista + {{datosAsistire.totalList}}
                 </button>
 
-
             </div>
-
+            <br>
         </div>
 
 
@@ -149,9 +157,10 @@
             <h3 class="info-title" style="color: #340034">Precio Anticipado</h3>
             <br>
             <div>
-                <div class="col-lg-3 col-md-6 col-sm-6" ng-repeat="eventsService in allEventsService"  ng-show="eventsService.visible">
+                <div class="col-md-10 col-md-offset-1 col-xs-12" ng-repeat="eventsService in allEventsService"
+                     ng-show="eventsService.visible">
                     <div class="card1 card1-stats">
-                        <div class="card1-header" data-background-color="gray">
+                        <div class="card1-header " data-background-color="white">
                             <i ng-show="eventsService.tipo == 'Mesa'"
                                class=" material-icons ">local_play</i>
                             <i ng-show="eventsService.tipo == 'Preventa'"
@@ -164,22 +173,22 @@
                                class="fa fa-glass"></i>
                         </div>
 
-                        <div class="card1-content" >
-                            <p class="category" style="color: #340034!important;"> {{eventsService.tipo}} </p>
-                            <h3 class="title">
-                                <small> $</small>
-                                {{eventsService.precio}}
+                        <div class="card1-content">
+                            <h4 style="color: #340034!important;font-weight: 400;"> {{eventsService.tipo}} </h4>
+                            <small class="category" style="font-weight: 400;">{{eventsService.desc}}</small>
+                            <h3 class="title"><span style="color: #999999">$ </span>{{eventsService.precio | number:0}}
                             </h3>
-                            <p class="category">Fin de Venta<br> {{ eventsService.fechaFin |date : 'dd MMM'}}
-                                <br>
-                            <p class="category">{{ eventsService.fechaFin |date : 'HH:mm a'}}
-                            </p>
+
                         </div>
                         <div class="card1-footer">
                             <div class="stats">
-                                 <a class="btn btn-info" data-ng-show="eventsService.cantidad > eventsService.totalComprados" ng-click="dialogAdquirirServicio(eventsService)"> Adquirir</a>
-                                <a class="btn btn-default" data-ng-show="eventsService.cantidad <= eventsService.totalComprados" > AGOTADO!</a>
-
+                                <a class="btn btn-info"
+                                   data-ng-show="eventsService.cantidad > eventsService.totalComprados"
+                                   ng-click="dialogAdquirirServicio(eventsService)">Comprar</a>
+                                <a class="btn btn-default"
+                                   data-ng-show="eventsService.cantidad <= eventsService.totalComprados">AGOTADO!</a>
+                                <small class="col-md-12 col-xs-12" style="margin-top: -10px;">FIN DE VENTA:</small>
+                                <span class="col-md-12 col-xs-12" style="margin-top: -10px;">{{ eventsService.fechaFin |date : 'dd MMM HH:mm a'}}</span>
                             </div>
                         </div>
                     </div>
@@ -200,61 +209,59 @@
             <h5>{{event.djs}}</h5>
         </div>
         <br>
-        <div class="features ">
+        <div class="features row">
 
-            <center>
-                <div class="text-center col-md-10 col-md-offset-1 col-xs-12">
-                    <div class="col-md-3 col-xs-6">
-                        <div class="info">
-                            <div class="icon " style="color: #fe0072">
-                                <i class="material-icons">music_note</i>
-                            </div>
-                            <p> Estilo Musical</p>
-                            <p style="font-size: 18px; color: #340034" class="teststyle">
-                                {{event.musicGenres}}
-                            </p>
+            <div class="text-center col-md-10 col-md-offset-1 col-xs-12">
+                <div class="col-md-3 col-xs-6">
+                    <div class="info">
+                        <div class="icon " style="color: #fe0072">
+                            <i class="material-icons">music_note</i>
                         </div>
-                    </div>
-                    <div class="col-md-3 col-xs-6">
-                        <div class="info">
-                            <div class="icon " style="color: #fe0072">
-                                <i class="material-icons">layers</i>
-                            </div>
-                            <p>Ambientes</p>
-                            <p style="font-size: 18px; color: #340034" class="teststyle">
-                                {{event.eventEnvironment}}
-
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-xs-6">
-                        <div class="info">
-                            <div class="icon" style="color: #fe0072 ">
-                                <i class="material-icons ">accessibility</i>
-                            </div>
-                            <p>Vestimenta</p>
-                            <p style="font-size: 18px; color: #340034" class="teststyle">
-                                {{event.clothing}}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-xs-6">
-                        <div class="info">
-                            <div class="icon " style="color: #fe0072">
-                                <i class="material-icons">people</i>
-                            </div>
-                            <p>
-                                Restricciones
-                            </p>
-                            <p style="font-size: 18px; color: #340034" class="teststyle">
-                               <i class="fa fa-mars"> + {{event.ageRangeMale}}</i> |
-                                <i class="fa fa-venus"> + {{event.ageRangeFemale}}</i>
-                            </p>
-                        </div>
+                        <p> Estilo Musical</p>
+                        <p style="font-size: 18px; color: #340034" class="teststyle">
+                            {{event.musicGenres}}
+                        </p>
                     </div>
                 </div>
+                <div class="col-md-3 col-xs-6">
+                    <div class="info">
+                        <div class="icon " style="color: #fe0072">
+                            <i class="material-icons">layers</i>
+                        </div>
+                        <p>Ambientes</p>
+                        <p style="font-size: 18px; color: #340034" class="teststyle">
+                            {{event.eventEnvironment}}
 
-            </center>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-6">
+                    <div class="info">
+                        <div class="icon" style="color: #fe0072 ">
+                            <i class="material-icons ">accessibility</i>
+                        </div>
+                        <p>Vestimenta</p>
+                        <p style="font-size: 18px; color: #340034" class="teststyle">
+                            {{event.clothing}}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-6">
+                    <div class="info">
+                        <div class="icon " style="color: #fe0072">
+                            <i class="material-icons">people</i>
+                        </div>
+                        <p>
+                            Restricciones
+                        </p>
+                        <p style="font-size: 18px; color: #340034" class="teststyle">
+                            <small>Hombres</small> <span style="font-weight: 400">+{{event.ageRangeMale}}</span>  <br>
+                            <small>Mujeres</small> <span style="font-weight: 400">+{{event.ageRangeFemale}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
         <br>
@@ -324,92 +331,98 @@
     }
 </script>
 
-<script id="dialogAdquirirServicio" type="text/ng-template"  >
+<script id="dialogAdquirirServicio" type="text/ng-template">
 
     <div class="col-xs-12 col-md-12">
         <div id="panelPrincipal">
 
-    <h4  class="col-md-12 col-xs-12 text-center"> Bienvenido {{usuarioLogeado.displayName}}</h4>
-    <div class="text-center col-md-12">
+            <h4 class="col-md-12 col-xs-12 text-center"> Bienvenido {{usuarioLogeado.displayName}}</h4>
+            <div class="text-center col-md-12">
 
-        <p class="btn btn-sm btn-info col-md-12 col-xs-12">
-            $ {{eventsService.precio}}
-        </p>
-        <p class="description col-md-4 col-xs-12">
-            {{eventsService.desc}}
-        </p>
-        <p class="description col-md-4 col-xs-12">
-            {{ eventsService.fechaFin |date : 'hh:mm / dd MMMM yyyy '}}
-        </p>
-        <p class="description col-md-4 col-xs-12">
-            Entradas Maximas {{eventsService.maxEntradas}}
-        </p>
+                <p class="btn btn-sm btn-info col-md-12 col-xs-12">
+                    $ {{eventsService.precio}}
+                </p>
+                <p class="description col-md-4 col-xs-12">
+                    {{eventsService.desc}}
+                </p>
+                <p class="description col-md-4 col-xs-12">
+                    {{ eventsService.fechaFin |date : 'hh:mm / dd MMMM yyyy '}}
+                </p>
+                <p class="description col-md-4 col-xs-12">
+                    Entradas Maximas {{eventsService.maxEntradas}}
+                </p>
 
-    </div>
-    <div class="text-center col-md-12">
-    <p class="description col-md-4 col-xs-12 text-center">¿Cantidad que deseas adquirir?</p>
-    <md-select class="col-md-4 col-xs-12 text-center" style="margin-top: -7px" name="ticketQty" ng-model="cantidadDeCompra"
-               placeholder="0">
-        <md-option selected ng-value="0">
-            0
-        </md-option>
-        <md-option
-                ng-repeat="entrada in maxEntradas track by entrada.id"
-                ng-value="entrada.id">
-            {{entrada.name}}
-        </md-option>
-    </md-select>
-    <p class="col-md-4 col-xs-12 text-center"  ng-show="cantidadDeCompra != undefined"  > Total : $ {{cantidadDeCompra*eventsService.precio}}</p>
-    </div>
+            </div>
+            <div class="text-center col-md-12">
+                <p class="description col-md-4 col-xs-12 text-center">¿Cantidad que deseas adquirir?</p>
+                <md-select class="col-md-4 col-xs-12 text-center" style="margin-top: -7px" name="ticketQty"
+                           ng-model="cantidadDeCompra"
+                           placeholder="0">
+                    <md-option selected ng-value="0">
+                        0
+                    </md-option>
+                    <md-option
+                            ng-repeat="entrada in maxEntradas track by entrada.id"
+                            ng-value="entrada.id">
+                        {{entrada.name}}
+                    </md-option>
+                </md-select>
+                <p class="col-md-4 col-xs-12 text-center" ng-show="cantidadDeCompra != undefined"> Total : $
+                    {{cantidadDeCompra*eventsService.precio}}</p>
+            </div>
 
-    <p class="col-md-12 col-xs-12 text-center"> <strong>METODO DE PAGO </strong> </p>
-    <div class="col-md-12 col-xs-12">
-        <button class="btn btn-primary btn-sm col-md-6 text-center" ng-show="userQvoRQ.creditCardDefault == undefined"> AGREGAR TARJETA DE CREDITO </button>
-    </div>
+            <p class="col-md-12 col-xs-12 text-center"><strong>METODO DE PAGO </strong></p>
+            <div class="col-md-12 col-xs-12">
+                <button class="btn btn-primary btn-sm col-md-6 text-center"
+                        ng-show="userQvoRQ.creditCardDefault == undefined"> AGREGAR TARJETA DE CREDITO
+                </button>
+            </div>
 
-    <md-radio-group class="col-md-12 col-xs-12 text-center" ng-model="metodoDePagoSelect" >
+            <md-radio-group class="col-md-12 col-xs-12 text-center" ng-model="metodoDePagoSelect">
 
-        <md-radio-button class="col-md-6 col-xs-12"  ng-show="userQvoRQ.creditCardDefault" value="oneClick">
-            OneClick<br>
-            <img src="./image/contenido_productos_webpay_oneclick.jpg" height="70" />
+                <md-radio-button class="col-md-6 col-xs-12" ng-show="userQvoRQ.creditCardDefault" value="oneClick">
+                    OneClick<br>
+                    <img src="./image/contenido_productos_webpay_oneclick.jpg" height="70"/>
 
-        </md-radio-button>
+                </md-radio-button>
 
-        <md-radio-button class="col-md-6  col-xs-12" ng-show="userQvoRQ.userQvoId" value="webPayPlus">
-            WebPay Plus<br>
-            <img src="./image/webpay.png" height="70" />
-        </md-radio-button>
-    </md-radio-group>
+                <md-radio-button class="col-md-6  col-xs-12" ng-show="userQvoRQ.userQvoId" value="webPayPlus">
+                    WebPay Plus<br>
+                    <img src="./image/webpay.png" height="70"/>
+                </md-radio-button>
+            </md-radio-group>
 
-    <div class="col-md-12 col-xs-12">
-    <div  class="form-group label-floating col-md-6 col-xs-12">
-        <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">email</i>
-        <div class="col-md-10 col-xs-10">
-            <input type="text" class="form-control" placeholder="Ingresa Email" ng-model="email"/>
-            <span class="form-control-feedback">
+            <div class="col-md-12 col-xs-12">
+                <div class="form-group label-floating col-md-6 col-xs-12">
+                    <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">email</i>
+                    <div class="col-md-10 col-xs-10">
+                        <input type="text" class="form-control" placeholder="Ingresa Email" ng-model="email"/>
+                        <span class="form-control-feedback">
 			                <i class="material-icons">done</i>
 
 		</span>
-        </div>
-    </div>
+                    </div>
+                </div>
 
-    <div class="form-group label-floating  col-md-6 col-xs-12" >
-        <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">call</i>
+                <div class="form-group label-floating  col-md-6 col-xs-12">
+                    <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">call</i>
 
-        <div class="col-md-10 col-xs-10">
-            <input type="number" class="form-control" placeholder="Ingresa Celular" ng-model="celular"/>
-            <span class="form-control-feedback">
+                    <div class="col-md-10 col-xs-10">
+                        <input type="number" class="form-control" placeholder="Ingresa Celular" ng-model="celular"/>
+                        <span class="form-control-feedback">
 			<i class="material-icons">done</i>
 		</span>
-        </div>
-    </div>
-    </div>
+                    </div>
+                </div>
+            </div>
 
-<center>
-            <button ng-click="hide()" class="btn  btn-sm"> Cancelar</button>
-            <button ng-click="adquirir(cantidadDeCompra,celular,metodoDePagoSelect)" class="btn btn-info btn-sm "> Adquirir</button>
-</center>
-    </div>
+            <center>
+                <button ng-click="hide()" class="btn  btn-sm"> Cancelar</button>
+                <button ng-click="adquirir(cantidadDeCompra,celular,metodoDePagoSelect)" class="btn btn-info btn-sm ">
+                    Adquirir
+                </button>
+            </center>
+        </div>
 
         <div id="panelDireccionando" class="col-md-12" style="display: none">
             <center>
@@ -420,10 +433,7 @@
                         </div>
                         <h4 class="info-title">Redireccionando a pagina segura. no cierre el navegador porfavor.</h4>
 
-                        <md-progress-circular   class=" md-hue-1"  md-diameter="50"></md-progress-circular>
-
-
-
+                        <md-progress-circular class=" md-hue-1" md-diameter="50"></md-progress-circular>
 
 
                     </div>
