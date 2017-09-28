@@ -63,7 +63,6 @@
     <center>
 
 
-
         <div class=" date111 mdl-color-text--white mdl-cell "
              style="color: white; margin-top: -25px; z-index: 3000!important;">
 
@@ -109,14 +108,15 @@
                 <img src="image/guest-list.png"/>
                 <br>
                 <br>
-                <span>Lista gratis hasta : <span><span style="font-weight: 400">{{event.freemiumHour | date : 'shortTime'}}<span>
+                <span>Lista gratis hasta : </span><span style="font-weight: 400">{{event.freemiumHour | date : 'shortTime'}}</span>
             </p>
 
             <br>
             <br>
             <div id="selectLista" ng-show="event.freemiumHour != event.date" class="col-md-6 col-md-offset-3">
                 <span style="margin-top: 25px; font-size: 20px;" class="col-md-6 col-xs-12"><bolder>Confirmar lista + Amigos: </bolder></span>
-                <md-select  ng-model="totalReserva" placeholder="Selecionar" class="col-xs-12 col-md-6" style="font-size: 20px">
+                <md-select ng-model="totalReserva" placeholder="Seleccionar" class="col-xs-12 col-md-6"
+                           style="font-size: 20px">
                     <md-option ng-value="1">+1 Amigos</md-option>
                     <md-option ng-value="2">+2 Amigos</md-option>
                     <md-option ng-value="3">+3 Amigos</md-option>
@@ -255,8 +255,10 @@
                             Restricciones
                         </p>
                         <p style="font-size: 18px; color: #340034" class="teststyle">
-                            <small>Hombres</small> <span style="font-weight: 400">+{{event.ageRangeMale}}</span>  <br>
-                            <small>Mujeres</small> <span style="font-weight: 400">+{{event.ageRangeFemale}}</span>
+                            <small>Hombres</small>
+                            <span style="font-weight: 400">+{{event.ageRangeMale}}</span> <br>
+                            <small>Mujeres</small>
+                            <span style="font-weight: 400">+{{event.ageRangeFemale}}</span>
                         </p>
                     </div>
                 </div>
@@ -276,7 +278,7 @@
             </p>
             <br>
 
-            <ng-map zoom="14"
+            <ng-map zoom="14" style="border-radius: 5px"
                     disable-default-u-i="true"
                     scrollwheel="false"
                     default-style="true"
@@ -310,17 +312,16 @@
 
 <script type="text/ng-template" id="dialogAccederConFacebook" class="col-xs-12">
 
-    <div class="col-md-10 col-lg-offset-1">
-        <center>
-            <button ng-click="IngresarConFacebook()" scope="public_profile email user_birthday"
-                    class=" btn btn-info">
-                <i class="material-icons"></i> OBTENEN TU CODIGO
-            </button>
-            <br>
-            <font class="nombreEvento"> Con este codigo tendras acceso a tus eventos preferidos, tus reservas, tus
-                compras de entradas y mas.
-            </font>
-        </center>
+    <div class="text-center" style="margin: 30px">
+
+            <span class="nombreEvento">Para continuar tu compra necesitamos algunos datos y la manera más rápida de obtenerlos es desde facebook.
+            </span>
+        <br>
+        <button ng-click="IngresarConFacebook()" style="background-color: #3b5998;"
+                scope="public_profile email user_birthday"
+                class="btn btn-social btn-fill btn-facebook">
+            <i class="fa fa-facebook-square"></i> Continuar con Facebook
+        </button>
     </div>
 
 
@@ -332,117 +333,107 @@
 </script>
 
 <script id="dialogAdquirirServicio" type="text/ng-template">
+    <div class="card text-center " id="panelPrincipal" style="color:#340034 ">
+        <div class="col-md-6 col-xs-12 ">
+            <h2 class="title">
+                <i ng-show="eventsService.tipo == 'Mesa'"
+                   class=" material-icons ">local_play</i>
+                <i ng-show="eventsService.tipo == 'Preventa'"
+                   class="fa fa-ticket "></i>
+                <i ng-show="eventsService.tipo == 'Vip'"
+                   class="fa fa-diamond"></i>
+                <i ng-show="eventsService.tipo == 'Especial'"
+                   class=" material-icons ">stars</i>
+                <i ng-show="eventsService.tipo == 'Botella'"
+                   class="fa fa-glass"></i>
+                {{eventsService.tipo}}
+            </h2>
 
-    <div class="col-xs-12 col-md-12">
-        <div id="panelPrincipal">
+            <h4 class="description">{{eventsService.desc}}</h4>
+            <h3 style="font-weight: 400">$ {{cantidadDeCompra*eventsService.precio | number:0}}</h3>
 
-            <h4 class="col-md-12 col-xs-12 text-center"> Bienvenido {{usuarioLogeado.displayName}}</h4>
-            <div class="text-center col-md-12">
-
-                <p class="btn btn-sm btn-info col-md-12 col-xs-12">
-                    $ {{eventsService.precio}}
-                </p>
-                <p class="description col-md-4 col-xs-12">
-                    {{eventsService.desc}}
-                </p>
-                <p class="description col-md-4 col-xs-12">
-                    {{ eventsService.fechaFin |date : 'hh:mm / dd MMMM yyyy '}}
-                </p>
-                <p class="description col-md-4 col-xs-12">
-                    Entradas Maximas {{eventsService.maxEntradas}}
-                </p>
-
-            </div>
-            <div class="text-center col-md-12">
-                <p class="description col-md-4 col-xs-12 text-center">¿Cantidad que deseas adquirir?</p>
-                <md-select class="col-md-4 col-xs-12 text-center" style="margin-top: -7px" name="ticketQty"
-                           ng-model="cantidadDeCompra"
-                           placeholder="0">
-                    <md-option selected ng-value="0">
-                        0
-                    </md-option>
-                    <md-option
-                            ng-repeat="entrada in maxEntradas track by entrada.id"
-                            ng-value="entrada.id">
+            <div class="col-md-6 col-md-offset-3">
+                <span style="margin-top: 25px; font-size: 20px;" class="col-md-6 col-xs-12">Cantidad</span>
+                <md-select class="col-md-6 col-xs-12 text-center" name="ticketQty"
+                           ng-model="cantidadDeCompra">
+                    <md-option ng-selected="entrada.id == 1" ng-repeat="entrada in maxEntradas track by entrada.id"
+                               ng-value="entrada.id">
                         {{entrada.name}}
                     </md-option>
                 </md-select>
-                <p class="col-md-4 col-xs-12 text-center" ng-show="cantidadDeCompra != undefined"> Total : $
-                    {{cantidadDeCompra*eventsService.precio}}</p>
             </div>
-
-            <p class="col-md-12 col-xs-12 text-center"><strong>METODO DE PAGO </strong></p>
+        </div>
+        <div class="col-md-6 col-xs-12 leftspan">
+            <h2 class="title text-center">Método de pago</h2>
             <div class="col-md-12 col-xs-12">
                 <button class="btn btn-primary btn-sm col-md-6 text-center"
                         ng-show="userQvoRQ.creditCardDefault == undefined"> AGREGAR TARJETA DE CREDITO
                 </button>
             </div>
 
-            <md-radio-group class="col-md-12 col-xs-12 text-center" ng-model="metodoDePagoSelect">
+            <md-radio-group class="col-md-12 col-xs-12text-center" ng-model="metodoDePagoSelect">
 
-                <md-radio-button class="col-md-6 col-xs-12" ng-show="userQvoRQ.creditCardDefault" value="oneClick">
+                <md-radio-button class="col-md-12 col-xs-12" ng-show="userQvoRQ.creditCardDefault" value="oneClick">
                     OneClick<br>
                     <img src="./image/contenido_productos_webpay_oneclick.jpg" height="70"/>
 
                 </md-radio-button>
 
-                <md-radio-button class="col-md-6  col-xs-12" ng-show="userQvoRQ.userQvoId" value="webPayPlus">
+                <md-radio-button class="col-md-12  col-xs-12" ng-show="userQvoRQ.userQvoId" value="webPayPlus">
                     WebPay Plus<br>
                     <img src="./image/webpay.png" height="70"/>
                 </md-radio-button>
             </md-radio-group>
 
-            <div class="col-md-12 col-xs-12">
-                <div class="form-group label-floating col-md-6 col-xs-12">
-                    <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">email</i>
-                    <div class="col-md-10 col-xs-10">
-                        <input type="text" class="form-control" placeholder="Ingresa Email" ng-model="email"/>
-                        <span class="form-control-feedback">
-			                <i class="material-icons">done</i>
 
-		</span>
-                    </div>
-                </div>
-
-                <div class="form-group label-floating  col-md-6 col-xs-12">
-                    <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">call</i>
-
-                    <div class="col-md-10 col-xs-10">
-                        <input type="number" class="form-control" placeholder="Ingresa Celular" ng-model="celular"/>
-                        <span class="form-control-feedback">
-			<i class="material-icons">done</i>
-		</span>
-                    </div>
+        </div>
+        <div class="col-md-6 col-md-offset-3">
+            <div class="form-group label-floating col-md-7 col-xs-12">
+                <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">email</i>
+                <div class="col-md-10 col-xs-10">
+                    <input type="text" class="form-control" placeholder="Ingresa Email" ng-model="email"/>
+                    <span class="form-control-feedback"><i class="material-icons">done</i></span>
                 </div>
             </div>
 
-            <center>
-                <button ng-click="hide()" class="btn  btn-sm"> Cancelar</button>
-                <button ng-click="adquirir(cantidadDeCompra,celular,metodoDePagoSelect)" class="btn btn-info btn-sm ">
-                    Adquirir
-                </button>
-            </center>
-        </div>
+            <div class="form-group label-floating  col-md-5 col-xs-12">
+                <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">call</i>
 
-        <div id="panelDireccionando" class="col-md-12" style="display: none">
-            <center>
-                <div class="col-md-12">
-                    <div class="info">
-                        <div class="icon icon-success">
-                            <i class="material-icons">verified_user</i>
-                        </div>
-                        <h4 class="info-title">Redireccionando a pagina segura. no cierre el navegador porfavor.</h4>
-
-                        <md-progress-circular class=" md-hue-1" md-diameter="50"></md-progress-circular>
-
-
-                    </div>
+                <div class="col-md-10 col-xs-10">
+                    <input type="number" class="form-control" placeholder="Ingresa Celular" ng-model="celular"/>
+                    <span class="form-control-feedback">
+			        <i class="material-icons">done</i>
+		            </span>
                 </div>
-            </center>
+            </div>
         </div>
-
+        <div class="col-md-6 col-md-offset-3">
+            <button ng-click="hide()" class="btn  btn-sm">Cancelar</button>
+            <button ng-click="adquirir(cantidadDeCompra,celular,metodoDePagoSelect)" class="btn btn-info btn-sm ">
+                Confirmar
+            </button>
+        </div>
 
     </div>
+
+
+    <div id="panelDireccionando" class="col-md-12" style="display: none">
+        <center>
+            <div class="col-md-12">
+                <div class="info">
+                    <div class="icon icon-success">
+                        <i class="material-icons">verified_user</i>
+                    </div>
+                    <h4 class="info-title">Redireccionando a pagina segura. no cierre el navegador porfavor.</h4>
+
+                    <md-progress-circular class=" md-hue-1" md-diameter="50"></md-progress-circular>
+
+
+                </div>
+            </div>
+        </center>
+    </div>
+
 
 </script>
 
