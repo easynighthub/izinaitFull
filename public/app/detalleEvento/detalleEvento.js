@@ -768,8 +768,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
                                             firebase.database().ref('users/' + $scope.usuarioLogeado.$id + "/tickets/"+ $scope.newTicket.ticketId).update(
                                              {
-                                                eventId: $scope.newTicket.ticketId,
-                                                ticketId :eventId
+                                                eventId: eventId,
+                                                ticketId :$scope.newTicket.ticketId
                                                     });
 
 

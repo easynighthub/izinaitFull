@@ -1,11 +1,22 @@
 {
   "hosting": {
     "public": "public",
+    "rewrites":
+    [{
+      "source": "/detalleEvento", "function": "detalleEvento"
+    }],
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ]
+    ],
+    "headers": [ {
+      "source" : "**/*.@(eot|otf|ttf|ttc|woff|font.css)",
+      "headers" : [ {
+        "key" : "Access-Control-Allow-Origin",
+        "value" : "*"
+      } ]
+    }]
   },
   "database": {
     "rules": "database.rules.json"

@@ -539,7 +539,7 @@ exports.sendWelcomeEmail = functions.database.ref('/tickets/{eventId}/{userId}')
     const displayName = "andro ostoic"; // The display name of the user.
 // [END eventAttributes]
 
-  //  return sendWelcomeEmail(email, displayName);
+   return sendWelcomeEmail(email, displayName);
 });
 
 /*
