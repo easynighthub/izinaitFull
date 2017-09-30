@@ -127,7 +127,7 @@
         -->
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" ng-show="musicGenresSelect == true">
                         <select ng-model="newEvent.musicGenresSelect" class="selectpicker " data-max-options="3"
                                 data-style="select-with-transition" multiple title="Genero musical (max 3)"
                                 data-size="7">
@@ -154,8 +154,16 @@
                             <option value="Trap">Trap</option>
                         </select>
                     </div>
+                    <div class="col-md-6" ng-show="musicGenresSelect != true" >
+                        Genero musical :
+                        <font  ng-repeat="musicGenres in newEvent.musicGenresSelect">{{musicGenres}}
 
-                    <div class="col-md-6">
+                        </font>
+                        <i ng-click="borrarMusicGenresSelect()" class="material-icons testico">close </i>
+
+                    </div>
+
+                    <div class="col-md-6" ng-show="eventEnvironmentSelect == true" >
 
                         <select ng-model="newEvent.eventEnvironmentSelect" required="true" class="selectpicker"
                                 data-max-options="2"
@@ -176,6 +184,14 @@
                             <option value="Universitario">Universitario</option>
                             <option value="Pub">Pub</option>
                         </select>
+
+                    </div>
+                    <div class="col-md-6" ng-show="eventEnvironmentSelect != true" >
+                        Ambiente :
+                        <font  ng-repeat="environment in newEvent.eventEnvironmentSelect">{{environment}}
+
+                        </font>
+                        <i ng-click="borrarEventEnvironmentSelect()" class="material-icons testico">close </i>
                     </div>
                     <!--  genero
                     <md-input-container class="col-xs-12 padd-0-xs col-sm-6">
@@ -196,7 +212,7 @@
                 <!--  edad -->
                 <div class="col-xs-12">
 
-                    <div class="col-md-4">
+                    <div class="col-md-4" ng-show="ageRangeFemale == true">
 
                         <!--  <i style="float: left;" class="fa fa-venus" aria-hidden="true"></i>  -->
 
@@ -215,7 +231,13 @@
                         </select>
 
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-md-4" ng-show="ageRangeFemale != true">
+                        <p> Edad Mujeres : {{newEvent.ageRangeFemale}}
+                            <i ng-click="borrarEventAgeRangeFemale()" class="material-icons testico">close </i> </p>
+
+
+                    </div>
+                    <div class="col-md-4" ng-show="ageRangeMale == true">
 
                         <!--  <i style="float: left;" class="fa fa-venus" aria-hidden="true"></i>  -->
 
@@ -234,7 +256,15 @@
                         </select>
 
                     </div>
-                    <div class="col-sm-4">
+
+                    <div class="col-md-4" ng-show="ageRangeMale != true">
+                        <p> Edad Hombres: {{newEvent.ageRangeMale}}
+                            <i ng-click="borrarEventAgeRangeMale()" class="material-icons testico">close </i> </p>
+
+
+                    </div>
+
+                    <div class="col-md-4"  ng-show="clothing == true">
 
                         <!--  <i style="float: left;" class="fa fa-venus" aria-hidden="true"></i>  -->
 
@@ -249,6 +279,12 @@
                             <option value="SemiFormal">SemiFormal</option>
                             <option value="Verano">Verano</option>
                         </select>
+
+                    </div>
+                    <div class="col-md-4" ng-show="clothing != true">
+                        <p> Codigo de vestimenta :  {{newEvent.clothing}}
+                            <i ng-click="borrarEventClothing()" class="material-icons testico">close </i> </p>
+
 
                     </div>
 

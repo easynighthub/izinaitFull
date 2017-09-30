@@ -23,6 +23,13 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             var admin = window.currentAdmin;
             var adminLogeado = "";
             $scope.newEvent = {};
+
+            $scope.eventEnvironmentSelect = true;
+            $scope.musicGenresSelect = true;
+            $scope.ageRangeFemale = true;
+            $scope.ageRangeMale = true;
+            $scope.clothing = true;
+
             $scope.serviciosEvent = [];
 
 
@@ -33,6 +40,12 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 firebase.database().ref('events/').child(eventId).once('value', function (snapshot) {
                     var event = snapshot.val();
                     console.log(event);
+
+                    $scope.eventEnvironmentSelect = false;
+                    $scope.musicGenresSelect = false;
+                    $scope.ageRangeFemale = false;
+                    $scope.ageRangeMale = false;
+                    $scope.clothing = false;
 
                         var eventServices = firebase.database().ref('/eventServices/' + event.id);
                         var eventServicesRQ = $firebaseArray(eventServices);
@@ -89,7 +102,8 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
 
 
-
+                            $scope.newEvent.musicGenres =event.musicGenresSelect;
+                            $scope.newEvent.eventEnvironment =event.eventEnvironmentSelect;
                             $scope.newEvent.eventEnvironmentSelect = event.eventEnvironmentSelect;
                             $scope.newEvent.musicGenresSelect = event.musicGenresSelect;
 
@@ -438,6 +452,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             $scope.grabarEvento = function () {
                 var subir = true;
                 var errorList = [];
+
                 if (!$scope.newEvent.name) {
                     subir = false;
                     errorList.push("FALTA NOMBRE");
@@ -743,6 +758,38 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
                 });
             };
+
+
+
+            // funciones botones
+            $scope.borrarMusicGenresSelect = function() {
+
+                $scope.musicGenresSelect = true;
+                $scope.newEvent.musicGenresSelect = undefined;
+
+            };
+            $scope.borrarEventEnvironmentSelect = function() {
+
+                $scope.eventEnvironmentSelect = true;
+                $scope.newEvent.eventEnvironmentSelect = undefined;
+            };
+            $scope.borrarEventAgeRangeFemale = function() {
+
+                $scope.ageRangeFemale = true;
+                $scope.newEvent.ageRangeFemale = undefined;
+            };
+
+            $scope.borrarEventAgeRangeMale = function() {
+
+                $scope.ageRangeMale = true;
+                $scope.newEvent.ageRangeMale = undefined;
+            };
+            $scope.borrarEventClothing = function() {
+
+                $scope.clothing = true;
+                $scope.newEvent.clothing = undefined;
+            };
+
 
 
         }])
