@@ -268,7 +268,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
             $scope.verEvento = function (evento) {
                 //document.location.href = 'https://izinait.com/app/#!/detalleEvento?id=' + evento.$id, '_blank';
-                window.open('https://izinait.com/app/#!/detalleEvento?id=' + evento.$id, '_blank')
+                window.open('https://izinait.com/app/#!/detalleEvento?id=' + evento.$id+'&friend='+adminLogeado.$id, '_blank')
             };
 
             $scope.duplicateEvent = function (event) {
