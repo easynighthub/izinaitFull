@@ -1,62 +1,59 @@
-
 <meta name="smartbanner:enabled-platforms" content="android,ios">
 
 <div class="row">
-	<div class="col-md-4" ng-repeat="event in eventsWithServices | orderBy:'date'" ng-show="event.toHour > eventosFuturoFecha">
-		<div class="card card-product" ng-click="administrar(event)">
-			<div class="card-image">
-				<img class="img" style="height: 150px; transform: perspective(1350px);" src="{{event.image}}">
-				<div style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;" class="card-title jvectormap-legend-tick-text">
-					{{event.name}}
-				</div>
-			</div>
-			<div class="card-content">
-				 <!-- <div class="">
-					<div class="row" style="margin:0px!important" ng-repeat="reserva in event.reservas"
-						 ng-show="event.ReservaCantidad >= 1">
-						<div class="stats pull-left">
-                                    <span id="iconoReserva" class="category">
-                                        <i style="color: #4caf50" ng-show="reserva.tipo == 'Mesa'"
-										   class="fa fa-star"></i>
-                                        <i style="color: #f44336" ng-show="reserva.tipo == 'Preventa'"
-										   class="fa fa-ticket "></i>
-                                        <i style="color: #c8c8c8" ng-show="reserva.tipo == 'Vip'"
-										   class="fa fa-diamond"></i>
-                                        <i style="color: #ff9800" ng-show="reserva.tipo == 'Especial'"
-										   class="fa fa-certificate"></i>
-                                        <i style="color: #00bcd4" ng-show="reserva.tipo == 'Botella'"
-										   class="fa fa-glass"></i>
-                                        <span class="text-capitalize">{{reserva.tipo }}</span>
-                                    </span>
-						</div>
-						<span class="stats pull-right">
-                                    {{reserva.utilizados}}
-                                </span>
-					</div>
-					<div ng-show="event.ReservaCantidad < 1">
-						<p class="category text-center">Sin ventas</p>
-					</div>
-				</div> -->
+    <div class="col-md-4" ng-repeat="event in eventsWithServices | orderBy:'date'"
+         ng-show="event.toHour > eventosFuturoFecha">
+        <div class="card card-product" ng-click="administrar(event)">
+            <div class="card-image">
+                <img class="img" style="height: 150px; transform: perspective(1350px);" src="{{event.image}}">
+                <div style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
+                     class="card-title jvectormap-legend-tick-text">
+                    {{event.name}}
+                </div>
+            </div>
+            <div class="card-content">
+                <!-- <div class="">
+                   <div class="row" style="margin:0px!important" ng-repeat="reserva in event.reservas"
+                        ng-show="event.ReservaCantidad >= 1">
+                       <div class="stats pull-left">
+                                   <span id="iconoReserva" class="category">
+                                       <i style="color: #4caf50" ng-show="reserva.tipo == 'Mesa'"
+                                          class="fa fa-star"></i>
+                                       <i style="color: #f44336" ng-show="reserva.tipo == 'Preventa'"
+                                          class="fa fa-ticket "></i>
+                                       <i style="color: #c8c8c8" ng-show="reserva.tipo == 'Vip'"
+                                          class="fa fa-diamond"></i>
+                                       <i style="color: #ff9800" ng-show="reserva.tipo == 'Especial'"
+                                          class="fa fa-certificate"></i>
+                                       <i style="color: #00bcd4" ng-show="reserva.tipo == 'Botella'"
+                                          class="fa fa-glass"></i>
+                                       <span class="text-capitalize">{{reserva.tipo }}</span>
+                                   </span>
+                       </div>
+                       <span class="stats pull-right">
+                                   {{reserva.utilizados}}
+                               </span>
+                   </div>
+                   <div ng-show="event.ReservaCantidad < 1">
+                       <p class="category text-center">Sin ventas</p>
+                   </div>
+               </div> -->
 
-			</div>
-			<div class="card-footer">
-				<div class="stats">
-					<p class="category">
-						<i class="material-icons">event</i>
-						{{event.date | date:"EEEE dd','MMMM"}}
-						<i class="material-icons">alarm</i>
-						{{event.date | date:"HH:mm" }} - {{event.toHour | date:"HH:mm" }}
-					</p>
-
-				</div>
-				<div class="stats pull-right">
-
-
-					<button class="btn btn-sm btn-success">ingresar</button>
-
-				</div>
-
-			</div>
-		</div>
-	</div>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <p class="category" style="text-transform: capitalize">
+                        <i class="material-icons">event</i>
+                        {{event.date | date:"EEEE dd', 'MMMM"}}
+                    </p>
+                </div>
+                <div class="stats pull-right">
+                    <p class="category">
+                        <i class="material-icons">alarm</i>
+                        {{event.date | date:"HH:mm" }} - {{event.toHour | date:"HH:mm" }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

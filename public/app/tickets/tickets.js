@@ -22,6 +22,7 @@ angular.module('myApp.tickets', ['ngRoute'])
 
             var user = window.currentApp;
             var usuarioLogeado = "";
+            $('.main-raised').css("margin-top", "-20px");
 
             firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);

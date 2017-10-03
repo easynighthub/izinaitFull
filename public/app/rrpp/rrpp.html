@@ -2,49 +2,54 @@
     <button id="BarraCargando" class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"></i> CARGANDO EVENTOS
     </button>
 
-     </center>
+</center>
 
 <center>
-    <div id="eventosRrpp" style="display: none">
-
-    <font size="5"> Lista de {{rrpp.name}}</font>
-    <br><br>
-    <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-4 padd-0-xs inline-block float-fix"
-             ng-repeat="event in events | orderBy:'date' | filter: event.musicGenres "
-             ng-click="goEventRRpp(event)"
-             ng-show="event.visible">
-            <div class="testcard">
+    <div style="max-width: 160px;
+    margin: -80px auto 0;">
+        <img src="{{wnCon.picture}}" style="    box-shadow: 0 10px 30px -12px rgba(254, 0, 114, 0.42), 0 4px 25px 0px rgba(254, 0, 114, 0.12), 0 8px 10px -5px rgba(254, 0, 114, 0.2);
+" class="img-circle img-responsive">
+    </div>
+    <div id="eventosRrpp" style="display: none; color:#340034">
 
 
-                <img height="167" width="450" class="testimage" src="{{event.image}}">
+        <h3 style="font-weight: 400; text-shadow: 0 2px 5px rgba(33, 33, 33, 0.3);">{{rrpp.name}}</h3>
+        <h4 style="font-weight: 400;">Te invita a:</h4>
+        <br><br>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4 padd-0-xs inline-block float-fix"
+                 ng-repeat="event in events | orderBy:'date' | filter: event.musicGenres "
+                 ng-click="goEventRRpp(event)"
+                 ng-show="event.visible">
+                <div class="testcard">
 
-                <span class="testfecha">
+
+                    <img height="167" width="450" class="testimage" src="{{event.image}}">
+
+                    <span class="testfecha" style="text-transform: capitalize">
                         {{event.date | date:"EEEE dd', 'MMMM " }}
                     </span>
 
-                <div class="testcontenido">
-                    <p class=testh2"><strong>{{event.name}}</strong></p>
-                    <p class="teststyle"><i class="material-icons testico">store</i> {{getClub(event.clubs)}}</p>
+                    <div class="testcontenido">
+                        <p class=testh2"><strong>{{event.name}}</strong></p>
+                        <p class="teststyle"><i class="material-icons testico">store</i> {{getClub(event.clubs)}}</p>
 
-                    <p class="teststyle"><i class="material-icons testico">music_note</i> {{event.musicGenres}}</p>
-                    <p class="teststyle"><i class="material-icons testico">layers</i> {{event.eventEnvironment}}</p>
+                        <p class="teststyle"><i class="material-icons testico">music_note</i> {{event.musicGenres}}</p>
+                        <p class="teststyle"><i class="material-icons testico">layers</i> {{event.eventEnvironment}}</p>
+                    </div>
+
+                    <div class="testfooter">
+                        <p class="testboton btn " ng-show="event.freemiumHour == event.date"> CPL
+                            ${{event.entryValue }}</p>
+                        <p class="testboton btn " ng-show="event.freemiumHour != event.date">
+                            GRATIS</p>
+                    </div>
+
                 </div>
-
-                <div class="testfooter">
-                    <p class="testboton btn " ng-show="event.freemiumHour == event.date"> CPL
-                        ${{event.entryValue }}</p>
-                    <p class="testboton btn " ng-show="event.freemiumHour != event.date">
-                        GRATIS</p>
-
-
-                </div>
-
             </div>
+
+
         </div>
-
-
     </div>
-</div>
 
 </center>

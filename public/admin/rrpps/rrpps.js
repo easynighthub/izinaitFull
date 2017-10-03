@@ -37,7 +37,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
 
             firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
-                console.log(exists);
+                //console.log(exists);
                 if (exists == true) {
                     var ref = firebase.database().ref('/admins/').child(admin.$id || admin.uid);
                     var adminLocal = $firebaseObject(ref);
@@ -64,7 +64,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
 
                         }
                         ;
-                        console.log(adminLogeado);
+                        //console.log(adminLogeado);
 
                         document.getElementById('BarraCargando').style.display = 'none';
                         document.getElementById('panelPrincipal').style.display = 'block';
@@ -87,10 +87,10 @@ angular.module('myApp.rrpps', ['ngRoute'])
                 var rrpps = $firebaseArray(firebase.database().ref('admins/' + adminLogeado.$id + '/rrpps'));
 
                 rrpps.$loaded().then(function () {
-                    console.log(rrpps);
+                    //console.log(rrpps);
                     $scope.Allrrpps = rrpps;
                     $scope.Allrrpps.forEach(function (x) {
-                        console.log(x.clubs);
+                        //console.log(x.clubs);
                         if (x.bloqueado == true) {
                             var buscarNick = $firebaseObject(firebase.database().ref('rrpps/' + x.$id));
                             buscarNick.$loaded().then(function () {
@@ -130,7 +130,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
 
                         if (validateEmail(result)) {
                             var existeEnAdmin = false;
-                            console.log($scope.rrpps);
+                            //console.log($scope.rrpps);
                             $scope.rrpps.forEach(function (rrpp) {  //rrpps del clubs
                                 if (rrpp.email == result) {
                                     existeEnAdmin = true;
@@ -146,7 +146,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
                                     var existeEnBaseDeDatos = false;
                                     todosLosRRPPs.forEach(function (x) {
                                         if (x.email == result) {
-                                            console.log(x);
+                                            //console.log(x);
                                             firebase.database().ref('admins/' + adminLogeado.$id + '/rrpps/' + x.uid).update({
                                                 uid: x.uid,
                                                 bloqueado: false,
@@ -192,7 +192,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
             $scope.borrarRRPPdelClub = function (rrppSelect) {
 
                 var confirm = $mdDialog.confirm()
-                    .title('Desea eliminar este relacionador publico del este club?')
+                    .title('¿Desea eliminar RR.PP?')
                     .textContent('')
                     .ariaLabel('Lucky day')
                     .targetEvent(rrppSelect)
@@ -200,8 +200,8 @@ angular.module('myApp.rrpps', ['ngRoute'])
                     .cancel('CANCELAR');
 
                 $mdDialog.show(confirm).then(function () {
-                    console.log((Object.keys(confirm._options.targetEvent.clubs).length));
-                    console.log(confirm._options.targetEvent);
+                    //console.log((Object.keys(confirm._options.targetEvent.clubs).length));
+                    //console.log(confirm._options.targetEvent);
                     if (Object.keys(confirm._options.targetEvent.clubs).length > 1) {
                         firebase.database().ref(
                             'admins/'
@@ -224,10 +224,10 @@ angular.module('myApp.rrpps', ['ngRoute'])
                             },
                             cache: false,
                             success: function () {
-                                console.log("siiiiiiiiiiiiiiiiiiiiiii");
+                                //console.log("siiiiiiiiiiiiiiiiiiiiiii");
                             },
                             error: function () {
-                                console.log("noooooooooooooooooooooo");
+                                //console.log("noooooooooooooooooooooo");
                             },
                         });
 
@@ -273,7 +273,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
                     buttonsStyling: false
                 }).then(function (result) {
 
-                    console.log(result);
+                    //console.log(result);
 
                     swal({
                         type: 'success',

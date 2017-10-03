@@ -25,6 +25,7 @@ angular.module('myApp.rrpp', ['ngRoute'])
             console.log(nickName);
             $scope.club = [];
             $scope.events = [];
+            $('.main-raised').css("margin-top", "-20px");
 
             firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
@@ -33,6 +34,7 @@ angular.module('myApp.rrpp', ['ngRoute'])
                 if (exists == true) {
                     var ref = firebase.database().ref('/users/').child(user.$id || user.uid);
                     var usersLocal = $firebaseObject(ref);
+                    $scope.wnCon = usersLocal;
                     usersLocal.$loaded().then(function () {
                         usuarioLogeado = usersLocal;
                         console.log(usuarioLogeado);
