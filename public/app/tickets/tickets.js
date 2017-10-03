@@ -12,42 +12,40 @@ angular.module('myApp.tickets', ['ngRoute'])
                 templateUrl: 'tickets/tickets.html',
                 controller: 'ticketsCtrl',
                 data: {
-                    meta: {
-                        'title': 'hola',
-                        'description': 'Home page description'
-                    }
                 }
             }
         );
     }])
-    .controller('ticketsCtrl', ['$scope','$http', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
-        function ($scope,$http, $firebaseObject, $firebaseArray, $filter, $rootScope) {
+    .controller('ticketsCtrl', ['$scope', '$http', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
+        function ($scope, $http, $firebaseObject, $firebaseArray, $filter, $rootScope) {
 
 
-            var user = window.currentApp ;
+            var user = window.currentApp;
             var usuarioLogeado = "";
 
-            firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function(snapshot) {
+            firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
-                console.log(exists);
+                //console.log(exists);
 
                 if (exists == true) {
                     var ref = firebase.database().ref('/users/').child(user.$id || user.uid);
                     var usersLocal = $firebaseObject(ref);
                     usersLocal.$loaded().then(function () {
+                        $scope.wnCon = usersLocal;
                         usuarioLogeado = usersLocal;
+
+                        //console.log(usuarioLogeado);
                         $scope.ticketsAll = [];
-                       console.log(Object.keys(usuarioLogeado.tickets));
-                            angular.forEach(usuarioLogeado.tickets, function (x) {
+                        //console.log(Object.keys(usuarioLogeado.tickets));
+                        angular.forEach(usuarioLogeado.tickets, function (x) {
 
-                                var ticketsRQ = $firebaseObject( firebase.database().ref('tickets/').child(x.eventId +'/'+ x.ticketId));
-                                ticketsRQ.$loaded().then(function () {
+                            var ticketsRQ = $firebaseObject(firebase.database().ref('tickets/').child(x.eventId + '/' + x.ticketId));
+                            ticketsRQ.$loaded().then(function () {
 
-                                    $scope.ticketsAll.push(ticketsRQ);
-                                    console.log($scope.ticketsAll);
+                                $scope.ticketsAll.push(ticketsRQ);
+                                //console.log($scope.ticketsAll);
 
-                                });
-
+                            });
 
 
                         });
@@ -58,28 +56,26 @@ angular.module('myApp.tickets', ['ngRoute'])
                         $('.codigoAcceder').text("Tú Codigo");
                         $('.pruebacon').removeClass("contenedor");
                         //  $('.codigoAcceder').prepend($('<img>',{id:'theImg',src:usuarioLogeado.picture}))
-                        console.log(window.currentApp + " ENTRE");
+                        //console.log(window.currentApp + " ENTRE");
                         $(navigationexample).removeClass("in");
                     });
                 } else {
                     window.currentApp = "";
                     usuarioLogeado = "";
                     $('.codigoAcceder').text("acceder");
-                    console.log(window.currentApp + " NO ENTRE");
-                    $(navigationexample).removeClass( "in" );
-                };
+                    //console.log(window.currentApp + " NO ENTRE");
+                    $(navigationexample).removeClass("in");
+                }
+                ;
 
             });
-
-
-
 
 
             $scope.filterDateInput = new Date();
 
             /*   var users = $firebaseArray(firebase.database().ref().child('users'));
              users.$loaded().then(function () {
-             console.log(users);
+             //console.log(users);
              users.forEach(function (x) {
              /*    if(x.email != "izi@nait.com" || x.email != "null@izinait.com" ){
              if(x.facebookId){
@@ -94,7 +90,7 @@ angular.module('myApp.tickets', ['ngRoute'])
              url: url,
              crossOrigin: true,
              }).then(function successCallback(response) {
-             console.log(response);
+             //console.log(response);
              if(response.data.error != undefined){
              alert("ESTE CORREO YA EXISTE");
              }
@@ -116,7 +112,7 @@ angular.module('myApp.tickets', ['ngRoute'])
 
              );
 
-             console.log("exito");
+             //console.log("exito");
              };
              }, function errorCallback(response) {
              });
@@ -136,18 +132,21 @@ angular.module('myApp.tickets', ['ngRoute'])
              });
              }); */
 
-        /*    var clubsER = $firebaseArray(firebase.database().ref().child('clubs'));
+            /*    var clubsER = $firebaseArray(firebase.database().ref().child('clubs'));
 
-            var currentDay = new Date().getTime();
-            clubsER.$loaded().then(function () {
-                var eventsRequest = $firebaseArray(firebase.database().ref().child('events').orderByChild('toHour').startAt(currentDay));
-                eventsRequest.$loaded().then(function () {
-                    console.log(eventsRequest);
-                    $scope.Allvents = eventsRequest;
-                    $scope.events = $scope.Allvents;
+                var currentDay = new Date().getTime();
+                clubsER.$loaded().then(function () {
+                    var eventsRequest = $firebaseArray(firebase.database().ref().child('events').orderByChild('toHour').startAt(currentDay));
+                    eventsRequest.$loaded().then(function () {
+                        //console.log(eventsRequest);
+                        $scope.Allvents = eventsRequest;
+                        $scope.events = $scope.Allvents;
 
-                });
-            }); */
+                    });
+                }); */
+
+            var clubsER = $firebaseArray(firebase.database().ref().child('clubs'));
+
 
 
             $scope.filterEventsByText = function () {
@@ -174,14 +173,14 @@ angular.module('myApp.tickets', ['ngRoute'])
             }
 
             $scope.seeAllEvents = function () {
-                $scope.events = $filter('filter')($scope.Allvents   );
+                $scope.events = $filter('filter')($scope.Allvents);
                 document.getElementById('verTodosLosEventos').style.display = 'none';
                 document.getElementById('buscarPorFecha').style.display = 'block';
             }
 
             $scope.goToEventDetails = function (event) {
-                console.log(event + "log click");
-                console.log("hola soy andro el mejor");
+                //console.log(event + "log click");
+                //console.log("hola soy andro el mejor");
                 $rootScope.selectedEvent = event;
                 location.href = "#!/detalleEvento?id=" + event.$id;
             }
@@ -194,22 +193,36 @@ angular.module('myApp.tickets', ['ngRoute'])
             };
 
 
-
-
             var eventsRequest = $firebaseArray(firebase.database().ref().child('events'));
             eventsRequest.$loaded().then(function () {
-                console.log(eventsRequest);
+                //console.log(eventsRequest);
                 $scope.Allvents = eventsRequest;
                 $scope.events = $scope.Allvents;
 
             });
 
-            $scope.getNombreEvento = function (idEvent) {
+            $scope.getClubName = function (idEvent) {
+                var eventoKey = idEvent;
+                var club = $filter('filter')($scope.events, {$id: eventoKey})[0].clubs;
+                if (club) {
+                    var clubKey = Object.keys(club)[0];
+                    return $filter('filter')(clubsER, {$id: clubKey})[0].name;
+                }
+            };
+
+            $scope.goToEventDetails = function (idEvent) {
+                location.href = "#!/detalleEvento?id=" + idEvent;
+            }
+
+
+
+            $scope.getEvento = function (idEvent) {
                 if (idEvent) {
                     var eventoKey = idEvent;
-                    console.log(eventoKey);
-                    return $filter('filter')($scope.events,  {$id :eventoKey})[0].name;
-                };
+                    //console.log($filter('filter')($scope.events, {$id: eventoKey})[0]);
+                    return $filter('filter')($scope.events, {$id: eventoKey})[0];
+                }
+                ;
 
 
             };

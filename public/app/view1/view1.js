@@ -165,8 +165,6 @@ angular.module('myApp.view1', ['ngRoute'])
             }
 
             $scope.goToEventDetails = function (event) {
-                console.log(event + "log click");
-                console.log("hola soy andro el mejor");
                 $rootScope.selectedEvent = event;
                 location.href = "#!/detalleEvento?id=" + event.$id;
             }

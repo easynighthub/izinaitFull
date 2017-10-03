@@ -1,17 +1,6 @@
-<style>
-    .imagenRedonda {
-        /* cambia estos dos valores para definir el tamaño de tu círculo */
-        height: 55%;
-        width: 55%;
-        /* los siguientes valores son independientes del tamaño del círculo */
-        background-repeat: no-repeat;
-        background-position: 50%;
-        border-radius: 50%;
-        background-size: 100% auto;
-    }
-</style>
-<div id="codigoVisibile"    style='display:none;'>
-    <div class="col-sm-6 col-md-6">    <center>
+<div id="codigoVisibile" style='display:none;'>
+    <div class="col-sm-6 col-md-6  col-xs-12 text-center">
+
         <br>
         <img class="fotoPerfilCodigo" src="{{foto}}">
         <br>
@@ -28,18 +17,17 @@
         <div id="qr">
         </div>
         <br>
-        <button id="salir"
-                class=" btn btn-sm" style="background-color: #fe0072">
+        <button id="salir" class="btn" style="background-color: #fe0072">
             <i class="material-icons"></i> SALIR
         </button>
         <!--  <img class="imagenRedonda" src="{{foto}}"/>-->
 
-    </center></div>
-    <div class="col-md-6 " ng-show="userQvoRQ.userQvoId != undefined">
+    </div>
+    <div class="col-md-6 col-xs-12" ng-show="userQvoRQ.userQvoId != undefined">
 
         <div class="title">
             <center>
-            <h3>AGREGAR TARJETA DE CREDITO</h3>
+            <h3>TARJETAS DE CREDITO</h3>
                 <button class="btn btn-success" ng-click="crearCliente()"> AGREGAR TARJETA DE CREDITO ON-CLICK</button>
             </center>
         </div>
@@ -72,6 +60,9 @@
 
 
     </div>
+    <a class="btn" href="#!/tickets" style="background-color: #340034">
+        <i class="material-icons"></i> Tickets
+    </a>
 
 </div>
 
@@ -108,11 +99,11 @@
         <center><br>
             <h5> REDIRECCIONANDO </h5>
             <button id="BarraCargando"  style="display: none"
-                    class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"> </i>
+                    class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"></i>
                 CONFIRMANDO DATOS
             </button>
             <button id="barraRedirectUrl"  style="display: block"
-                    class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"> </i>
+                    class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"></i>
                 Redirecciando a pagina segura.
             </button>
 

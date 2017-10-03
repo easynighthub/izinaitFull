@@ -28,7 +28,7 @@ angular.module('myApp', [
             var patt = new RegExp('firebase:authUser:');
             if (patt.test(str)) {
                 window.currentApp = JSON.parse(localStorage.getItem(str));
-                console.log(window.currentApp);
+                //console.log(window.currentApp);
                 return true;
             }
         }
@@ -37,11 +37,11 @@ angular.module('myApp', [
 
     if (validateUser()) {
         $routeProvider.otherwise({redirectTo: '/view1'});
-        console.log(window.currentApp);
+        //console.log(window.currentApp);
     } else {
         $routeProvider.otherwise({redirectTo: '/view1'});
         window.currentApp = "";
-        console.log(window.currentApp);
+        //console.log(window.currentApp);
     }
 
     function load() {

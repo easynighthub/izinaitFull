@@ -111,6 +111,15 @@
     cursor: auto;
     margin-bottom: 10px;
 }
+.testcard2{
+    position: relative;
+    text-align: center;
+
+    border-radius: 6px;
+    display: block;
+    cursor: auto;
+    margin-bottom: 10px;
+}
 
 
 .footer-distributed {
@@ -204,7 +213,7 @@
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    font-weight: 700;
+    font-weight: 500;
     color: #f4f4f4 !important;
     background-color: #340034 !important;
 }
