@@ -113,46 +113,27 @@
 
             <br>
             <br>
-            <div id="selectLista" ng-show="event.freemiumHour != event.date" class="col-md-6 col-md-offset-3 " >
-                <span style="margin-top: 25px; font-size: 20px;" class="col-md-6 col-xs-12"><bolder>Confirmar lista + Amigos: </bolder></span>
-                <select  ng-model="totalReserva" placeholder="Seleccionar" class="col-xs-12 col-md-6 select-style"
-                           style="font-size: 20px ; margin-top: 20px">
-                    <option ng-value="1">+1 Amigos</option>
-                    <option ng-value="2">+2 Amigos</option>
-                    <option ng-value="3">+3 Amigos</option>
-                    <option ng-value="4">+4 Amigos</option>
-                    <option ng-value="5">+5 Amigos</option>
-                    <option ng-value="6">+6 Amigos</option>
-                    <option ng-value="7">+7 Amigos</option>
-                    <option ng-value="8">+8 Amigos</option>
-                    <option ng-value="9">+9 Amigos</option>
-                    <option ng-value="10">+10 Amigos</option>
-                </select>
 
-                <style>
 
-                    .select-style {
-                        border: 1px solid #ccc;
-                        border-radius: 3px;
-                        overflow: hidden;
-                    }
 
-                    .select-style select {
-                        padding: 5px 8px;
-                        width: 130%;
-                        border: none;
-                        box-shadow: none;
-                        background: transparent;
-                        background-image: none;
-                        -webkit-appearance: none;
-                    }
 
-                    .select-style select:focus {
-                        outline: none;
-                    }
-                </style>
+                    <span ng-show="verSelectList" style=" font-size: 18px;" class="col-md-6 col-xs-12"   >
+                        <bolder>Confirmar lista + Amigos: </bolder>
+                    </span>
+                    <button ng-show="verSelectList" style="margin-top: 0px" ng-click="disminuirLista()" class="btn btn-sm btn-primary">
+                        -
+                    </button>
+                    <font ng-show="verSelectList" size="5" >
+                        {{ totalReserva}}
+                    </font>
+                    <button ng-show="verSelectList" style="margin-top: 0px"  ng-click="aumentarLista()" class="btn btn-sm btn-primary">
+                        +
+                    </button>
 
-            </div>
+
+
+
+
             <div class="col-md-12">
                 <button id="botonAsistir" ng-click="guardarListaGratis()"
                         scope="public_profile email user_birthday"
@@ -328,6 +309,9 @@
 
         </div>
 
+        <img src="data:image/png;base64,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
+">
+
 
     </center>
 
@@ -376,22 +360,27 @@
 
 
             <h4 class="description">{{eventsService.desc}}</h4>
-            <h3 style="font-weight: 400">$ {{cantidadDeCompra*eventsService.precio | number:0}}</h3>
+            <h3 style="font-weight: 400">$ {{cantidadDeCompra*eventsService.precio *1.03 + 300| number:0}}</h3>
 
 
 
             <div class="col-md-6 col-md-offset-3">
-                <span style="margin-top: 25px; font-size: 20px;" class="col-md-6 col-xs-8">Cantidad :</span>
+              <!--  <span style="margin-top: 25px; font-size: 20px;" class="col-md-6 col-xs-8">Cantidad :</span>
                 <select  style="margin-top: 25px" aria-label="aria-label" class="col-md-6 col-xs-4 text-center select-style" name="ticketQty"
                            ng-model="cantidadDeCompra">
-
-
 
                     <option ng-repeat="entrada in maxEntradas track by entrada.id"
                                ng-value="entrada.id">
                         {{entrada.name}}
                     </option>
-                </select>
+                </select> -->
+
+                <p  class="col-md-12 col-xs-12">
+
+                    <span style=" font-size: 18px;" class="col-md-6 col-xs-12"   ><bolder>Cantidad: </bolder></span>
+                    <button style="margin-top: 0px" ng-click="disminuirTicket()" class="btn btn-sm btn-primary"> - </button>
+                    <font size="5" >{{ cantidadDeCompra}} </font>
+                    <button style="margin-top: 0px"  ng-click="aumentarTicket()" class="btn btn-sm btn-primary"> + </button></p>
             </div>
         </div>
         <div class="col-md-6 col-xs-12 leftspan">

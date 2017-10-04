@@ -30,6 +30,8 @@ const cors = require('cors')({origin: true});
 
 var qrProyect = require('qr-image');
 
+var QRCode = require('qrcode');
+
 var promise = require('request-promise');
 var MP = require("mercadopago");
 
@@ -624,7 +626,9 @@ function sendWelcomeEmail(datos) {
     var eventCapturado;
     var clubCapturado;
     var direccionClub ="";
-console.log(datos);
+    var linkQr;
+    console.log(datos.userId);
+
    admin.database().ref(`/events/${datos.eventId}`).once('value').then(snapshot => {
        eventCapturado = snapshot.val();
         linkFoto = eventCapturado.image;
@@ -634,16 +638,36 @@ console.log(datos);
        var utcSeconds = datos.date;
        var fechaCompraInicial = new Date(0); // The 0 there is the key, which sets the date to the epoch
        var fechaCompra = fechaCompraInicial.setUTCSeconds(utcSeconds);
+
+
+
+       var opts = {
+           errorCorrectionLevel: 'H',
+           type: 'image/jpeg',
+           rendererOpts: {
+               quality: 0.3
+           }
+       }
+
+
        admin.database().ref(`/clubs/${Object.keys(eventCapturado.clubs)[0]}`).once('value').then(snapshot => {
            clubCapturado = snapshot.val();
 
            nombreClub = clubCapturado.name;
            direccionClub = clubCapturado.address;
-           const mailOptions = {
-               from: `${APP_NAME} <noreply@firebase.com>`,
-               to: datos.email,
-               html: `
-             <!doctype html>
+
+
+           QRCode.toDataURL(datos.userId, opts, function (err, url) {
+               if (err) throw err
+
+               linkQr = url;
+               console.log(linkQr);
+
+               const mailOptions = {
+                   from: `${APP_NAME} <noreply@firebase.com>`,
+                   to: datos.email,
+                   html: `
+                   <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
@@ -818,7 +842,7 @@ console.log(datos);
                                         </tr>
                                         <tr>
                                           <td style="word-wrap:break-word;font-size:0px;padding:10px 25px;" align="left">
-                                            <div style="cursor:auto;color:white;font-family:helvetica;font-size:11px;line-height:22px;text-align:left;">Acabas de realizar una compra para el evento "${nombreEvento}", con un valor de $ ${datos.totalAPagar} , recuerda que con tu codigo QR podras acceder de manera rapida y sencilla.</div>
+                                            <div style="cursor:auto;color:white;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:22px;text-align:left;">Acabas de realizar una compra para el evento "${nombreEvento}", con un valor de $ ${datos.totalAPagar} , recuerda que con tu codigo QR podras acceder de manera rapida y sencilla.</div>
                                           </td>
                                         </tr>
                                         <tr>
@@ -840,13 +864,24 @@ console.log(datos);
                                                 <tbody>
                                                   <tr>
                                                     <td style="word-wrap:break-word;font-size:0px;padding:10px 25px;" align="left">
-                                                      <div style="cursor:auto;color:white;font-family:helvetica;font-size:9px;line-height:22px;text-align:left;">Nombre Evento : ${nombreEvento} <br> Club Evento : ${nombreClub} <br> Dirección Club : ${direccionClub}<br> Fecha de compra: ${fechaCompra} <br> Código Transacción: ${datos.idTransaccion} <br> Correo
+                                                      <div style="cursor:auto;color:white;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:9px;line-height:22px;text-align:left;">Nombre Evento : ${nombreEvento} <br> Club Evento : ${nombreClub} <br> Dirección Club : ${direccionClub}<br> Fecha de compra: ${fechaCompra} <br> Código Transacción: ${datos.idTransaccion} <br> Correo
                                                         del comprador : ${datos.email} <br> Metodo de pago : OneClick</div>
                                                     </td>
                                                   </tr>
                                                 </tbody>
                                               </table>
                                             </div>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td style="word-wrap:break-word;font-size:0px;padding:10px 25px;" align="center">
+                                            <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0px;" align="center" border="0">
+                                              <tbody>
+                                                <tr>
+                                                  <td style="width:300px;"><img alt="" title="" height="auto" src="src="data:image/png;base64,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" style="border:none;border-radius:0px;display:block;font-size:13px;outline:none;text-decoration:none;width:100%;height:auto;" width="300"></td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
                                           </td>
                                         </tr>
                                         <tr>
@@ -859,66 +894,6 @@ console.log(datos);
                                                 </tr>
                                               </tbody>
                                             </table>
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                          <td style="word-wrap:break-word;font-size:0px;padding:10px 25px;padding-top:10px;padding-bottom:10px;padding-right:25px;padding-left:25px;" align="center">
-                                            <div>
-                                              <!--[if mso | IE]>
-      <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="undefined"><tr><td>
-      <![endif]-->
-                                              <table role="presentation" cellpadding="0" cellspacing="0" style="float:none;display:inline-table;" align="center" border="0">
-                                                <tbody>
-                                                  <tr>
-                                                    <td style="padding:4px;vertical-align:middle;">
-                                                      <table role="presentation" cellpadding="0" cellspacing="0" style="background:#3b5998;border-radius:3px;width:20px;" border="0">
-                                                        <tbody>
-                                                          <tr>
-                                                            <td style="vertical-align:middle;width:20px;height:20px;">
-                                                              <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.facebook.com/Izinait/"><img alt="facebook" height="20" src="https://www.mailjet.com/images/theme/v1/icons/ico-social/facebook.png" style="display:block;border-radius:3px;" width="20"></a>
-                                                            </td>
-                                                          </tr>
-                                                        </tbody>
-                                                      </table>
-                                                    </td>
-                                                  </tr>
-                                                </tbody>
-                                              </table>
-                                              <!--[if mso | IE]>
-      </td><td>
-      <![endif]-->
-                                              <table role="presentation" cellpadding="0" cellspacing="0" style="float:none;display:inline-table;" align="center" border="0">
-                                                <tbody>
-                                                  <tr>
-                                                    <td style="padding:4px;vertical-align:middle;">
-                                                      <table role="presentation" cellpadding="0" cellspacing="0" style="background:#3f729b;border-radius:3px;width:20px;" border="0">
-                                                        <tbody>
-                                                          <tr>
-                                                            <td style="vertical-align:middle;width:20px;height:20px;">
-                                                              <a href="[[SHORT_PERMALINK]]"><img alt="instagram" height="20" src="https://www.mailjet.com/images/theme/v1/icons/ico-social/instagram.png" style="display:block;border-radius:3px;" width="20"></a>
-                                                            </td>
-                                                          </tr>
-                                                        </tbody>
-                                                      </table>
-                                                    </td>
-                                                  </tr>
-                                                </tbody>
-                                              </table>
-                                              <!--[if mso | IE]>
-      </td><td>
-      <![endif]-->
-                                              <table role="presentation" cellpadding="0" cellspacing="0" style="float:none;display:inline-table;" align="center" border="0">
-                                                <tbody></tbody>
-                                              </table>
-                                              <!--[if mso | IE]>
-      </td></tr></table>
-      <![endif]-->
-                                            </div>
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                          <td style="word-wrap:break-word;font-size:0px;padding:10px 25px;" align="center">
-                                            <div style="cursor:auto;color:white;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;text-align:center;">izinait © 2017 | contacto@izinait.com | www.izinait.com</div>
                                           </td>
                                         </tr>
                                       </tbody>
@@ -953,24 +928,29 @@ console.log(datos);
 
 </html>
                `
-           };
+               };
 
-           // The user subscribed to the newsletter.
-           mailOptions.subject = `Gracias por tu compra, ${APP_NAME}!`;
-           mailOptions.text = ``
-           ;
-           return mailTransport.sendMail(mailOptions).then(() => {
-               console.log('New welcome email sent t1111111o:', datos.email);
+               // The user subscribed to the newsletter.
+               mailOptions.subject = `Gracias por tu compra, ${APP_NAME}!`;
+               mailOptions.text = ``;
+               return mailTransport.sendMail(mailOptions).then(() => {
+                   console.log('New welcome email sent t1111111o:', datos.email);
+               });
+           });
+
+
+
+
+
+
+
+
+
        });
 
 
 
 
-
-
-
-
-       });
 
    });
 

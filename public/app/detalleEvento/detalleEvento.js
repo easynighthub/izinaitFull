@@ -75,7 +75,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                             $scope.siExisto = +1
                                             if ($scope.siExisto > 0) {
                                                 document.getElementById('botonAsistir').style.display = 'none';
-                                                document.getElementById('selectLista').style.display = 'none';
+                                                $scope.verSelectList = false;
+                                                //document.getElementById('selectLista').style.display = 'none';
                                                 document.getElementById('botonLista').style.display = 'block';
                                             }
                                         });
@@ -296,8 +297,23 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
             $scope.editarListaGratis = function () {
                 document.getElementById('botonAsistir').style.display = 'block';
-                document.getElementById('selectLista').style.display = 'block';
+                $scope.verSelectList = true;
+                //document.getElementById('selectLista').style.display = 'block';
                 document.getElementById('botonLista').style.display = 'none';
+            };
+            $scope.totalReserva = 1;
+
+            $scope.aumentarLista = function () {
+                if($scope.totalReserva < 10){
+                    $scope.totalReserva +=1;
+                }
+
+            };
+            $scope.disminuirLista = function () {
+                if( $scope.totalReserva>1){
+                    $scope.totalReserva -=1;
+                }
+
             };
 
             $scope.guardarListaGratis = function () {
@@ -321,7 +337,9 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             function guardarListaGratisFuncion(total) {
                 firebase.database().ref('events/' + eventId + '/asist/' + usuarioLogeado.$id).update($scope.nuevaAsistencia);
                 document.getElementById('botonAsistir').style.display = 'none';
-                document.getElementById('selectLista').style.display = 'none';
+
+                $scope.verSelectList = false;
+                //document.getElementById('selectLista').style.display = 'none';
                 document.getElementById('botonLista').style.display = 'block';
                 $scope.datosAsistire = {};
                 $scope.datosAsistire.totalList = total;
@@ -695,6 +713,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     $scope.email = "";
                 };
 
+
+
                 for (var i = 1; i <= $scope.eventsService.maxEntradas; i++) {
                     var entradas = {
                         id: i,
@@ -702,6 +722,22 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     };
                     $scope.maxEntradas.push(entradas);
                     //console.log("Entradas", $scope.maxEntradas)
+                };
+
+
+                $scope.aumentarTicket = function () {
+                    console.log($scope.eventsService.maxEntradas);
+                    if($scope.eventsService.maxEntradas > $scope.cantidadDeCompra){
+                        $scope.cantidadDeCompra += 1;
+                    }
+
+                };
+
+                $scope.disminuirTicket = function () {
+                    if($scope.cantidadDeCompra > 1){
+                        $scope.cantidadDeCompra -= 1
+                    }
+                   ;
                 };
 
                 $scope.adquirir = function (cantidadDeCompra, celular,metodoDePagoSelect) {
@@ -750,6 +786,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                                 $scope.newTicket.rrppid = Rrpp;
                                                 $scope.newTicket.cantidadDeCompra = cantidadDeCompra;
                                                 $scope.newTicket.totalAPagar = $scope.eventsService.precio * cantidadDeCompra;
+                                                $scope.newTicket.totalPagadoConComision = $scope.eventsService.precio * cantidadDeCompra * 1.05 + 500;
                                                 $scope.newTicket.eventId = eventId;
                                                 $scope.newTicket.userId = $scope.usuarioLogeado.$id;
                                                 $scope.newTicket.ticketId = firebase.database().ref().child('ticketsCreate/').push().key;
