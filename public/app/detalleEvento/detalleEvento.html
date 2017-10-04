@@ -332,7 +332,7 @@
     }
 </script>
 
-<script id="dialogAdquirirServicio" type="text/ng-template">
+<script id="dialogAdquirirServicio" type="text/ng-template" >
     <div class="card text-center " id="panelPrincipal" style="color:#340034 ">
         <div class="col-md-6 col-xs-12 ">
             <h2 class="title">
@@ -354,7 +354,7 @@
 
             <div class="col-md-6 col-md-offset-3">
                 <span style="margin-top: 25px; font-size: 20px;" class="col-md-6 col-xs-12">Cantidad</span>
-                <md-select class="col-md-6 col-xs-12 text-center" name="ticketQty"
+                <md-select aria-label="aria-label" class="col-md-6 col-xs-12 text-center" name="ticketQty"
                            ng-model="cantidadDeCompra">
                     <md-option ng-selected="entrada.id == 1" ng-repeat="entrada in maxEntradas track by entrada.id"
                                ng-value="entrada.id">
@@ -407,7 +407,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-6 col-xs-12 col-md-offset-3">
             <button ng-click="hide()" class="btn  btn-sm">Cancelar</button>
             <button ng-click="adquirir(cantidadDeCompra,celular,metodoDePagoSelect)" class="btn btn-info btn-sm ">
                 Confirmar

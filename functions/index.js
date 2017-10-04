@@ -540,7 +540,7 @@ exports.sendWelcomeEmail = functions.database.ref('/tickets/{eventId}/{userId}')
     const displayName = "andro ostoic"; // The display name of the user.
 // [END eventAttributes]
 
-   return sendWelcomeEmail(email, displayName);
+   return sendWelcomeEmail(datos);
 });
 
 /*
@@ -616,11 +616,29 @@ exports.obtenerClienteQvo = functions.https.onRequest((req, res) => {
 
 //funciones !
 
-function sendWelcomeEmail(email, displayName) {
-    const mailOptions = {
-        from: `${APP_NAME} <noreply@firebase.com>`,
-        to: email,
-        html: `<!doctype html>
+function sendWelcomeEmail(datos) {
+    const datosCapturados = datos;
+    var linkFoto = "";
+    var nombreClub = "";
+    var nombreEvento ="";
+console.log(datos);
+   admin.database().ref(`/events/${datos.eventId}`).once('value').then(snapshot => {
+        const eventCapturado = snapshot.val();
+        linkFoto = eventCapturado.image;
+        nombreEvento = eventCapturado.name;
+        nombreClub = "caleido";
+       var utcSeconds = datos.date;
+       var fechaCompraInicial = new Date(0); // The 0 there is the key, which sets the date to the epoch
+       var fechaCompra = fechaCompraInicial.setUTCSeconds(utcSeconds);
+
+
+
+
+
+       const mailOptions = {
+           from: `${APP_NAME} <noreply@firebase.com>`,
+           to: datos.email,
+           html: `<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
@@ -787,12 +805,12 @@ function sendWelcomeEmail(email, displayName) {
                                         </tr>
                                         <tr>
                                           <td style="word-wrap:break-word;font-size:0px;padding:10px 25px;" align="left">
-                                            <div style="cursor:auto;color:white;font-family:helvetica;font-size:13px;line-height:22px;text-align:left;">Gracias Andro Ostoic por comprar en izinait</div>
+                                            <div style="cursor:auto;color:white;font-family:helvetica;font-size:13px;line-height:22px;text-align:left;">Gracias ${datos.displayName} por comprar en izinait</div>
                                           </td>
                                         </tr>
                                         <tr>
                                           <td style="word-wrap:break-word;font-size:0px;padding:10px 25px;" align="left">
-                                            <div style="cursor:auto;color:white;font-family:helvetica;font-size:11px;line-height:22px;text-align:left;">Acabas de realizar una compra para el evento "NOMBRE EVENTO", con un valor de "VALOR TICKETS" , recuerda que con tu codigo QR podras acceder de manera rapida y sencilla.</div>
+                                            <div style="cursor:auto;color:white;font-family:helvetica;font-size:11px;line-height:22px;text-align:left;">Acabas de realizar una compra para el evento ${nombreEvento}, con un valor de ${datos.totalAPagar} , recuerda que con tu codigo QR podras acceder de manera rapida y sencilla.</div>
                                           </td>
                                         </tr>
                                         <tr>
@@ -800,7 +818,7 @@ function sendWelcomeEmail(email, displayName) {
                                             <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0px;" align="center" border="0">
                                               <tbody>
                                                 <tr>
-                                                  <td style="width:250px;"><img alt="" title="" height="auto" src="https://firebasestorage.googleapis.com/v0/b/project-8746388695669481444.appspot.com/o/eventImages%2F-KuutzdO0BnoF8J_HqPV?alt=media&token=d1fc104f-458f-4be0-9f8d-5cbd7095c3c3"
+                                                  <td style="width:250px;"><img alt="" title="" height="auto" src="${linkFoto}"
                                                       style="border:none;border-radius:0px;display:block;font-size:13px;outline:none;text-decoration:none;width:100%;height:auto;" width="250"></td>
                                                 </tr>
                                               </tbody>
@@ -809,7 +827,18 @@ function sendWelcomeEmail(email, displayName) {
                                         </tr>
                                         <tr>
                                           <td style="word-wrap:break-word;font-size:0px;padding:10px 25px;" align="left">
-                                            <div style="cursor:auto;color:white;font-family:helvetica;font-size:9px;line-height:22px;text-align:left;">Nombre Evento : The Nuñork Times <br> Club Evento : Caleido Club<br> Comprado el: 25 sept. 2017 / 07:13<br> Código Transacción: trx_jw1a-HdW_9DdCL8eW5M0GA <br> Correo del comprador : andro.ostoic@gmail.com <br>                                              Metodo de pago : OneClick</div>
+                                            <div style="cursor:auto;color:white;font-family:helvetica;font-size:9px;line-height:22px;text-align:left;">
+                                            Nombre Evento : ${nombreEvento}
+                                            <br> 
+                                            Club Evento : ${nombreClub} 
+                                            <br> 
+                                            Fecha de compra: ${fechaCompra} 
+                                            <br> 
+                                            Código Transacción: ${datos.idTransaccion} 
+                                            <br>
+                                            Correo del comprador : ${datos.email} 
+                                            <br>
+                                            </div>
                                           </td>
                                         </tr>
                                       </tbody>
@@ -843,15 +872,21 @@ function sendWelcomeEmail(email, displayName) {
 </body>
 
 </html>`
-    };
+       };
 
-    // The user subscribed to the newsletter.
-    mailOptions.subject = `Welcome to ${APP_NAME}!`;
-    mailOptions.text = ``
-    ;
-    return mailTransport.sendMail(mailOptions).then(() => {
-        console.log('New welcome email sent t1111111o:', email);
-    });
+       // The user subscribed to the newsletter.
+       mailOptions.subject = `Welcome to ${APP_NAME}!`;
+       mailOptions.text = ``
+       ;
+       return mailTransport.sendMail(mailOptions).then(() => {
+           console.log('New welcome email sent t1111111o:', email);
+       });
+
+   });
+
+
+
+
 };
 
 
