@@ -36,21 +36,29 @@
                             <tbody>
                             <tr ng-repeat="rrpp in rrpps">
                                 <td>{{rrpp.email}}</td>
-                                <td>{{rrpp.nickName}}
+                                <td><span class="text-primary">{{rrpp.nickName}}</span>
                                     <br>
-                                    <a id="copyContent" target="_blank" href="https://izinait.com/app/#!/rrpp#{{rrpp.nickName}}">https://izinait.com/app/#!/rrpp#{{rrpp.nickName}}</a>
+                                    <input style="display: inline-block;
+                                            border: 1px solid #707a82;
+                                            border-color: #fe0072;
+                                            padding: 10px;
+                                            width: 100%;
+                                            border-radius: 3px;
+                                            font-size: 12px;
+                                            max-width: 100%;
+                                            word-break: break-all;" value="https://izinait.com/app/#!/rrpp#{{rrpp.nickName}}"
+                                           onclick="copyToClipboardMsg(this, 'msg')">
+
 
                                 </td>
                                 <td class=" text-right">
-                                    <a class="btn btn-just-icon btn-round" tooltip="Eliminar"
+                                    <a class="btn btn-just-icon btn-simple btn-rose" tooltip="Eliminar"
                                        ng-click="borrarRRPPdelClub(rrpp)" ng-show="!rrpp.bloqueado">
                                         <i class="material-icons pointer btn_rsvp_trash">delete_forever</i>
-                                        <div class="ripple-container"></div>
                                     </a>
-                                    <a id="copy" class="btn btn-just-icon btn-round btn-rose" onclick="copyToClipboardMsg(document.getElementById('copyContent'), 'msg')"
-                                       data-copy="https://izinait.com/app/#!/rrpp#{{rrpp.nickName}}">
-                                        <i class="material-icons">content_copy</i>
-                                        <div class="ripple-container"></div>
+                                    <a id="copy" class="btn btn-just-icon btn-simple btn-rose" target="_blank"
+                                       href="https://izinait.com/app/#!/rrpp#{{rrpp.nickName}}">
+                                        <i class="material-icons">exit_to_app</i>
                                     </a>
                                     <md-checkbox
                                             ng-disabled="rrpp.bloqueado"
@@ -116,7 +124,7 @@
                 target.id = targetId;
                 document.body.appendChild(target);
             }
-            target.textContent = elem.textContent;
+            target.textContent = elem.id;
         }
         // select the content
         var currentFocus = document.activeElement;
