@@ -457,7 +457,17 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 lastName: response.last_name,
                                 gender: response.gender
                             });
-                    }
+                    };
+                    function    updateData(response) {
+                        database
+                            .ref(USERS_LOCATION + user.uid)
+                            .update({
+                                displayName: response.name,
+                                picture: response.picture.data.url,
+                                firstName: response.first_name,
+                                lastName: response.last_name,
+                            });
+                    };
 
                     function onAuthStateChanged(user) {
                         //cleanupUi();
@@ -502,7 +512,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 $('.codigoAcceder').text("Tú Codigo");
                                 console.log("obvtuve la foto y el correo");
                                 $mdDialog.hide();
-                                //location.reload();
+
+                                location.reload();
                                 //dialogAdquirirServicio(eventsService);
 
 
@@ -510,7 +521,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
 
                         } else {
-                            writeUserData(response);
+                            updateData(response);
                             console.log(firebase.auth().currentUser);
                             // obtengo codigo
 
@@ -533,7 +544,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 $('.codigoAcceder').text("Tú Codigo");
                                 console.log("obvtuve la foto y el correo");
                                 $mdDialog.hide();
-                                $scope.dialogAdquirirServicio(eventsService);
+                                location.reload();
+                                //$scope.dialogAdquirirServicio(eventsService);
 
 
                             });
