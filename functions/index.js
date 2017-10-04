@@ -621,24 +621,29 @@ function sendWelcomeEmail(datos) {
     var linkFoto = "";
     var nombreClub = "";
     var nombreEvento ="";
+    var eventCapturado;
+    var clubCapturado;
+    var direccionClub ="";
 console.log(datos);
    admin.database().ref(`/events/${datos.eventId}`).once('value').then(snapshot => {
-        const eventCapturado = snapshot.val();
+       eventCapturado = snapshot.val();
         linkFoto = eventCapturado.image;
         nombreEvento = eventCapturado.name;
-        nombreClub = "caleido";
+        console.log(eventCapturado);
+
        var utcSeconds = datos.date;
        var fechaCompraInicial = new Date(0); // The 0 there is the key, which sets the date to the epoch
        var fechaCompra = fechaCompraInicial.setUTCSeconds(utcSeconds);
+       admin.database().ref(`/clubs/${Object.keys(eventCapturado.clubs)[0]}`).once('value').then(snapshot => {
+           clubCapturado = snapshot.val();
 
-
-
-
-
-       const mailOptions = {
-           from: `${APP_NAME} <noreply@firebase.com>`,
-           to: datos.email,
-           html: `<!doctype html>
+           nombreClub = clubCapturado.name;
+           direccionClub = clubCapturado.address;
+           const mailOptions = {
+               from: `${APP_NAME} <noreply@firebase.com>`,
+               to: datos.email,
+               html: `
+             <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
@@ -732,6 +737,9 @@ console.log(datos);
       .mj-column-per-100 {
         width: 100%!important;
       }
+      .mj-column-px-600 {
+        width: 600px!important;
+      }
       .mj-column-px-300 {
         width: 300px!important;
       }
@@ -770,9 +778,9 @@ console.log(datos);
                                   <!--[if mso | IE]>
       <table role="presentation" border="0" cellpadding="0" cellspacing="0">
         <tr>
-          <td style="vertical-align:top;width:300px;">
+          <td style="vertical-align:top;width:600px;">
       <![endif]-->
-                                  <div class="mj-column-px-300 outlook-group-fix" style="vertical-align:top;display:inline-block;direction:ltr;font-size:13px;text-align:left;width:100%;">
+                                  <div class="mj-column-px-600 outlook-group-fix" style="vertical-align:top;display:inline-block;direction:ltr;font-size:13px;text-align:left;width:100%;">
                                     <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                       <tbody>
                                         <tr>
@@ -796,8 +804,8 @@ console.log(datos);
                                             <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:separate;" align="center" border="0">
                                               <tbody>
                                                 <tr>
-                                                  <td style="border:none;border-radius:3px;color:#ffffff;cursor:auto;padding:10px 25px;" align="center" valign="middle" bgcolor="#F63A4D"><a href="https://izinait.com/app/#!/codigo" style="text-decoration:none;background:#F63A4D;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;text-transform:none;margin:0px;"
-                                                      target="_blank">Ver tus tickets</a></td>
+                                                  <td style="border:none;border-radius:3px;color:#ffffff;cursor:auto;padding:10px 25px;" align="center" valign="middle" bgcolor="#fe0072"><a href="https://izinait.com/app/#!/codigo" style="text-decoration:none;background:#fe0072;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;text-transform:none;margin:0px;"
+                                                      target="_blank">VE TU CODIGO QR</a></td>
                                                 </tr>
                                               </tbody>
                                             </table>
@@ -810,7 +818,7 @@ console.log(datos);
                                         </tr>
                                         <tr>
                                           <td style="word-wrap:break-word;font-size:0px;padding:10px 25px;" align="left">
-                                            <div style="cursor:auto;color:white;font-family:helvetica;font-size:11px;line-height:22px;text-align:left;">Acabas de realizar una compra para el evento ${nombreEvento}, con un valor de ${datos.totalAPagar} , recuerda que con tu codigo QR podras acceder de manera rapida y sencilla.</div>
+                                            <div style="cursor:auto;color:white;font-family:helvetica;font-size:11px;line-height:22px;text-align:left;">Acabas de realizar una compra para el evento "${nombreEvento}", con un valor de $ ${datos.totalAPagar} , recuerda que con tu codigo QR podras acceder de manera rapida y sencilla.</div>
                                           </td>
                                         </tr>
                                         <tr>
@@ -818,27 +826,99 @@ console.log(datos);
                                             <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0px;" align="center" border="0">
                                               <tbody>
                                                 <tr>
-                                                  <td style="width:250px;"><img alt="" title="" height="auto" src="${linkFoto}"
-                                                      style="border:none;border-radius:0px;display:block;font-size:13px;outline:none;text-decoration:none;width:100%;height:auto;" width="250"></td>
+                                                  <td style="width:500px;"><img alt="" title="" height="auto" src="https://firebasestorage.googleapis.com/v0/b/project-8746388695669481444.appspot.com/o/eventImages%2F-KuutzdO0BnoF8J_HqPV?alt=media&token=d1fc104f-458f-4be0-9f8d-5cbd7095c3c3"
+                                                      style="border:none;border-radius:0px;display:block;font-size:13px;outline:none;text-decoration:none;width:100%;height:auto;" width="500"></td>
                                                 </tr>
                                               </tbody>
                                             </table>
                                           </td>
                                         </tr>
                                         <tr>
-                                          <td style="word-wrap:break-word;font-size:0px;padding:10px 25px;" align="left">
-                                            <div style="cursor:auto;color:white;font-family:helvetica;font-size:9px;line-height:22px;text-align:left;">
-                                            Nombre Evento : ${nombreEvento}
-                                            <br> 
-                                            Club Evento : ${nombreClub} 
-                                            <br> 
-                                            Fecha de compra: ${fechaCompra} 
-                                            <br> 
-                                            Código Transacción: ${datos.idTransaccion} 
-                                            <br>
-                                            Correo del comprador : ${datos.email} 
-                                            <br>
+                                          <td style="word-wrap:break-word;font-size:0px;" align="center">
+                                            <div class="mj-column-px-300 outlook-group-fix" data-vertical-align="top" style="vertical-align:top;display:inline-block;direction:ltr;font-size:13px;text-align:left;width:100%;">
+                                              <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                <tbody>
+                                                  <tr>
+                                                    <td style="word-wrap:break-word;font-size:0px;padding:10px 25px;" align="left">
+                                                      <div style="cursor:auto;color:white;font-family:helvetica;font-size:9px;line-height:22px;text-align:left;">Nombre Evento : ${nombreEvento} <br> Club Evento : ${nombreClub} <br> Dirección Club : ${direccionClub}<br> Fecha de compra: ${fechaCompra} <br> Código Transacción: ${datos.idTransaccion} <br> Correo
+                                                        del comprador : ${datos.email} <br> Metodo de pago : OneClick</div>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
                                             </div>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td style="word-wrap:break-word;font-size:0px;padding:10px 25px;" align="center">
+                                            <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:separate;" align="center" border="0">
+                                              <tbody>
+                                                <tr>
+                                                  <td style="border:none;border-radius:3px;color:#ffffff;cursor:auto;padding:10px 25px;" align="center" valign="middle" bgcolor="#fe0072"><a href="https://izinait.com/app/#!/codigo" style="text-decoration:none;background:#fe0072;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;text-transform:none;margin:0px;"
+                                                      target="_blank">ACA PODRAS VER TUS TICKETS</a></td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td style="word-wrap:break-word;font-size:0px;padding:10px 25px;padding-top:10px;padding-bottom:10px;padding-right:25px;padding-left:25px;" align="center">
+                                            <div>
+                                              <!--[if mso | IE]>
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="undefined"><tr><td>
+      <![endif]-->
+                                              <table role="presentation" cellpadding="0" cellspacing="0" style="float:none;display:inline-table;" align="center" border="0">
+                                                <tbody>
+                                                  <tr>
+                                                    <td style="padding:4px;vertical-align:middle;">
+                                                      <table role="presentation" cellpadding="0" cellspacing="0" style="background:#3b5998;border-radius:3px;width:20px;" border="0">
+                                                        <tbody>
+                                                          <tr>
+                                                            <td style="vertical-align:middle;width:20px;height:20px;">
+                                                              <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.facebook.com/Izinait/"><img alt="facebook" height="20" src="https://www.mailjet.com/images/theme/v1/icons/ico-social/facebook.png" style="display:block;border-radius:3px;" width="20"></a>
+                                                            </td>
+                                                          </tr>
+                                                        </tbody>
+                                                      </table>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                              <!--[if mso | IE]>
+      </td><td>
+      <![endif]-->
+                                              <table role="presentation" cellpadding="0" cellspacing="0" style="float:none;display:inline-table;" align="center" border="0">
+                                                <tbody>
+                                                  <tr>
+                                                    <td style="padding:4px;vertical-align:middle;">
+                                                      <table role="presentation" cellpadding="0" cellspacing="0" style="background:#3f729b;border-radius:3px;width:20px;" border="0">
+                                                        <tbody>
+                                                          <tr>
+                                                            <td style="vertical-align:middle;width:20px;height:20px;">
+                                                              <a href="[[SHORT_PERMALINK]]"><img alt="instagram" height="20" src="https://www.mailjet.com/images/theme/v1/icons/ico-social/instagram.png" style="display:block;border-radius:3px;" width="20"></a>
+                                                            </td>
+                                                          </tr>
+                                                        </tbody>
+                                                      </table>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                              <!--[if mso | IE]>
+      </td><td>
+      <![endif]-->
+                                              <table role="presentation" cellpadding="0" cellspacing="0" style="float:none;display:inline-table;" align="center" border="0">
+                                                <tbody></tbody>
+                                              </table>
+                                              <!--[if mso | IE]>
+      </td></tr></table>
+      <![endif]-->
+                                            </div>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td style="word-wrap:break-word;font-size:0px;padding:10px 25px;" align="center">
+                                            <div style="cursor:auto;color:white;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;text-align:center;">izinait © 2017 | contacto@izinait.com | www.izinait.com</div>
                                           </td>
                                         </tr>
                                       </tbody>
@@ -871,15 +951,25 @@ console.log(datos);
   </div>
 </body>
 
-</html>`
-       };
+</html>
+               `
+           };
 
-       // The user subscribed to the newsletter.
-       mailOptions.subject = `Welcome to ${APP_NAME}!`;
-       mailOptions.text = ``
-       ;
-       return mailTransport.sendMail(mailOptions).then(() => {
-           console.log('New welcome email sent t1111111o:', email);
+           // The user subscribed to the newsletter.
+           mailOptions.subject = `Gracias por tu compra, ${APP_NAME}!`;
+           mailOptions.text = ``
+           ;
+           return mailTransport.sendMail(mailOptions).then(() => {
+               console.log('New welcome email sent t1111111o:', datos.email);
+       });
+
+
+
+
+
+
+
+
        });
 
    });

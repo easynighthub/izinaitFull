@@ -113,21 +113,45 @@
 
             <br>
             <br>
-            <div id="selectLista" ng-show="event.freemiumHour != event.date" class="col-md-6 col-md-offset-3">
+            <div id="selectLista" ng-show="event.freemiumHour != event.date" class="col-md-6 col-md-offset-3 " >
                 <span style="margin-top: 25px; font-size: 20px;" class="col-md-6 col-xs-12"><bolder>Confirmar lista + Amigos: </bolder></span>
-                <md-select ng-model="totalReserva" placeholder="Seleccionar" class="col-xs-12 col-md-6"
-                           style="font-size: 20px">
-                    <md-option ng-value="1">+1 Amigos</md-option>
-                    <md-option ng-value="2">+2 Amigos</md-option>
-                    <md-option ng-value="3">+3 Amigos</md-option>
-                    <md-option ng-value="4">+4 Amigos</md-option>
-                    <md-option ng-value="5">+5 Amigos</md-option>
-                    <md-option ng-value="6">+6 Amigos</md-option>
-                    <md-option ng-value="7">+7 Amigos</md-option>
-                    <md-option ng-value="8">+8 Amigos</md-option>
-                    <md-option ng-value="9">+9 Amigos</md-option>
-                    <md-option ng-value="10">+10 Amigos</md-option>
-                </md-select>
+                <select  ng-model="totalReserva" placeholder="Seleccionar" class="col-xs-12 col-md-6 select-style"
+                           style="font-size: 20px ; margin-top: 20px">
+                    <option ng-value="1">+1 Amigos</option>
+                    <option ng-value="2">+2 Amigos</option>
+                    <option ng-value="3">+3 Amigos</option>
+                    <option ng-value="4">+4 Amigos</option>
+                    <option ng-value="5">+5 Amigos</option>
+                    <option ng-value="6">+6 Amigos</option>
+                    <option ng-value="7">+7 Amigos</option>
+                    <option ng-value="8">+8 Amigos</option>
+                    <option ng-value="9">+9 Amigos</option>
+                    <option ng-value="10">+10 Amigos</option>
+                </select>
+
+                <style>
+
+                    .select-style {
+                        border: 1px solid #ccc;
+                        border-radius: 3px;
+                        overflow: hidden;
+                    }
+
+                    .select-style select {
+                        padding: 5px 8px;
+                        width: 130%;
+                        border: none;
+                        box-shadow: none;
+                        background: transparent;
+                        background-image: none;
+                        -webkit-appearance: none;
+                    }
+
+                    .select-style select:focus {
+                        outline: none;
+                    }
+                </style>
+
             </div>
             <div class="col-md-12">
                 <button id="botonAsistir" ng-click="guardarListaGratis()"
@@ -349,64 +373,73 @@
                 {{eventsService.tipo}}
             </h2>
 
+
+
             <h4 class="description">{{eventsService.desc}}</h4>
             <h3 style="font-weight: 400">$ {{cantidadDeCompra*eventsService.precio | number:0}}</h3>
 
+
+
             <div class="col-md-6 col-md-offset-3">
-                <span style="margin-top: 25px; font-size: 20px;" class="col-md-6 col-xs-12">Cantidad</span>
-                <md-select aria-label="aria-label" class="col-md-6 col-xs-12 text-center" name="ticketQty"
+                <span style="margin-top: 25px; font-size: 20px;" class="col-md-6 col-xs-8">Cantidad :</span>
+                <select  style="margin-top: 25px" aria-label="aria-label" class="col-md-6 col-xs-4 text-center select-style" name="ticketQty"
                            ng-model="cantidadDeCompra">
-                    <md-option ng-selected="entrada.id == 1" ng-repeat="entrada in maxEntradas track by entrada.id"
+
+
+
+                    <option ng-repeat="entrada in maxEntradas track by entrada.id"
                                ng-value="entrada.id">
                         {{entrada.name}}
-                    </md-option>
-                </md-select>
+                    </option>
+                </select>
             </div>
         </div>
         <div class="col-md-6 col-xs-12 leftspan">
-            <h2 class="title text-center">Método de pago</h2>
+            <h3 class="title text-center">Método de pago</h3>
+
             <div class="col-md-12 col-xs-12">
                 <button class="btn btn-primary btn-sm col-md-6 text-center"
                         ng-show="userQvoRQ.creditCardDefault == undefined"> AGREGAR TARJETA DE CREDITO
                 </button>
             </div>
 
-            <md-radio-group class="col-md-12 col-xs-12text-center" ng-model="metodoDePagoSelect">
+            <md-radio-group class="col-md-12 col-xs-12 text-center" ng-model="metodoDePagoSelect">
 
-                <md-radio-button class="col-md-12 col-xs-12" ng-show="userQvoRQ.creditCardDefault" value="oneClick">
+                <md-radio-button class="col-md-6 col-xs-12" ng-show="userQvoRQ.creditCardDefault" value="oneClick">
                     OneClick<br>
                     <img src="./image/contenido_productos_webpay_oneclick.jpg" height="70"/>
 
                 </md-radio-button>
 
-                <md-radio-button class="col-md-12  col-xs-12" ng-show="userQvoRQ.userQvoId" value="webPayPlus">
+                <md-radio-button class="col-md-6  col-xs-12" ng-show="userQvoRQ.userQvoId" value="webPayPlus">
                     WebPay Plus<br>
                     <img src="./image/webpay.png" height="70"/>
                 </md-radio-button>
             </md-radio-group>
 
 
-        </div>
-        <div class="col-md-6 col-md-offset-3">
-            <div class="form-group label-floating col-md-7 col-xs-12">
-                <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">email</i>
-                <div class="col-md-10 col-xs-10">
-                    <input type="text" class="form-control" placeholder="Ingresa Email" ng-model="email"/>
-                    <span class="form-control-feedback"><i class="material-icons">done</i></span>
+                <div class="form-group label-floating col-md-6 col-xs-12">
+                    <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">email</i>
+                    <div class="col-md-10 col-xs-10">
+                        <input type="text" class="form-control" placeholder="Ingresa Email" ng-model="email"/>
+                        <span class="form-control-feedback"><i class="material-icons">done</i></span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group label-floating  col-md-5 col-xs-12">
-                <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">call</i>
+                <div class="form-group label-floating  col-md-6 col-xs-12">
+                    <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">call</i>
 
-                <div class="col-md-10 col-xs-10">
-                    <input type="number" class="form-control" placeholder="Ingresa Celular" ng-model="celular"/>
-                    <span class="form-control-feedback">
+                    <div class="col-md-10 col-xs-10">
+                        <input type="number" class="form-control" placeholder="Ingresa Celular" ng-model="celular"/>
+                        <span class="form-control-feedback">
 			        <i class="material-icons">done</i>
 		            </span>
+                    </div>
                 </div>
-            </div>
+
+
         </div>
+
         <div class="col-md-6 col-xs-12 col-md-offset-3">
             <button ng-click="hide()" class="btn  btn-sm">Cancelar</button>
             <button ng-click="adquirir(cantidadDeCompra,celular,metodoDePagoSelect)" class="btn btn-info btn-sm ">
@@ -424,7 +457,7 @@
                     <div class="icon icon-success">
                         <i class="material-icons">verified_user</i>
                     </div>
-                    <h4 class="info-title">Redireccionando a pagina segura. no cierre el navegador porfavor.</h4>
+                    <h4 class="info-title">Realizando una compra segura con tu tarjeta de credito</h4>
 
                     <md-progress-circular class=" md-hue-1" md-diameter="50"></md-progress-circular>
 

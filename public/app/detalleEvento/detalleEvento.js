@@ -681,18 +681,19 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 console.log($scope.usuarioLogeado);
                 $scope.maxEntradas = [];
                 $scope.newTicket = [];
-                $scope.cantidadDeCompra;
+                $scope.cantidadDeCompra = 1;
                 $scope.celular;
+
 
 
                 if ($scope.usuarioLogeado.celular) {
                     $scope.celular = $scope.usuarioLogeado.celular;
-                }
+                };
                 if($scope.usuarioLogeado.email != 'null@izinait.com'){
                     $scope.email = $scope.usuarioLogeado.email;
                 }else{
                     $scope.email = "";
-                }
+                };
 
                 for (var i = 1; i <= $scope.eventsService.maxEntradas; i++) {
                     var entradas = {
@@ -708,147 +709,158 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     if(celular.toString().length > 7){
                         if(cantidadDeCompra >0 )
                         {
+                            if (validateEmail($scope.email)) {
+                                if(metodoDePagoSelect != undefined){
+                                    if(metodoDePagoSelect == "oneClick"){
+
+                                        document.getElementById('panelPrincipal').style.display = 'none';
+                                        document.getElementById('panelDireccionando').style.display = 'block';
+
+                                        // creditCardDefaulf if sino redireccionar a agregar tarjeta de credito
+
+                                        var url  = "https://us-central1-project-8746388695669481444.cloudfunctions.net/cobrarTarjetaDeCredito" +
+                                            "?userQvo=" + $scope.userQvoRQ.userQvoId +
+                                            "&" +
+                                            "tarjetaCredito=" + $scope.userQvoRQ.creditCardDefault +
+                                            "&" +
+                                            "cobroTotal="+  $scope.eventsService.precio * cantidadDeCompra;
+
+                                        $http({
+                                            method: 'GET',
+                                            url: url,
+                                            crossOrigin: true,
+                                        }).then(function successCallback(response) {
+                                            console.log(response);
+                                            if(response.data.status == "successful"){
+
+                                                console.log(response.data.status);
+
+                                                $scope.newTicket.email = $scope.usuarioLogeado.email;
+                                                $scope.newTicket.ideventservices = $scope.eventsService.id;
+                                                $scope.newTicket.tipoEventservices = $scope.eventsService.tipo;
+                                                // !!!!!! falta rescatar el id de la fila selecionada "del servicio a comprar"
+                                                $scope.newTicket.displayName = $scope.usuarioLogeado.displayName;
+                                                $scope.newTicket.lastName = $scope.usuarioLogeado.lastName; //$scope.datosTicket.lastName;
+                                                $scope.newTicket.firstName = $scope.usuarioLogeado.firstName; //$scope.datosTicket.firstName;
+                                                $scope.newTicket.celular = celular;
+                                                $scope.newTicket.date = new Date().getTime();
+                                                $scope.newTicket.paidOut = true; //devolver pago
+                                                $scope.newTicket.redeemed = false;
+                                                $scope.newTicket.cantidadUtilizada = 0;
+                                                $scope.newTicket.rrppid = Rrpp;
+                                                $scope.newTicket.cantidadDeCompra = cantidadDeCompra;
+                                                $scope.newTicket.totalAPagar = $scope.eventsService.precio * cantidadDeCompra;
+                                                $scope.newTicket.eventId = eventId;
+                                                $scope.newTicket.userId = $scope.usuarioLogeado.$id;
+                                                $scope.newTicket.ticketId = firebase.database().ref().child('ticketsCreate/').push().key;
+                                                $scope.newTicket.idTransaccion = response.data.id;
+
+                                                firebase.database().ref('tickets/' + eventId + '/'  + $scope.newTicket.ticketId).set($scope.newTicket).then(
+                                                    function (s) {
+                                                        console.log('se guardaron bien el tickets');
+                                                        firebase.database().ref('ticketsCreate/' + $scope.newTicket.ticketId).set(true);
+
+                                                        //  firebase.database().ref('users/' + $scope.usuarioLogeado.$id + '/events/'+ $scope.event.admin+'/' + eventId).set(true);
+
+                                                        firebase.database().ref('users/' + $scope.usuarioLogeado.$id).update(
+                                                            {
+                                                                celular: $scope.newTicket.celular,
+                                                            });
+
+                                                        firebase.database().ref('users/' + $scope.usuarioLogeado.$id + "/tickets/"+ $scope.newTicket.ticketId).update(
+                                                            {
+                                                                eventId: eventId,
+                                                                ticketId :$scope.newTicket.ticketId
+                                                            });
 
 
-                        if(metodoDePagoSelect == "oneClick"){
+                                                        firebase.database().ref('userQvo/' + $scope.usuarioLogeado.$id +'/charges/'+ response.data.id)
+                                                            .update(response.data);
 
-                            document.getElementById('panelPrincipal').style.display = 'none';
-                            document.getElementById('panelDireccionando').style.display = 'block';
+                                                        $mdDialog.hide();
 
-                            // creditCardDefaulf if sino redireccionar a agregar tarjeta de credito
+                                                        /*      $scope.getClub = function (club) {
+                                                         if (club) {
+                                                         var clubKey = Object.keys(club)[0];
+                                                         return $filter('filter')(clubsER, {$id: clubKey})[0].name;
+                                                         }
+                                                         };
+                                                         var nameClub = $scope.getClub(getEvent.clubs);
+                                                         */
 
-                            var url  = "https://us-central1-project-8746388695669481444.cloudfunctions.net/cobrarTarjetaDeCredito" +
-                                "?userQvo=" + $scope.userQvoRQ.userQvoId +
-                                "&" +
-                                "tarjetaCredito=" + $scope.userQvoRQ.creditCardDefault +
-                                "&" +
-                                "cobroTotal="+  $scope.eventsService.precio * cantidadDeCompra;
+                                                        /*   $.ajax({
+                                                         url: 'http://www.abcs.cl/correo/reservarServicio.php',
+                                                         type: "POST",
+                                                         data: {
+                                                         name: $scope.usuarioLogeado.displayName,
+                                                         phone: $scope.newTicket.celular,
+                                                         email:  $scope.usuarioLogeado.email,
+                                                         message: "GRACIAS POR COMPRAR ESTE SERVICIO",
+                                                         eventName : getEvent.name,
+                                                         clubName : nameClub
+                                                         },
+                                                         cache: false,
+                                                         success: function() {
+                                                         console.log("siiiiiiiiiiiiiiiiiiiiiii");
+                                                         },
+                                                         error: function() {
+                                                         console.log("noooooooooooooooooooooo");
+                                                         },
+                                                         }); */
 
-                            $http({
-                                method: 'GET',
-                                url: url,
-                                crossOrigin: true,
-                            }).then(function successCallback(response) {
-                                console.log(response);
-                                if(response.data.status == "successful"){
-
-                                    console.log(response.data.status);
-
-                                    $scope.newTicket.email = $scope.usuarioLogeado.email;
-                                    $scope.newTicket.ideventservices = $scope.eventsService.id;
-                                    $scope.newTicket.tipoEventservices = $scope.eventsService.tipo;
-                                    // !!!!!! falta rescatar el id de la fila selecionada "del servicio a comprar"
-                                    $scope.newTicket.displayName = $scope.usuarioLogeado.displayName;
-                                    $scope.newTicket.lastName = $scope.usuarioLogeado.lastName; //$scope.datosTicket.lastName;
-                                    $scope.newTicket.firstName = $scope.usuarioLogeado.firstName; //$scope.datosTicket.firstName;
-                                    $scope.newTicket.celular = celular;
-                                    $scope.newTicket.date = new Date().getTime();
-                                    $scope.newTicket.paidOut = true; //devolver pago
-                                    $scope.newTicket.redeemed = false;
-                                    $scope.newTicket.cantidadUtilizada = 0;
-                                    $scope.newTicket.rrppid = Rrpp;
-                                    $scope.newTicket.cantidadDeCompra = cantidadDeCompra;
-                                    $scope.newTicket.totalAPagar = $scope.eventsService.precio * cantidadDeCompra;
-                                    $scope.newTicket.eventId = eventId;
-                                    $scope.newTicket.userId = $scope.usuarioLogeado.$id;
-                                    $scope.newTicket.ticketId = firebase.database().ref().child('ticketsCreate/').push().key;
-                                    $scope.newTicket.idTransaccion = response.data.id;
-
-                                    firebase.database().ref('tickets/' + eventId + '/'  + $scope.newTicket.ticketId).set($scope.newTicket).then(
-                                        function (s) {
-                                            console.log('se guardaron bien el tickets');
-                                            firebase.database().ref('ticketsCreate/' + $scope.newTicket.ticketId).set(true);
-
-                                            //  firebase.database().ref('users/' + $scope.usuarioLogeado.$id + '/events/'+ $scope.event.admin+'/' + eventId).set(true);
-
-                                            firebase.database().ref('users/' + $scope.usuarioLogeado.$id).update(
-                                                {
-                                                    celular: $scope.newTicket.celular,
-                                                });
-
-                                            firebase.database().ref('users/' + $scope.usuarioLogeado.$id + "/tickets/"+ $scope.newTicket.ticketId).update(
-                                             {
-                                                eventId: eventId,
-                                                ticketId :$scope.newTicket.ticketId
-                                                    });
+                                                    }, function (e) {
+                                                        alert('Error, intente de nuevo');
+                                                        // console.log('se guardo mal ', e);
+                                                    }
+                                                );
+                                                //mostrar mensaje de exito!
+                                            };
+                                            // this callback will be called asynchronously
+                                            // when the response is available
+                                        }, function errorCallback(response) {
+                                            // called asynchronously if an error occurs
+                                            // or server returns response with an error status.
+                                        });
 
 
-                                            firebase.database().ref('userQvo/' + $scope.usuarioLogeado.$id +'/charges/'+ response.data.id)
-                                                .update(response.data);
+                                    };
 
-                                            $mdDialog.hide();
+                                    if(metodoDePagoSelect =="webPayPlus"){
 
-                                            /*      $scope.getClub = function (club) {
-                                             if (club) {
-                                             var clubKey = Object.keys(club)[0];
-                                             return $filter('filter')(clubsER, {$id: clubKey})[0].name;
-                                             }
-                                             };
-                                             var nameClub = $scope.getClub(getEvent.clubs);
-                                             */
+                                        document.getElementById('panelPrincipal').style.display = 'none';
+                                        document.getElementById('panelDireccionando').style.display = 'block';
 
-                                            /*   $.ajax({
-                                             url: 'http://www.abcs.cl/correo/reservarServicio.php',
-                                             type: "POST",
-                                             data: {
-                                             name: $scope.usuarioLogeado.displayName,
-                                             phone: $scope.newTicket.celular,
-                                             email:  $scope.usuarioLogeado.email,
-                                             message: "GRACIAS POR COMPRAR ESTE SERVICIO",
-                                             eventName : getEvent.name,
-                                             clubName : nameClub
-                                             },
-                                             cache: false,
-                                             success: function() {
-                                             console.log("siiiiiiiiiiiiiiiiiiiiiii");
-                                             },
-                                             error: function() {
-                                             console.log("noooooooooooooooooooooo");
-                                             },
-                                             }); */
+                                        var url ="https://us-central1-project-8746388695669481444.cloudfunctions.net/cobrarConWebPayPlus?" +
+                                            "userQvo=" + $scope.userQvoRQ.userQvoId +
+                                            "&" +
+                                            "cobroTotal=" + $scope.eventsService.precio * cantidadDeCompra;
 
-                                        }, function (e) {
-                                            alert('Error, intente de nuevo');
-                                            // console.log('se guardo mal ', e);
-                                        }
-                                    );
-                                    //mostrar mensaje de exito!
-                                };
-                                // this callback will be called asynchronously
-                                // when the response is available
-                            }, function errorCallback(response) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                            });
+                                        $http({
+                                            method: 'GET',
+                                            url: url,
+                                            crossOrigin: true,
+                                        }).then(function successCallback(response) {
+                                            console.log(response);
+                                            location.href = response.data.redirect_url;
+                                            // this callback will be called asynchronously
+                                            // when the response is available
+                                        }, function errorCallback(response) {
+                                            // called asynchronously if an error occurs
+                                            // or server returns response with an error status.
+                                        });
+
+                                    }
+                                }else{
+                                    alert('SELECIONE METODO DE PAGO');
+                                }
+                            }else{
+                                alert('INGRESE UN CORREO ELECTRONICO VALIDO');
+                            }
 
 
-                        };
 
-                        if(metodoDePagoSelect =="webPayPlus"){
 
-                            document.getElementById('panelPrincipal').style.display = 'none';
-                            document.getElementById('panelDireccionando').style.display = 'block';
 
-                            var url ="https://us-central1-project-8746388695669481444.cloudfunctions.net/cobrarConWebPayPlus?" +
-                                "userQvo=" + $scope.userQvoRQ.userQvoId +
-                                "&" +
-                                "cobroTotal=" + $scope.eventsService.precio * cantidadDeCompra;
-
-                            $http({
-                                method: 'GET',
-                                url: url,
-                                crossOrigin: true,
-                            }).then(function successCallback(response) {
-                                console.log(response);
-                                location.href = response.data.redirect_url;
-                                // this callback will be called asynchronously
-                                // when the response is available
-                            }, function errorCallback(response) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                            });
-
-                        }
                         }else{
                             alert('INGRESA CANTIDAD DE COMPRA DISTINCA A 0 ');
                         }
@@ -869,6 +881,11 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     $mdDialog.cancel();
 
                 };
+
+                function validateEmail(email) {
+                    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    return re.test(email);
+                }
 
 
             };
