@@ -780,6 +780,10 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                         }).then(function successCallback(response) {
                                             console.log(response);
                                             if(response.data.status == "successful"){
+                                                document.getElementById('panelDireccionando').style.display = 'none';
+                                                document.getElementById('panelCompraExito').style.display = 'block';
+                                                var pagoPuerta = false;
+
 
                                                 console.log(response.data.status);
 
@@ -794,6 +798,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                                 $scope.newTicket.date = new Date().getTime();
                                                 $scope.newTicket.paidOut = true; //devolver pago
                                                 $scope.newTicket.redeemed = false;
+                                                $scope.newTicket.pagoPuerta = pagoPuerta;
                                                 $scope.newTicket.cantidadUtilizada = 0;
                                                 $scope.newTicket.rrppid = Rrpp;
                                                 $scope.newTicket.cantidadDeCompra = cantidadDeCompra;
@@ -803,7 +808,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                                 $scope.newTicket.userId = $scope.usuarioLogeado.$id;
                                                 $scope.newTicket.ticketId = firebase.database().ref().child('ticketsCreate/').push().key;
                                                 $scope.newTicket.idTransaccion = response.data.id;
-
+                                                                //
                                                 firebase.database().ref('tickets/' + eventId + '/'  + $scope.newTicket.ticketId).set($scope.newTicket).then(
                                                     function (s) {
                                                         console.log('se guardaron bien el tickets');
@@ -826,7 +831,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                                         firebase.database().ref('userQvo/' + $scope.usuarioLogeado.$id +'/charges/'+ response.data.id)
                                                             .update(response.data);
 
-                                                        $mdDialog.hide();
+                                                       // $mdDialog.hide();
 
                                                         /*      $scope.getClub = function (club) {
                                                          if (club) {
@@ -863,6 +868,10 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                                     }
                                                 );
                                                 //mostrar mensaje de exito!
+                                            }
+                                            else{
+                                                document.getElementById('panelDireccionando').style.display = 'none';
+                                                document.getElementById('panelCompraRechazada').style.display = 'block';
                                             };
                                             // this callback will be called asynchronously
                                             // when the response is available
@@ -876,13 +885,68 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
                                     if(metodoDePagoSelect =="webPayPlus"){
 
+                                        var pagoPuerta = false;
+
+                                        $scope.newTicket.ticketId = firebase.database().ref().child('ticketsCreate/').push().key;
+                                        firebase.database().ref('ticketsCreate/' + $scope.newTicket.ticketId).set(true);
+
+                                        $scope.newTicket.email = $scope.usuarioLogeado.email;
+                                        $scope.newTicket.ideventservices = $scope.eventsService.id;
+                                        $scope.newTicket.tipoEventservices = $scope.eventsService.tipo;
+                                        // !!!!!! falta rescatar el id de la fila selecionada "del servicio a comprar"
+                                        $scope.newTicket.displayName = $scope.usuarioLogeado.displayName;
+                                        $scope.newTicket.lastName = $scope.usuarioLogeado.lastName; //$scope.datosTicket.lastName;
+                                        $scope.newTicket.firstName = $scope.usuarioLogeado.firstName; //$scope.datosTicket.firstName;
+                                        $scope.newTicket.celular = celular;
+                                        $scope.newTicket.date = new Date().getTime();
+                                        $scope.newTicket.paidOut = false; //devolver pago
+                                        $scope.newTicket.pagoPuerta = pagoPuerta;
+                                        $scope.newTicket.redeemed = false;
+                                        $scope.newTicket.cantidadUtilizada = 0;
+                                        $scope.newTicket.rrppid = Rrpp;
+                                        $scope.newTicket.cantidadDeCompra = cantidadDeCompra;
+                                        $scope.newTicket.totalAPagar = $scope.eventsService.precio * cantidadDeCompra;
+                                        $scope.newTicket.totalPagadoConComision = $scope.eventsService.precio * cantidadDeCompra * 1.05 + 500;
+                                        $scope.newTicket.eventId = eventId;
+                                        $scope.newTicket.userId = $scope.usuarioLogeado.$id;
+                                       // $scope.newTicket.idTransaccion = response.data.id;
+
+                                        firebase.database().ref('tickets/' + eventId + '/'  + $scope.newTicket.ticketId).set($scope.newTicket).then(
+                                            function (s) {
+                                                console.log('se guardaron bien el tickets');
+
+                                                //  firebase.database().ref('users/' + $scope.usuarioLogeado.$id + '/events/'+ $scope.event.admin+'/' + eventId).set(true);
+
+                                                firebase.database().ref('users/' + $scope.usuarioLogeado.$id).update(
+                                                    {
+                                                        celular: $scope.newTicket.celular,
+                                                    });
+
+                                                firebase.database().ref('users/' + $scope.usuarioLogeado.$id + "/tickets/"+ $scope.newTicket.ticketId).update(
+                                                    {
+                                                        eventId: eventId,
+                                                        ticketId :$scope.newTicket.ticketId
+                                                    });
+
+
+                                                //firebase.database().ref('userQvo/' + $scope.usuarioLogeado.$id +'/charges/'+ response.data.id)
+                                                  //  .update(response.data);
+
+
+                                            }, function (e) {
+                                                alert('Error, intente de nuevo');
+                                                // console.log('se guardo mal ', e);
+                                            });
+
                                         document.getElementById('panelPrincipal').style.display = 'none';
-                                        document.getElementById('panelDireccionando').style.display = 'block';
+                                        document.getElementById('panelRedirectWebPayPlus').style.display = 'block';
+                                console.log($scope.newTicket.totalPagadoConComision);
 
                                         var url ="https://us-central1-project-8746388695669481444.cloudfunctions.net/cobrarConWebPayPlus?" +
                                             "userQvo=" + $scope.userQvoRQ.userQvoId +
                                             "&" +
-                                            "cobroTotal=" + $scope.eventsService.precio * cantidadDeCompra;
+                                            "cobroTotal=" + $scope.newTicket.totalPagadoConComision +"&"+
+                                            "userId="+$scope.userQvoRQ.id+"&ticketId="+$scope.newTicket.ticketId+"&eventId="+eventId;
 
                                         $http({
                                             method: 'GET',
