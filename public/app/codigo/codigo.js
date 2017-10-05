@@ -19,6 +19,9 @@ angular.module('myApp.codigo', ['ngRoute'])
 
             var uidTarjetaDeCredito = $routeParams.uid || ""  ; // id del evento entregador por url
 
+            $('.main-raised').css("margin-top", "-20px");
+            $('.main-raised').css("margin-left", "20px");
+            $('.main-raised').css("margin-right", "20px");
 
             var user = window.currentApp;
             var token = "" ;
