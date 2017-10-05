@@ -19,6 +19,7 @@ const functions = require('firebase-functions'),
     admin = require('firebase-admin'),
     logging = require('@google-cloud/logging')();
 
+
 //var qvoJs = require('./qvo/functions.js');
 
 
@@ -99,7 +100,6 @@ exports.agregarTarjetaUsuarioQvo = functions.https.onRequest((req, res) => {
     });
 
 });
-
 exports.obtenerUnaInscripcionDeTarjeta = functions.https.onRequest((req, res) => {
     // Grab the current value of what was written to the Realtime Database.
     const userQvo = req.query.userQvo;
@@ -124,7 +124,6 @@ exports.obtenerUnaInscripcionDeTarjeta = functions.https.onRequest((req, res) =>
     });
 
 });
-
 exports.cobrarTarjetaDeCredito = functions.https.onRequest((req, res) => {
     // Grab the current value of what was written to the Realtime Database.
     const userQvo = req.query.userQvo;
@@ -155,11 +154,58 @@ exports.cobrarTarjetaDeCredito = functions.https.onRequest((req, res) => {
 
 });
 
+
+exports.ComprobarCompraConWebPayPlus = functions.https.onRequest((req, res) => {
+    // ...
+    const userId = req.query.userId;
+    const ticketId = req.query.ticketId;
+    const eventId = req.query.eventId;
+    const transaction_id= req.query.transaction_id;
+
+    fetch('https://playground.qvo.cl/transactions/'+transaction_id, {
+        headers: {
+            'Authorization': 'Bearer ' + functions.config().qvo.token,
+            'Content-Type': 'application/json'
+        }
+    }).then(function(response) {
+        console.log(response);
+        return response.json();
+    }).then(function (body) {
+
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        if(body.status == 'successful')
+        {
+            console.log(body);
+
+            admin.database().ref("/userQvo/" + userId + "/charges/"+body.id).set(body);
+            admin.database().ref("/tickets/" + eventId +"/ticketId").update({
+                idTransaccion : body.id,
+                paidOut : true
+            });
+            res.redirect(303, "https://www.izinait.com/app/#!/tickets?transaccionRealizada=true");
+        }else{
+            res.redirect(303, "https://www.izinait.com/app/#!/tickets?transaccionRealizada=false");
+        }
+
+
+
+
+
+    });
+
+
+
+
+});
+
 exports.cobrarConWebPayPlus = functions.https.onRequest((req, res) => {
     // Grab the current value of what was written to the Realtime Database.
     const userQvo = req.query.userQvo;
     const url = "";
     const cobroTotal = req.query.cobroTotal;
+    const userId = req.query.userId;
+    const ticketId = req.query.ticketId;
+    const eventId = req.query.eventId;
 
     fetch('https://playground.qvo.cl/webpay_plus/charge', {
         method: 'POST',
@@ -169,7 +215,7 @@ exports.cobrarConWebPayPlus = functions.https.onRequest((req, res) => {
         },
         body: JSON.stringify({
             amount: cobroTotal,
-            return_url: "http://www.izinait.com/app/#!/tickets",
+            return_url: "http://www.izinait.com/ComprobarCompraConWebPayPlus?userId="+userId+"&eventId="+eventId+"&ticketId="+ticketId,
             customer_id: req.query.userQvo
 
         })
@@ -181,7 +227,6 @@ exports.cobrarConWebPayPlus = functions.https.onRequest((req, res) => {
         console.log(body);
         res.status(200).send(body);
         return body;
-
     }).then(function (ok) {
         console.log(ok);
     });
@@ -663,7 +708,10 @@ function sendWelcomeEmail(datos) {
                linkQr = url;
                console.log(linkQr);
 
-               const mailOptions = {
+
+
+
+                   const mailOptions = {
                    from: `${APP_NAME} <noreply@firebase.com>`,
                    to: datos.email,
                    html: `

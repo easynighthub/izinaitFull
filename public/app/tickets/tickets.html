@@ -67,3 +67,48 @@
 <button id="BarraCargando" class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"></i> CARGANDO TICKETS
 </button>
 
+
+
+
+<script id="dialogCompraTicket" type="text/ng-template" >
+
+    <div id="panelCompraExito" class="col-md-12" >
+        <center>
+            <div class="col-md-12">
+                <div class="info">
+                    <div class="icon icon-success">
+                        <i class="material-icons">done_all</i>
+                    </div>
+                    <h4 class="info-title">Tu compra se realizo con exito.</h4>
+                    <p> Muchas gracias por tu confianza, tus datos estan totalmente seguros</p>
+
+                    <a href="#!/tickets" ng-click="cancel()" class="btn btn-primary"> Ver Tickets</a>
+
+
+                </div>
+            </div>
+        </center>
+    </div>
+
+    <div id="panelCompraRechazada" class="col-md-12" >
+        <center>
+            <div class="col-md-12">
+                <div class="info">
+                    <div class="icon icon-danger">
+                        <i class="material-icons">sentiment_very_dissatisfied</i>
+                    </div>
+                    <h4 class="info-title">Tu compra no pudo ser realizada.</h4>
+                    <p> por algun motivo no se pudo efectuar.</p>
+
+                    <a href="#!/view1" ng-click="cancel()" class="btn btn-primary"> EVENTOS</a>
+
+
+                </div>
+            </div>
+        </center>
+    </div>
+
+
+
+
+</script>

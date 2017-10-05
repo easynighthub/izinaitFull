@@ -16,13 +16,28 @@ angular.module('myApp.tickets', ['ngRoute'])
             }
         );
     }])
-    .controller('ticketsCtrl', ['$scope', '$http', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
-        function ($scope, $http, $firebaseObject, $firebaseArray, $filter, $rootScope) {
+    .controller('ticketsCtrl', ['$scope', '$http', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope','$mdDialog','$routeParams',
+        function ($scope, $http, $firebaseObject, $firebaseArray, $filter, $rootScope,$mdDialog,$routeParams) {
 
 
             var user = window.currentApp;
             var usuarioLogeado = "";
             $('.main-raised').css("margin-top", "-20px");
+
+            var transaccionRealizada = $routeParams.transaccionRealizada || undefined ; // id del evento entregador por url
+
+            if(transaccionRealizada != undefined){
+
+                $mdDialog.show({
+                    controller: dialogCompraTicketController,
+                    templateUrl: 'dialogCompraTicket',
+                    parent: angular.element(document.body),
+                    clickOutsideToClose: true,
+                    locals: {
+                        transaccionRealizada:transaccionRealizada
+                    }
+                });
+            }
 
             firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
@@ -39,6 +54,7 @@ angular.module('myApp.tickets', ['ngRoute'])
                         $scope.ticketsAll = [];
                         //console.log(Object.keys(usuarioLogeado.tickets));
                         angular.forEach(usuarioLogeado.tickets, function (x) {
+
 
                             var ticketsRQ = $firebaseObject(firebase.database().ref('tickets/').child(x.eventId + '/' + x.ticketId));
                             ticketsRQ.$loaded().then(function () {
@@ -224,6 +240,33 @@ angular.module('myApp.tickets', ['ngRoute'])
                     return $filter('filter')($scope.events, {$id: eventoKey})[0];
                 }
                 ;
+
+
+            };
+
+
+            function dialogCompraTicketController($scope, $mdDialog, $timeout, $q, $log, $http, transaccionRealizada ) {
+
+
+             if(transaccionRealizada){
+
+                  location.href = "#!/tickets";
+               }else {
+
+                    //location.href = "#!/tickets";
+              }
+
+
+
+                $scope.hide = function () {
+                    $mdDialog.hide();
+                };
+
+                $scope.cancel = function () {
+                    $mdDialog.cancel();
+
+                };
+
 
 
             };

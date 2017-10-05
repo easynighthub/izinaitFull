@@ -340,7 +340,7 @@
 </script>
 
 <script id="dialogAdquirirServicio" type="text/ng-template" >
-    <div class="card text-center " id="panelPrincipal" style="color:#340034 ">
+    <div class="card text-center " id="panelPrincipal" style="color:#340034 " >
         <div class="col-md-6 col-xs-12 ">
             <h2 class="title">
                 <i ng-show="eventsService.tipo == 'Mesa'"
@@ -391,20 +391,17 @@
                 </button>
             </div>
 
-            <md-radio-group class="col-md-12 col-xs-12 text-center" ng-model="metodoDePagoSelect">
 
+            <md-radio-group class="col-md-12 col-xs-12 text-center" ng-model="metodoDePagoSelect">
                 <md-radio-button class="col-md-6 col-xs-12" ng-show="userQvoRQ.creditCardDefault" value="oneClick">
                     OneClick<br>
                     <img src="./image/contenido_productos_webpay_oneclick.jpg" height="70"/>
-
                 </md-radio-button>
-
                 <md-radio-button class="col-md-6  col-xs-12" ng-show="userQvoRQ.userQvoId" value="webPayPlus">
                     WebPay Plus<br>
                     <img src="./image/webpay.png" height="70"/>
                 </md-radio-button>
             </md-radio-group>
-
 
                 <div class="form-group label-floating col-md-6 col-xs-12">
                     <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">email</i>
@@ -446,6 +443,60 @@
                         <i class="material-icons">verified_user</i>
                     </div>
                     <h4 class="info-title">Realizando una compra segura con tu tarjeta de credito</h4>
+
+                    <md-progress-circular class=" md-hue-1" md-diameter="50"></md-progress-circular>
+
+
+                </div>
+            </div>
+        </center>
+    </div>
+
+    <div id="panelCompraExito" class="col-md-12" style="display: none">
+        <center>
+            <div class="col-md-12">
+                <div class="info">
+                    <div class="icon icon-success">
+                        <i class="material-icons">done_all</i>
+                    </div>
+                    <h4 class="info-title">Tu compra se realizo con exito.</h4>
+                    <p> Muchas gracias por tu confianza, tus datos estan totalmente seguros</p>
+
+                   <a href="#!/tickets" ng-click="cancel()" class="btn btn-primary"> Ver Tickets</a>
+
+
+                </div>
+            </div>
+        </center>
+    </div>
+
+    <div id="panelCompraRechazada" class="col-md-12" style="display: none">
+        <center>
+            <div class="col-md-12">
+                <div class="info">
+                    <div class="icon icon-danger">
+                        <i class="material-icons">sentiment_very_dissatisfied</i>
+                    </div>
+                    <h4 class="info-title">Tu compra no pudo ser realizada.</h4>
+                    <p> Revisa tu tarjeta de credito en tu perfil</p>
+
+                    <a href="#!/codigo" ng-click="cancel()" class="btn btn-primary"> Ver tarjetas de credito</a>
+
+
+                </div>
+            </div>
+        </center>
+    </div>
+
+    <div id="panelRedirectWebPayPlus" class="col-md-12" style="display: none">
+        <center>
+            <div class="col-md-12">
+                <div class="info">
+                    <div class="icon icon-danger">
+                        <i class="material-icons">security</i>
+                    </div>
+                    <h4 class="info-title">Abriendo modo seguro de pago.</h4>
+                    <p> Por favor no cierre el navegador.</p>
 
                     <md-progress-circular class=" md-hue-1" md-diameter="50"></md-progress-circular>
 
