@@ -22,9 +22,10 @@
     <br>
     <br>
     <div class="text-center col-md-4 col-xs-12 col-md-offset-4">
-        <a class="btn btn-success col-xs-12" ng-click="crearCliente()">
+        <a class="btn btn-success col-xs-12" style="background-color: black" ng-click="crearCliente()" data-toggle="tooltip" data-placement="top"
+           title="¡PAGINA SEGURA!">
             <i class="fa fa-credit-card" aria-hidden="true"></i>
-            TARJETA DE CREDITO ON-CLICK
+            webpay <span style="color: #0ab1fc">ONE</span>CLICK
         </a>
     </div>
     <br>
@@ -32,18 +33,27 @@
     <div class="col-md-8  text-center  col-xs-12" ng-show="userQvoRQ.userQvoId != undefined">
 
 
-        <div class="card col-md-12 col-xs-12 col-md-offset-3">
+        <div class="card col-md-12 table-responsive col-xs-12 col-md-offset-3">
             <table class="col-md-12 col-xs-12 table">
                 <thead>
                 <tr class="text-primary">
+                    <th>Primaria</th>
                     <th>Tipo</th>
                     <th>Fecha Creación</th>
-                    <th>Digitos</th>
+                    <th>Ultimos Digitos</th>
                     <th>Borrar</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="card in userQvoRQ.cards">
+                    <td class="text-left">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="optionsRadios"><span class="circle"></span><span
+                                    class="check"></span>
+                            </label>
+                        </div>
+                    </td>
                     <td class="text-left">{{card.card_type}}</td>
                     <td class="text-left">{{card.created_at | date : 'dd MMM yy'}}</td>
                     <td class="text-left">*** {{card.last_4_digits}}</td>
@@ -59,18 +69,14 @@
         </div>
 
     </div>
-    <center>
-    <div class="col-md-12  col-xs-12  ">
-        <center>
+    <div class="col-md-12  col-xs-12  text-center col-md-offset-3">
         <a id="salir" class="btn  col-md-3" style="background-color: #fe0072">
             <i class="fa fa-sign-out" aria-hidden="true"></i> SALIR
         </a>
         <a class=" btn   col-md-3" href="#!/tickets" style="background-color: #340034">
             <i class="fa fa-ticket" aria-hidden="true"></i> Tickets
         </a>
-        </center>
     </div>
-</center>
 </div>
 
 
