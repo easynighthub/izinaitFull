@@ -115,23 +115,20 @@
             <br>
 
 
-
-
-                    <span ng-show="verSelectList" style=" font-size: 18px;" class="col-md-6 col-xs-12"   >
+            <span ng-show="verSelectList" style=" font-size: 18px;" class="col-md-6 col-xs-12">
                         <bolder>Confirmar lista + Amigos: </bolder>
                     </span>
-                    <button ng-show="verSelectList" style="margin-top: 0px" ng-click="disminuirLista()" class="btn btn-sm btn-primary">
-                        -
-                    </button>
-                    <font ng-show="verSelectList" size="5" >
-                        {{ totalReserva}}
-                    </font>
-                    <button ng-show="verSelectList" style="margin-top: 0px"  ng-click="aumentarLista()" class="btn btn-sm btn-primary">
-                        +
-                    </button>
-
-
-
+            <button ng-show="verSelectList" style="margin-top: 0px" ng-click="disminuirLista()"
+                    class="btn btn-sm btn-primary">
+                -
+            </button>
+            <font ng-show="verSelectList" size="5">
+                {{ totalReserva}}
+            </font>
+            <button ng-show="verSelectList" style="margin-top: 0px" ng-click="aumentarLista()"
+                    class="btn btn-sm btn-primary">
+                +
+            </button>
 
 
             <div class="col-md-12">
@@ -283,33 +280,35 @@
             </p>
             <br>
 
-            <ng-map zoom="14" style="border-radius: 5px"
-                    disable-default-u-i="true"
-                    scrollwheel="false"
-                    default-style="true"
-                    center="[{{event.lat}}, {{event.lng}}]">
-                <marker
-                        id="foo"
-                        centered="true"
-                        animation="Animation.BOUNCE"
-                        title="{{getClub(event.clubs)}}"
-                        on-click="map.showInfoWindow('bar')"
-                        position="{{event.lat}},{{event.lng}}">
-                </marker>
-                <info-window id="bar" visible-on-marker="foo">
-                    <a href="https://www.google.com/maps/place/{{event.lat}},{{event.lng}}" target="_blank">
-                        <h6 style="color: #340034">{{getDireccionClub(event.clubs)}}<br>{{getClub(event.clubs)}}</h6>
-                    </a>
-                </info-window>
-            </ng-map>
+            <div class="map" style="border-radius: 10px">
+                <ng-map zoom="14"
+
+                        disable-default-u-i="true"
+                        scrollwheel="false"
+                        default-style="true"
+                        center="[{{event.lat}}, {{event.lng}}]">
+                    <marker
+                            id="foo"
+                            centered="true"
+                            animation="Animation.BOUNCE"
+                            title="{{getClub(event.clubs)}}"
+                            on-click="map.showInfoWindow('bar')"
+                            position="{{event.lat}},{{event.lng}}">
+                    </marker>
+                    <info-window id="bar" visible-on-marker="foo">
+                        <a href="https://www.google.com/maps/place/{{event.lat}},{{event.lng}}" target="_blank">
+                            <h6 style="color: #340034">{{getDireccionClub(event.clubs)}}<br>{{getClub(event.clubs)}}
+                            </h6>
+                        </a>
+                    </info-window>
+                </ng-map>
+            </div>
             <div class="mdl-cell mdl-color--white  mdl-cell--10-col mdl-cell--12-col-phone">
                 #El club se reserva el derecho de admisión#
             </div>
 
 
         </div>
-
-
 
 
     </center>
@@ -339,8 +338,8 @@
     }
 </script>
 
-<script id="dialogAdquirirServicio" type="text/ng-template" >
-    <div class="card text-center " id="panelPrincipal" style="color:#340034 " >
+<script id="dialogAdquirirServicio" type="text/ng-template">
+    <div class="card text-center " id="panelPrincipal" style="color:#340034 ">
         <div class="col-md-6 col-xs-12 ">
             <h2 class="title">
                 <i ng-show="eventsService.tipo == 'Mesa'"
@@ -357,29 +356,30 @@
             </h2>
 
 
-
             <h4 class="description">{{eventsService.desc}}</h4>
             <h3 style="font-weight: 400">$ {{cantidadDeCompra*eventsService.precio *1.03 + 300| number:0}}</h3>
 
 
-
             <div class="col-md-6 col-md-offset-3">
-              <!--  <span style="margin-top: 25px; font-size: 20px;" class="col-md-6 col-xs-8">Cantidad :</span>
-                <select  style="margin-top: 25px" aria-label="aria-label" class="col-md-6 col-xs-4 text-center select-style" name="ticketQty"
-                           ng-model="cantidadDeCompra">
+                <!--  <span style="margin-top: 25px; font-size: 20px;" class="col-md-6 col-xs-8">Cantidad :</span>
+                  <select  style="margin-top: 25px" aria-label="aria-label" class="col-md-6 col-xs-4 text-center select-style" name="ticketQty"
+                             ng-model="cantidadDeCompra">
 
-                    <option ng-repeat="entrada in maxEntradas track by entrada.id"
-                               ng-value="entrada.id">
-                        {{entrada.name}}
-                    </option>
-                </select> -->
+                      <option ng-repeat="entrada in maxEntradas track by entrada.id"
+                                 ng-value="entrada.id">
+                          {{entrada.name}}
+                      </option>
+                  </select> -->
 
-                <p  class="col-md-12 col-xs-12">
+                <p class="col-md-12 col-xs-12">
 
-                    <span style=" font-size: 18px;" class="col-md-6 col-xs-12"   ><bolder>Cantidad: </bolder></span>
-                    <button style="margin-top: 0px" ng-click="disminuirTicket()" class="btn btn-sm btn-primary"> - </button>
-                    <font size="5" >{{ cantidadDeCompra}} </font>
-                    <button style="margin-top: 0px"  ng-click="aumentarTicket()" class="btn btn-sm btn-primary"> + </button></p>
+                    <span style=" font-size: 18px;" class="col-md-6 col-xs-12"><bolder>Cantidad: </bolder></span>
+                    <button style="margin-top: 0px" ng-click="disminuirTicket()" class="btn btn-sm btn-primary"> -
+                    </button>
+                    <font size="5">{{ cantidadDeCompra}} </font>
+                    <button style="margin-top: 0px" ng-click="aumentarTicket()" class="btn btn-sm btn-primary"> +
+                    </button>
+                </p>
             </div>
         </div>
         <div class="col-md-6 col-xs-12 leftspan">
@@ -403,24 +403,24 @@
                 </md-radio-button>
             </md-radio-group>
 
-                <div class="form-group label-floating col-md-6 col-xs-12">
-                    <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">email</i>
-                    <div class="col-md-10 col-xs-10">
-                        <input type="text" class="form-control" placeholder="Ingresa Email" ng-model="email"/>
-                        <span class="form-control-feedback"><i class="material-icons">done</i></span>
-                    </div>
+            <div class="form-group label-floating col-md-6 col-xs-12">
+                <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">email</i>
+                <div class="col-md-10 col-xs-10">
+                    <input type="text" class="form-control" placeholder="Ingresa Email" ng-model="email"/>
+                    <span class="form-control-feedback"><i class="material-icons">done</i></span>
                 </div>
+            </div>
 
-                <div class="form-group label-floating  col-md-6 col-xs-12">
-                    <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">call</i>
+            <div class="form-group label-floating  col-md-6 col-xs-12">
+                <i class="material-icons col-md-2 col-xs-2" style="margin-top: 5px">call</i>
 
-                    <div class="col-md-10 col-xs-10">
-                        <input type="number" class="form-control" placeholder="Ingresa Celular" ng-model="celular"/>
-                        <span class="form-control-feedback">
+                <div class="col-md-10 col-xs-10">
+                    <input type="number" class="form-control" placeholder="Ingresa Celular" ng-model="celular"/>
+                    <span class="form-control-feedback">
 			        <i class="material-icons">done</i>
 		            </span>
-                    </div>
                 </div>
+            </div>
 
 
         </div>
@@ -462,7 +462,7 @@
                     <h4 class="info-title">Tu compra se realizo con exito.</h4>
                     <p> Muchas gracias por tu confianza, tus datos estan totalmente seguros</p>
 
-                   <a href="#!/tickets" ng-click="cancel()" class="btn btn-primary"> Ver Tickets</a>
+                    <a href="#!/tickets" ng-click="cancel()" class="btn btn-primary"> Ver Tickets</a>
 
 
                 </div>
