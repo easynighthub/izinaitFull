@@ -3,7 +3,7 @@
     "public": "public",
     "rewrites":
     [{
-      "source": "/detalleEvento", "function": "detalleEvento",
+      "source": "/detalleEvento", "function": "detalleEvento"
     },
       {
         "source": "/ComprobarCompraConWebPayPlus", "function":"ComprobarCompraConWebPayPlus"
