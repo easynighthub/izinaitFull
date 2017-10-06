@@ -54,7 +54,7 @@
 
                     <img height="167" width="450" class="testimage" src="{{event.image}}">
 
-                    <span class="testfecha">
+                    <span class="testfecha text-capitalize">
                         {{event.date | date:"EEEE dd', 'MMMM " }}
                     </span>
 
@@ -70,7 +70,7 @@
 
                     <div class="testfooter">
                         <p class="testboton btn " ng-show="event.freemiumHour == event.date"> CPL
-                            ${{event.entryValue }}</p>
+                            ${{event.entryValue | number:0 }}</p>
                         <p class="testboton btn " ng-show="event.freemiumHour != event.date">
                             GRATIS</p>
 
