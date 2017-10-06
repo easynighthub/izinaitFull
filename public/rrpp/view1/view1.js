@@ -188,7 +188,8 @@ angular.module('myApp.view1', ['ngRoute'])
                                     email :$scope.email
                                 });
                             firebase.database().ref('nickName/' + rrppLogeadoRecibido.$id).update(
-                                {nickName:$scope.nickName
+                                {nickName:$scope.nickName,
+                                    uid :rrppLogeadoRecibido.$id
                                 });
                             $mdDialog.hide();
                         }else{

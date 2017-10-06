@@ -491,8 +491,14 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 if (!$scope.newEvent.clothing) {
                     subir = false;
                     errorList.push("FALTA CODIGO DE VESTIMENTA");
-                }
-                ;
+                };
+
+                if(!$scope.newEvent.djs){
+                    errorList.push("FALTA lINE UP");
+                };
+                if(!$scope.newEvent.entryValue){
+                    errorList.push("FALTA VALOR PUERTA");
+                };
 
                 if (!$scope.newEvent.eventEnvironmentSelect) {
                     subir = false;
@@ -580,17 +586,18 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     $scope.newEvent.eventEnvironment = $scope.newEvent.eventEnvironmentSelect ? $scope.newEvent.eventEnvironmentSelect.join(', ') : '';
                     $scope.newEvent.musicGenres = $scope.newEvent.musicGenresSelect ? $scope.newEvent.musicGenresSelect.join(', ') : '';
 
+                    console.log($scope.newEvent);
 
-                    if ($scope.serviciosEvent.length > 0) {
+                  if ($scope.serviciosEvent.length > 0) {
 
                         document.getElementById('BarraCargando').style.display = 'block';
                         document.getElementById('crearEvento').style.display = 'none';
                         guardarServicios();
                         subirImagen();
                     } else {
-                        subirImagen();
-                        demo.showSwal('success-message');
-                    }
+                      subirImagen();
+                      demo.showSwal('success-message');
+                  }
                     ;
                 }
                 ;
