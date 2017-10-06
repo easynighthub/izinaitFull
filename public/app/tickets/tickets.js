@@ -24,20 +24,9 @@ angular.module('myApp.tickets', ['ngRoute'])
             var usuarioLogeado = "";
             $('.main-raised').css("margin-top", "-20px");
 
-            var transaccionRealizada = $routeParams.transaccionRealizada || undefined ; // id del evento entregador por url
 
-            if(transaccionRealizada != undefined){
 
-                $mdDialog.show({
-                    controller: dialogCompraTicketController,
-                    templateUrl: 'dialogCompraTicket',
-                    parent: angular.element(document.body),
-                    clickOutsideToClose: true,
-                    locals: {
-                        transaccionRealizada:transaccionRealizada
-                    }
-                });
-            }
+
 
             firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
@@ -248,13 +237,7 @@ angular.module('myApp.tickets', ['ngRoute'])
             function dialogCompraTicketController($scope, $mdDialog, $timeout, $q, $log, $http, transaccionRealizada ) {
 
 
-             if(transaccionRealizada){
 
-                  location.href = "#!/tickets";
-               }else {
-
-                    //location.href = "#!/tickets";
-              }
 
 
 
@@ -267,6 +250,36 @@ angular.module('myApp.tickets', ['ngRoute'])
 
                 };
 
+
+
+            };
+            var transaccionRealizada = $routeParams.transaccionRealizada || undefined ; // id del evento entregador por url
+            if(transaccionRealizada != undefined){
+                console.log(transaccionRealizada);
+                if(transaccionRealizada == 'true')
+                {
+                    console.log(transaccionRealizada);
+                    $mdDialog.show({
+                        controller: dialogCompraTicketController,
+                        templateUrl: 'dialogCompraTicket',
+                        parent: angular.element(document.body),
+                        clickOutsideToClose: true,
+                        locals: {
+                            transaccionRealizada:transaccionRealizada
+                        }
+                    });
+
+                }else{
+                    $mdDialog.show({
+                        controller: dialogCompraTicketController,
+                        templateUrl: 'dialogComprarTicketRechazado',
+                        parent: angular.element(document.body),
+                        clickOutsideToClose: true,
+                        locals: {
+                            transaccionRealizada:transaccionRealizada
+                        }
+                    });
+                }
 
 
             };

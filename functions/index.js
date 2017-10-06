@@ -178,13 +178,16 @@ exports.ComprobarCompraConWebPayPlus = functions.https.onRequest((req, res) => {
             console.log(body);
 
             admin.database().ref("/userQvo/" + userId + "/charges/"+body.id).set(body);
-            admin.database().ref("/tickets/" + eventId +"/ticketId").update({
+            admin.database().ref("/tickets/" + eventId +"/"+ticketId).update({
                 idTransaccion : body.id,
                 paidOut : true
             });
             res.redirect(303, "https://www.izinait.com/app/#!/tickets?transaccionRealizada=true");
         }else{
             res.redirect(303, "https://www.izinait.com/app/#!/tickets?transaccionRealizada=false");
+
+            admin.database().ref("/tickets/" + eventId +"/"+ticketId).set(null);
+            admin.database().ref("/users/" + userId +"/tickets/"+ticketId).set(null);
         }
 
 

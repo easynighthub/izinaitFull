@@ -13,7 +13,7 @@
         <hr class="divisor">
         <br>
 
-        <div ng-repeat="ticket in ticketsAll">
+        <div ng-repeat="ticket in ticketsAll | orderBy:'-date'" >
 
             <div class="col-md-10 col-md-offset-1 col-xs-12">
                 <div class="col-md-4 col-xs-12">
@@ -90,25 +90,30 @@
         </center>
     </div>
 
-    <div id="panelCompraRechazada" class="col-md-12" >
-        <center>
-            <div class="col-md-12">
-                <div class="info">
-                    <div class="icon icon-danger">
-                        <i class="material-icons">sentiment_very_dissatisfied</i>
-                    </div>
-                    <h4 class="info-title">Tu compra no pudo ser realizada.</h4>
-                    <p> por algun motivo no se pudo efectuar.</p>
-
-                    <a href="#!/view1" ng-click="cancel()" class="btn btn-primary"> EVENTOS</a>
 
 
+
+
+
+</script>
+
+
+<script id="dialogComprarTicketRechazado" type="text/ng-template" >
+<div id="panelCompraRechazada" class="col-md-12" >
+    <center>
+        <div class="col-md-12">
+            <div class="info">
+                <div class="icon icon-danger">
+                    <i class="material-icons">sentiment_very_dissatisfied</i>
                 </div>
+                <h4 class="info-title">Tu compra no pudo ser realizada.</h4>
+                <p> por algun motivo no se pudo efectuar.</p>
+
+                <a href="#!/view1" ng-click="cancel()" class="btn btn-primary"> EVENTOS</a>
+
+
             </div>
-        </center>
-    </div>
-
-
-
-
+        </div>
+    </center>
+</div>
 </script>

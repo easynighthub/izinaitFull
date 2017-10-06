@@ -32,7 +32,7 @@
     <div class="col-md-8  text-center  col-xs-12" ng-show="userQvoRQ.userQvoId != undefined">
 
 
-        <div class="card col-md-12  col-md-offset-3">
+        <div class="card col-md-12 col-xs-12 col-md-offset-3">
             <table class="col-md-12 col-xs-12 table">
                 <thead>
                 <tr class="text-primary">
@@ -59,14 +59,18 @@
         </div>
 
     </div>
-    <div class="col-md-12">
-        <a id="salir" class="btn" style="background-color: #fe0072">
+    <center>
+    <div class="col-md-12  col-xs-12  ">
+        <center>
+        <a id="salir" class="btn  col-md-3" style="background-color: #fe0072">
             <i class="fa fa-sign-out" aria-hidden="true"></i> SALIR
         </a>
-        <a class="btn" href="#!/tickets" style="background-color: #340034">
+        <a class=" btn   col-md-3" href="#!/tickets" style="background-color: #340034">
             <i class="fa fa-ticket" aria-hidden="true"></i> Tickets
         </a>
+        </center>
     </div>
+</center>
 </div>
 
 
@@ -98,7 +102,7 @@
 
 <script type="text/ng-template" id="dialogCrearClienteQvo" class="col-xs-12">
 
-    <div class="col-md-12">
+    <div class="col-md-12 col-xs-12">
         <center><br>
             <h5> REDIRECCIONANDO </h5>
             <button id="BarraCargando" style="display: none"
@@ -106,7 +110,7 @@
                 CONFIRMANDO DATOS
             </button>
             <button id="barraRedirectUrl" style="display: block"
-                    class="btn btn-info btn-lg"><i class="fa fa-circle-o-notch fa-spin"></i>
+                    class="btn btn-info"><i class="fa fa-circle-o-notch fa-spin"></i>
                 Redirecciando a pagina segura.
             </button>
 
