@@ -2,7 +2,6 @@
 </button>
 
 
-
 <div id="detalleClub" style="display: none">
     <center>
 
@@ -87,36 +86,35 @@
         <hr class="hrStyle ">
         <br>
 
-        <div class="features col-md-12">
-
-            <div class="col-md-12 col-xs-12">
-                <p style="font-size: 15px; color: #340034" class="teststyle">
-                    {{club.description}}
-                </p>
-            </div>
-
+        <div class="col-md-10 col-md-offset-1 col-xs-12">
+            <p style="font-size: 15px; color: #340034" class="teststyle">
+                {{club.description}}
+            </p>
+        </div>
+        <br>
+        <br>
+        <div class="features row">
             <center>
-                <div class="text-center col-md-12 col-xs-12">
-                    <div class="col-md-6 col-xs-6">
-                        <div class="info">
-                            <div class="icon " style="color: #fe0072">
-                                <i class="material-icons">music_note</i>
-                            </div>
-                            <p> Estilo Musical</p>
-                            <p style="font-size: 18px; color: #340034" class="teststyle">
+                <div class="col-md-10 col-md-offset-4 col-xs-offset-2 col-xs-10">
+                    <div class="col-md-2 col-xs-8  player-card">
+                        <div class="icon ">
+                            <i class="material-icons" style="font-size: 40px">music_note</i>
+                        </div>
+                        <div class="card-body">
+                            <h4>Estilo Musical</h4>
+                            <p>
                                 {{club.clubMusic}}
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-6 col-xs-6">
-                        <div class="info">
-                            <div class="icon " style="color: #fe0072">
-                                <i class="material-icons">layers</i>
-                            </div>
-                            <p>Ambientes</p>
-                            <p style="font-size: 18px; color: #340034" class="teststyle">
+                    <div class="col-md-2 col-xs-8  player-card">
+                        <div class="icon ">
+                            <i class="material-icons" style="font-size: 40px">layers</i>
+                        </div>
+                        <div class="card-body">
+                            <h4>Ambientes</h4>
+                            <p>
                                 {{club.clubEnvironment}}
-
                             </p>
                         </div>
                     </div>
