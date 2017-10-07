@@ -1,0 +1,26 @@
+<table class="table">
+    <thead class="text-primary">
+    <th>Evento</th>
+    <th>Fecha</th>
+    <th>Recaudacion</th>
+    <th>Pago izinait</th>
+    <th>IVA</th>
+    <th>Total Depisito</th>
+    <th>Acción</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="event in eventosAFacturar">
+        <td>{{event.name}}</td>
+        <td>{{event.date |date:"EEEE dd', 'MMMM yyyy" }}</td>
+        <td>{{event.deposito | number:0}}</td>
+
+        <td class="text-primary">{{event.izinait| number:0}}</td>
+        <td> {{event.izinait*0.19| number:0}}</td>
+        <td class="text-primary">{{event.deposito - event.izinait - (event.izinait*0.19)| number :0}}</td>
+        <td> <button  ng-show="event.depositado == undefined" class="btn btn-primary">SOLICITAR DEPOSITO</button>
+            <button  ng-show="event.depositado == true" class="btn btn-default">DEPOSITADO</button></td>
+    </tr>
+
+
+    </tbody>
+</table>
