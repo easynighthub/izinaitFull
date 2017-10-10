@@ -38,8 +38,12 @@ angular.module('myApp.view1', ['ngRoute'])
             $('.main-panel').perfectScrollbar('update');
             $('.smartbanner').addClass('hide');
 
+            console.log(admin);
+
             firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
+
+
 
                 if (exists == true) {
                     var ref = firebase.database().ref('/admins/').child(admin.$id || admin.uid);

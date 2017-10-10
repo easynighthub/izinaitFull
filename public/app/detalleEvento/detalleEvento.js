@@ -771,7 +771,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                             "&" +
                                             "tarjetaCredito=" + $scope.userQvoRQ.creditCardDefault +
                                             "&" +
-                                            "cobroTotal="+  $scope.eventsService.precio * cantidadDeCompra;
+                                            "cobroTotal="+  $scope.eventsService.precio * cantidadDeCompra * 1.05 + 500;
 
                                         $http({
                                             method: 'GET',
