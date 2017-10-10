@@ -93,7 +93,7 @@ exports.agregarTarjetaUsuarioQvo = functions.https.onRequest((req, res) => {
         return response.json();
     }).then(function (body) {
         console.log(body);
-        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Origin', 'https://izinait.com');
         res.status(200).send(body);
         //return res.redirect(303, body.redirect_url);
 
@@ -153,8 +153,6 @@ exports.cobrarTarjetaDeCredito = functions.https.onRequest((req, res) => {
     });
 
 });
-
-
 exports.ComprobarCompraConWebPayPlus = functions.https.onRequest((req, res) => {
     // ...
     const userId = req.query.userId;
@@ -200,7 +198,6 @@ exports.ComprobarCompraConWebPayPlus = functions.https.onRequest((req, res) => {
 
 
 });
-
 exports.cobrarConWebPayPlus = functions.https.onRequest((req, res) => {
     // Grab the current value of what was written to the Realtime Database.
     const userQvo = req.query.userQvo;
@@ -235,7 +232,6 @@ exports.cobrarConWebPayPlus = functions.https.onRequest((req, res) => {
     });
 
 });
-
 exports.consultarUsuarioQvo = functions.https.onRequest((req, res) => {
     // Grab the current value of what was written to the Realtime Database.
     const userQvo = req.query.userQvo;
@@ -257,8 +253,6 @@ exports.consultarUsuarioQvo = functions.https.onRequest((req, res) => {
         console.log("ok");
     });
 });
-
-
 exports.detalleEvento = functions.https.onRequest((req, res) => {
    // const hours = (new Date().getHours() % 12) + 1 // london is UTC + 1hr;
     const id = req.query.id;
@@ -597,14 +591,31 @@ exports.sendWelcomeEmail = functions.database.ref('/users/{users}').onWrite(even
 // [END onCreateTrigger]
     // [START eventAttributes]
     //const user = event.data; // The Firebase user.
+    const datosAntiguos = event.data._data;
+    const datosNuevos = event.data._newData;
+    const datos = event.data.val();
+
+    if(event.data._data.email != event.data._newData.email){
+            if(event.data._newData.email != 'null@izinait.com'){
+                if(event.data._data.email == 'null@izinait.com'){
+                    sendWelcome(datos);
+                }
+
+            }
+    }
+
     console.log(event.data.val());
-    const email = event.data.val();
+    console.log(event.data);
+    console.log(event);
+
+
     //if(email != 'null@izinait.com'){
       //  sendWelcome(email);
     //}
 
 
-   // return sendWelcomeEmail(datos);
+
+    //return sendWelcome(datos);
 });
 
 /*
@@ -1251,10 +1262,10 @@ function sendWelcome(datos){
     };
 
     // The user subscribed to the newsletter.
-    mailOptions.subject = `Gracias por tu compra, ${APP_NAME}!`;
+    mailOptions.subject = `Bienvenido a izinait!`;
     mailOptions.text = ``;
     return mailTransport.sendMail(mailOptions).then(() => {
-        console.log('New welcome email sent t1111111o:', datos.email);
+        console.log('nuevo usuario registrado :', datos.email);
     });
 
 
