@@ -514,15 +514,6 @@ exports.crearUsuarioQvo = functions.database.ref('/userQvo/{userId}')
             console.log("ok");
         });
     }); */
-
-
-
-
-
-
-
-
-
 /*
 exports.addMessagess = functions.https.onRequest((req, res) => {
     // Grab the text parameter.
@@ -533,7 +524,6 @@ exports.addMessagess = functions.https.onRequest((req, res) => {
         res.redirect(303, snapshot.ref);
     });
 }); */
-
 /*
 
 exports.agregarTarjeta = functions.database.ref('/userQvo/{userId}/tarjeta')
@@ -566,7 +556,6 @@ exports.agregarTarjeta = functions.database.ref('/userQvo/{userId}/tarjeta')
 
     });
 */
-
 /*
 exports.addMessagess2 = functions.https.onRequest((req, res) => {
     // Grab the text parameter.
@@ -592,22 +581,11 @@ exports.addMessagess2 = functions.https.onRequest((req, res) => {
 
 
 exports.correoCompraTicket = functions.database.ref('/tickets/{eventId}/{userId}').onWrite(event => {
-// [END onCreateTrigger]
-    // [START eventAttributes]
-    //const user = event.data; // The Firebase user.
+
     console.log(event.data.val());
     const datos = event.data.val();
-
-
-    const email = datos.email; // The email of the user.
-//const qrDato = datos.userId;
-//var qr = qrProyect.image(qrDato, { type: 'png' });
-//qr.pipe(require('fs').createWriteStream('qrCompra.png'));
-//console.log(qr);
-
-    const displayName = "andro ostoic"; // The display name of the user.
-// [END eventAttributes]
-
+    const email = datos.email;
+    const displayName = "andro ostoic";
    return sendWelcomeEmail(datos);
 });
 
