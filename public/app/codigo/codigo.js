@@ -438,10 +438,10 @@ angular.module('myApp.codigo', ['ngRoute'])
                     var usersRef = database.ref(USERS_LOCATION);
                     usersRef.child(userId).once('value', function(snapshot) {
                         var exists = (snapshot.val() !== null);
-                        console.log(snapshot.val().facebookId);
-                        if(snapshot.val().facebookId == undefined){
-                            exists = false;
-                            console.log(exists);
+
+                        console.log(exists);
+                        if(exists == false){
+
                             userExistsCallback(exists, response);
                         }else {
                             console.log(exists);
