@@ -58,6 +58,9 @@ angular.module('myApp.codigo', ['ngRoute'])
 
 
 
+
+
+
                             if(uidTarjetaDeCredito != "")
                             {
 
@@ -524,7 +527,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                             var url = "https://us-central1-project-8746388695669481444.cloudfunctions.net/createUserQvo?email="
                                 +user.email
                                 +"&name="
-                                +user.displayName
+                                +user.displayName;
 
                             $http({
                                 method: 'GET',
@@ -561,6 +564,50 @@ angular.module('myApp.codigo', ['ngRoute'])
 
 
                 }
+
+            };
+
+            $scope.selecionarTarjeta = function (card) {
+
+                firebase.database().ref('userQvo/' +$scope.usuarioLogeado.$id).update(
+                    { creditCardDefault: card.id}
+                );
+
+
+            };
+
+            $scope.eliminarTarjeta = function (card, userQvo) {
+                console.log("holaaaa");
+                    if(card.id == userQvo.creditCardDefault){
+                       console.log("DEBE SELECIONAR OTRA TARJETA PREDETERMINADA ANTES DE BORRAR");
+                       console.log($scope.userQvoRQ.cards);
+
+                    }else {
+                        var url = "https://us-central1-project-8746388695669481444.cloudfunctions.net/eliminarTarjetaQvo?userQvo="
+                            +userQvo.userQvoId
+                            +"&tarjetaUserQvo="
+                            +card.id;
+
+                        $http({
+                            method: 'GET',
+                            url: url,
+                            crossOrigin: true,
+                        }).then(function successCallback(response) {
+                            console.log(response);
+
+                        }, function errorCallback(response) {
+                            firebase.database().ref('userQvo/' +$scope.usuarioLogeado.$id +'/cards/' + card.id ).set(null);
+                            if($scope.userQvoRQ.cards == undefined) {
+                                firebase.database().ref('userQvo/' +$scope.usuarioLogeado.$id +'/creditCardDefault' ).set(null);
+                            }
+
+
+
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                        });
+
+                    }
 
             };
 

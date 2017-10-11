@@ -47,19 +47,16 @@
                 <tbody>
                 <tr ng-repeat="card in userQvoRQ.cards">
                     <td class="text-left">
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="optionsRadios"><span class="circle"></span><span
-                                    class="check"></span>
-                            </label>
-                        </div>
+                        <button  disabled ng-show="userQvoRQ.creditCardDefault == card.id" class="btn btn-sm " style="background-color: #340034">PREDETERMINADA</button>
+                        <button  ng-click="selecionarTarjeta(card)" ng-show="userQvoRQ.creditCardDefault != card.id" class="btn btn-sm " style="background-color: #fe0072">SELECIONAR</button>
+
                     </td>
                     <td class="text-left">{{card.card_type}}</td>
                     <td class="text-left">{{card.created_at | date : 'dd MMM yy'}}</td>
                     <td class="text-left">*** {{card.last_4_digits}}</td>
                     <td class="text-left">
                         <a style="color: red" href=""
-                           ng-click="eliminarTarjeta()" ng-show="!rrpp.bloqueado">
+                           ng-click="eliminarTarjeta(card,userQvoRQ)" >
                             <i class="material-icons pointer btn_rsvp_trash">delete_forever</i>
                         </a>
                     </td>

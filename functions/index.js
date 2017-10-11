@@ -73,7 +73,6 @@ exports.createUserQvo = functions.https.onRequest((req, res) => {
         //return admin.database().ref("/userQvo/"+data.uid+"/customer_id").set(body.id);
     });
 });
-
 exports.agregarTarjetaUsuarioQvo = functions.https.onRequest((req, res) => {
     // Grab the current value of what was written to the Realtime Database.
     const userQvo = req.query.userQvo;
@@ -131,6 +130,7 @@ exports.cobrarTarjetaDeCredito = functions.https.onRequest((req, res) => {
     const tarjetaCredito = req.query.tarjetaCredito;
     const cobroTotal = req.query.cobroTotal;
 
+
     fetch('https://playground.qvo.cl/customers/' + userQvo + '/cards/' + tarjetaCredito + '/charge', {
         method: 'POST',
         headers: {
@@ -138,7 +138,8 @@ exports.cobrarTarjetaDeCredito = functions.https.onRequest((req, res) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            amount: cobroTotal
+            amount: cobroTotal,
+            description : "hola"
         })
     }).then(function (response) {
         console.log(response)
@@ -254,6 +255,28 @@ exports.consultarUsuarioQvo = functions.https.onRequest((req, res) => {
         console.log("ok");
     });
 });
+exports.eliminarTarjetaQvo = functions.https.onRequest((req, res) => {
+    // Grab the current value of what was written to the Realtime Database.
+    const userQvo = req.query.userQvo;
+    const tarjetaUserQvo = req.query.tarjetaUserQvo;
+
+    fetch('https://playground.qvo.cl/customers/' + userQvo + '/cards/' + tarjetaUserQvo, {
+        method : 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + functions.config().qvo.token,
+        }
+
+    }).then(function (res) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        return res.json();
+        console.log(res.json());
+    }).then(function (body) {
+        console.log(body);
+
+        res.status(200).send(body);
+    });
+});
+
 exports.detalleEvento = functions.https.onRequest((req, res) => {
    // const hours = (new Date().getHours() % 12) + 1 // london is UTC + 1hr;
     const id = req.query.id;
@@ -1269,6 +1292,12 @@ function sendWelcome(datos){
         console.log('nuevo usuario registrado :', datos.email);
     });
 
+
+
+
+    exports.prueba = function(){
+        console.log(prueba);
+    }
 
 };
 

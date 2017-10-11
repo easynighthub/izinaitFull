@@ -766,12 +766,14 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
                                         // creditCardDefaulf if sino redireccionar a agregar tarjeta de credito
 
+                                        var cobroTotal = $scope.eventsService.precio * cantidadDeCompra * 1.05 + 500;
+
                                         var url  = "https://us-central1-project-8746388695669481444.cloudfunctions.net/cobrarTarjetaDeCredito" +
                                             "?userQvo=" + $scope.userQvoRQ.userQvoId +
                                             "&" +
                                             "tarjetaCredito=" + $scope.userQvoRQ.creditCardDefault +
                                             "&" +
-                                            "cobroTotal="+  $scope.eventsService.precio * cantidadDeCompra * 1.05 + 500;
+                                            "cobroTotal="+  cobroTotal;
 
                                         $http({
                                             method: 'GET',
