@@ -25,6 +25,10 @@
                     </div>
                 </div>
                 <div class="col-md-8 col-xs-12">
+                    <button disabled ng-show="ticket.redeemed == true " class="btn btn-primary btn-sm" style="float: right">
+                        UTILIZADO
+                    </button>
+
                     <div class="testcontenido">
                         <h4 style="font-weight: 500;">{{getEvento(ticket.eventId).name}}</h4>
                         <h4 style="font-weight: 400;">
