@@ -6,6 +6,11 @@ angular.module('myApp.view1', ['ngRoute'])
                 $routeProvider.when('/view1', {
                 templateUrl: 'view1/view1.html',
                 controller: 'View1Ctrl',
+                    data: {
+                        meta: {
+                            'title': 'TODOS LOS EVENTOS',
+                        }
+                    }
             }
         );
     }])

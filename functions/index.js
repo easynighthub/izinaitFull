@@ -20,7 +20,7 @@ const functions = require('firebase-functions'),
     logging = require('@google-cloud/logging')();
 
 
-//var qvoJs = require('./qvo/functions.js');
+var qvoJs = require('./qvo/functions.js');
 
 
 admin.initializeApp(functions.config().firebase);
@@ -39,11 +39,11 @@ var MP = require("mercadopago");
 const gmailEmail = encodeURIComponent(functions.config().gmail.email);
 const gmailPassword = encodeURIComponent(functions.config().gmail.password);
 
-const mailTransport = nodemailer.createTransport(`smtps://${gmailEmail}:${gmailPassword}@smtp.gmail.com`);
 
-// Your company name to include in the emails
-// TODO: Change this to your app or company name to customize the email sent.
-const APP_NAME = 'IZINAIT';
+// firebase functions:config:set gmail.password=<YOUR STRIPE API KEY>
+
+const mailTransport = nodemailer.createTransport(`smtps://${gmailEmail}:${gmailPassword}@smtp.gmail.com`);
+const APP_NAME = 'izinait';
 
 
 exports.createUserQvo = functions.https.onRequest((req, res) => {
@@ -93,6 +93,7 @@ exports.agregarTarjetaUsuarioQvo = functions.https.onRequest((req, res) => {
         return response.json();
     }).then(function (body) {
         console.log(body);
+        console.log(res);
         res.setHeader('Access-Control-Allow-Origin', 'https://izinait.com');
         res.status(200).send(body);
         //return res.redirect(303, body.redirect_url);
