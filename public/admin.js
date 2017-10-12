@@ -82,7 +82,8 @@ signInButtonFacebook.addEventListener('click', function() {
                 facebookId: response.id,
                 lastName: response.last_name,
                 gender : response.gender,
-                idClubWork:false
+                idClubWork:false,
+                celular : 0
             });
         database.ref(USERS_LOCATION+user.uid+'/rrpps/'+adminId).update({
             uid:adminId,
@@ -108,6 +109,7 @@ signInButtonFacebook.addEventListener('click', function() {
             facebookId: response.id,
             lastName: response.last_name,
             gender : response.gender,
+            name: response.name,
             confirm : false,
             nickName:adminId// editable al momonento de ingresar
         });
