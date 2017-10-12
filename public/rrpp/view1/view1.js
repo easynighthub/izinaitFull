@@ -43,14 +43,14 @@ angular.module('myApp.view1', ['ngRoute'])
 
             firebase.database().ref('rrpps/').child(rrpp.$id || rrpp.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
-                console.log(exists);
+                //console.log(exists);
                 if (exists == true) {
                     var ref = firebase.database().ref('/rrpps/').child(rrpp.$id || rrpp.uid);
                     var rrppLocal = $firebaseObject(ref);
                     rrppLocal.$loaded().then(function () {
                         rrppLogeado = rrppLocal;
                         $('.photo').prepend($('<img>',{id:'theImg',src:rrppLogeado.picture}));
-                        console.log(rrppLogeado);
+                        //console.log(rrppLogeado);
 
                         if(rrppLogeado.confirm == false){
                             cambiarNickName(rrppLogeado);
@@ -79,15 +79,15 @@ angular.module('myApp.view1', ['ngRoute'])
 
 
             function dialogControllerSelecionarClub($scope, $mdDialog, $timeout, $q, $log,adminLogeadoRecibido ,clubsCargados) {
-                console.log(clubsCargados);
-                console.log(adminLogeadoRecibido);
+                //console.log(clubsCargados);
+                //console.log(adminLogeadoRecibido);
                 $scope.clubs = clubsCargados;
 
                 $scope.clubsSelecionados = [];
 
                 $scope.selecionarClubs = function (club) {
                     club.selecionado = !club.selecionado;
-                    console.log($scope.clubs);
+                    //console.log($scope.clubs);
                 };
 
                 $scope.aceptarClub = function () {
@@ -121,7 +121,7 @@ angular.module('myApp.view1', ['ngRoute'])
             };
 
             var cambiarNickName = function (rrppLogeadoRecibido) {
-                console.log(rrppLogeadoRecibido);
+                //console.log(rrppLogeadoRecibido);
 
 
                     var rrppLogeadoRecibido = rrppLogeadoRecibido;
@@ -138,7 +138,7 @@ angular.module('myApp.view1', ['ngRoute'])
             };
 
             function dialogControllerCambiarNickName($scope, $mdDialog, $timeout, $q, $log,rrppLogeadoRecibido) {
-                console.log(rrppLogeadoRecibido);
+                //console.log(rrppLogeadoRecibido);
 
                 if(rrppLogeadoRecibido.uid == rrppLogeadoRecibido.nickName){
                     $scope.nickName = "";
@@ -162,17 +162,17 @@ angular.module('myApp.view1', ['ngRoute'])
                           $scope.nickNameSelect = buscarmeRequest;
                           $scope.nickNameSelect.forEach(function (x) {
 
-                              console.log("entre si mi nick estiste dentro de los rrpps");
+                              //console.log("entre si mi nick estiste dentro de los rrpps");
                               if(x.nickName == $scope.nickName){
                                   nickNameYaExiste = true ;
                               }
 
-                              console.log(nickNameYaExiste);
+                              //console.log(nickNameYaExiste);
                               cantidad++;
-                              console.log(cantidad);
+                              //console.log(cantidad);
 
                               if(cantidad == $scope.nickNameSelect.length){
-                                  console.log("entra esta wea")
+                                  //console.log("entra esta wea")
                                   $scope.function2();
                               };
 
@@ -248,7 +248,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
 
                         $scope.events.push(event);
-                        console.log("=================== se muestra")
+                        //console.log("=================== se muestra")
                         return true;
 
                 }

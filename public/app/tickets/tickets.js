@@ -30,7 +30,7 @@ angular.module('myApp.tickets', ['ngRoute'])
 
             firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
-                //console.log(exists);
+                ////console.log(exists);
 
                 if (exists == true) {
                     var ref = firebase.database().ref('/users/').child(user.$id || user.uid);
@@ -39,9 +39,9 @@ angular.module('myApp.tickets', ['ngRoute'])
                         $scope.wnCon = usersLocal;
                         usuarioLogeado = usersLocal;
 
-                        //console.log(usuarioLogeado);
+                        ////console.log(usuarioLogeado);
                         $scope.ticketsAll = [];
-                        //console.log(Object.keys(usuarioLogeado.tickets));
+                        ////console.log(Object.keys(usuarioLogeado.tickets));
                         angular.forEach(usuarioLogeado.tickets, function (x) {
 
 
@@ -49,7 +49,7 @@ angular.module('myApp.tickets', ['ngRoute'])
                             ticketsRQ.$loaded().then(function () {
 
                                 $scope.ticketsAll.push(ticketsRQ);
-                                //console.log($scope.ticketsAll);
+                                ////console.log($scope.ticketsAll);
 
                             });
 
@@ -62,14 +62,14 @@ angular.module('myApp.tickets', ['ngRoute'])
                         $('.codigoAcceder').text("Tú Codigo");
                         $('.pruebacon').removeClass("contenedor");
                         //  $('.codigoAcceder').prepend($('<img>',{id:'theImg',src:usuarioLogeado.picture}))
-                        //console.log(window.currentApp + " ENTRE");
+                        ////console.log(window.currentApp + " ENTRE");
                         $(navigationexample).removeClass("in");
                     });
                 } else {
                     window.currentApp = "";
                     usuarioLogeado = "";
                     $('.codigoAcceder').text("acceder");
-                    //console.log(window.currentApp + " NO ENTRE");
+                    ////console.log(window.currentApp + " NO ENTRE");
                     $(navigationexample).removeClass("in");
                 }
                 ;
@@ -81,7 +81,7 @@ angular.module('myApp.tickets', ['ngRoute'])
 
             /*   var users = $firebaseArray(firebase.database().ref().child('users'));
              users.$loaded().then(function () {
-             //console.log(users);
+             ////console.log(users);
              users.forEach(function (x) {
              /*    if(x.email != "izi@nait.com" || x.email != "null@izinait.com" ){
              if(x.facebookId){
@@ -96,7 +96,7 @@ angular.module('myApp.tickets', ['ngRoute'])
              url: url,
              crossOrigin: true,
              }).then(function successCallback(response) {
-             //console.log(response);
+             ////console.log(response);
              if(response.data.error != undefined){
              alert("ESTE CORREO YA EXISTE");
              }
@@ -118,7 +118,7 @@ angular.module('myApp.tickets', ['ngRoute'])
 
              );
 
-             //console.log("exito");
+             ////console.log("exito");
              };
              }, function errorCallback(response) {
              });
@@ -144,7 +144,7 @@ angular.module('myApp.tickets', ['ngRoute'])
                 clubsER.$loaded().then(function () {
                     var eventsRequest = $firebaseArray(firebase.database().ref().child('events').orderByChild('toHour').startAt(currentDay));
                     eventsRequest.$loaded().then(function () {
-                        //console.log(eventsRequest);
+                        ////console.log(eventsRequest);
                         $scope.Allvents = eventsRequest;
                         $scope.events = $scope.Allvents;
 
@@ -185,8 +185,8 @@ angular.module('myApp.tickets', ['ngRoute'])
             }
 
             $scope.goToEventDetails = function (event) {
-                //console.log(event + "log click");
-                //console.log("hola soy andro el mejor");
+                ////console.log(event + "log click");
+                ////console.log("hola soy andro el mejor");
                 $rootScope.selectedEvent = event;
                 location.href = "#!/detalleEvento?id=" + event.$id;
             }
@@ -201,7 +201,7 @@ angular.module('myApp.tickets', ['ngRoute'])
 
             var eventsRequest = $firebaseArray(firebase.database().ref().child('events'));
             eventsRequest.$loaded().then(function () {
-                //console.log(eventsRequest);
+                ////console.log(eventsRequest);
                 $scope.Allvents = eventsRequest;
                 $scope.events = $scope.Allvents;
 
@@ -225,7 +225,7 @@ angular.module('myApp.tickets', ['ngRoute'])
             $scope.getEvento = function (idEvent) {
                 if (idEvent) {
                     var eventoKey = idEvent;
-                    //console.log($filter('filter')($scope.events, {$id: eventoKey})[0]);
+                    ////console.log($filter('filter')($scope.events, {$id: eventoKey})[0]);
                     return $filter('filter')($scope.events, {$id: eventoKey})[0];
                 }
                 ;
@@ -255,10 +255,10 @@ angular.module('myApp.tickets', ['ngRoute'])
             };
             var transaccionRealizada = $routeParams.transaccionRealizada || undefined ; // id del evento entregador por url
             if(transaccionRealizada != undefined){
-                console.log(transaccionRealizada);
+                //console.log(transaccionRealizada);
                 if(transaccionRealizada == 'true')
                 {
-                    console.log(transaccionRealizada);
+                    //console.log(transaccionRealizada);
                     $mdDialog.show({
                         controller: dialogCompraTicketController,
                         templateUrl: 'dialogCompraTicket',

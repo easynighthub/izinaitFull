@@ -39,7 +39,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
                 firebase.database().ref('events/').child(eventId).once('value', function (snapshot) {
                     var event = snapshot.val();
-                    console.log(event);
+                    //console.log(event);
 
                     $scope.eventEnvironmentSelect = false;
                     $scope.musicGenresSelect = false;
@@ -51,7 +51,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                         var eventServicesRQ = $firebaseArray(eventServices);
                         eventServicesRQ.$loaded().then(function () {
                             event.reservas = eventServicesRQ;
-                            console.log(event.reservas);
+                            //console.log(event.reservas);
                             $scope.serviciosEvent = event.reservas;
                             $scope.serviciosEvent.forEach(function (serv) {
                                     serv.fechaFin = null;
@@ -86,7 +86,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                             $scope.newEvent.name = event.name;
                             $scope.newEvent.entryValue = event.entryValue;
 
-                            console.log($scope.newEvent);
+                            //console.log($scope.newEvent);
                             if (event.freemiumHour != event.date) {
                                 $scope.activarHoraGratis = true;
                             };
@@ -161,7 +161,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             ;
 
             if ($rootScope.eventToRepet != null) {
-                console.log($rootScope.eventToRepet);
+                //console.log($rootScope.eventToRepet);
                  location.href = "#!/crearEvento?id=" + $rootScope.eventToRepet.$id;
                 ;
                 location.reload();
@@ -221,7 +221,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                                                     rp.numeroTotal = 0;
                                                     $scope.newEvent.rrpps.push(rp);
                                                 } else {
-                                                    console.log("rrpp no trabaja para este club")
+                                                    //console.log("rrpp no trabaja para este club")
                                                 }
                                             }
                                             ;
@@ -283,8 +283,8 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
             function startDateBeforeRender($dates) {
                 if ($scope.dateRangeEnd) {
-                    console.log(new Date($scope.dateRangeEnd).getTime());
-                    console.log(new Date($scope.dateRangeStart).getTime());
+                    //console.log(new Date($scope.dateRangeEnd).getTime());
+                    //console.log(new Date($scope.dateRangeStart).getTime());
                     $scope.newEvent.fromHour = new Date($scope.dateRangeStart).getTime();
                     $scope.newEvent.toHour = new Date($scope.dateRangeEnd).getTime();
                     var activeDate = moment($scope.dateRangeEnd);
@@ -318,13 +318,13 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     $("#thumb").val('');
                 },
                 onAfterProcessImage: function () {
-                    console.log(this);
-                    //console.log(this.imageObj);
-                    //console.log(this.imageFinal(this.image[0]));
+                    //console.log(this);
+                    ////console.log(this.imageObj);
+                    ////console.log(this.imageFinal(this.image[0]));
 
 
                     linkGuardarFoto = this.image[0].currentSrc;
-                    //console.log(linkGuardarFoto);
+                    ////console.log(linkGuardarFoto);
 
                     // Create a reference to 'mountains.jpg'
                     /*   */
@@ -555,7 +555,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 });
 
 
-                console.log(errorList);
+                //console.log(errorList);
 
 
                 if (subir == true) {
@@ -586,7 +586,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     $scope.newEvent.eventEnvironment = $scope.newEvent.eventEnvironmentSelect ? $scope.newEvent.eventEnvironmentSelect.join(', ') : '';
                     $scope.newEvent.musicGenres = $scope.newEvent.musicGenresSelect ? $scope.newEvent.musicGenresSelect.join(', ') : '';
 
-                    console.log($scope.newEvent);
+                    //console.log($scope.newEvent);
 
                   if ($scope.serviciosEvent.length > 0) {
 
@@ -602,7 +602,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 }
                 ;
 
-                console.log($scope.newEvent);
+                //console.log($scope.newEvent);
 
 
             };
@@ -618,7 +618,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             }
 
             $scope.activarHoraGratisF = function () {
-                console.log($scope.newEvent.freemiumHour);
+                //console.log($scope.newEvent.freemiumHour);
                 !$scope.activarHoraGratis;
                 if ($scope.activarHoraGratis == false) {
                     $scope.newEvent.freemiumHour = undefined;
@@ -628,12 +628,12 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
             var guardarServicios = function () {
                 if ("undefined" === typeof $scope.newEvent.id) {
-                    console.log("Omitir");
+                    //console.log("Omitir");
                 } else {
-                    console.log("Guardando servicios para el evento: " + $scope.newEvent.id);
+                    //console.log("Guardando servicios para el evento: " + $scope.newEvent.id);
 
                     var tipoServicio = [];
-                    console.log($scope.serviciosEvent);
+                    //console.log($scope.serviciosEvent);
                     $scope.serviciosEvent.forEach(function (element, index, array) {
                         var service = {
                             tipo: element.tipo,
@@ -651,10 +651,10 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     var newPostKey = firebase.database().ref().child('events/' + $scope.newEvent.id + '/').push().key; //esto es solo para probar rapido
                     firebase.database().ref('eventServices/' + $scope.newEvent.id + '/').set(tipoServicio).then(
                         function (s) {
-                            console.log('se guardaron bien los servicios ', s);
+                            //console.log('se guardaron bien los servicios ', s);
                         }, function (e) {
                             alert('Error, intente de nuevo');
-                            console.log('se guardo mal ', e);
+                            //console.log('se guardo mal ', e);
                         }
                     );
                 }
@@ -663,12 +663,12 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
             /*  var ref = firebase.storage().ref('andro');
               ref.putString(message, 'data_url').then(function(snapshot) {
-                  console.log( snapshot.a.downloadURLs[0]);
-                  console.log('Uploaded a data_url string!');
+                  //console.log( snapshot.a.downloadURLs[0]);
+                  //console.log('Uploaded a data_url string!');
               }); */
             var managerError = function (e) {
                 stopLoading();
-                console.log('Hubo un Error', e);
+                //console.log('Hubo un Error', e);
                 alert('Error interno, intente nuevamente.');
             };
 
@@ -676,7 +676,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 var file = linkGuardarFoto;  // URL DE LA IMAGEN
                 var ref = firebase.storage().ref('eventImages/' + $scope.newEvent.id);  // RUTA DE DONDE SE GUARDARA
                 ref.putString(file, 'data_url').then(function (snapshot) {
-                    console.log("guarde bien la imagen");
+                    //console.log("guarde bien la imagen");
                     $scope.newEvent.image = snapshot.a.downloadURLs[0]; // url donde quedo el archivo guardado
                     firebase.database().ref('events/' + $scope.newEvent.id).set($scope.newEvent).then(
                         function (s) {
@@ -684,7 +684,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                                 function (s) {
 
                                     updateDoormanEvents($scope.newEvent.id);
-                                    console.log("guerde bien todo el evento");
+                                    //console.log("guerde bien todo el evento");
 
                                 }, managerError);
                         }, managerError);
@@ -694,11 +694,11 @@ angular.module('myApp.crearEvento', ['ngRoute'])
 
             var updateDoormanEvents = function (eventId) {
 
-                console.log(eventId);
+                //console.log(eventId);
 
                 firebase.database().ref('admins/' + adminLogeado.$id + '/events/' + $scope.newEvent.id).set(true);
-                console.log("guarde bien el events id en el administrador");
-                console.log("entro a guardar doormans");
+                //console.log("guarde bien el events id en el administrador");
+                //console.log("entro a guardar doormans");
 
                 angular.forEach(adminLogeado.doormans, function (dr) {
                     if (dr.bloqueado == true) {
@@ -707,7 +707,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                         if (Object.keys(dr.clubs).indexOf(adminLogeado.idClubWork) >= 0) {
                             firebase.database().ref('doormans/' + dr.uid + '/events/' + $scope.newEvent.id).set(true);
                         } else {
-                            console.log("doorman no trabaja para este club")
+                            //console.log("doorman no trabaja para este club")
                         }
                     }
                     ;
@@ -721,7 +721,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                         if (Object.keys(rp.clubs).indexOf(adminLogeado.idClubWork) >= 0) {
                             firebase.database().ref('rrpps/' + rp.uid + '/events/' + $scope.newEvent.id).set(true)
                         } else {
-                            console.log("rrpp no trabaja para este club")
+                            //console.log("rrpp no trabaja para este club")
                         }
                     }
                     ;

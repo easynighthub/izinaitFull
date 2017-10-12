@@ -18,7 +18,7 @@ angular.module('myApp.listaGratis', ['ngRoute'])
             var doorman = window.currentDoorman;
             var doormanLogeado = "";
             var eventIdSelect = localStorage.getItem('eventIdSelect');
-            console.log(eventIdSelect);
+            //console.log(eventIdSelect);
             var eventId = $routeParams.id || eventIdSelect; // id del evento entregador por url
             var eventoCompleto = [];
             firebase.database().ref('events/').child(eventId).once('value', function(snapshot) {
@@ -36,24 +36,24 @@ angular.module('myApp.listaGratis', ['ngRoute'])
 
             firebase.database().ref('doormans/').child(doorman.$id || doorman.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
-                console.log(exists);
+                //console.log(exists);
 
                 if (exists == true) {
                     var ref = firebase.database().ref('/doormans/').child(doorman.$id || doorman.uid);
                     var doormLocal = $firebaseObject(ref);
                     doormLocal.$loaded().then(function () {
                         doormanLogeado = doormLocal;
-                        console.log(doormanLogeado);
+                        //console.log(doormanLogeado);
 
                         var listaGratis = $firebaseArray(firebase.database().ref('/events/'+ eventId+'/asist'));
                         listaGratis.$loaded().then(function () {
                             $scope.AllListaGratis = listaGratis;
-                            console.log($scope.AllListaGratis);
+                            //console.log($scope.AllListaGratis);
                             $scope.listaGratis = $scope.AllListaGratis;
 
                             if($scope.code != ""){
                                 $scope.listaGratis = $filter('filter')($scope.AllListaGratis, {$id: $scope.code});
-                                console.log($scope.code);
+                                //console.log($scope.code);
                             };
                         });
 
@@ -64,7 +64,7 @@ angular.module('myApp.listaGratis', ['ngRoute'])
                 } else {
                     window.currentDoorman = "";
                     doormanLogeado = "";
-                    console.log(window.currentDoorman + " NO ENTRE");
+                    //console.log(window.currentDoorman + " NO ENTRE");
                 };
 
             });
@@ -75,7 +75,7 @@ angular.module('myApp.listaGratis', ['ngRoute'])
             };
 
             $scope.filterEventsByText = function () {
-                //console.log("adsadasdsa");
+                ////console.log("adsadasdsa");
                 $scope.listaGratis = $filter('filter')($scope.AllListaGratis, {displayName: $scope.filterNameInput});
             }
 
@@ -85,7 +85,7 @@ angular.module('myApp.listaGratis', ['ngRoute'])
 
             $scope.abrirListaGratis = function (userCapturado) {
                 var user = [];
-                console.log(userCapturado);
+                //console.log(userCapturado);
                 firebase.database().ref('users/').child(userCapturado.$id).once('value', function(snapshot) {
                     var exists = (snapshot.val() !== null);
                    if(exists){
@@ -111,40 +111,40 @@ angular.module('myApp.listaGratis', ['ngRoute'])
             };
 
             function ControllerdialogAbrirListaGratis($scope, $mdDialog,$timeout, $q, $log, userCapturado,user) {
-                console.log(userCapturado);
+                //console.log(userCapturado);
                 $scope.doormanLogeado = doormanLogeado;
-                console.log(user);
+                //console.log(user);
                 $scope.user = user;
                 $scope.userCapturado = userCapturado;
-                console.log($scope.userCapturado);
+                //console.log($scope.userCapturado);
                 $scope.entradasHombre = 0;
                 $scope.entradasMujer = 0;
 
                 $scope.disminuirEntradasHombre = function (entradasHombre) {
                     if(entradasHombre == 0){
-                        console.log("no se puede disminiur mas");
+                        //console.log("no se puede disminiur mas");
                     }else {
-                        console.log("funciona")
+                        //console.log("funciona")
                         $scope.entradasHombre -= 1;
                     }
                 };
                 $scope.disminuirEntradasMujer = function (entradasMujer) {
                     if(entradasMujer == 0){
-                        console.log("no se puede disminiur mas");
+                        //console.log("no se puede disminiur mas");
                     }else {
-                        console.log("funciona")
+                        //console.log("funciona")
                         $scope.entradasMujer -= 1;
                     }
 
                 };
                 $scope.aumentarEntradasHombre = function () {
-                        console.log("funciona")
+                        //console.log("funciona")
                         $scope.entradasHombre += 1;
 
 
                 };
                 $scope.aumentarEntradasMujer = function () {
-                        console.log("funciona")
+                        //console.log("funciona")
                         $scope.entradasMujer += 1;
 
 

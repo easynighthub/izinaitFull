@@ -57,10 +57,10 @@ angular.module('myApp.eventPast', ['ngRoute'])
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
                         $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
-                        //console.log(adminLogeado);
+                        ////console.log(adminLogeado);
 
                         if (adminLogeado.idClubWork == false) {
-                            //console.log("entreeeeeeeeeeeeeeeeeeeeeeeee");
+                            ////console.log("entreeeeeeeeeeeeeeeeeeeeeeeee");
                             ObtenerClub(adminLogeado);
                         } else {
                             var clubNombreMostrar = [];
@@ -84,14 +84,14 @@ angular.module('myApp.eventPast', ['ngRoute'])
                         var eventsAdminRequest = $firebaseArray(eventosAdmin);
                         eventsAdminRequest.$loaded().then(function () {
                             $scope.Allvents = $filter('filter')(eventsAdminRequest, getFuturesEvents);
-                            //console.log($scope.Allvents);
+                            ////console.log($scope.Allvents);
                             if ($scope.Allvents.length == 0) {
                                 document.getElementById('noHayEventos').style.display = 'block';
                                 document.getElementById('BarraCargando').style.display = 'none';
                             }
                             if (eventsAdminRequest == undefined) {
                                 $('.no-js').removeClass('nav-open');
-                                //console.log("no cargo nada");
+                                ////console.log("no cargo nada");
                                 document.getElementById('noHayEventos').style.display = 'block';
                                 document.getElementById('BarraCargando').style.display = 'none';
 
@@ -142,10 +142,10 @@ angular.module('myApp.eventPast', ['ngRoute'])
                                             ticketServiceRQ.$loaded().then(function () {
 
 
-                                                //console.log(ticketServiceRQ);
+                                                ////console.log(ticketServiceRQ);
                                                 $scope.tickets = ticketServiceRQ;
 
-                                                console.log($scope.tickets);
+                                                //console.log($scope.tickets);
 
                                                 $scope.tickets.forEach(function (k){
                                                     if(k.paidOut){
@@ -169,7 +169,7 @@ angular.module('myApp.eventPast', ['ngRoute'])
 
 
                                         $scope.eventsWithServices.push(x);
-                                        //console.log($scope.eventsWithServices);
+                                        ////console.log($scope.eventsWithServices);
                                     });
                                 });
 
@@ -209,15 +209,15 @@ angular.module('myApp.eventPast', ['ngRoute'])
 
 
             function dialogControllerSelecionarClub($scope, $mdDialog, $timeout, $q, $log, adminLogeadoRecibido, clubsCargados) {
-                //console.log(clubsCargados);
-                //console.log(adminLogeadoRecibido);
+                ////console.log(clubsCargados);
+                ////console.log(adminLogeadoRecibido);
                 $scope.clubs = clubsCargados;
 
                 $scope.clubsSelecionados = [];
 
                 $scope.selecionarClubs = function (club) {
                     club.selecionado = !club.selecionado;
-                    //console.log($scope.clubs);
+                    ////console.log($scope.clubs);
                 };
 
                 $scope.aceptarClub = function () {
@@ -252,7 +252,7 @@ angular.module('myApp.eventPast', ['ngRoute'])
             };
 
             var ObtenerClub = function (adminLogeadoRecibido) {
-                //console.log(adminLogeadoRecibido.clubs);
+                ////console.log(adminLogeadoRecibido.clubs);
 
                 if (adminLogeadoRecibido.clubs == undefined) {
                     var clubsCargados = [];
@@ -294,12 +294,12 @@ angular.module('myApp.eventPast', ['ngRoute'])
             };
 
             function dialogControllerAdministrarClub($scope, $mdDialog, $timeout, $q, $log, adminLogeadoRecibido, clubsParaAdministrar) {
-                //console.log(clubsParaAdministrar);
-                //console.log(adminLogeadoRecibido);
+                ////console.log(clubsParaAdministrar);
+                ////console.log(adminLogeadoRecibido);
                 $scope.clubs = clubsParaAdministrar;
 
                 $scope.administrarClub = function (club) {
-                    //console.log(club);
+                    ////console.log(club);
 
                     firebase.database().ref('admins/' + adminLogeadoRecibido.$id).update(
                         {idClubWork: club.uid});

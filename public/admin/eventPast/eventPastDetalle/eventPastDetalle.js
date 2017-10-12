@@ -43,7 +43,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
             var eventCargadoRQ = $firebaseObject(eventCargado);
             eventCargadoRQ.$loaded().then(function () {
                 event =eventCargadoRQ;
-                             console.log(eventCargadoRQ);
+                             //console.log(eventCargadoRQ);
 
             })
 
@@ -62,7 +62,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                         var rrppsAdmin = firebase.database().ref('events/' +  eventId +'/rrpps');
                         var rrppsAdminRQ = $firebaseArray(rrppsAdmin);
                         rrppsAdminRQ.$loaded().then(function () {
-                            console.log(rrppsAdminRQ);
+                            //console.log(rrppsAdminRQ);
                             $scope.rrppsAdminRQ = rrppsAdminRQ;
 
                         });
@@ -111,7 +111,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                                             rrppsRQ.$loaded().then(function () {
                                                 puerta.$loaded().then(function () {
                                                     usersRQ.$loaded().then(function () {
-                                                    console.log(puerta);
+                                                    //console.log(puerta);
                                                     $scope.puerta = puerta;
 
                                                     $scope.totalDineroServicios = 0;
@@ -149,8 +149,8 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                                                 $scope.listaGratis.forEach(function (x) {
 
                                                     $scope.totalListasGratis = $scope.totalListasGratis + x.totalAsist;
-                                                    console.log( Object.keys(x));
-                                                    console.log(x.ingresos);
+                                                    //console.log( Object.keys(x));
+                                                    //console.log(x.ingresos);
                                                     var ultimoIngreso = 0;
                                                     if(x.ingresos){
                                                         angular.forEach(x.ingresos,function (ingreso) {
@@ -172,7 +172,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
 
                                                 });
 
-                                                console.log($scope.datosTotalesRRPP);
+                                                //console.log($scope.datosTotalesRRPP);
 
 
 
@@ -192,7 +192,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                                                     rrpp.cantidadDeMesas = 0;
                                                         $scope.listaGratis.forEach(function (x) {
                                                             if (rp.uid == x.idRRPP) {
-                                                                console.log("hola");
+                                                                //console.log("hola");
                                                                 rrpp.listaTotal = rrpp.listaTotal + x.totalAsist;
                                                                 rrpp.cantidadDeCheckIn += x.totalAsist;
                                                                 $scope.checkInTotales += x.totalAsist;
@@ -204,7 +204,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
 
                                                             if(t.tipoEventservices == 'Preventa')
                                                             {
-                                                                console.log(t);
+                                                                //console.log(t);
                                                             }
 
                                                             if (rp.uid == t.rrppid) {
@@ -341,7 +341,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
 
                                     $scope.ticketUtilizados = 0;
                                     $scope.serviciosEvent.forEach(function (j) {
-                                        console.log("tipo de servicio")
+                                        //console.log("tipo de servicio")
                                         j.utilizados = 0;
                                         $scope.ticketsEvent.forEach(function (x) {
 
@@ -415,7 +415,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
             $scope.getNombreRRPP = function (idRRPP) {
                 if (idRRPP) {
                     var rrppKey = idRRPP;
-                    ////console.log(idRRPP);
+                    //////console.log(idRRPP);
                     return $filter('filter')($scope.rrppsAdminRQ,  {uid :rrppKey})[0].name;
                 };
 

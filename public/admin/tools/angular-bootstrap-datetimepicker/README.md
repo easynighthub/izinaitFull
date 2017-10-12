@@ -168,8 +168,8 @@ passing in the selected value and previous value.
 This function will be called when the user selects a value on the minView.
 ```javascript
 $scope.onTimeSet = function (newDate, oldDate) {
-    console.log(newDate);
-    console.log(oldDate);
+    //console.log(newDate);
+    //console.log(oldDate);
 }
 ```
 

@@ -49,7 +49,7 @@ angular.module('myApp.doorman', ['ngRoute'])
 
             firebase.database().ref('doormans/').child(doorman.$id || doorman.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
-                //console.log(exists);
+                ////console.log(exists);
 
                 if (exists == true) {
                     var ref = firebase.database().ref('/doormans/').child(doorman.$id || doorman.uid);
@@ -63,7 +63,7 @@ angular.module('myApp.doorman', ['ngRoute'])
 
                         if (doormanLogeado.events) {
                             $scope.eventsId = Object.keys(doormanLogeado.events);
-                            /////console.log($scope.eventsId);
+                            ///////console.log($scope.eventsId);
 
                             newEventFB.$loaded().then(function () {
                                 $scope.allEvents = newEventFB;
@@ -71,7 +71,7 @@ angular.module('myApp.doorman', ['ngRoute'])
                                     $scope.eventsId.forEach(function (x) {
                                         if (j.$id == x) {
                                             $scope.events.push(j);
-                                            //console.log($scope.events);
+                                            ////console.log($scope.events);
                                         }
                                         ;
                                     });
@@ -87,7 +87,7 @@ angular.module('myApp.doorman', ['ngRoute'])
                 } else {
                     window.currentDoorman = "";
                     doormanLogeado = "";
-                    //console.log(window.currentDoorman + " NO ENTRE");
+                    ////console.log(window.currentDoorman + " NO ENTRE");
                 }
                 ;
 
@@ -103,10 +103,10 @@ angular.module('myApp.doorman', ['ngRoute'])
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
                         $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
-                        ////console.log(adminLogeado);
+                        //////console.log(adminLogeado);
 
                         if (adminLogeado.idClubWork == false) {
-                            ////console.log("entreeeeeeeeeeeeeeeeeeeeeeeee");
+                            //////console.log("entreeeeeeeeeeeeeeeeeeeeeeeee");
                             ObtenerClub(adminLogeado);
                         } else {
                             var clubNombreMostrar = [];
@@ -130,13 +130,13 @@ angular.module('myApp.doorman', ['ngRoute'])
                         var eventsAdminRequest = $firebaseArray(eventosAdmin);
                         eventsAdminRequest.$loaded().then(function () {
                             $scope.Allvents = $filter('filter')(eventsAdminRequest, getFuturesEvents);
-                            ////console.log($scope.Allvents);
+                            //////console.log($scope.Allvents);
                             if ($scope.Allvents.length == 0) {
                                 document.getElementById('noHayEventos').style.display = 'block';
                             }
                             if (eventsAdminRequest == undefined) {
                                 $('.no-js').removeClass('nav-open');
-                                ////console.log("no cargo nada");
+                                //////console.log("no cargo nada");
                                 document.getElementById('noHayEventos').style.display = 'block';
 
                             } else {
@@ -153,7 +153,7 @@ angular.module('myApp.doorman', ['ngRoute'])
                                             var ticketServices = firebase.database().ref('/tickets/' + x.$id);
                                             var ticketServiceRQ = $firebaseArray(ticketServices);
                                             ticketServiceRQ.$loaded().then(function () {
-                                                ////console.log(ticketServiceRQ);
+                                                //////console.log(ticketServiceRQ);
                                                 $scope.tickets = ticketServiceRQ;
                                                 $scope.tickets.forEach(function (k) {
                                                     if (j.$id == k.ideventservices) {
@@ -165,7 +165,7 @@ angular.module('myApp.doorman', ['ngRoute'])
                                         });
 
                                         $scope.eventsWithServices.push(x);
-                                        ////console.log($scope.eventsWithServices);
+                                        //////console.log($scope.eventsWithServices);
                                     });
                                 });
 

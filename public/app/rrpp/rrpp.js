@@ -22,14 +22,14 @@ angular.module('myApp.rrpp', ['ngRoute'])
 
           //  var eventId = $routeParams.id;
             var nickName = window.location.href.split("#")[2];
-            ////console.log(nickName);
+            //////console.log(nickName);
             $scope.club = [];
             $scope.events = [];
             $('.main-raised').css("margin-top", "-20px");
 
             firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
-                ////console.log(exists);
+                //////console.log(exists);
 
 
 
@@ -39,18 +39,18 @@ angular.module('myApp.rrpp', ['ngRoute'])
                     $scope.rrppCon = usersLocal;
                     usersLocal.$loaded().then(function () {
                         usuarioLogeado = usersLocal;
-                        //console.log(usuarioLogeado);
+                        ////console.log(usuarioLogeado);
                         //  $('.user-header .imagen').text(usersLocal.picture);
                         $('.codigoAcceder').text("Tú Codigo");
                         //  $('.codigoAcceder').prepend($('<img>',{id:'theImg',src:usuarioLogeado.picture}))
-                        //console.log(window.currentApp + " ENTRE");
+                        ////console.log(window.currentApp + " ENTRE");
                         $(navigationexample).removeClass("in");
                     });
                 } else {
                     window.currentApp = "";
                     usuarioLogeado = "";
                     $('.codigoAcceder').text("acceder");
-                    //console.log(window.currentApp + " NO ENTRE");
+                    ////console.log(window.currentApp + " NO ENTRE");
                     $(navigationexample).removeClass( "in" );
                 };
 
@@ -65,23 +65,23 @@ angular.module('myApp.rrpp', ['ngRoute'])
             buscarNickNameRequest.$loaded().then(function () {
                 $scope.todoslosRRpps = buscarNickNameRequest;
                 $scope.rrpps = $scope.todoslosRRpps;
-                //console.log($scope.rrpps);
+                ////console.log($scope.rrpps);
                 buscarNickName.once("value").then(function (snapshot) {
                     $scope.rrpps.forEach(function (data) {
                         var c = snapshot.child(data.$id + '/nickName/').exists(); // true
 
-                        //console.log(data.$id);
-                        //console.log(data.nickName);
+                        ////console.log(data.$id);
+                        ////console.log(data.nickName);
                         if (data.nickName == nickName) {
                             var getRrpp = $firebaseObject(firebase.database().ref().child('rrpps/' + data.$id));
-                            //console.log("entre a buscar el rrpp por el id " + getRrpp );
+                            ////console.log("entre a buscar el rrpp por el id " + getRrpp );
                             getRrpp.$loaded().then(function () {
                                 $scope.rrpp = getRrpp;
                                 if($scope.rrpp.name =='izinait')
                                 {
                                     document.getElementById("foto").src = "../logo160.png";
                                 }
-                                ////console.log("entre a buscar los eventos del rrpp")
+                                //////console.log("entre a buscar los eventos del rrpp")
                                 getEvents();
                             });
                         }
@@ -128,7 +128,7 @@ angular.module('myApp.rrpp', ['ngRoute'])
                     // });
 
 
-                    //console.log("el rrpp no tiene eventos")
+                    ////console.log("el rrpp no tiene eventos")
                 }
 
             };
@@ -140,7 +140,7 @@ angular.module('myApp.rrpp', ['ngRoute'])
                     if(visible = event.visible){
 
                         $scope.events.push(event);
-                        //console.log("=================== se muestra")
+                        ////console.log("=================== se muestra")
                         return true;
                     }
                 }
@@ -157,7 +157,7 @@ angular.module('myApp.rrpp', ['ngRoute'])
             };
 
             $scope.goEventRRpp = function(event) {
-                //console.log(event + "log click");
+                ////console.log(event + "log click");
                 $rootScope.selectedEvent = event;
                 location.href = "#!/detalleEvento?id="+event.$id+'&friend='+$scope.rrpp.$id;
 

@@ -57,8 +57,8 @@ signInButtonFacebook.addEventListener('click', function() {
         // The signed-in user info.
         user = result.user;
 
-        console.log(token);
-        console.log(user);
+        //console.log(token);
+        //console.log(user);
 
         firebase.auth().onAuthStateChanged(onAuthStateChanged);
     }).catch(function(error) {
@@ -194,7 +194,7 @@ ingresarAdmin.addEventListener('click', function() {
 
     firebase.auth().signInWithEmailAndPassword(email, password).then(
         function(s){
-            console.log(s);
+            //console.log(s);
             firebase.database().ref('/admins/' + s.uid).once('value').then(function(snapshot) {
                 if (snapshot.val() != null)
                     window.location.href = 'admin';
@@ -206,7 +206,7 @@ ingresarAdmin.addEventListener('click', function() {
             });
         },
         function(e) {
-            console.log(e);
+            //console.log(e);
             alert('ESTE USUARIO NO EXISTE EN NUESTRA BASE DE DATOS, PONGA SE ENCONTACTO CON IZINAIT');
             document.getElementById('BarraCargando').style.display = 'none';
             document.getElementById('signIn').style.display = 'block';

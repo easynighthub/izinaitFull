@@ -24,7 +24,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
             var patt = new RegExp('firebase:authUser:');
             if(patt.test(str)){
                 window.currentRRPP = JSON.parse(localStorage.getItem(str));
-                console.log(window.currentRRPP);
+                //console.log(window.currentRRPP);
                 return true;
             }
         }
@@ -33,11 +33,11 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
     if(validateUser()) {
         $routeProvider.otherwise({redirectTo: '/view1'});
-        console.log(window.currentRRPP);
+        //console.log(window.currentRRPP);
     } else {
         $routeProvider.otherwise({redirectTo: '/view1'});
         window.currentRRPP ="";
-        console.log(window.currentRRPP);
+        //console.log(window.currentRRPP);
     }
 
 

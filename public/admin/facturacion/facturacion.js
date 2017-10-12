@@ -52,10 +52,10 @@ angular.module('myApp.facturacion', ['ngRoute'])
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
-                        console.log(adminLogeado);
+                        //console.log(adminLogeado);
                         $scope.adminLogeado = adminLogeado;
                         $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
-                        //console.log(adminLogeado);
+                        ////console.log(adminLogeado);
 
 
                         if (adminLogeado.idClubWork == false) {

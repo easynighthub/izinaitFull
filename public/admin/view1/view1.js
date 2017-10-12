@@ -38,7 +38,7 @@ angular.module('myApp.view1', ['ngRoute'])
             $('.main-panel').perfectScrollbar('update');
             $('.smartbanner').addClass('hide');
 
-            console.log(admin);
+            //console.log(admin);
 
             firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
@@ -51,10 +51,10 @@ angular.module('myApp.view1', ['ngRoute'])
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
                         $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
-                        //console.log(adminLogeado);
+                        ////console.log(adminLogeado);
 
                         if (adminLogeado.idClubWork == false) {
-                            //console.log("entreeeeeeeeeeeeeeeeeeeeeeeee");
+                            ////console.log("entreeeeeeeeeeeeeeeeeeeeeeeee");
                             ObtenerClub(adminLogeado);
                         } else {
                             var clubNombreMostrar = [];
@@ -80,13 +80,13 @@ angular.module('myApp.view1', ['ngRoute'])
                         var eventsAdminRequest = $firebaseArray(eventosAdmin);
                         eventsAdminRequest.$loaded().then(function () {
                             $scope.Allvents = $filter('filter')(eventsAdminRequest, getFuturesEvents);
-                            //console.log($scope.Allvents);
+                            ////console.log($scope.Allvents);
                             if ($scope.Allvents.length == 0) {
                                 document.getElementById('noHayEventos').style.display = 'block';
                             }
                             if (eventsAdminRequest == undefined) {
                                 $('.no-js').removeClass('nav-open');
-                                //console.log("no cargo nada");
+                                ////console.log("no cargo nada");
                                 document.getElementById('noHayEventos').style.display = 'block';
                                 $('.tituloIziboss').text("Eventos Futuros");
                             } else {
@@ -103,7 +103,7 @@ angular.module('myApp.view1', ['ngRoute'])
                                             var ticketServices = firebase.database().ref('/tickets/' + x.$id);
                                             var ticketServiceRQ = $firebaseArray(ticketServices);
                                             ticketServiceRQ.$loaded().then(function () {
-                                                //console.log(ticketServiceRQ);
+                                                ////console.log(ticketServiceRQ);
                                                 $scope.tickets = ticketServiceRQ;
                                                 $scope.tickets.forEach(function (k) {
                                                     if (j.$id == k.ideventservices) {
@@ -115,7 +115,7 @@ angular.module('myApp.view1', ['ngRoute'])
                                         });
 
                                         $scope.eventsWithServices.push(x);
-                                        //console.log($scope.eventsWithServices);
+                                        ////console.log($scope.eventsWithServices);
                                     });
                                 });
 
@@ -145,7 +145,7 @@ angular.module('myApp.view1', ['ngRoute'])
                 // if (currentDay < value.toHour){
                 if ($scope.eventosFuturoFecha < value.toHour) {
                     if (Object.keys(value.clubs) == adminLogeado.idClubWork) {
-                        console.log(Object.keys(value.clubs));
+                        //console.log(Object.keys(value.clubs));
                         return true;
                     }
                 }
@@ -156,15 +156,15 @@ angular.module('myApp.view1', ['ngRoute'])
 
 
             function dialogControllerSelecionarClub($scope, $mdDialog, $timeout, $q, $log, adminLogeadoRecibido, clubsCargados) {
-                //console.log(clubsCargados);
-                //console.log(adminLogeadoRecibido);
+                ////console.log(clubsCargados);
+                ////console.log(adminLogeadoRecibido);
                 $scope.clubs = clubsCargados;
 
                 $scope.clubsSelecionados = [];
 
                 $scope.selecionarClubs = function (club) {
                     club.selecionado = !club.selecionado;
-                    //console.log($scope.clubs);
+                    ////console.log($scope.clubs);
                 };
 
                 $scope.aceptarClub = function () {
@@ -199,7 +199,7 @@ angular.module('myApp.view1', ['ngRoute'])
             };
 
             var ObtenerClub = function (adminLogeadoRecibido) {
-                //console.log(adminLogeadoRecibido.clubs);
+                ////console.log(adminLogeadoRecibido.clubs);
 
                 if (adminLogeadoRecibido.clubs == undefined) {
                     var clubsCargados = [];
@@ -241,12 +241,12 @@ angular.module('myApp.view1', ['ngRoute'])
             };
 
             function dialogControllerAdministrarClub($scope, $mdDialog, $timeout, $q, $log, adminLogeadoRecibido, clubsParaAdministrar) {
-                //console.log(clubsParaAdministrar);
-                //console.log(adminLogeadoRecibido);
+                ////console.log(clubsParaAdministrar);
+                ////console.log(adminLogeadoRecibido);
                 $scope.clubs = clubsParaAdministrar;
 
                 $scope.administrarClub = function (club) {
-                    //console.log(club);
+                    ////console.log(club);
 
                     firebase.database().ref('admins/' + adminLogeadoRecibido.$id).update(
                         {idClubWork: club.uid});

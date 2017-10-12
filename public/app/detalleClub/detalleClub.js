@@ -22,23 +22,23 @@ angular.module('myApp.detalleClub', ['ngRoute'])
 
             firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
-                console.log(exists);
+                //console.log(exists);
 
                 if (exists == true) {
                     var ref = firebase.database().ref('/users/').child(user.$id || user.uid);
                     var usersLocal = $firebaseObject(ref);
                     usersLocal.$loaded().then(function () {
                         usuarioLogeado = usersLocal;
-                        console.log(usuarioLogeado);
+                        //console.log(usuarioLogeado);
                         //  $('.user-header .imagen').text(usersLocal.picture);
                         $('.codigoAcceder').text("Tú Codigo");
-                        console.log(window.currentApp + " ENTRE");
+                        //console.log(window.currentApp + " ENTRE");
                     });
                 } else {
                     window.currentApp = "";
                     $scope.usuarioLogeado = "";
                     $('.codigoAcceder').text("acceder");
-                    console.log(window.currentApp + " NO ENTRE");
+                    //console.log(window.currentApp + " NO ENTRE");
                 };
 
             });
@@ -81,7 +81,7 @@ angular.module('myApp.detalleClub', ['ngRoute'])
             };
 
             $scope.goEvent = function (event) {
-                console.log(event + "log click");
+                //console.log(event + "log click");
                 $rootScope.selectedEvent = event;
                 location.href = "#!/detalleEvento?id=" + event.$id;
             };
@@ -99,11 +99,11 @@ angular.module('myApp.detalleClub', ['ngRoute'])
                     dataType: 'jsonp',
                     success: function (json) {
                         setInstagramScope(json.items);
-                        console.log(json.items);
+                        //console.log(json.items);
                     },
                     error: function (response) {
-                        console.log("Error");
-                        console.log(response);
+                        //console.log("Error");
+                        //console.log(response);
                     }
                 });
             }

@@ -109,14 +109,14 @@
 			} 
 			/*if (!empty(options.height) && !empty(options.width) && !empty($(element).innerHeight() && !empty($(element).innerWidth()))) {
 				//all sizes are filled in
-				console.log(options.width)
-				console.log(options.height)
-				console.log(options.width / options.height)
+				//console.log(options.width)
+				//console.log(options.height)
+				//console.log(options.width / options.height)
 				
-				console.log($(element).outerWidth())
-				console.log($(element).outerHeight())
+				//console.log($(element).outerWidth())
+				//console.log($(element).outerHeight())
 				
-				console.log($(element).outerWidth() / $(element).outerHeight())
+				//console.log($(element).outerWidth() / $(element).outerHeight())
 				
 				if ((options.width / options.height) != ($(element).outerWidth() / $(element).outerHeight())) {
 					$(element).empty().attr('class','').addClass('alert alert-danger').html('HTML5 Upload Image: The ratio of all sizes (CSS and image) are not the same...');
@@ -275,7 +275,7 @@
 		        var reader = new FileReader();
 		        
 		        reader.onload = (function(theFile) {
-		        	//console.log(theFile);
+		        	////console.log(theFile);
 		        	return function(e) {
 		        		$(element).find('img').remove(); 
 		        		_self.readImage(reader.result, e.target.result, theFile.name, theFile.type);
@@ -295,7 +295,7 @@
 			
 			var img 		= new Image;
     		img.onload 		= function(tmp) {
-    			//console.log(tmp);
+    			////console.log(tmp);
     			var imgElement		= $('<img src="' + src + '" name="' + name + '" />');
     			var width, height, useWidth, useHeight, ratio, elementRatio;
     			
@@ -614,7 +614,7 @@
 	            imageObj.src = $(image).attr('src');
 	            
 	            if (options.saveOriginal === true) {
-	            	//console.log($(image).attr('src'));
+	            	////console.log($(image).attr('src'));
 	            	obj			= $.extend({original: $(image).attr('src')}, obj);
 	            }
 	            
@@ -805,14 +805,14 @@
 			}
 			
 			if (!empty(image)) {
-				//console.log(image.offset());
+				////console.log(image.offset());
 				$(image).css({left: $(image).css('left').replace(/[^-\d\.]/g, '') * factor + 'px', top: $(image).css('top').replace(/[^-\d\.]/g, '')  * factor + 'px'})
 				$(image).width($(image).width() * factor);
 				$(image).height($(image).height()  * factor);
 				
 				_self._ghost();
 			}
-			//console.log('resize plugin');
+			////console.log('resize plugin');
 			return true;
 		},
 /*		rotate: function(degrees) {

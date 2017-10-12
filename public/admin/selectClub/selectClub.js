@@ -36,14 +36,14 @@ angular.module('myApp.selectClub', ['ngRoute'])
 
             firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
-                console.log(exists);
+                //console.log(exists);
                 if (exists == true) {
                     var ref = firebase.database().ref('/admins/').child(admin.$id || admin.uid);
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
                         $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
-                        console.log(adminLogeado);
+                        //console.log(adminLogeado);
                         if(adminLogeado.idClubWork == false){
                             ObtenerClub (adminLogeado);
                         }else{
@@ -76,15 +76,15 @@ angular.module('myApp.selectClub', ['ngRoute'])
 
 
             function dialogControllerSelecionarClub($scope, $mdDialog, $timeout, $q, $log,adminLogeadoRecibido ,clubsCargados) {
-                console.log(clubsCargados);
-                console.log(adminLogeadoRecibido);
+                //console.log(clubsCargados);
+                //console.log(adminLogeadoRecibido);
                 $scope.clubs = clubsCargados;
 
                 $scope.clubsSelecionados = [];
 
                 $scope.selecionarClubs = function (club) {
                     club.selecionado = !club.selecionado;
-                    console.log($scope.clubs);
+                    //console.log($scope.clubs);
                 };
 
                 $scope.aceptarClub = function () {
@@ -118,7 +118,7 @@ angular.module('myApp.selectClub', ['ngRoute'])
             };
 
             var ObtenerClub = function (adminLogeadoRecibido) {
-                console.log(adminLogeadoRecibido.clubs);
+                //console.log(adminLogeadoRecibido.clubs);
 
                 if(adminLogeadoRecibido.clubs == undefined){
                     var clubsCargados = [];
@@ -161,12 +161,12 @@ angular.module('myApp.selectClub', ['ngRoute'])
             };
 
             function dialogControllerAdministrarClub($scope, $mdDialog, $timeout, $q, $log,adminLogeadoRecibido ,clubsParaAdministrar) {
-                console.log(clubsParaAdministrar);
-                console.log(adminLogeadoRecibido);
+                //console.log(clubsParaAdministrar);
+                //console.log(adminLogeadoRecibido);
                 $scope.clubs = clubsParaAdministrar;
 
                 $scope.administrarClub = function (club) {
-                    console.log(club);
+                    //console.log(club);
 
                     firebase.database().ref('admins/' + adminLogeadoRecibido.$id).update(
                         {idClubWork:club.uid});

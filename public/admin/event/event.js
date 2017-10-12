@@ -27,7 +27,7 @@ angular.module('myApp.event', ['ngRoute'])
 
             $scope.rrpps = [];
             var eventIdSelect = localStorage.getItem('eventIdSelect');
-            //console.log(eventIdSelect);
+            ////console.log(eventIdSelect);
             var eventId = $routeParams.id || eventIdSelect; // id del evento entregador por url
             var eventoCompleto = [];
             $scope.code = '';
@@ -59,7 +59,7 @@ angular.module('myApp.event', ['ngRoute'])
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
                         $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
-                        ////console.log(adminLogeado);
+                        //////console.log(adminLogeado);
 
                     });
                 } else {
@@ -74,7 +74,7 @@ angular.module('myApp.event', ['ngRoute'])
 
             firebase.database().ref('events/').child(eventId).once('value', function (snapshot) {
                 eventoCompleto = snapshot.val();
-                //console.log(Object.keys(eventoCompleto.clubs)[0]);
+                ////console.log(Object.keys(eventoCompleto.clubs)[0]);
             });
 
 
@@ -83,23 +83,23 @@ angular.module('myApp.event', ['ngRoute'])
 
             firebase.database().ref('doormans/').child(doorman.$id || doorman.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
-                //console.log(exists);
+                ////console.log(exists);
 
                 if (exists == true) {
                     var ref = firebase.database().ref('/doormans/').child(doorman.$id || doorman.uid);
                     var doormLocal = $firebaseObject(ref);
                     doormLocal.$loaded().then(function () {
                         doormanLogeado = doormLocal;
-                        //console.log(doormanLogeado);
+                        ////console.log(doormanLogeado);
 
 
                         firebase.database().ref('events/').child(eventId + '/rrpps/noRRPP').once('value', function (snapshot) {
                             var exists = (snapshot.val() !== null);
 
-                            console.log(snapshot.val());
-                            console.log(exists);
+                            //console.log(snapshot.val());
+                            //console.log(exists);
                             if(!exists){
-                                console.log(exists);
+                                //console.log(exists);
                                 firebase.database().ref('events/' + eventId + '/rrpps/noRRPP').update({
                                     name: 'Sin RR.PP',
                                     uid: 'noRRPP',
@@ -113,12 +113,12 @@ angular.module('myApp.event', ['ngRoute'])
                         var listaGratis = $firebaseArray(firebase.database().ref('/events/' + eventId + '/asist'));
                         listaGratis.$loaded().then(function () {
                             $scope.AllListaGratis = listaGratis;
-                            //console.log($scope.AllListaGratis);
+                            ////console.log($scope.AllListaGratis);
                             $scope.listaGratis = $scope.AllListaGratis;
 
                             if ($scope.code != "") {
                                 $scope.listaGratis = $filter('filter')($scope.AllListaGratis, {$id: $scope.code});
-                                //console.log($scope.code);
+                                ////console.log($scope.code);
                             };
 
                             var tickets = $firebaseArray(firebase.database().ref('/tickets/' + eventId));
@@ -136,7 +136,7 @@ angular.module('myApp.event', ['ngRoute'])
 
                                 if ($scope.code != "") {
                                     $scope.ticketsObtenidos = $filter('filter')($scope.AllticketsObtenidos, {userId: $scope.code});
-                                    ////console.log($scope.code);
+                                    //////console.log($scope.code);
                                 }
                                 ;
                             });
@@ -151,7 +151,7 @@ angular.module('myApp.event', ['ngRoute'])
                 } else {
                     window.currentDoorman = "";
                     doormanLogeado = "";
-                    //console.log(window.currentDoorman + " NO ENTRE");
+                    ////console.log(window.currentDoorman + " NO ENTRE");
                 }
                 ;
 
@@ -242,15 +242,15 @@ angular.module('myApp.event', ['ngRoute'])
 
 
             function ControllerdialogCobrarServicio($scope, $mdDialog, $timeout, $q, $log, ticketObtenido, user) {
-                console.log(ticketObtenido);
+                //console.log(ticketObtenido);
                 $scope.doormanLogeado = doormanLogeado;
-                console.log(user);
+                //console.log(user);
                 $scope.user = user;
                 $scope.ticketObtenido = ticketObtenido;
-                console.log($scope.ticketObtenido);
+                //console.log($scope.ticketObtenido);
                 $scope.precioIndividual = $scope.ticketObtenido.totalAPagar / $scope.ticketObtenido.cantidadDeCompra;
                 $scope.ingresosRestantes = $scope.ticketObtenido.cantidadDeCompra - $scope.ticketObtenido.cantidadUtilizada;
-                console.log($scope.precioIndividual);
+                //console.log($scope.precioIndividual);
                 $scope.entradasHombre = 0;
                 $scope.entradasMujer = 0;
                 var tipoDePago;
@@ -260,37 +260,37 @@ angular.module('myApp.event', ['ngRoute'])
                 $scope.userEdad = Math.floor(edadClient);
                 $scope.disminuirEntradasHombre = function (entradasHombre) {
                     if (entradasHombre == 0) {
-                        console.log("no se puede disminiur mas");
+                        //console.log("no se puede disminiur mas");
                     } else {
-                        console.log("funciona")
+                        //console.log("funciona")
                         $scope.entradasHombre -= 1;
                     }
                 };
                 $scope.disminuirEntradasMujer = function (entradasMujer) {
                     if (entradasMujer == 0) {
-                        console.log("no se puede disminiur mas");
+                        //console.log("no se puede disminiur mas");
                     } else {
-                        console.log("funciona")
+                        //console.log("funciona")
                         $scope.entradasMujer -= 1;
                     }
 
                 };
                 $scope.aumentarEntradasHombre = function (entradasHombre, entradasMujer) {
                     if (entradasHombre + entradasMujer < $scope.ingresosRestantes) {
-                        console.log("funciona")
+                        //console.log("funciona")
                         $scope.entradasHombre += 1;
                     } else {
-                        console.log("no se puede aumentar mas ");
+                        //console.log("no se puede aumentar mas ");
                     }
 
                 };
                 $scope.aumentarEntradasMujer = function (entradasHombre, entradasMujer) {
                     if (entradasHombre + entradasMujer < $scope.ingresosRestantes) {
-                        console.log("funciona")
+                        //console.log("funciona")
                         $scope.entradasMujer += 1;
 
                     } else {
-                        console.log("no se puede aumentar mas ");
+                        //console.log("no se puede aumentar mas ");
                     }
 
                 };
@@ -348,10 +348,10 @@ angular.module('myApp.event', ['ngRoute'])
                 $scope.obtenerTipoDePago = function (tipoPagoSelecionado) {
                     if (tipoDePago == tipoPagoSelecionado) {
                         tipoDePago = "";
-                        console.log(tipoDePago);
+                        //console.log(tipoDePago);
                     } else {
                         tipoDePago = tipoPagoSelecionado;
-                        console.log(tipoDePago);
+                        //console.log(tipoDePago);
                     }
                     ;
                 }
@@ -383,7 +383,7 @@ angular.module('myApp.event', ['ngRoute'])
             };
 
             $scope.AgregarPersonas = function (index, rrppSelect) {
-                //console.log(index + "  " + rrppSelect);
+                ////console.log(index + "  " + rrppSelect);
 
 
                 if(rrppSelect.uid == "noRRPP")
@@ -422,11 +422,11 @@ angular.module('myApp.event', ['ngRoute'])
                 } else {
                     $scope.rrppSelect = rrppSelect;
                     $scope.rrppSelectElejido = rrppSelect;
-                    console.log($scope.rrppSelectElejido);
+                    //console.log($scope.rrppSelectElejido);
                 }
                 ;
-                //console.log(index);
-                //console.log($scope.rrppSelect.uid);
+                ////console.log(index);
+                ////console.log($scope.rrppSelect.uid);
                 $scope.gratisHombre = 0;
                 $scope.valorGratisHombre = 0;
                 $scope.gratisMujer = 0;
@@ -442,7 +442,7 @@ angular.module('myApp.event', ['ngRoute'])
 
                 $scope.aumentargratisHombre = function (gratisHombre) {
                     if (gratisHombre >= 0) {
-                        //console.log("funciona")
+                        ////console.log("funciona")
                         $scope.gratisHombre += 1;
                     }
 
@@ -450,16 +450,16 @@ angular.module('myApp.event', ['ngRoute'])
 
                 $scope.disminuirgratisHombre = function (gratisHombre) {
                     if (gratisHombre == 0) {
-                        //console.log("no se puede disminiur menos");
+                        ////console.log("no se puede disminiur menos");
                     } else {
-                        //console.log("funciona")
+                        ////console.log("funciona")
                         $scope.gratisHombre -= 1;
                     }
                 };
 
                 $scope.aumentargratisMujer = function (gratisMujer) {
                     if (gratisMujer >= 0) {
-                        //console.log("funciona")
+                        ////console.log("funciona")
                         $scope.gratisMujer += 1;
                     }
 
@@ -467,16 +467,16 @@ angular.module('myApp.event', ['ngRoute'])
 
                 $scope.disminuirgratisgratisMujer = function (gratisMujer) {
                     if (gratisMujer == 0) {
-                        //console.log("no se puede disminiur menos");
+                        ////console.log("no se puede disminiur menos");
                     } else {
-                        //console.log("funciona")
+                        ////console.log("funciona")
                         $scope.gratisMujer -= 1;
                     }
                 };
 
                 $scope.aumentarExtraMujer = function (extraMujer) {
                     if (extraMujer >= 0) {
-                        //console.log("funciona")
+                        ////console.log("funciona")
                         $scope.extraMujer += 1;
                     }
 
@@ -484,16 +484,16 @@ angular.module('myApp.event', ['ngRoute'])
 
                 $scope.disminuirExtraMujer = function (extraMujer) {
                     if (extraMujer == 0) {
-                        //console.log("no se puede disminiur menos");
+                        ////console.log("no se puede disminiur menos");
                     } else {
-                        //console.log("funciona")
+                        ////console.log("funciona")
                         $scope.extraMujer -= 1;
                     }
                 };
 
                 $scope.aumentarExtraHombre = function (extraHombre) {
                     if (extraHombre >= 0) {
-                        //console.log("funciona")
+                        ////console.log("funciona")
                         $scope.extraHombre += 1;
                     }
 
@@ -501,16 +501,16 @@ angular.module('myApp.event', ['ngRoute'])
 
                 $scope.disminuirExtraHombre = function (extraHombre) {
                     if (extraHombre == 0) {
-                        //console.log("no se puede disminiur menos");
+                        ////console.log("no se puede disminiur menos");
                     } else {
-                        //console.log("funciona")
+                        ////console.log("funciona")
                         $scope.extraHombre -= 1;
                     }
                 };
 
                 $scope.aumentarVipHombre = function (vipHombre) {
                     if (vipHombre >= 0) {
-                        //console.log("funciona")
+                        ////console.log("funciona")
                         $scope.vipHombre += 1;
                     }
 
@@ -518,16 +518,16 @@ angular.module('myApp.event', ['ngRoute'])
 
                 $scope.disminuirVipHombre = function (vipHombre) {
                     if (vipHombre == 0) {
-                        //console.log("no se puede disminiur menos");
+                        ////console.log("no se puede disminiur menos");
                     } else {
-                        //console.log("funciona")
+                        ////console.log("funciona")
                         $scope.vipHombre -= 1;
                     }
                 };
 
                 $scope.aumentarVipMujer = function (vipMujer) {
                     if (vipMujer >= 0) {
-                        //console.log("funciona")
+                        ////console.log("funciona")
                         $scope.vipMujer += 1;
                     }
 
@@ -535,9 +535,9 @@ angular.module('myApp.event', ['ngRoute'])
 
                 $scope.disminuirVipMujer = function (vipMujer) {
                     if (vipMujer == 0) {
-                        //console.log("no se puede disminiur menos");
+                        ////console.log("no se puede disminiur menos");
                     } else {
-                        //console.log("funciona")
+                        ////console.log("funciona")
                         $scope.vipMujer -= 1;
                     }
                 };
@@ -563,7 +563,7 @@ angular.module('myApp.event', ['ngRoute'])
                             rrppId: $scope.rrppSelect.uid,
                             date: new Date().getTime()
                         };
-                    //console.log(puertaTicket);
+                    ////console.log(puertaTicket);
 
                     firebase.database().ref('events/' + eventId + '/puertaTickets/' + newIdPuerta).set(puertaTicket);
 
@@ -575,7 +575,7 @@ angular.module('myApp.event', ['ngRoute'])
                                 if (!lk.numeroTotal) {
                                     lk.numeroTotal = 0;
                                 }
-                                //console.log(lk);
+                                ////console.log(lk);
                                 lk.numeroTotal =
                                     lk.numeroTotal +
                                     $scope.extraMujer +
@@ -609,7 +609,7 @@ angular.module('myApp.event', ['ngRoute'])
 
             $scope.abrirListaGratis = function (userCapturado) {
                 var user = [];
-                //console.log(userCapturado);
+                ////console.log(userCapturado);
                 firebase.database().ref('users/').child(userCapturado.$id).once('value', function (snapshot) {
                     var exists = (snapshot.val() !== null);
                     if (exists) {
@@ -639,13 +639,13 @@ angular.module('myApp.event', ['ngRoute'])
 
 
             function ControllerdialogAbrirListaGratis($scope, $mdDialog, $timeout, $q, $log, userCapturado, user) {
-                console.log(userCapturado);
+                //console.log(userCapturado);
                 $scope.fechaFin = eventoCompleto.freemiumHour;
                 $scope.doormanLogeado = doormanLogeado;
-                console.log(user);
+                //console.log(user);
                 $scope.user = user;
                 $scope.userCapturado = userCapturado;
-                //console.log($scope.userCapturado);
+                ////console.log($scope.userCapturado);
                 $scope.entradasHombre = 0;
                 $scope.entradasMujer = 0;
 
@@ -655,29 +655,29 @@ angular.module('myApp.event', ['ngRoute'])
 
                 $scope.disminuirEntradasHombre = function (entradasHombre) {
                     if (entradasHombre == 0) {
-                        //console.log("no se puede disminiur mas");
+                        ////console.log("no se puede disminiur mas");
                     } else {
-                        //console.log("funciona")
+                        ////console.log("funciona")
                         $scope.entradasHombre -= 1;
                     }
                 };
                 $scope.disminuirEntradasMujer = function (entradasMujer) {
                     if (entradasMujer == 0) {
-                        //console.log("no se puede disminiur mas");
+                        ////console.log("no se puede disminiur mas");
                     } else {
-                        //console.log("funciona")
+                        ////console.log("funciona")
                         $scope.entradasMujer -= 1;
                     }
 
                 };
                 $scope.aumentarEntradasHombre = function () {
-                    //console.log("funciona")
+                    ////console.log("funciona")
                     $scope.entradasHombre += 1;
 
 
                 };
                 $scope.aumentarEntradasMujer = function () {
-                    //console.log("funciona")
+                    ////console.log("funciona")
                     $scope.entradasMujer += 1;
 
 
@@ -686,7 +686,7 @@ angular.module('myApp.event', ['ngRoute'])
                 $scope.guardarEntrada = function () {
 
                     var total = $scope.userCapturado.totalAsist + $scope.entradasHombre + $scope.entradasMujer;
-                    console.log($scope.userCapturado);
+                    //console.log($scope.userCapturado);
                     var nuevoIngreso = firebase.database().ref('events/' + eventId + '/asist' + $scope.userCapturado.$id + '/ingresos').push().key;
 
 
@@ -744,8 +744,8 @@ angular.module('myApp.event', ['ngRoute'])
             $scope.asistenciasTotales =0;
             var calcularAsistenciasTotales = function () {
                 $scope.asistenciasTotales =0;
-                 console.log($scope.listaGratis);
-                console.log($scope.Allrrpps);   console.log($scope.ticketsObtenidos);
+                 //console.log($scope.listaGratis);
+                //console.log($scope.Allrrpps);   //console.log($scope.ticketsObtenidos);
 
                 $scope.listaGratis.forEach(function (x) {
                     $scope.asistenciasTotales += x.totalAsist;

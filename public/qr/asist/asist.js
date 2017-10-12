@@ -42,11 +42,11 @@ angular.module('myApp.asist', ['ngRoute'])
                 var doormanFB = $firebaseObject(ref);
                 doormanFB.$loaded().then(function () {
                     doormanLogeado = doormanFB;
-                    console.log(doormanLogeado);
-                    console.log(window.currentDoorman + " ENTRE");
+                    //console.log(doormanLogeado);
+                    //console.log(window.currentDoorman + " ENTRE");
                 });
             } else {
-                console.log(window.currentDoorman + " NO ENTRE");
+                //console.log(window.currentDoorman + " NO ENTRE");
             };
 
 

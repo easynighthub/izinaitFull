@@ -52,7 +52,7 @@ angular.module('myApp.clientes', ['ngRoute'])
 
             firebase.database().ref('admins/').child(admin.$id || admin.uid || 'offline').once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
-                //console.log(exists);
+                ////console.log(exists);
                 if (exists == true) {
                     var ref = firebase.database().ref('/admins/').child(admin.$id || admin.uid);
                     var adminLocal = $firebaseObject(ref);
@@ -60,7 +60,7 @@ angular.module('myApp.clientes', ['ngRoute'])
                         adminLogeado = adminLocal;
                         $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
 
-                        //console.log(adminLogeado);
+                        ////console.log(adminLogeado);
                         if (adminLogeado.idClubWork == false) {
                         } else {
                             var clubNombreMostrar = [];
@@ -81,9 +81,9 @@ angular.module('myApp.clientes', ['ngRoute'])
                         }
                         ;
                         firebase.database().ref('admins/' + adminLogeado.$id + '/clients').child(adminLogeado.idClubWork).once('value', function (snapshot) {
-                            ////console.log(snapshot.val());
+                            //////console.log(snapshot.val());
                             clientes = snapshot.val();
-                            console.log(clientes);
+                            //console.log(clientes);
                             if (clientes != null) {
                                 $scope.cantidadDeClientesPorClub = 0;
                                 $scope.cantidadDeHombres = 0;
@@ -142,7 +142,7 @@ angular.module('myApp.clientes', ['ngRoute'])
 
                 var lastDate = 1;
                 var EventAsists = 0;
-                //console.log(client);
+                ////console.log(client);
 
                 firebase.database().ref('users/').child(client.$id + '/events/' + adminLogeado.$id + '/' + adminLogeado.idClubWork).once('value', function (snapshot) {
                     var events = snapshot.val();
@@ -155,7 +155,7 @@ angular.module('myApp.clientes', ['ngRoute'])
                     client.lastDate = lastDate;
                     client.EventAsists = EventAsists;
                     $scope.clientes.push(client);
-                    //console.log($scope.clientes);
+
 
                 });
 
@@ -163,6 +163,7 @@ angular.module('myApp.clientes', ['ngRoute'])
             };
 
 
+            //console.log($scope.clientes +1);
             /* $scope.clientes.$loaded().then(function dtServicios() {
                  $('#dtClientes').DataTable(
                      {

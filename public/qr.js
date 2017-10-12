@@ -4,13 +4,13 @@ var _0xacbb=["\x41\x49\x7A\x61\x53\x79\x41\x4E\x34\x43\x4E\x45\x73\x78\x57\x5F\x
 loginDoorman.addEventListener('click', function () {
     var correoDoorman = document.getElementById('correoDoorman').value;
     var pwDoorman = document.getElementById('pwDoorman').value;
-    console.log(correoDoorman);
-    console.log(pwDoorman);
+    //console.log(correoDoorman);
+    //console.log(pwDoorman);
 
 
     firebase.auth().signInWithEmailAndPassword(correoDoorman, pwDoorman).then(
         function(s){
-            console.log(s);
+            //console.log(s);
             firebase.database().ref('/doormans/' + s.uid).once('value').then(function(snapshot) {
                 if (snapshot.val() != null)
                     window.location.href = 'qr';
@@ -21,7 +21,7 @@ loginDoorman.addEventListener('click', function () {
             });
         },
         function(e) {
-            console.log(e);
+            //console.log(e);
             alert('ESTE USUARIO NO EXISTE EN NUESTRA BASE DE DATOS, PONGA SE ENCONTACTO CON IZINAIT');
         }
     );

@@ -63,7 +63,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                         var rrppsAdmin = firebase.database().ref('admins/' + adminLogeado.$id  +'/rrpps');
                         var rrppsAdminRQ = $firebaseArray(rrppsAdmin);
                         rrppsAdminRQ.$loaded().then(function () {
-                            //console.log(rrppsAdminRQ);
+                            ////console.log(rrppsAdminRQ);
                             $scope.rrppsAdminRQ = rrppsAdminRQ;
                         });
 
@@ -254,7 +254,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             $scope.getNombreRRPP = function (idRRPP) {
                 if (idRRPP) {
                     var rrppKey = idRRPP;
-                    ////console.log(idRRPP);
+                    //////console.log(idRRPP);
                     return $filter('filter')($scope.rrppsAdminRQ,  {$id :rrppKey})[0].name;
                 };
 

@@ -23,26 +23,26 @@ angular.module('myApp.view1', ['ngRoute'])
 
             firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
-                console.log(exists);
+                //console.log(exists);
 
                 if (exists == true) {
                     var ref = firebase.database().ref('/users/').child(user.$id || user.uid);
                     var usersLocal = $firebaseObject(ref);
                     usersLocal.$loaded().then(function () {
                         usuarioLogeado = usersLocal;
-                        console.log(usuarioLogeado);
+                        //console.log(usuarioLogeado);
                         //  $('.user-header .imagen').text(usersLocal.picture);
                         $('.codigoAcceder').text("Tú Codigo");
                         $('.pruebacon').removeClass("contenedor");
                       //  $('.codigoAcceder').prepend($('<img>',{id:'theImg',src:usuarioLogeado.picture}))
-                        console.log(window.currentApp + " ENTRE");
+                        //console.log(window.currentApp + " ENTRE");
                         $(navigationexample).removeClass("in");
                     });
                 } else {
                     window.currentApp = "";
                     usuarioLogeado = "";
                     $('.codigoAcceder').text("acceder");
-                    console.log(window.currentApp + " NO ENTRE");
+                    //console.log(window.currentApp + " NO ENTRE");
                     $(navigationexample).removeClass( "in" );
                 };
 
@@ -56,7 +56,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
      /*  var users = $firebaseArray(firebase.database().ref().child('users'));
             users.$loaded().then(function () {
-                console.log(users);
+                //console.log(users);
                 users.forEach(function (x) {
 
                     firebase.database().ref('users/' + x.$id).update({
@@ -86,7 +86,7 @@ angular.module('myApp.view1', ['ngRoute'])
                               url: url,
                               crossOrigin: true,
                           }).then(function successCallback(response) {
-                              console.log(response);
+                              //console.log(response);
                               if(response.data.error != undefined){
                                   alert("ESTE CORREO YA EXISTE");
                               }
@@ -108,7 +108,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
                                   );
 
-                                  console.log("exito");
+                                  //console.log("exito");
                               };
                           }, function errorCallback(response) {
                           });
@@ -128,7 +128,7 @@ angular.module('myApp.view1', ['ngRoute'])
             clubsER.$loaded().then(function () {
                 var eventsRequest = $firebaseArray(firebase.database().ref().child('events').orderByChild('toHour').startAt(currentDay));
                 eventsRequest.$loaded().then(function () {
-                    console.log(eventsRequest);
+                    //console.log(eventsRequest);
                     $scope.Allvents = eventsRequest;
                     $scope.events = $scope.Allvents;
                     document.getElementById('BarraCargando').style.display = 'none';

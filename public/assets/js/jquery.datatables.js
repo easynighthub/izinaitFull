@@ -6436,7 +6436,7 @@
 			}
 		}
 		else if ( window.console && console.log ) {
-			console.log( msg );
+			//console.log( msg );
 		}
 	}
 

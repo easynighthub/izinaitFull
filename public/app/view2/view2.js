@@ -17,16 +17,16 @@ angular.module('myApp.view2', ['ngRoute'])
 
             firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
-                console.log(exists);
+                //console.log(exists);
                 if (exists == true) {
                     var ref = firebase.database().ref('/users/').child(user.$id || user.uid);
                     var usersLocal = $firebaseObject(ref);
                     usersLocal.$loaded().then(function () {
                         usuarioLogeado = usersLocal;
-                        console.log( usuarioLogeado);
+                        //console.log( usuarioLogeado);
                         //  $('.user-header .imagen').text(usersLocal.picture);
                         $('.codigoAcceder').text("Tú Codigo");
-                        console.log(window.currentApp + " ENTRE");
+                        //console.log(window.currentApp + " ENTRE");
                         $(navigationexample).removeClass( "in" );
                     });
                 } else {
@@ -34,7 +34,7 @@ angular.module('myApp.view2', ['ngRoute'])
                     window.currentApp = "";
                     usuarioLogeado = "";
                     $('.codigoAcceder').text("acceder");
-                    console.log(window.currentApp + " NO ENTRE");
+                    //console.log(window.currentApp + " NO ENTRE");
                     $(navigationexample).removeClass( "in" );
                 };
 
@@ -76,8 +76,8 @@ angular.module('myApp.view2', ['ngRoute'])
 
             // boton para entrar al club y ver detalles
             $scope.goToClubDetails = function(club) {
-                console.log(club);
-                console.log("==============================");
+                //console.log(club);
+                //console.log("==============================");
                 $rootScope.selectedClub = club;
                 location.href = "#!/detalleClub?id="+club.$id;
             }

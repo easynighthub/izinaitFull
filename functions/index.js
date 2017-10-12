@@ -65,7 +65,7 @@ exports.createUserQvo = functions.https.onRequest((req, res) => {
             return res.json();
         })
         .then(function (body) {
-        console.log(body);
+        //console.log(body);
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.status(200).send(body);
         return body;
@@ -88,11 +88,11 @@ exports.agregarTarjetaUsuarioQvo = functions.https.onRequest((req, res) => {
             return_url: "https://izinait.com/app#!/codigo"
         })
     }).then(function (response) {
-        console.log(response)
+        //console.log(response)
         return response.json();
     }).then(function (body) {
-        console.log(body);
-        console.log(res);
+        //console.log(body);
+        //console.log(res);
         res.setHeader('Access-Control-Allow-Origin', 'https://izinait.com');
         res.status(200).send(body);
         //return res.redirect(303, body.redirect_url);
@@ -113,10 +113,10 @@ exports.obtenerUnaInscripcionDeTarjeta = functions.https.onRequest((req, res) =>
 
         }
     }).then(function (response) {
-        console.log(response)
+        //console.log(response)
         return response.json();
     }).then(function (body) {
-        console.log(body);
+        //console.log(body);
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.status(200).send(body);
         //return res.redirect(303, body.redirect_url);
@@ -142,16 +142,16 @@ exports.cobrarTarjetaDeCredito = functions.https.onRequest((req, res) => {
             description : "hola"
         })
     }).then(function (response) {
-        console.log(response)
+        //console.log(response)
         return response.json();
     }).then(function (body) {
         res.setHeader('Access-Control-Allow-Origin', '*');
-        console.log(body);
+        //console.log(body);
         res.status(200).send(body);
         return body;
 
     }).then(function (ok) {
-        console.log(ok);
+        //console.log(ok);
     });
 
 });
@@ -168,14 +168,14 @@ exports.ComprobarCompraConWebPayPlus = functions.https.onRequest((req, res) => {
             'Content-Type': 'application/json'
         }
     }).then(function(response) {
-        console.log(response);
+        //console.log(response);
         return response.json();
     }).then(function (body) {
 
         res.setHeader('Access-Control-Allow-Origin', '*');
         if(body.status == 'successful')
         {
-            console.log(body);
+            //console.log(body);
 
             admin.database().ref("/userQvo/" + userId + "/charges/"+body.id).set(body);
             admin.database().ref("/tickets/" + eventId +"/"+ticketId).update({
@@ -222,15 +222,15 @@ exports.cobrarConWebPayPlus = functions.https.onRequest((req, res) => {
 
         })
     }).then(function (response) {
-        console.log(response)
+        //console.log(response)
         return response.json();
     }).then(function (body) {
         res.setHeader('Access-Control-Allow-Origin', '*');
-        console.log(body);
+        //console.log(body);
         res.status(200).send(body);
         return body;
     }).then(function (ok) {
-        console.log(ok);
+        //console.log(ok);
     });
 
 });
@@ -245,14 +245,14 @@ exports.consultarUsuarioQvo = functions.https.onRequest((req, res) => {
         }
     }).then(function (res) {
         return res.json();
-        console.log(res.json());
-        console.log("NETRE AL RES");
+        //console.log(res.json());
+        //console.log("NETRE AL RES");
     }).then(function (body) {
-        console.log(body);
+        //console.log(body);
         res.status(200).send(body);
         return body
     }).then(function (ok) {
-        console.log("ok");
+        //console.log("ok");
     });
 });
 exports.eliminarTarjetaQvo = functions.https.onRequest((req, res) => {
@@ -269,9 +269,9 @@ exports.eliminarTarjetaQvo = functions.https.onRequest((req, res) => {
     }).then(function (res) {
         res.setHeader('Access-Control-Allow-Origin', '*');
         return res.json();
-        console.log(res.json());
+        //console.log(res.json());
     }).then(function (body) {
-        console.log(body);
+        //console.log(body);
 
         res.status(200).send(body);
     });
@@ -286,14 +286,14 @@ exports.detalleEvento = functions.https.onRequest((req, res) => {
     var url = "";
     var urlTest = "";
 
-    console.log(id +" " + friend);
+    //console.log(id +" " + friend);
 
 
     return admin.database().ref(`/events/${id}`).once('value').then(snapshot => {
         const eventCapturado = snapshot.val();
         var rrppSelect = "";
 
-        console.log(eventCapturado);
+        //console.log(eventCapturado);
         if(friend != undefined){
             admin.database().ref(`/rrpps/${friend}`).once('value').then(snapshot => {
                 const rrppCapturado = snapshot.val();
@@ -356,7 +356,7 @@ exports.detalleEvento = functions.https.onRequest((req, res) => {
                 }else{
 
 
-                console.log(rrppCapturado);
+                //console.log(rrppCapturado);
                 rrppSelect = rrppCapturado.name;
                     urlTest = "https://izinait.com/detalleEvento?id=" + id +"&friend=" + rrppCapturado.uid;
                 url = "https://izinait.com/app/#!/detalleEvento?id=" + id +"&friend=" + rrppCapturado.uid;
@@ -488,7 +488,7 @@ exports.detalleEvento = functions.https.onRequest((req, res) => {
 exports.crearUsuarioQvo = functions.database.ref('/userQvo/{userId}')
     .onWrite(event => {
         // Grab the current value of what was written to the Realtime Database.
-        console.log(event.data.val());
+        //console.log(event.data.val());
         const data = event.data.val();
 
 
@@ -504,14 +504,14 @@ exports.crearUsuarioQvo = functions.database.ref('/userQvo/{userId}')
         })
             .then(function (res) {
                 return res.json();
-                console.log(res.json());
-                console.log("NETRE AL RES");
+                //console.log(res.json());
+                //console.log("NETRE AL RES");
             }).then(function (body) {
-            console.log(body);
+            //console.log(body);
             return admin.database().ref("/userQvo/" + data.uid + "/customer_id").set(body.id);
 
         }).then(function (ok) {
-            console.log("ok");
+            //console.log("ok");
         });
     }); */
 /*
@@ -529,7 +529,7 @@ exports.addMessagess = functions.https.onRequest((req, res) => {
 exports.agregarTarjeta = functions.database.ref('/userQvo/{userId}/tarjeta')
     .onWrite(event => {
         // Grab the current value of what was written to the Realtime Database.
-        console.log(event.data.val());
+        //console.log(event.data.val());
         const data = event.data.val();
 
 
@@ -544,14 +544,14 @@ exports.agregarTarjeta = functions.database.ref('/userQvo/{userId}/tarjeta')
                 return_url: "https://izinait.com/app"
             })
         }).then(function (response) {
-            console.log(response)
+            //console.log(response)
             return response.json();
         }).then(function (body) {
-            console.log(body);
+            //console.log(body);
             return body;
 
         }).then(function (ok) {
-            console.log(ok);
+            //console.log(ok);
         });
 
     });
@@ -572,8 +572,8 @@ exports.addMessagess2 = functions.https.onRequest((req, res) => {
             return_url: "http://izinait.com/app"
         })
     }).then(function (response) {
-        console.log(response);
-        console.log(response.json());
+        //console.log(response);
+        //console.log(response.json());
     });
 // Push the new message into the Realtime Database using the Firebase Admin SDK.
 
@@ -582,7 +582,7 @@ exports.addMessagess2 = functions.https.onRequest((req, res) => {
 
 exports.correoCompraTicket = functions.database.ref('/tickets/{eventId}/{userId}').onWrite(event => {
 
-    console.log(event.data.val());
+    //console.log(event.data.val());
     const datos = event.data.val();
     const email = datos.email;
     const displayName = "andro ostoic";
@@ -606,9 +606,9 @@ exports.sendWelcomeEmail = functions.database.ref('/users/{users}').onWrite(even
             }
     }
 
-    console.log(event.data.val());
-    console.log(event.data);
-    console.log(event);
+    //console.log(event.data.val());
+    //console.log(event.data);
+    //console.log(event);
 
 
     //if(email != 'null@izinait.com'){
@@ -624,7 +624,7 @@ exports.sendWelcomeEmail = functions.database.ref('/users/{users}').onWrite(even
 exports.makeUppercase = functions.database.ref('/messages/{pushId}/email')
     .onWrite(event => {
         // Grab the current value of what was written to the Realtime Database.
-        console.log(event.data);
+        //console.log(event.data);
         const data = "andro.ostoic@gmail.com";
 
         fetch('https://playground.qvo.cl/customers', {
@@ -639,9 +639,9 @@ exports.makeUppercase = functions.database.ref('/messages/{pushId}/email')
         })
             .then(function (res) {
                 return res.json();
-                console.log(res.json());
+                //console.log(res.json());
             }).then(function (json) {
-            console.log(json);
+            //console.log(json);
         });
     }); */
 
@@ -650,7 +650,7 @@ exports.makeUppercase = functions.database.ref('/messages/{pushId}/email')
 exports.obtenerCliente = functions.database.ref('/messages/{pushId}/email2')
     .onWrite(event => {
         // Grab the current value of what was written to the Realtime Database.
-        console.log(event.data);
+        //console.log(event.data);
         const data = "androstoic@gmail.com";
 
         fetch('https://playground.qvo.cl/customers/cus_kVf3XE91uyZOD_VV3LKNtA', {
@@ -660,10 +660,10 @@ exports.obtenerCliente = functions.database.ref('/messages/{pushId}/email2')
             }
         })
             .then(function (res) {
-                console.log(res.json());
+                //console.log(res.json());
                 return res.json();
             }).then(function (body) {
-            console.log(body);
+            //console.log(body);
             return admin.database().ref(`/qvo_customers/${data.uid}/customer_id`).set(customer.id);
         });
 
@@ -683,7 +683,7 @@ exports.obtenerClienteQvo = functions.https.onRequest((req, res) => {
             'Content-Type': 'application/json'
         }
     }).then(function (response) {
-        console.log(response);
+        //console.log(response);
     });
 
 });
@@ -702,13 +702,13 @@ function sendWelcomeEmail(datos) {
     var clubCapturado;
     var direccionClub ="";
     var linkQr;
-    console.log(datos.userId);
+    //console.log(datos.userId);
 
    admin.database().ref(`/events/${datos.eventId}`).once('value').then(snapshot => {
        eventCapturado = snapshot.val();
         linkFoto = eventCapturado.image;
         nombreEvento = eventCapturado.name;
-        console.log(eventCapturado);
+        //console.log(eventCapturado);
 
        var utcSeconds = datos.date;
        var fechaCompraInicial = new Date(0); // The 0 there is the key, which sets the date to the epoch
@@ -736,7 +736,7 @@ function sendWelcomeEmail(datos) {
                if (err) throw err
 
                linkQr = url;
-               console.log(linkQr);
+               //console.log(linkQr);
 
 
 
@@ -1012,7 +1012,7 @@ function sendWelcomeEmail(datos) {
                mailOptions.subject = `Gracias por tu compra, ${APP_NAME}!`;
                mailOptions.text = ``;
                return mailTransport.sendMail(mailOptions).then(() => {
-                   console.log('New welcome email sent t1111111o:', datos.email);
+                   //console.log('New welcome email sent t1111111o:', datos.email);
                });
            });
 
@@ -1267,14 +1267,14 @@ function sendWelcome(datos){
     mailOptions.subject = `Bienvenido a izinait!`;
     mailOptions.text = ``;
     return mailTransport.sendMail(mailOptions).then(() => {
-        console.log('nuevo usuario registrado :', datos.email);
+        //console.log('nuevo usuario registrado :', datos.email);
     });
 
 
 
 
     exports.prueba = function(){
-        console.log(prueba);
+        //console.log(prueba);
     }
 
 };

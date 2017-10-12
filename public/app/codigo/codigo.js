@@ -34,14 +34,14 @@ angular.module('myApp.codigo', ['ngRoute'])
 
             firebase.database().ref('users/').child(user.$id || user.uid || 'offline' ).once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
-                console.log(exists);
+                //console.log(exists);
                 if (exists == true) {
                     var ref = firebase.database().ref('/users/').child(user.$id || user.uid);
                     var usersLocal = $firebaseObject(ref);
                     usersLocal.$loaded().then(function () {
                         $scope.usuarioLogeado = usersLocal;
                         window.currentApp = usersLocal;
-                        console.log( $scope.usuarioLogeado);
+                        //console.log( $scope.usuarioLogeado);
                         update_qrcode();
                         $scope.nombre = $scope.usuarioLogeado.displayName;
                         $scope.email = $scope.usuarioLogeado.email;
@@ -53,7 +53,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                         var userQvo = firebase.database().ref('/userQvo/').child( $scope.usuarioLogeado.$id);
                         var userQvoRQ = $firebaseObject(userQvo);
                         userQvoRQ.$loaded().then(function () {
-                            console.log(userQvoRQ);
+                            //console.log(userQvoRQ);
                             $scope.userQvoRQ = userQvoRQ;
 
 
@@ -76,9 +76,9 @@ angular.module('myApp.codigo', ['ngRoute'])
                                     url: url,
                                     crossOrigin: true,
                                 }).then(function successCallback(response) {
-                                    console.log(response);
+                                    //console.log(response);
                                     if(response.data.status == "succeeded"){
-                                        console.log(response.data.status);
+                                        //console.log(response.data.status);
 
                                         firebase.database().ref('userQvo/' +$scope.usuarioLogeado.$id+'/cards/'+  response.data.card.id).set(
                                             response.data.card);
@@ -145,13 +145,13 @@ angular.module('myApp.codigo', ['ngRoute'])
                 var qvo = firebase.database().ref('userQvo/').child($scope.usuarioLogeado.$id);
                 var userQvo = $firebaseObject(qvo);
                 userQvo.$loaded().then(function () {
-                    console.log(userQvo);
+                    //console.log(userQvo);
                     userQvoSelect = userQvo;
-                    console.log(userQvoSelect);
+                    //console.log(userQvoSelect);
                     return userQvoSelect;
 
                 }).then(function (userQvoSelect) {
-                    console.log(userQvoSelect);
+                    //console.log(userQvoSelect);
                     firebase.database().ref('userQvo/' + $scope.usuarioLogeado.$id +'/tarjeta').set({
                         userQvo : userQvoSelect.customer_id,
                         tarjeta : true
@@ -197,7 +197,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                          url: url,
                          crossOrigin: true,
                      }).then(function successCallback(response) {
-                         console.log(response);
+                         //console.log(response);
                          location.href = response.data.redirect_url ;
                          // this callback will be called asynchronously
                          // when the response is available
@@ -221,7 +221,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                          url: url,
                          crossOrigin: true,
                      }).then(function successCallback(response) {
-                         console.log(response);
+                         //console.log(response);
                          if(response.data.error != undefined){
                              alert("ESTE CORREO YA EXISTE");
                          }
@@ -329,8 +329,8 @@ angular.module('myApp.codigo', ['ngRoute'])
                     token = result.credential.accessToken;
                     // The signed-in user info.
                     user = result.user;
-                    console.log(token);
-                    console.log(user);
+                    //console.log(token);
+                    //console.log(user);
 
                     firebase.auth().onAuthStateChanged(onAuthStateChanged);
                 }).catch(function(error) {
@@ -423,7 +423,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                             $scope.nombre = $scope.usuarioLogeado.displayName;
                             $scope.email = $scope.usuarioLogeado.email;
                             $scope.foto = $scope.usuarioLogeado.picture;
-                                console.log("entre hasta aca");
+                                //console.log("entre hasta aca");
 
                             $scope.confirmarCorreo($scope.usuarioLogeado);
                             document.getElementById('codigoVisibile').style.display = 'block';
@@ -439,12 +439,12 @@ angular.module('myApp.codigo', ['ngRoute'])
                     usersRef.child(userId).once('value', function(snapshot) {
                         var exists = (snapshot.val() !== null);
 
-                        console.log(exists);
+                        //console.log(exists);
                         if(exists == false){
 
                             userExistsCallback(exists, response);
                         }else {
-                            console.log(exists);
+                            //console.log(exists);
                             userExistsCallback(exists, response);
                         }
 
@@ -471,7 +471,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                         var usersTodosRQ = $firebaseArray(usersTodos);
                         usersTodosRQ.$loaded().then(function () {
 
-                            console.log(usersTodosRQ);
+                            //console.log(usersTodosRQ);
                             var contador = 0;
                             var existe = false ;
                             angular.forEach(usersTodosRQ ,function (usersRecorridos) {
@@ -479,14 +479,14 @@ angular.module('myApp.codigo', ['ngRoute'])
                                     existe = true;
                                 };
                                 contador+=1;
-                                console.log(contador + " es igual a " + usersTodosRQ.length);
+                                //console.log(contador + " es igual a " + usersTodosRQ.length);
 
                             });
 
                             if(contador == usersTodosRQ.length)
                             {
                                 if(existe != true){
-                                    console.log("no existe este correo");
+                                    //console.log("no existe este correo");
                                     firebase.database().ref('users/' + user.$id).update({
                                      email: result
                                     });
@@ -517,11 +517,11 @@ angular.module('myApp.codigo', ['ngRoute'])
                     var userQvo = firebase.database().ref('/userQvo/').child(user.$id);
                     var userQvoRQ = $firebaseObject(userQvo);
                     userQvoRQ.$loaded().then(function () {
-                        console.log(userQvoRQ);
+                        //console.log(userQvoRQ);
                         $scope.userQvoRQ = userQvoRQ;
                         if($scope.userQvoRQ.userQvoId != undefined){
                             // el usuario esta perfect.
-                            console.log("usuario perfecto");
+                            //console.log("usuario perfecto");
                         }else{
 
                             var url = "https://us-central1-project-8746388695669481444.cloudfunctions.net/createUserQvo?email="
@@ -534,7 +534,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                                 url: url,
                                 crossOrigin: true,
                             }).then(function successCallback(response) {
-                                console.log(response);
+                                //console.log(response);
                                 if(response.data.error != undefined){
                                     alert("ESTE CORREO YA EXISTE");
 
@@ -577,10 +577,10 @@ angular.module('myApp.codigo', ['ngRoute'])
             };
 
             $scope.eliminarTarjeta = function (card, userQvo) {
-                console.log("holaaaa");
+                //console.log("holaaaa");
                     if(card.id == userQvo.creditCardDefault){
-                       console.log("DEBE SELECIONAR OTRA TARJETA PREDETERMINADA ANTES DE BORRAR");
-                       console.log($scope.userQvoRQ.cards);
+                       //console.log("DEBE SELECIONAR OTRA TARJETA PREDETERMINADA ANTES DE BORRAR");
+                       //console.log($scope.userQvoRQ.cards);
 
                     }else {
                         var url = "https://us-central1-project-8746388695669481444.cloudfunctions.net/eliminarTarjetaQvo?userQvo="
@@ -593,7 +593,7 @@ angular.module('myApp.codigo', ['ngRoute'])
                             url: url,
                             crossOrigin: true,
                         }).then(function successCallback(response) {
-                            console.log(response);
+                            //console.log(response);
 
                         }, function errorCallback(response) {
                             firebase.database().ref('userQvo/' +$scope.usuarioLogeado.$id +'/cards/' + card.id ).set(null);
