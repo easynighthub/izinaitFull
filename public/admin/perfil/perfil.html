@@ -32,19 +32,19 @@
                         <div class="col-md-4">
                         <div class="form-group label-floating">
                             <label class="control-label">NickName</label>
-                            <input type="email" class="form-control" ng-model="adminLogeado.nickName">
+                            <input style="text-transform:lowercase;" type="text" class="form-control" ng-model="adminLogeado.nickName">
                         </div>
 
                     </div>
                         <div class="col-md-4">
                             <div class="form-group label-floating">
                                 <label class="control-label">Celular</label>
-                                <input type="email" class="form-control" ng-model="adminLogeado.celular">
+                                <input type="number" class="form-control" ng-model="adminLogeado.celular">
                             </div>
                         </div>
                     </div>
 
-                    <button  class="btn btn-rose pull-right" ng-click="actualizarNickName()">ACTUALIZAR</button>
+                    <button  class="btn btn-rose pull-right " ng-click="actualizarPerfil()">ACTUALIZAR</button>
                     <div class="clearfix"></div>
 
             </div>
@@ -64,12 +64,12 @@
                     {{club.nombre}} -eliminar-
 
                 </p>
-                <a href="#pablo" class="btn btn-rose btn-round">Agregar Club</a>
+                <a ng-click="agregarClub()" class="btn btn-rose btn-round">Agregar Club</a>
             </div>
         </div>
     </div>
 
-    <div ng-show="adminLogeado.cuentaBancaria" class="col-md-12">
+    <div ng-show="adminLogeado.cuentaBancaria && !ver" class="col-md-12">
         <div class="card">
             <div class="card-header card-header-icon" data-background-color="rose">
                 <i class="material-icons">perm_identity</i>
@@ -84,30 +84,45 @@
                 <div class="row">
 
                     <div class="col-md-2">
+                        <p class="title">
+                          Banco :
+                        </p>
                         <p class="description">
                             {{cuentaBancaria.banco}}
 
                         </p>
                     </div>
                     <div class="col-md-2">
+                        <p class="title">
+                            Tipo de Cuenta :
+                        </p>
                         <p class="description">
                             {{cuentaBancaria.tipoDeCuenta}}
 
                         </p>
                     </div>
                     <div class="col-md-2">
+                        <p class="title">
+                            Rut :
+                        </p>
                         <p class="description">
                             {{cuentaBancaria.rut}}
 
                         </p>
                     </div>
                     <div class="col-md-2">
+                        <p class="title">
+                            N° de Cuenta :
+                        </p>
                         <p class="description">
                             {{cuentaBancaria.numeroCuenta}}
 
                         </p>
                     </div>
                     <div class="col-md-3">
+                        <p class="title">
+                            Nombre :
+                        </p>
                         <p class="description">
                             {{cuentaBancaria.nombre}}
 
@@ -115,7 +130,7 @@
                     </div>
 
                     <div class="col-md-1">
-                        <button  class="btn btn-rose pull-right" data-ng-click="actualizarClub()">ACTUALIZAR</button>
+                        <button  class="btn btn-rose pull-right" data-ng-click="editarCuentaBancaria()">EDITAR</button>
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -127,7 +142,7 @@
         </div>
     </div>
 
-    <div ng-show="!adminLogeado.cuentaBancaria " class="col-md-12">
+    <div ng-show="!adminLogeado.cuentaBancaria || ver" class="col-md-12">
         <div class="card">
             <div class="card-header card-header-icon" data-background-color="rose">
                 <i class="material-icons">perm_identity</i>
@@ -176,9 +191,9 @@
                         </div>
                     </div>
                 </div>
-                {{cuentaBancaria}}
 
-                <button  class="btn btn-rose pull-right" ng-click="actualizarPerfil()">ACTUALIZAR</button>
+
+                <button  class="btn btn-rose pull-right" ng-click="actualizarCuentaBancaria()">ACTUALIZAR</button>
                 <div class="clearfix"></div>
 
             </div>

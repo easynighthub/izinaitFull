@@ -36,6 +36,7 @@ angular.module('myApp.perfil', ['ngRoute'])
             $scope.eventosFuturoFecha = new Date().getTime();
             $scope.eventsWithServices = [];
             $scope.cuentaBancaria = {};
+            $scope.ver = false ;
 
             $(sideEventos).addClass("active");
             $(crearEventos).removeClass("active");
@@ -109,133 +110,40 @@ angular.module('myApp.perfil', ['ngRoute'])
             });
 
 
+$scope.agregarClub = function () {
+    swal({
+        title: "Estamos mejorando!",
+        text: "En esta version, no se puede agregar clubs manualmente, ponte en contacto con nosotros  contacto@izinait.com!",
+        buttonsStyling: true,
+        confirmButtonClass: "btn btn-warning",
+        type: "warning",
+    });
+}
 
 
 
-            function dialogControllerSelecionarClub($scope, $mdDialog, $timeout, $q, $log, adminLogeadoRecibido, clubsCargados) {
-                //console.log(clubsCargados);
-                //console.log(adminLogeadoRecibido);
-                $scope.clubs = clubsCargados;
 
-                $scope.clubsSelecionados = [];
-
-                $scope.selecionarClubs = function (club) {
-                    club.selecionado = !club.selecionado;
-                    //console.log($scope.clubs);
-                };
-
-                $scope.aceptarClub = function () {
-                    $scope.clubs.forEach(function (x) {
-                        if (x.selecionado == true) {
-                            firebase.database().ref('admins/' + adminLogeadoRecibido.$id + '/clubs/' + x.$id).update(
-                                {
-                                    uid: x.$id,
-                                    activoParaCrearEventos: true,
-                                    validado: false,
-                                    nombre: x.name
-                                });
-
-                        }
-                        ;
-                    });
-                    $mdDialog.hide();
-                    location.reload();
-
-                };
-
-                $scope.hide = function () {
-                    $mdDialog.hide();
-                };
-
-                $scope.cancel = function () {
-                    $mdDialog.cancel();
-
-                };
-
-
-            };
-
-            var ObtenerClub = function (adminLogeadoRecibido) {
-                //console.log(adminLogeadoRecibido.clubs);
-
-                if (adminLogeadoRecibido.clubs == undefined) {
-                    var clubsCargados = [];
-                    var clubsER = firebase.database().ref().child('clubs');
-                    $scope.clubsER = $firebaseArray(clubsER);
-                    $scope.clubsER.$loaded().then(function () {
-
-                        clubsCargados = $scope.clubsER;
-                        clubsCargados.forEach(function (x) {
-                            x.selecionado = false;
-                        });
-
-                        $mdDialog.show({
-                            controller: dialogControllerSelecionarClub,
-                            templateUrl: 'dialogSelecionarClub',
-                            parent: angular.element(document.body),
-                            clickOutsideToClose: true,
-                            locals: {
-                                adminLogeadoRecibido: adminLogeadoRecibido,
-                                clubsCargados: clubsCargados
-                            }
-                        });
-                    });
-
-
-                } else {
-                    var clubsParaAdministrar = adminLogeadoRecibido.clubs;
-                    $mdDialog.show({
-                        controller: dialogControllerAdministrarClub,
-                        templateUrl: 'dialogAdministrarClub',
-                        parent: angular.element(document.body),
-                        clickOutsideToClose: true,
-                        locals: {
-                            adminLogeadoRecibido: adminLogeadoRecibido,
-                            clubsParaAdministrar: clubsParaAdministrar
-                        }
-                    });
-                }
-            };
-
-            function dialogControllerAdministrarClub($scope, $mdDialog, $timeout, $q, $log, adminLogeadoRecibido, clubsParaAdministrar) {
-                //console.log(clubsParaAdministrar);
-                //console.log(adminLogeadoRecibido);
-                $scope.clubs = clubsParaAdministrar;
-
-                $scope.administrarClub = function (club) {
-                    //console.log(club);
-
-                    firebase.database().ref('admins/' + adminLogeadoRecibido.$id).update(
-                        {idClubWork: club.uid});
-                    $('.clubSelecionado').text(club.nombre);
-                    $mdDialog.hide();
-
-                };
-
-                $scope.hide = function () {
-                    $mdDialog.hide();
-                };
-
-                $scope.cancel = function () {
-                    $mdDialog.cancel();
-
-                };
-
-
-            };
-
-            $scope.actualizarPerfil = function () {
+            $scope.actualizarCuentaBancaria = function () {
                 console.log("llegue a guardar");
                 if($scope.cuentaBancaria.banco != ''){
                     if($scope.cuentaBancaria.tipoDeCuenta != ''){
                         if($scope.cuentaBancaria.nombre != ''){
                             if($scope.cuentaBancaria.numeroCuenta != ''){
                                 if($scope.cuentaBancaria.rut != ''){
+                                    $scope.ver = false ;
                             console.log("llegue a guardar");
                                     firebase.database().ref('admins/' + adminLogeado.$id + '/cuentaBancaria').set($scope.cuentaBancaria).then(
                                         function (s) {
                                             console.log('se guardaron bien los servicios ', s);
-                                            location.reload();
+
+                                            swal({
+                                                title: "Exelente!",
+                                                text: "Tu cuenta bancaria han sido actualizada exitosamente!",
+                                                buttonsStyling: true,
+                                                confirmButtonClass: "btn btn-success",
+                                                type: "success"
+                                            });
+
                                         }, function (e) {
                                             alert('Error, intente de nuevo');
                                             console.log('se guardo mal ', e);
@@ -253,9 +161,139 @@ angular.module('myApp.perfil', ['ngRoute'])
 
 
 
-            $scope.actualizarNickName = function () {
 
 
+            $scope.editarCuentaBancaria = function () {
+                $scope.ver = true ;
+            };
+
+
+
+            $scope.actualizarPerfil = function () {
+
+                var nickNameYaExiste = false ;
+                var cantidad = 0;
+                $scope.adminLogeado.nickName = $scope.adminLogeado.nickName.toLowerCase();
+                $scope.pasado = $scope.adminLogeado.nickName.toLowerCase();
+
+
+                var buscarNickname = firebase.database().ref('/nickName');
+                var buscarmeRequest = $firebaseArray(buscarNickname);
+                buscarmeRequest.$loaded().then(function () {
+                    $scope.nickNameSelect = buscarmeRequest;
+                    $scope.nickNameSelect.forEach(function (x) {
+
+                        //console.log("entre si mi nick estiste dentro de los rrpps");
+                        if(x.nickName == $scope.adminLogeado.nickName){
+                            nickNameYaExiste = true ;
+                        }
+
+                        //console.log(nickNameYaExiste);
+                        cantidad++;
+                        //console.log(cantidad);
+
+                        if(cantidad == $scope.nickNameSelect.length){
+                            //console.log("entra esta wea")
+                            $scope.function2();
+                        };
+
+                    });
+                });
+
+                $scope.function2 = function (){
+
+                    if(nickNameYaExiste != true){
+
+                        if($scope.adminLogeado.celular.toString().length > 7) {
+                            firebase.database().ref('admins/' + $scope.adminLogeado.$id).update(
+                                {
+                                    celular: $scope.adminLogeado.celular,
+                                });
+
+                            firebase.database().ref('rrpps/' + $scope.adminLogeado.$id).update(
+                                {
+                                    nickName: $scope.adminLogeado.nickName,
+                                    confirm : true,
+                                    email :$scope.adminLogeado.email
+                                });
+                            firebase.database().ref('nickName/' + $scope.adminLogeado.$id).update(
+                                {
+                                    nickName:$scope.adminLogeado.nickName,
+                                    uid :$scope.adminLogeado.$id
+                                });
+
+                            swal({
+                                title: "Exelente!",
+                                text: "Tus datos han sido actualizados exitosamente!",
+                                buttonsStyling: true,
+                                confirmButtonClass: "btn btn-success",
+                                type: "success",
+                            });
+
+                        }
+
+
+
+
+                    }else{
+
+                        if($scope.pasado ==  $scope.adminLogeado.nickName){
+
+                                if($scope.adminLogeado.celular.toString().length > 7){
+
+
+                                    firebase.database().ref('admins/' + $scope.adminLogeado.$id).update(
+                                        {
+                                            celular : $scope.adminLogeado.celular,
+                                        });
+                                    firebase.database().ref('rrpps/' + $scope.adminLogeado.$id).update(
+                                        {
+                                            nickName: $scope.adminLogeado.nickName,
+                                            confirm : true,
+                                            email :$scope.adminLogeado.email
+                                        });
+                                    firebase.database().ref('nickName/' + $scope.adminLogeado.$id).update(
+                                        {
+                                            nickName:$scope.adminLogeado.nickName,
+                                            uid :$scope.adminLogeado.$id
+                                        });
+
+                                    swal({
+                                        title: "Exelente!",
+                                        text: "Tus datos han sido actualizados exitosamente!",
+                                        buttonsStyling: true,
+                                        confirmButtonClass: "btn btn-success",
+                                        type: "success"
+                                    });
+
+
+                                }else {
+                                    swal({
+                                        title: "Hay algo mal!",
+                                        text: "El celular que ingresas es invalido !",
+                                        buttonsStyling: true,
+                                        confirmButtonClass: "btn btn-warning",
+                                        type: "warning"
+                                    });
+                                }
+
+
+
+
+                        }else{
+                            swal({
+                                title: "Hay algo mal!",
+                                text: "El nickname ya esta siendo utilizado por otra persona, intente con otro!",
+                                buttonsStyling: true,
+                                confirmButtonClass: "btn btn-warning",
+                                type: "warning"
+                            });
+                        }
+
+
+                    };
+
+                };
 
             };
 
