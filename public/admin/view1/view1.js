@@ -62,11 +62,13 @@ angular.module('myApp.view1', ['ngRoute'])
                             $scope.clubNombre = $firebaseArray(clubNombre);
                             $scope.clubNombre.$loaded().then(function () {
 
+
                                 clubNombreMostrar = $scope.clubNombre;
                                 clubNombreMostrar.forEach(function (x) {
                                     if (x.$id == adminLogeado.idClubWork) {
                                         $('.clubSelecionado').text(x.name + " ");
                                         $(".clubSelecionado").append("<b class='caret'> </b>");
+                                        $(sidebar).css("background-image", x.clubLogo);
                                     }
                                     ;
                                 });

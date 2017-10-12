@@ -1,5 +1,10 @@
 <meta name="smartbanner:enabled-platforms" content="android,ios">
-
+<center>
+    <div style="display: none" id="noHayEventos">
+        <i class="fa fa-calendar-times-o" style="font-size: 200px" aria-hidden="true"></i>
+        <h2>Actualmente no hay eventos asignados.</h2>
+    </div>
+</center>
 <div class="row">
     <div class="col-md-4" ng-repeat="event in eventsWithServices | orderBy:'date'"
          ng-show="event.toHour > eventosFuturoFecha">

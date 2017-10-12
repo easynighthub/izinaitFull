@@ -43,6 +43,8 @@ angular.module('myApp.eventPast', ['ngRoute'])
             $(sideRrpp).removeClass("active");
             $(sideDoorman).removeClass("active");
             $(contenido).css("padding-top", "30px ");
+            $('.tituloIziboss').text("Eventos Pasados");
+
 
             $('.main-panel').perfectScrollbar('update');
 
@@ -93,7 +95,7 @@ angular.module('myApp.eventPast', ['ngRoute'])
                                 document.getElementById('noHayEventos').style.display = 'block';
                                 document.getElementById('BarraCargando').style.display = 'none';
 
-                                $('.tituloIziboss').text("Eventos Futuros");
+
                             } else {
                                 $('.no-js').removeClass('nav-open');
                                 $scope.tickets = [];
@@ -175,7 +177,6 @@ angular.module('myApp.eventPast', ['ngRoute'])
                             }
                             ;
 
-                            $('.tituloIziboss').text("Eventos Futuros");
 
 
                         });

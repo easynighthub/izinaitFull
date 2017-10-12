@@ -79,7 +79,7 @@ angular.module('myApp.doorman', ['ngRoute'])
                                 });
                             });
                         } else {
-                            alert("no tiene eventos asignado");
+                            document.getElementById('noHayEventos').style.display = 'block';
                         }
 
 
