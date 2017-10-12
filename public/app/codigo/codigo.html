@@ -22,7 +22,8 @@
     <br>
     <br>
     <div class="text-center col-md-4 col-xs-12 col-md-offset-4">
-        <a class="btn btn-success col-xs-12" style="background-color: black" ng-click="crearCliente()" data-toggle="tooltip" data-placement="top"
+        <a class="btn btn-success col-xs-12" style="background-color: black" ng-click="crearCliente()"
+           data-toggle="tooltip" data-placement="top"
            title="¡PAGINA SEGURA!">
             <i class="fa fa-credit-card" aria-hidden="true"></i>
             webpay <span style="color: #0ab1fc">ONE</span>CLICK
@@ -30,41 +31,55 @@
     </div>
     <br>
     <br>
-    <div class="col-md-8  text-center  col-xs-12" ng-show="userQvoRQ.userQvoId != undefined">
+    <div class="col-md-8  text-center  col-xs-12" ng-show="userQvoRQ.creditCardDefault == undefined">
 
 
         <div class="card col-md-12 table-responsive col-xs-12 col-md-offset-3">
-            <table class="col-md-12 col-xs-12 table">
-                <thead>
-                <tr class="text-primary">
-                    <th>Primaria</th>
-                    <th>Tipo</th>
-                    <th>Fecha Creación</th>
-                    <th>Ultimos Digitos</th>
-                    <th>Borrar</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="card in userQvoRQ.cards">
-                    <td class="text-left">
-                        <button  disabled ng-show="userQvoRQ.creditCardDefault == card.id" class="btn btn-sm " style="background-color: #340034">PREDETERMINADA</button>
-                        <button  ng-click="selecionarTarjeta(card)" ng-show="userQvoRQ.creditCardDefault != card.id" class="btn btn-sm " style="background-color: #fe0072">SELECIONAR</button>
-
-                    </td>
-                    <td class="text-left">{{card.card_type}}</td>
-                    <td class="text-left">{{card.created_at | date : 'dd MMM yy'}}</td>
-                    <td class="text-left">*** {{card.last_4_digits}}</td>
-                    <td class="text-left">
-                        <a style="color: red" href=""
-                           ng-click="eliminarTarjeta(card,userQvoRQ)" >
-                            <i class="material-icons pointer btn_rsvp_trash">delete_forever</i>
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <h2>No tienes tarjetas asociadas</h2>
         </div>
 
+    </div>
+    <div ng-show="userQvoRQ.creditCardDefault != undefined">
+        <div class="col-md-8  text-center  col-xs-12" ng-show="userQvoRQ.userQvoId != undefined">
+
+
+            <div class="card col-md-12 table-responsive col-xs-12 col-md-offset-3">
+                <table class="col-md-12 col-xs-12 table">
+                    <thead>
+                    <tr class="text-primary">
+                        <th>Primaria</th>
+                        <th>Tipo</th>
+                        <th>Fecha Creación</th>
+                        <th>Ultimos Digitos</th>
+                        <th>Borrar</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="card in userQvoRQ.cards">
+                        <td class="text-left">
+                            <button disabled ng-show="userQvoRQ.creditCardDefault == card.id" class="btn btn-sm "
+                                    style="background-color: #340034">PREDETERMINADA
+                            </button>
+                            <button ng-click="selecionarTarjeta(card)" ng-show="userQvoRQ.creditCardDefault != card.id"
+                                    class="btn btn-sm " style="background-color: #fe0072">SELECIONAR
+                            </button>
+
+                        </td>
+                        <td class="text-left">{{card.card_type}}</td>
+                        <td class="text-left">{{card.created_at | date : 'dd MMM yy'}}</td>
+                        <td class="text-left">*** {{card.last_4_digits}}</td>
+                        <td class="text-left">
+                            <a style="color: red" href=""
+                               ng-click="eliminarTarjeta(card,userQvoRQ)">
+                                <i class="material-icons pointer btn_rsvp_trash">delete_forever</i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
     </div>
     <div class="col-md-12  col-xs-12  text-center col-md-offset-3">
         <a id="salir" class="btn  col-md-3" style="background-color: #fe0072">
@@ -74,6 +89,7 @@
             <i class="fa fa-ticket" aria-hidden="true"></i> Tickets
         </a>
     </div>
+
 </div>
 
 

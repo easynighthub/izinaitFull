@@ -87,9 +87,8 @@
             <br>
 
             <br>
-            <p style="font-size: 20px; vertical-align: middle" class="teststyle"><i class="fa fa-money"
-                                                                                    style="font-size: 28px"
-                                                                                    aria-hidden="true"></i>
+            <p style="font-size: 20px; vertical-align: middle" class="teststyle">
+                <i class="fa fa-money" style="font-size: 28px" aria-hidden="true"></i>
                 Valor en Puerta: CPL <strong>$ {{event.entryValue | number:0}}</strong>
             </p>
 
@@ -380,9 +379,12 @@
             <h3 class="title text-center">Método de pago</h3>
 
             <div class="col-md-12 col-xs-12">
-                <button class="btn btn-primary btn-sm col-md-6 text-center"
-                        ng-show="userQvoRQ.creditCardDefault == undefined"> AGREGAR TARJETA DE CREDITO
-                </button>
+                <a class="btn btn-success col-xs-12" ng-show="userQvoRQ.creditCardDefault == undefined" style="background-color: black" ng-click="crearCliente()"
+                   data-toggle="tooltip" data-placement="top"
+                   title="¡PAGINA SEGURA!">
+                    <i class="fa fa-credit-card" aria-hidden="true"></i>
+                    webpay <span style="color: #0ab1fc">ONE</span>CLICK
+                </a>
             </div>
 
 
