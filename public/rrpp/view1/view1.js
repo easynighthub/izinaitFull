@@ -153,7 +153,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
                     var nickNameYaExiste = false ;
                     var cantidad = 0;
-
+                    $scope.nickName = $scope.nickName.toLowerCase();
 
 
                       var buscarNickname = firebase.database().ref('/nickName');
