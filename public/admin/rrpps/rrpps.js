@@ -43,7 +43,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
-                        $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
+                        //$('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
                         if (adminLogeado.idClubWork == false) {
                             ObtenerClub(adminLogeado);
                         } else {
@@ -57,6 +57,8 @@ angular.module('myApp.rrpps', ['ngRoute'])
                                     if (x.$id == adminLogeado.idClubWork) {
                                         $('.clubSelecionado').text(x.name + " ");
                                         $(".clubSelecionado").append("<b class='caret'> </b>");
+                                        $('.photo').prepend($('<img>', {id: 'theImg', src: x.clubLogo}));
+                                        $(theImg).css("height", "-webkit-fill-available");
                                     }
                                 });
                                 traerRRPPS(adminLogeado.idClubWork);

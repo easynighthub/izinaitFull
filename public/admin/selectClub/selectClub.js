@@ -42,7 +42,7 @@ angular.module('myApp.selectClub', ['ngRoute'])
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
-                        $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
+                        //$('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
                         //console.log(adminLogeado);
                         if(adminLogeado.idClubWork == false){
                             ObtenerClub (adminLogeado);
@@ -57,6 +57,8 @@ angular.module('myApp.selectClub', ['ngRoute'])
                                     if(x.$id == adminLogeado.idClubWork){
                                         $('.clubSelecionado').text(x.name +" ");
                                         $( ".clubSelecionado" ).append( "<b class='caret'> </b>" );
+                                        $('.photo').prepend($('<img>', {id: 'theImg', src: x.clubLogo}));
+                                        $(theImg).css("height", "-webkit-fill-available");
                                     }
                                 });
                             });

@@ -50,7 +50,7 @@ angular.module('myApp.view1', ['ngRoute'])
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
-                        $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
+
                         ////console.log(adminLogeado);
 
                         if (adminLogeado.idClubWork == false) {
@@ -68,7 +68,8 @@ angular.module('myApp.view1', ['ngRoute'])
                                     if (x.$id == adminLogeado.idClubWork) {
                                         $('.clubSelecionado').text(x.name + " ");
                                         $(".clubSelecionado").append("<b class='caret'> </b>");
-                                        $(sidebar).css("background-image", x.clubLogo);
+                                        $('.photo').prepend($('<img>', {id: 'theImg', src: x.clubLogo}));
+                                        $(theImg).css("height", "-webkit-fill-available");
                                     }
                                     ;
                                 });

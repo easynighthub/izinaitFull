@@ -58,7 +58,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
                         $scope.adminLogeado =adminLogeado;
-                        $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
+                        //$('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
 
                         var rrppsAdmin = firebase.database().ref('admins/' + adminLogeado.$id  +'/rrpps');
                         var rrppsAdminRQ = $firebaseArray(rrppsAdmin);
@@ -81,6 +81,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                     if (x.$id == adminLogeado.idClubWork) {
                                         $('.clubSelecionado').text(x.name + " ");
                                         $(".clubSelecionado").append("<b class='caret'> </b>");
+                                        $('.photo').prepend($('<img>', {id: 'theImg', src: x.clubLogo}));
+                                        $(theImg).css("height", "-webkit-fill-available");
                                     }
                                 });
                             });

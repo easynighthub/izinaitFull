@@ -183,7 +183,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
-                        $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
+                        //$('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
                         if (adminLogeado.idClubWork == false) {
                             ObtenerClub(adminLogeado);
                         } else {
@@ -202,6 +202,8 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                                         $scope.newEvent.lat = x.latitude;
                                         $scope.newEvent.lng = x.longitude;
                                         $scope.newEvent.admin = adminLogeado.$id;
+                                        $('.photo').prepend($('<img>', {id: 'theImg', src: x.clubLogo}));
+                                        $(theImg).css("height", "-webkit-fill-available");
 
                                             $scope.newEvent.id = firebase.database().ref().child('events/').push().key;
 
