@@ -57,19 +57,19 @@ angular.module('myApp.perfil', ['ngRoute'])
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
-                        //console.log(adminLogeado);
+                        console.log(adminLogeado);
                         $scope.adminLogeado = adminLogeado;
 
                         $scope.cuentaBancaria = $scope.adminLogeado.cuentaBancaria;
                         $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
-                        ////console.log(adminLogeado);
+                        //console.log(adminLogeado);
 
                         var buscarNickname = firebase.database().ref('/nickName');
                         var buscarmeRequest = $firebaseArray(buscarNickname);
                         buscarmeRequest.$loaded().then(function () {
                             $scope.nickNameSelect = buscarmeRequest;
                             $scope.nickNameSelect.forEach(function (x) {
-                                //console.log(x);
+                                console.log(x);
                                 if(x.$id == $scope.adminLogeado.$id){
                                     $scope.adminLogeado.nickName = x.nickName ;
                                 };
@@ -113,15 +113,15 @@ angular.module('myApp.perfil', ['ngRoute'])
 
 
             function dialogControllerSelecionarClub($scope, $mdDialog, $timeout, $q, $log, adminLogeadoRecibido, clubsCargados) {
-                ////console.log(clubsCargados);
-                ////console.log(adminLogeadoRecibido);
+                //console.log(clubsCargados);
+                //console.log(adminLogeadoRecibido);
                 $scope.clubs = clubsCargados;
 
                 $scope.clubsSelecionados = [];
 
                 $scope.selecionarClubs = function (club) {
                     club.selecionado = !club.selecionado;
-                    ////console.log($scope.clubs);
+                    //console.log($scope.clubs);
                 };
 
                 $scope.aceptarClub = function () {
@@ -156,7 +156,7 @@ angular.module('myApp.perfil', ['ngRoute'])
             };
 
             var ObtenerClub = function (adminLogeadoRecibido) {
-                ////console.log(adminLogeadoRecibido.clubs);
+                //console.log(adminLogeadoRecibido.clubs);
 
                 if (adminLogeadoRecibido.clubs == undefined) {
                     var clubsCargados = [];
@@ -198,12 +198,12 @@ angular.module('myApp.perfil', ['ngRoute'])
             };
 
             function dialogControllerAdministrarClub($scope, $mdDialog, $timeout, $q, $log, adminLogeadoRecibido, clubsParaAdministrar) {
-                ////console.log(clubsParaAdministrar);
-                ////console.log(adminLogeadoRecibido);
+                //console.log(clubsParaAdministrar);
+                //console.log(adminLogeadoRecibido);
                 $scope.clubs = clubsParaAdministrar;
 
                 $scope.administrarClub = function (club) {
-                    ////console.log(club);
+                    //console.log(club);
 
                     firebase.database().ref('admins/' + adminLogeadoRecibido.$id).update(
                         {idClubWork: club.uid});
@@ -225,20 +225,20 @@ angular.module('myApp.perfil', ['ngRoute'])
             };
 
             $scope.actualizarPerfil = function () {
-                //console.log("llegue a guardar");
+                console.log("llegue a guardar");
                 if($scope.cuentaBancaria.banco != ''){
                     if($scope.cuentaBancaria.tipoDeCuenta != ''){
                         if($scope.cuentaBancaria.nombre != ''){
                             if($scope.cuentaBancaria.numeroCuenta != ''){
                                 if($scope.cuentaBancaria.rut != ''){
-                            //console.log("llegue a guardar");
+                            console.log("llegue a guardar");
                                     firebase.database().ref('admins/' + adminLogeado.$id + '/cuentaBancaria').set($scope.cuentaBancaria).then(
                                         function (s) {
-                                            //console.log('se guardaron bien los servicios ', s);
+                                            console.log('se guardaron bien los servicios ', s);
                                             location.reload();
                                         }, function (e) {
                                             alert('Error, intente de nuevo');
-                                            //console.log('se guardo mal ', e);
+                                            console.log('se guardo mal ', e);
                                         }
                                     );
                                 }
@@ -254,6 +254,7 @@ angular.module('myApp.perfil', ['ngRoute'])
 
 
             $scope.actualizarNickName = function () {
+
 
 
             };
