@@ -82,6 +82,7 @@ signInButtonFacebook.addEventListener('click', function() {
             facebookId: response.id,
             lastName: response.last_name,
             gender : response.gender,
+            name: response.name,
             confirm : false,
             nickName:adminId
         });
