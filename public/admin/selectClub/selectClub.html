@@ -1,16 +1,46 @@
 <script id="dialogAdministrarClub" type="text/ng-template">
-    <div class="col-md-12">
-        <center>
-            <h6> QUE CLUB DESEAS ADMINISTRAR ?</h6>
+    <div class="row col-md-10 col-md-offset-2 ">
 
-            <div ng-repeat="club in clubs" ng-show="club.activoParaCrearEventos">
-                <button class="btn btn-sm btn-success" ng-click="administrarClub(club)"   aria-label="Checkbox 1">
-                    {{club.nombre}}
-                </button>
 
+        <div ng-repeat="club in clubs" class=" col-md-4"  ng-show="club.activoParaCrearEventos">
+
+            <div class="card card-product " style="background: transparent;box-shadow: none; opacity: 0.7;" ng-click="administrarClub(club)">
+                <div class="card-image">
+                    <img src="../assets/img/sidebar-33.jpg" class="img"
+                         style="height: 150px; transform: perspective(1000px);">
+                    <div style="top: 50%;    left: 0;    right: 0;bottom: 0;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;text-shadow: 0 2px 5px rgba(33, 33, 33, 0.5);"
+                         class="card-title center-block jvectormap-legend-tick-text">
+                        <h4 style="font-weight: 400">{{club.nombre}}</h4>
+                    </div>
+                </div>
             </div>
-        </center>
+        </div>
+
+
     </div>
+
+
+    <style>
+
+        .card-product:hover{
+            opacity: 1!important;
+        }
+
+        .overflow2 {
+            overflow: auto;
+            overflow-x: hidden;
+            overflow-y: auto;
+            box-shadow: none;
+            max-width: 100%;
+            border-radius: 12px;
+            padding: 0px 30px 30px 30px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 10px;
+            background: transparent;
+            text-align: center;
+        }
+    </style>
 
 
 </script>

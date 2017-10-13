@@ -153,6 +153,9 @@ angular.module('myApp.selectClub', ['ngRoute'])
                         controller: dialogControllerAdministrarClub,
                         templateUrl: 'dialogAdministrarClub',
                         parent: angular.element(document.body),
+                        onComplete: function () {
+                            $('._md').addClass('overflow2');
+                        },
                         clickOutsideToClose: true,
                         locals: {
                             adminLogeadoRecibido: adminLogeadoRecibido,

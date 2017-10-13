@@ -116,7 +116,7 @@
 
 .player-card {
 
-    height: auto;
+    height: 250px;
     background-color: white;
     border-radius: 5px;
     text-decoration: none;
@@ -301,7 +301,6 @@
     /* margin-top: 6px; */
     /* margin-bottom: 5px; */
     line-height: 17px;
-    height: auto;
     max-height: 147px;
 
 }
