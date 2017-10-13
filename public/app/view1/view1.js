@@ -8,7 +8,7 @@ angular.module('myApp.view1', ['ngRoute'])
                 controller: 'View1Ctrl',
                     data: {
                         meta: {
-                            'title': 'TODOS LOS EVENTOS',
+                            'title': 'Los Mejores Eventos',
                         }
                     }
             }
