@@ -195,6 +195,7 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                                 clubNombreMostrar = $scope.clubNombre;
                                 clubNombreMostrar.forEach(function (x) {
                                     if (x.$id == adminLogeado.idClubWork) {
+                                        $scope.nombreClubHtml = x.name;
                                         $('.clubSelecionado').text(x.name + " ");
                                         $scope.newEvent.city = x.city;
                                         $scope.newEvent.clubs = {};
@@ -558,6 +559,19 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                 //console.log(errorList);
 
 
+if(errorList.length >0){
+
+    var errores =   errorList ? errorList.join('. <br>') : '';
+
+    swal({
+        title: "Faltan los siguientes datos!",
+        text: errores,
+        buttonsStyling: true,
+        confirmButtonClass: "btn btn-warning",
+        type: "warning"
+    });
+
+}
                 if (subir == true) {
 
                     if ($scope.activarHoraGratis == true) {
