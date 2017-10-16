@@ -49,9 +49,10 @@ angular.module('myApp.view1', ['ngRoute'])
                     var rrppLocal = $firebaseObject(ref);
                     rrppLocal.$loaded().then(function () {
                         rrppLogeado = rrppLocal;
-                        $('.photo').prepend($('<img>',{id:'theImg',src:rrppLogeado.picture}));
+                        $('.photo').prepend($('<img>',{id:'theImg',src:firebase.auth().currentUser.photoURL}));
+                        $('.clubSelecionado').text(  rrppLogeado.name+ " ");
                         //console.log(rrppLogeado);
-
+                                console.log(firebase.auth().currentUser);
                         if(rrppLogeado.confirm == false){
                             cambiarNickName(rrppLogeado);
                         };
@@ -78,47 +79,9 @@ angular.module('myApp.view1', ['ngRoute'])
 
 
 
-            function dialogControllerSelecionarClub($scope, $mdDialog, $timeout, $q, $log,adminLogeadoRecibido ,clubsCargados) {
-                //console.log(clubsCargados);
-                //console.log(adminLogeadoRecibido);
-                $scope.clubs = clubsCargados;
-
-                $scope.clubsSelecionados = [];
-
-                $scope.selecionarClubs = function (club) {
-                    club.selecionado = !club.selecionado;
-                    //console.log($scope.clubs);
-                };
-
-                $scope.aceptarClub = function () {
-                    $scope.clubs.forEach(function (x) {
-                        if(x.selecionado == true){
-                            firebase.database().ref('admins/' + adminLogeadoRecibido.$id+'/clubs/'+x.$id).update(
-                                {
-                                    uid: x.$id,
-                                    activoParaCrearEventos: true,
-                                    validado:false,
-                                    nombre: x.name
-                                });
-
-                        };
-                    });
-                    $mdDialog.hide();
-                    location.reload();
-
-                };
-
-                $scope.hide = function () {
-                    $mdDialog.hide();
-                };
-
-                $scope.cancel = function () {
-                    $mdDialog.cancel();
-
-                };
 
 
-            };
+
 
             var cambiarNickName = function (rrppLogeadoRecibido) {
                 //console.log(rrppLogeadoRecibido);
@@ -225,35 +188,50 @@ angular.module('myApp.view1', ['ngRoute'])
 
             $scope.verEvento = function(evento ) {
                 //document.location.href = 'https://izinait.com/app/#!/detalleEvento?id=' + evento.$id, '_blank';
-                window.open('https://izinait.com/app/#!/detalleEvento?id=' + evento.$id, '_blank')
+                window.open('https://izinait.com/app/#!/detalleEvento?id=' + evento.$id+"&friend="+rrppLogeado.$id, '_blank')
             };
 
-            $scope.duplicateEvent = function(event) {
-                $rootScope.eventToRepet = event;
-                $rootScope.eventEdit = undefined;
-                document.location.href = '#!/crearEvento';
-            };
 
-            $scope.editEvent = function(event) {
-                $rootScope.eventEdit = event;
-                $rootScope.eventToRepet = undefined;
-                document.location.href = '#!/crearEvento';
-            };
+
+
 
 
             var getFuturesEvents = function(event) {
+                event.listTotalRRPP = 0;
+                event.ticketTotalRRPP = 0;
                 var currentDay = new Date().getTime();
                 var visible = true;
-                if (currentDay < event.toHour){
+                //if (currentDay < event.toHour){
+                console.log(event);
 
+                angular.forEach(event.asist , function (x) {
 
+                    if(x.idRRPP == rrppLogeado.$id)
+                    {
+                        event.listTotalRRPP += x.totalList;
+                        console.log(event.listTotalRRPP);
+                    }
+                    var ticketEvent = firebase.database().ref().child('tickets/'+event.id);
+                    var ticketEventArray = $firebaseArray(ticketEvent);
+                    ticketEventArray.$loaded().then(function () {
+                        ticketEventArray.forEach(function (j) {
+                            console.log(ticketEventArray);
+                            if(j.rrppid == rrppLogeado.$id){
+                                event.ticketTotalRRPP += 1;
+                                console.log(event.ticketTotalRRPP);
+                            }
+                        })
+
+                    });
+
+                });
+                    event.linkRRPP = "https://www.izinait.com/detalleEvento?id="+ event.id+"&friend="+rrppLogeado.$id;
                         $scope.events.push(event);
-                        //console.log("=================== se muestra")
                         return true;
 
-                }
-                else
-                    return false;
+              //  }
+                //else
+                  //  return false;
             };
 
 
