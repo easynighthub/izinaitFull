@@ -303,7 +303,7 @@ exports.detalleEvento = functions.https.onRequest((req, res) => {
                     urlTest = "https://izinait.com/detalleEvento?id=" + id +"&friend=MD18DcCzYMXPhOQb8U61bWfgzRg2";
                     url = "https://izinait.com/app/#!/detalleEvento?id=" + id +"&friend=MD18DcCzYMXPhOQb8U61bWfgzRg2";
 
-                    var title = eventCapturado.name + "| Invita: " + rrppSelect;
+                    var title = eventCapturado.name + " | Invita: " + rrppSelect;
                     var description = (eventCapturado.eventDetails).toString();;
 
                     res.status(200).send(
@@ -413,12 +413,14 @@ exports.detalleEvento = functions.https.onRequest((req, res) => {
 
             });
 
-        }else{
+        }
+        else
+            {
             rrppSelect = "izinait";
             urlTest = "https://izinait.com/detalleEvento?id=" + id +"&friend=MD18DcCzYMXPhOQb8U61bWfgzRg2";
             url = "https://izinait.com/app/#!/detalleEvento?id=" + id +"&friend=MD18DcCzYMXPhOQb8U61bWfgzRg2";
 
-            var title = eventCapturado.name + " te invita " + rrppSelect;
+            var title = eventCapturado.name + "  invita " + rrppSelect;
             var description = (eventCapturado.eventDetails).toString();
 
             res.status(200).send(

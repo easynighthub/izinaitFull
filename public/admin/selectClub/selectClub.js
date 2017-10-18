@@ -129,6 +129,8 @@ angular.module('myApp.selectClub', ['ngRoute'])
                     $scope.clubsER.$loaded().then(function(){
 
                         clubsCargados = $scope.clubsER;
+
+
                         clubsCargados.forEach(function (x) {
                             x.selecionado = false;
                         });
@@ -149,6 +151,8 @@ angular.module('myApp.selectClub', ['ngRoute'])
 
                 }else{
                     var clubsParaAdministrar = adminLogeadoRecibido.clubs;
+
+                    console.log(clubsParaAdministrar);
                     $mdDialog.show({
                         controller: dialogControllerAdministrarClub,
                         templateUrl: 'dialogAdministrarClub',
@@ -159,13 +163,14 @@ angular.module('myApp.selectClub', ['ngRoute'])
                         clickOutsideToClose: true,
                         locals: {
                             adminLogeadoRecibido: adminLogeadoRecibido,
-                            clubsParaAdministrar :clubsParaAdministrar
+                            clubsParaAdministrar :clubsParaAdministrar,
+                            todosLosClubs: $scope.clubNombre
                         }
                     });
                 }
             };
 
-            function dialogControllerAdministrarClub($scope, $mdDialog, $timeout, $q, $log,adminLogeadoRecibido ,clubsParaAdministrar) {
+            function dialogControllerAdministrarClub($scope, $mdDialog, $timeout, $q, $log,adminLogeadoRecibido ,clubsParaAdministrar,todosLosClubs) {
                 //console.log(clubsParaAdministrar);
                 //console.log(adminLogeadoRecibido);
                 $scope.clubs = clubsParaAdministrar;
@@ -191,8 +196,23 @@ angular.module('myApp.selectClub', ['ngRoute'])
 
                 };
 
+                $scope.getFotos = function (idClub) {
+                    console.log(idClub);
+                    if (idClub) {
+                        var clubKey = idClub;
+                        //////console.log(idRRPP);
+                        return $filter('filter')(todosLosClubs,  {$id :clubKey})[0].clubLogo;
+                    };
+
+                }
+
 
             };
+
+
+
+
+
 
 
 
