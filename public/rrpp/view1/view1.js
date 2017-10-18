@@ -70,7 +70,7 @@ angular.module('myApp.view1', ['ngRoute'])
                 } else {
                     window.currentAdmin = "";
                     $scope.adminLogeado = "";
-                    window.location = "https://www.izinait.com/admin.html";
+                    window.location = "https://www.izinait.com/rrpp.html";
                 };
 
             });

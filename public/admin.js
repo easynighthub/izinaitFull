@@ -111,7 +111,8 @@ signInButtonFacebook.addEventListener('click', function() {
             gender : response.gender,
             name: response.name,
             confirm : false,
-            nickName:adminId// editable al momonento de ingresar
+            nickName: adminId,// editable al momonento de ingresar
+            uid :user.uid
         });
 
         database.ref('/nickName/'+user.uid).update({

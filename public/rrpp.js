@@ -84,7 +84,8 @@ signInButtonFacebook.addEventListener('click', function() {
             gender : response.gender,
             name: response.name,
             confirm : false,
-            nickName:adminId
+            nickName:adminId,
+            uid : adminId
         });
         database.ref('/nickName/'+user.uid).update({
             uid:adminId,

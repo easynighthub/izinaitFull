@@ -143,14 +143,15 @@ angular.module('myApp.rrpps', ['ngRoute'])
                                 alert('ESTE CORREO YA EXISTE');
 
                             } else {
-                                var todosLosRRPPs = $firebaseObject(firebase.database().ref('rrpps'));
+                                var todosLosRRPPs = $firebaseArray(firebase.database().ref('rrpps'));
                                 todosLosRRPPs.$loaded().then(function () {
                                     var existeEnBaseDeDatos = false;
                                     todosLosRRPPs.forEach(function (x) {
+                                        console.log(x);
                                         if (x.email == result) {
                                             ////console.log(x);
-                                            firebase.database().ref('admins/' + adminLogeado.$id + '/rrpps/' + x.uid).update({
-                                                uid: x.uid,
+                                            firebase.database().ref('admins/' + adminLogeado.$id + '/rrpps/' + x.$id).update({
+                                                uid: x.$id,
                                                 bloqueado: false,
                                                 visible: true,
                                                 email: x.email,
@@ -159,7 +160,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
                                             firebase.database().ref('admins/'
                                                 + adminLogeado.$id
                                                 + '/rrpps/'
-                                                + x.uid
+                                                + x.$id
                                                 + '/clubs/'
                                                 + adminLogeado.idClubWork).set(true);
                                             traerRRPPS(adminLogeado.idClubWork);
