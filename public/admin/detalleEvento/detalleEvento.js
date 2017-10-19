@@ -11,8 +11,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
         });
     }])
 
-    .controller('detalleEventoCtrl', ['$scope', '$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope',
-        function ($scope, $routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope) {
+    .controller('detalleEventoCtrl', ['$scope', '$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope','$mdDialog',
+        function ($scope, $routeParams, $firebaseObject, $firebaseArray, $filter, $rootScope, $mdDialog) {
 
 
 
@@ -262,6 +262,45 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
 
             };
+
+            $scope.ventaManual = function (servicioEvent) {
+                console.log(servicioEvent);
+
+                $mdDialog.show({
+                    controller: controllerDialogVentaManual,
+                    templateUrl: 'dialogVentaManual',
+                    parent: angular.element(document.body),
+                    clickOutsideToClose: true,
+                    locals: {
+                        servicioEvent: servicioEvent,
+                    }
+                });
+            };
+
+
+
+
+            function controllerDialogVentaManual($scope, $mdDialog, $timeout, $q, $log,$http, servicioEvent) {
+
+                $scope.servicioEvent = servicioEvent;
+                console.log(eventId);
+                console.log($scope.servicioEvent);
+
+
+
+
+                $scope.hide = function () {
+                    $mdDialog.hide();
+                };
+
+                $scope.cancel = function () {
+                    $mdDialog.cancel();
+
+                };
+
+
+            };
+
 
 
 

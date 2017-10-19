@@ -239,8 +239,14 @@
                                         <i style="color: #00bcd4" ng-show="servicioEvent.tipo == 'Botella'" class="fa fa-glass"></i>
                                     </span>
                                     <span>{{servicioEvent.tipo}}
+                                        <p >
+                                            <small class="category">{{servicioEvent.desc}}
+
+                                            </small>
+
+                                        </p>
                                         <p>
-                                            <small class="category">{{servicioEvent.desc}}</small>
+                                              <button ng-click="ventaManual(servicioEvent) "class="btn btn-sm">Venta manual</button>
                                         </p>
                                     </span>
                                 </span>
@@ -590,5 +596,63 @@
     }
 </script>
 
+
+<script type="text/ng-template" id="dialogVentaManual" class="col-xs-12">
+
+    <div class="col-md-12 col-xs-12">
+        <center><br>
+            <h5> Realizar venta manual </h5>
+
+
+
+            <div class="col-md-4 form-group  is-empty">
+                <label class="label-on-left label-floating">Nombre Completo</label>
+                <input id="nombreCompleto" ng-model="nombreCompleto" required="true" type="text"
+                       class="form-control ">
+
+                <span class="help-block">nombre completo por seguridad</span>
+
+            </div>
+
+            <div class=" col-md-4 form-group  is-empty">
+                <label class="label-on-left label-floating">Rut</label>
+                <input id="rut" ng-model="rut" type="number"
+                       class="form-control ">
+
+                <span class="help-block">sin gion verificador,  (opcional)</span>
+
+            </div>
+            <div class=" col-md-4 form-group  is-empty">
+                <label class="label-on-left label-floating">Correo</label>
+                <input id="correo" ng-model="correo" type="email"
+                       class="form-control ">
+
+                <span class="help-block">correo electronico para mejorar tu base de datos, (opcional)</span>
+
+            </div>
+<br><br>
+            <div>
+
+                <button class="btn "> CANCELAR</button>
+                <button class="btn btn-success"> VENTA REALIZADA</button>
+            </div>
+
+            <!--  <div id="datosClienteQvo">
+              <input  type="text" placeholder="Nombre" class="form-control col-md-12"  ng-model="usuarioLogeado.displayName">
+              <input  type="text" placeholder="Correo" class="form-control col-md-12" ng-model="usuarioLogeado.email">
+              <button ng-click="crearUsuarioQvo()" scope="public_profile email user_birthday"
+                      class=" btn btn-info">
+
+                  <i class="material-icons"></i> Agregar Tarjeta
+              </button>
+              </div>-->
+            <br>
+
+
+        </center>
+    </div>
+
+
+</script>
 
 
