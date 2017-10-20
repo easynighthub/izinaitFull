@@ -324,11 +324,24 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 $scope.nuevaAsistencia.totalAsist = 0;
                 $scope.nuevaAsistencia.displayName = usuarioLogeado.displayName;
                 $scope.nuevaAsistencia.idRRPP = Rrpp;
+                $scope.nuevaAsistencia.tipo = "General";
+                $scope.nuevaAsistencia.fechaCaducacion = $scope.event.freemiumHour;
+
                 var totalAsistenciaVisible = $scope.totalReserva;
+
+
                 if (usuarioLogeado != "") {
                     guardarListaGratisFuncion(totalAsistenciaVisible);
                 } else {
-                    alert("DEBES INICIAR SESION");
+                    $mdDialog.show({
+                        controller: dialogControllerAccederConFacebook,
+                        templateUrl: 'dialogAccederConFacebook',
+                        parent: angular.element(document.body),
+                        clickOutsideToClose: true,
+                        locals: {
+                            eventsService: "hola",
+                        }
+                    });
                 }
 
 

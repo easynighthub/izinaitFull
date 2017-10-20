@@ -605,12 +605,32 @@
 
 
 
-            <div class="col-md-12 form-group  is-empty">
+
+
+
+          <div class="col-md-6 form-group  is-empty">
                 <label class="label-on-left label-floating">Nombre Completo</label>
                 <input id="nombreCompleto" ng-model="nombreCompleto" required="true" type="text"
                        class="form-control ">
 
                 <span class="help-block">nombre completo por seguridad</span>
+
+            </div>
+            <div class="col-md-4  form-group  is-empty">
+              <button ng-click="menosEntradas()" class="btn btn-sm btn-primary">-</button>
+
+            </div>
+
+            <div class="col-md-4 form-group  is-empty">
+                <label class="label-on-left label-floating">Cantidad de entradas</label>
+                <input id="cantidad" ng-model="cantidad" required="true" type="number"
+                       class="form-control ">
+
+                <span class="help-block">cantidad del servicio</span>
+
+            </div>
+            <div class="col-md-4 form-group  is-empty">
+                <button ng-click="masEntradas()" class="btn btn-sm btn-primary">+</button>
 
             </div>
 
@@ -627,11 +647,11 @@
                 <input id="correo" ng-model="correo" type="email"
                        class="form-control ">
 
-                <span class="help-block">correo electronico para mejorar tu base de datos, (opcional)</span>
+                <span class="help-block">correo electronico para mejorar tu base de datos</span>
 
             </div>
-            <div class=" col-md-4 form-group  is-empty">
-                <label class="label-on-left label-floating">Correo</label>
+            <div class="col-md-4 form-group  is-empty">
+                <label class="label-on-left label-floating">Whatsapp</label>
                 <input id="wstp" ng-model="wstp" type="number"
                        class="form-control ">
 
@@ -642,8 +662,8 @@
 
             <div  class="col-md-12" style="margin-top: 50px">
 
-                <button class="btn "> CANCELAR</button>
-                <button class="btn btn-success"> VENTA REALIZADA</button>
+                <button ng-click="cancel()" class="btn "> CANCELAR</button>
+                <button ng-click="guardarEntradas()" class="btn btn-success"> VENTA REALIZADA</button>
             </div>
 
             <!--  <div id="datosClienteQvo">

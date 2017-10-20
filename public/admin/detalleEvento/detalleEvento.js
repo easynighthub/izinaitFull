@@ -285,6 +285,101 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 $scope.servicioEvent = servicioEvent;
                 console.log(eventId);
                 console.log($scope.servicioEvent);
+                $scope.cantidad = 1;
+                $scope.newticket = {};
+
+
+                $scope.masEntradas = function () {
+                    if(  $scope.cantidad < $scope.servicioEvent.maxEntradas  ){
+                        $scope.cantidad += 1;
+                    }
+                };
+
+                $scope.menosEntradas = function () {
+                    if( $scope.cantidad  > 1  ){
+                        $scope.cantidad -= 1;
+                    }
+
+                };
+
+                $scope.guardarEntradas = function () {
+
+
+
+
+
+                    var ref = firebase.database().ref('/usersManual/');
+                    var usersManual = $firebaseArray(ref);
+                    usersManual.$loaded().then(function () {
+                        var contador = 0;
+                        var existe = false;
+                        console.log(usersManual);
+                        usersManual.forEach(function (usersManual) {
+                            if(usersManual.email == $scope.correo){
+                                $scope.nuevoClienteId = usersManual.$id;
+                                existe = true;
+                            };
+
+                            contador +=1;
+                        });
+
+                        if(contador == usersManual.length){
+                            console.log("hooola");
+                            if(existe == true){
+                                firebase.database().ref('usersManual/' + $scope.nuevoClienteId ).update({
+                                    nombreCompleto: $scope.nombreCompleto,
+                                    celular: $scope.wstp,
+                                    email:  $scope.correo,
+                                    rut:  $scope.rut,
+                                });
+
+
+                            }else{
+                                $scope.nuevoClienteId = firebase.database().ref('usersManual/').push().key;
+                                firebase.database().ref('usersManual/' + $scope.nuevoClienteId ).update({
+                                    nombreCompleto: $scope.nombreCompleto,
+                                    celular: $scope.wstp,
+                                    email:  $scope.correo,
+                                    rut:  $scope.rut,
+                                });
+
+                            }
+
+                        }
+
+                    });
+
+
+
+
+
+                    $scope.newticket.cantidadDeCompra;
+                    $scope.newticket.cantidadUtilizada;
+                    $scope.newticket.celular;
+                    $scope.newticket.date;
+                    $scope.newticket.displayName;
+                    $scope.newticket.email;
+                    $scope.newticket.eventId;
+                    $scope.newticket.firstName;
+                    $scope.newticket.idTransaccion;
+                    $scope.newticket.ideventservices;
+                    $scope.newticket.lastName;
+                    $scope.newticket.pagoPuerta;
+                    $scope.newticket.paidOut;
+                    $scope.newticket.redeemed;
+                    $scope.newticket.rrppid;
+                    $scope.newticket.ticketId;
+                    $scope.newticket.tipoEventservices;
+                    $scope.newticket.totalAPagar;
+                    $scope.newticket.totalPagadoConComision;
+                    $scope.newticket.userId;
+
+
+
+                    console.log(adminLogeado);
+                };
+
+
 
 
 
@@ -302,6 +397,14 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             };
 
 
+var cargarUsuariosManual = function () {
+    var ref = firebase.database().ref('/usersManual/');
+    var usersManual = $firebaseObject(ref);
+    usersManual.$loaded().then(function () {
+
+    });
+
+};
 
 
 

@@ -276,7 +276,6 @@ exports.eliminarTarjetaQvo = functions.https.onRequest((req, res) => {
         res.status(200).send(body);
     });
 });
-
 exports.detalleEvento = functions.https.onRequest((req, res) => {
    // const hours = (new Date().getHours() % 12) + 1 // london is UTC + 1hr;
     const id = req.query.id;

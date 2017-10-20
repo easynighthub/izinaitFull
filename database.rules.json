@@ -84,6 +84,10 @@
     "clothing": {
       ".write": "auth != null",
       ".read":  "auth != null"
+    },
+    "usersManual": {
+      ".write": "auth != null",
+      ".read":  "auth != null"
     }
 
 
