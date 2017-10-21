@@ -1,0 +1,261 @@
+
+<div class="card col-xs-12 col-md-12 text-center">
+    <div class="card-header card-header-icon" style="float: none;padding-top: 0px;" tabindex="0">
+        <h1><i class="fa fa-bullhorn" sty aria-hidden="true"></i></h1>
+        <h2 class="card-title">Compartir Tu enlace:</h2>
+    </div>
+    <div>
+        <span id="copyContent" class="margin-15 inline-block" style="margin: 15px;display: inline-block;
+                    border: 1px solid #707a82;
+                    padding: 10px;
+                    border-radius: 3px;
+                    font-size: 12px;
+                    max-width: 100%;
+                    word-break: break-all;">
+            https://izinait.com/app/#!/rrpp# + nickname rrpp
+                    </span>
+        <div class="share-icons" style="margin: 20px;margin-top: 0px;">
+            <a id="copy" class="btn btn-just-icon btn-round " data-copy="{{event.evenUrl}}">
+                <i class="material-icons">content_copy</i>
+                <div class="ripple-container"></div>
+            </a>
+            <a class="btn btn-just-icon btn-round btn-facebook" target="_blank"
+               href="https://www.facebook.com/dialog/share?app_id=1138664439526562&amp;display=popup&amp;href={{event.evenUrl}}&amp;redirect_uri={{event.evenUrl}}&amp;mobile_iframe=true">
+                <i class="fa fa-facebook"> </i>
+                <div class="ripple-container"></div>
+            </a>
+            <a target="_blank" class="btn btn-just-icon btn-round btn-twitter">
+                <i class="fa fa-twitter"></i>
+                <div class="ripple-container"></div>
+            </a>
+            <a target="_blank" href="https://plus.google.com/share?url={{event.evenUrl}}"
+               class="btn btn-just-icon btn-round btn-google">
+                <i class="fa fa-google"> </i>
+                <div class="ripple-container"></div>
+            </a>
+            <a target="_blank" href="https://plus.google.com/share?url={{event.evenUrl}}"
+               class="btn btn-just-icon btn-round btn-success">
+                WSP
+                <div class="ripple-container"></div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("copy").addEventListener("click", function () {
+        copyToClipboardMsg(document.getElementById("copyContent"), "msg");
+    });
+
+    function copyToClipboardMsg(elem, msgElem) {
+        var succeed = copyToClipboard(elem);
+        var msg;
+        if (!succeed) {
+            msg = "Copy not supported or blocked.  Press Ctrl+c to copy."
+        } else {
+            msg = "Text copied to the clipboard."
+        }
+        if (typeof msgElem === "string") {
+            msgElem = document.getElementById(msgElem);
+        }
+    }
+
+    function copyToClipboard(elem) {
+        // create hidden text element, if it doesn't already exist
+        var targetId = "_hiddenCopyText_";
+        var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+        var origSelectionStart, origSelectionEnd;
+        if (isInput) {
+            // can just use the original source element for the selection and copy
+            target = elem;
+            origSelectionStart = elem.selectionStart;
+            origSelectionEnd = elem.selectionEnd;
+        } else {
+            // must use a temporary form element for the selection and copy
+            target = document.getElementById(targetId);
+            if (!target) {
+                var target = document.createElement("textarea");
+                target.style.position = "absolute";
+                target.style.left = "-9999px";
+                target.style.top = "0";
+                target.id = targetId;
+                document.body.appendChild(target);
+            }
+            target.textContent = elem.textContent;
+        }
+        // select the content
+        var currentFocus = document.activeElement;
+        target.focus();
+        target.setSelectionRange(0, target.value.length);
+
+        // copy the selection
+        var succeed;
+        try {
+            succeed = document.execCommand("copy");
+            swal({
+                title: "Copiado!",
+                text: "El enlace se ha copiado en el portapapeles.",
+                buttonsStyling: false,
+                confirmButtonClass: "btn btn-success",
+                type: "success"
+            });
+        } catch (e) {
+            succeed = false;
+        }
+        // restore original focus
+        if (currentFocus && typeof currentFocus.focus === "function") {
+            currentFocus.focus();
+        }
+
+        if (isInput) {
+            // restore prior selection
+            elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+        } else {
+            // clear temporary content
+            target.textContent = "";
+        }
+        return succeed;
+    }
+</script>
+
+
+<script type="text/ng-template" id="dialogVentaManual" class="col-xs-12">
+
+    <div class="col-md-12 col-xs-12">
+        <center><br>
+            <h5> Realizar venta manual </h5>
+
+
+
+
+
+
+            <div class="col-md-6 form-group  is-empty">
+                <label class="label-on-left label-floating">Nombre Completo</label>
+                <input id="nombreCompleto" ng-model="nombreCompleto" required="true" type="text"
+                       class="form-control ">
+
+                <span class="help-block">nombre completo por seguridad</span>
+
+            </div>
+            <div class="col-md-4  form-group  is-empty">
+                <button ng-click="menosEntradas()" class="btn btn-sm btn-primary">-</button>
+
+            </div>
+
+            <div class="col-md-4 form-group  is-empty">
+                <label class="label-on-left label-floating">Cantidad de entradas</label>
+                <input id="cantidad" ng-model="cantidad" required="true" type="number"
+                       class="form-control ">
+
+                <span class="help-block">cantidad del servicio</span>
+
+            </div>
+            <div class="col-md-4 form-group  is-empty">
+                <button ng-click="masEntradas()" class="btn btn-sm btn-primary">+</button>
+
+            </div>
+
+            <div class=" col-md-4 form-group  is-empty">
+                <label class="label-on-left label-floating">Rut</label>
+                <input id="rut" ng-model="rut" type="number"
+                       class="form-control ">
+
+                <span class="help-block">sin gion verificador,  (opcional)</span>
+
+            </div>
+            <div class=" col-md-4 form-group  is-empty">
+                <label class="label-on-left label-floating">Correo</label>
+                <input id="correo" ng-model="correo" type="email"
+                       class="form-control ">
+
+                <span class="help-block">correo electronico para mejorar tu base de datos</span>
+
+            </div>
+            <div class="col-md-4 form-group  is-empty">
+                <label class="label-on-left label-floating">Whatsapp</label>
+                <input id="wstp" ng-model="wstp" type="number"
+                       class="form-control ">
+
+                <span class="help-block">numero de whatsaapp para mejorar tu base de datos, (opcional)</span>
+
+            </div>
+
+
+            <div  class="col-md-12" style="margin-top: 50px">
+
+                <button ng-click="cancel()" class="btn "> CANCELAR</button>
+                <button ng-click="guardarEntradas()" class="btn btn-success"> VENTA REALIZADA</button>
+            </div>
+
+            <!--  <div id="datosClienteQvo">
+              <input  type="text" placeholder="Nombre" class="form-control col-md-12"  ng-model="usuarioLogeado.displayName">
+              <input  type="text" placeholder="Correo" class="form-control col-md-12" ng-model="usuarioLogeado.email">
+              <button ng-click="crearUsuarioQvo()" scope="public_profile email user_birthday"
+                      class=" btn btn-info">
+
+                  <i class="material-icons"></i> Agregar Tarjeta
+              </button>
+              </div>-->
+            <br>
+
+
+        </center>
+    </div>
+
+
+</script>
+
+<script id="dialogCambiarNickName" type="text/ng-template">
+    <div class="col-md-12">
+
+        <h6> IDENTIFICATE CON UN NICK NAME UNICO PARA TÍ</h6>
+
+        <input type="text" style="text-transform:lowercase;" ng-model="nickName" class="form-control"
+               placeholder="nickName">
+        <input type="email" ng-model="email" class="form-control" placeholder="Correo Electronico">
+        <div class="text-right">
+            <button ng-click="confirmarDatos()" class="btn btn-info btn-sm "> Confirmar</button>
+        </div>
+    </div>
+
+
+</script>
+<script id="dialogMandarCortecia" type="text/ng-template">
+    <div class="col-md-12">
+
+        <h5> Enviar Cortecia</h5>
+
+        <input type="text" style="text-transform:lowercase;" ng-model="nombreCompleto" class="form-control"
+               placeholder="Nombre Completo">
+        <input type="email" ng-model="email" class="form-control" placeholder="Correo Electronico">
+        <input type="number" ng-model="celular" class="form-control" placeholder="Whatsapp">
+
+        <select ng-change="cantidadDeEntradas(tipoSelecionado)" ng-model="tipoSelecionado">
+            <option ng-repeat="tipo in tipoCortecias">{{tipo.tipo}}</option>
+        </select>
+
+        <div class="col-md-4  form-group  is-empty">
+            <button ng-click="menosEntradas()" class="btn btn-sm btn-primary">-</button>
+
+        </div>
+
+        <div class="col-md-4 form-group  is-empty">
+            <label class="label-on-left label-floating">Cantidad de entradas</label>
+            <input id="cantidad" ng-model="cantidad" required="true" type="number"
+                   class="form-control ">
+
+            <span class="help-block">cantidad del servicio</span>
+
+        </div>
+        <div class="col-md-4 form-group  is-empty">
+            <button ng-click="masEntradas()" class="btn btn-sm btn-primary">+</button>
+
+        </div>
+        <div class="text-right">
+            <button ng-click="enviarCortecias()" class="btn btn-info btn-sm "> Confirmar</button>
+        </div>
+    </div>
+
+
+</script>

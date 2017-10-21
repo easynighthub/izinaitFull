@@ -6,7 +6,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/detalleEvento', {
-            templateUrl: 'detalleEvento/detalleEvento.html',
+            templateUrl: 'detalleEvento/link.html',
             controller: 'detalleEventoCtrl'
         });
     }])

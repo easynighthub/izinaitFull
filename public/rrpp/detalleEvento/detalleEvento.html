@@ -1,17 +1,776 @@
+<div class="card col-md-12 col-xs12" style="
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url({{event.image}}) center center;
+    background-size: cover;
+    max-height: 250px;
+    min-height: 180px;
+    transform: perspective(1350px);
+">
+    <a class="btn btn-primary btn-info pull-right" ng-click="mandarCortecia()">
+        <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+        <span>ENVIAR cortesía</span>
+    </a>
+    <div style="top: 60%;
+    position: absolute;
+    bottom: 15px;
+    left: 10px;
+    color: #fff;
+    font-size: 1.3em;
+    text-shadow: 0 2px 5px rgba(33, 33, 33, 0.5);">
+        <h4 class="txt-white text-capitalize"
+            style="font-weight: 400;    text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">
+            {{event.name}}</h4>
+        <h6 class="txt-white text-capitalize category"
+            style="margin-top: -15px;    text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"><i
+                class="material-icons description">event</i> {{event.date | date:"EEEE dd', 'MMMM"}} <i
+                class="material-icons description">alarm</i> {{eventUrl.date | date:"HH:mm" }} - {{event.toHour |
+            date:"HH:mm" }}</h6>
+    </div>
 
-cantidad de cortecias generales : {{corteciasUtilizadas.general}}/{{corteciasHabilitadas.general}}<br>
-cantidad de cortecias vip : {{ corteciasUtilizadas.vip }}/{{corteciasHabilitadas.vip  }}<br>
-cantidad de cortecias vip Mesa : {{ corteciasUtilizadas.vipMesa }}/{{ corteciasHabilitadas.vipMesa  }}
-<br>
-<button CLASS="btn btn-primary" ng-click="mandarCortecia()"> ENVIAR CORTECIA</button>
+</div>
 
+
+<div id="detalleEvento">
+
+
+    <div class="col-lg-3 col-md-6 col-sm-6 ">
+        <div class="card card-stats">
+            <div class="card-header col-md-6 col-xs-5" data-background-color="rose">
+                <p class="card-title">Lista Gratis</p>
+            </div>
+            <div class="card-content">
+
+                <h3 class="card-title">{{totalListasGratis}}</h3>
+            </div>
+            <div class="card-footer">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header col-md-6 col-xs-5" data-background-color="rose">
+                <p class="card-title">Reservas</p>
+            </div>
+            <div class="card-content">
+
+                <h3 class="card-title">{{sumaTicketsTotal}}</h3>
+            </div>
+            <div class="card-footer">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header col-md-6 col-xs-5" data-background-color="rose">
+                <p class="card-title">Visitas</p>
+            </div>
+            <div class="card-content">
+
+                <h3 class="card-title">{{impresionesTotales}}</h3>
+            </div>
+            <div class="card-footer">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header col-md-6 col-xs-5" data-background-color="rose">
+                <p class="card-title">Efectividad</p>
+            </div>
+            <div class="card-content">
+
+                <h3 class="card-title" type="number">{{((sumaTicketsTotal+totalListasGratis)/impresionesTotales)*100 |
+                    number:0}}%</h3>
+            </div>
+            <div class="card-footer">
+
+            </div>
+        </div>
+    </div>
+
+    <!--  &lt;!&ndash;
+
+          <tr>
+              <td colspan="3"></td>
+              <td class="text-primary text-right">
+                  Total de impresiones
+              </td>
+              <td class="text-right text-primary">
+                  {{impresionesTotales}}
+              </td>
+          </tr>
+          <tr>
+              <td colspan="3"></td>
+              <td class="text-primary text-right">
+                  Total de Lista
+              </td>
+              <td class="text-right text-primary">
+                  {{totalListasGratis}}
+              </td>
+          </tr>
+          <tr>
+              <td colspan="3"></td>
+              <td class="text-primary text-right">
+                  total de Servicios
+              </td>
+              <td class="text-right text-primary">
+                  {{sumaTicketsTotal}}
+              </td>
+          </tr>
+
+      <div class="col-md-12">
+          <div class="card">
+              <div class="card-header negative" data-background-color="green">
+                  <h3 class="card-title">Servicios Vendidos</h3>
+              </div>
+
+              <div class="card-content">
+                  <div class="table-responsive">
+                      <table class="table table-striped">
+                          <thead>
+                          <th>Nombre</th>
+                          <th>Contacto</th>
+                          <th>Tipo</th>
+                          <th>Utilizado/Cantidad</th>
+                          <th>Total Pagado</th>
+                          </thead>
+                          <tbody>
+                          <tr ng-repeat="ticketEvent in ticketsEvent">
+                              <td> {{ticketEvent.displayName}}</td>
+                              <td> 9 {{ticketEvent.celular}}</td>
+                              <td>{{ticketEvent.tipoEventservices}}</td>
+                              <td>
+                                  {{ticketEvent.cantidadUtilizada}} / {{ticketEvent.cantidadDeCompra}}
+                              </td>
+                              <td class="text-primary">
+                                  <div ng-show="!ticketEvent.paidOut">
+                                      ${{(ticketEvent.totalAPagar/ticketEvent.cantidadDeCompra)*ticketEvent.cantidadUtilizada}}
+                                  </div>
+                                  <div ng-show="ticketEvent.paidOut"> ${{ticketEvent.totalAPagar}}</div>
+
+                              </td>
+                          </tr>
+                          &lt;!&ndash;    <tr>
+                                  <td colspan="3"></td>
+                                  <td>
+                                      Total Pagado
+                                  </td>
+                                  <td>
+                                      <small>&euro;</small>12,999
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td colspan="3"></td>
+                                  <td>
+                                      Total Pago en Puerta
+                                  </td>
+                                  <td>
+                                      <small>&euro;</small>12,999
+                                  </td>
+                              </tr>
+
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-6">
+          <div class="card">
+              <div class="card-header card-header-icon" data-background-color="rose">
+                  <i class="material-icons">assignment</i>
+              </div>
+              <h4 class="card-title">Lista Gratis</h4>
+              <div class="card-content">
+                  <div class="table-responsive">
+                      <table class="table table-striped">
+                          <thead>
+                          <th>Nombre</th>
+                          <th class="text-center">Utilizadas / Cantidad</th>
+                          </thead>
+                          <tbody>
+                          <tr data-ng-repeat="user in listaGratis">
+                              <td>{{user.displayName}}</td>
+                              <td class="text-center">{{user.totalAsist}} / {{user.totalList}}</td>
+                          </tr>
+                          <tr>
+                              &lt;!&ndash;   <td colspan="0"></td> &ndash;&gt;
+                              <td class="text-primary text-right">
+                                  Total Lista
+                              </td>
+                              <td class="text-right text-primary">
+                                  {{totalListasGratis}}
+                              </td>
+                          </tr>
+
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-12">
+          <div class="card">
+              <div class="card-header card-header-icon" data-background-color="rose">
+                  <i class="material-icons">assignment</i>
+              </div>
+              <h4 class="card-title">Relacionadores Publico</h4>
+              <div class="card-content">
+                  <div class="table-responsive">
+                      <table class="table table-striped">
+                          <thead>
+                          <th>Nombre</th>
+                          <th>Impresiones</th>
+                          <th>Lista</th>
+                          <th>Servicios</th>
+                          </thead>
+                          <tbody>
+                          <tr data-ng-repeat="rrpp in datosTotalesRRPP">
+                              <td>{{rrpp.nameRRPP}}</td>
+                              <td>{{rrpp.openLink}}</td>
+                              <td>{{rrpp.listaTotal}}</td>
+                              <td>{{rrpp.ticketsTotal}}</td>
+                              <td></td>
+                              <td></td>
+                          </tr>
+
+
+                          </tbody>
+
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+      <div class="content">
+          <div>
+              <div class="row">
+
+
+                  <div class="col-md-12" data-ng-show="true">
+                      <div class="card">
+                          <div class="card-header" data-background-color="purple">
+                              <h4 class="title">Servicios Asignados</h4>
+                              <p class="category">lista de servicios.</p>
+                          </div>
+                          <div class="card-content table-responsive">
+
+                              <table class="table">
+                                  <thead class="text-primary">
+                                  <th>Tipo</th>
+                                  <th>Valor</th>
+                                  <th>Vendidos / Cantidad</th>
+                                  <th>visible</th>
+                                  </thead>
+                                  <tbody>
+                                  <tr data-ng-repeat="servicioEvent in serviciosEvent">
+                                      <td>{{servicioEvent.tipo}}</td>
+                                      <td>{{servicioEvent.precio}}</td>
+                                      <td>{{servicioEvent.utilizados}} / {{servicioEvent.cantidad}}</td>
+                                      <td>
+                                          <md-switch ng-click="accionVisible(servicioEvent)"
+                                                     ng-model="servicioEvent.visible" aria-label="Switch 1">
+
+                                          </md-switch>
+
+                                      </td>
+                                  </tr>
+                                  </tbody>
+                              </table>
+
+                          </div>
+                      </div>
+                  </div>
+                  &lt;!&ndash;  <div class="col-md-10 col-md-offset-1">
+                  <div class="iframe-container hidden-sm hidden-xs">
+                       <iframe src="http://localhost:63342/izinaitFull/public/app/index.html?_ijt=otddf3mrr2clvpdijvq6jpf9ee#!/detalleEvento?id=-Kq5qvJY4LOE4S6tZNV7">
+                           <p>Your browser does not support iframes.</p>
+                       </iframe>
+                   </div>
+                   </div> &ndash;&gt;
+
+              </div>
+          </div>
+      </div>
+  -->
+
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header col-md-6 col-xs-5" data-background-color="purple">
+                <p class="card-title">Cort. General</p>
+            </div>
+            <div class="card-content">
+
+                <h3 class="card-title" type="number">
+                    {{corteciasUtilizadas.general}}/{{corteciasHabilitadas.general}}</h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <p class="category">
+                        Disponible
+                    </p>
+                </div>
+                <div class="stats pull-right">
+                    <p class="category">
+                        100
+                    </p>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header col-md-6 col-xs-5" data-background-color="purple">
+                <p class="card-title">Cort. Vip</p>
+            </div>
+            <div class="card-content">
+
+                <h3 class="card-title" type="number">{{ corteciasUtilizadas.vip }}/{{corteciasHabilitadas.vip }}</h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <p class="category">
+                        Disponible
+                    </p>
+                </div>
+                <div class="stats pull-right">
+                    <p class="category">
+                        100
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header col-md-6 col-xs-5" data-background-color="purple">
+                <p class="card-title">Cort. Vip mesa</p>
+            </div>
+            <div class="card-content">
+
+                <h3 class="card-title" type="number">{{ corteciasUtilizadas.vipMesa }}/{{ corteciasHabilitadas.vipMesa
+                    }}</h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <p class="category">
+                        Disponible
+                    </p>
+                </div>
+                <div class="stats pull-right">
+                    <p class="category">
+                        100
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header card-header-tabs" data-background-color="purple">
+            <div class="nav-tabs-navigation">
+                <div class="nav-tabs-wrapper">
+                    <ul class="nav nav-tabs" data-tabs="tabs">
+                        <li class="col-md-4 col-xs-12 active">
+                            <a href="#Servicios" target="_blank" data-toggle="tab">
+                                <p class="card-title text-center">Ventas</p>
+                                <div class="ripple-container"></div>
+                            </a>
+                        </li>
+                        <li class="col-md-4 col-xs-12">
+                            <a href="#listas" target="_blank" data-toggle="tab">
+                                <p class="card-title text-center">Lista</p>
+                                <div class="ripple-container"></div>
+                            </a>
+                        </li>
+                        <li class="col-md-4 col-xs-12">
+                            <a href="#rrpp" target="_blank" data-toggle="tab">
+                                <p class="card-title text-center">Cortesias</p>
+                                <div class="ripple-container"></div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card-content">
+            <div class="tab-content table-responsive">
+                <div class="tab-pane active table-responsive" id="Servicios">
+
+
+                    <table id="dtServicios" class="table table-striped" style="width: 100%!important;">
+                        <thead>
+                        <th>Nombre</th>
+                        <th>Contacto</th>
+                        <th>Tipo</th>
+
+                        <th class="text-right">Cantidad</th>
+                        <th class="text-right">Pagado</th>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="ticketEvent in ticketsEvent">
+                            <td> {{ticketEvent.displayName}}</td>
+                            <td> {{ticketEvent.celular}}</td>
+                            <td>{{ticketEvent.tipoEventservices}}</td>
+
+                            <td class="text-right">
+                                {{ticketEvent.cantidadDeCompra}}
+                            </td>
+                            <td class="text-primary text-right">
+                                <div ng-show="!ticketEvent.paidOut">
+                                    ${{(ticketEvent.totalAPagar/ticketEvent.cantidadDeCompra)*ticketEvent.cantidadUtilizada
+                                    | number:0}}
+                                </div>
+                                <div ng-show="ticketEvent.paidOut">${{ticketEvent.totalAPagar | number:0}}</div>
+
+                            </td>
+                        </tr>
+
+                        <!--    <tr>
+                                <td colspan="3"></td>
+                                <td>
+                                    Total Pagado
+                                </td>
+                                <td>
+                                    <small>&euro;</small>12,999
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td>
+                                    Total Pago en Puerta
+                                </td>
+                                <td>
+                                    <small>&euro;</small>12,999
+                                </td>
+                            </tr> -->
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane table-responsive" id="listas">
+                    <table id="dtListas" class="table table-striped" style="width: 100%!important;">
+                        <thead>
+                        <th>Nombre</th>
+                        <th class="text-right">Cantidad</th>
+                        </thead>
+
+                        <tbody>
+                        <tr data-ng-repeat="user in listaGratis">
+                            <td>{{user.displayName}}</td>
+                            <td class="text-right"> {{user.totalList}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane table-responsive" id="rrpp">
+
+
+                    <table id="dtRrpp" onchange="dtRrpp()" class="table table-striped">
+                        <thead>
+                        <th>Invitado</th>
+                        <th>Tipo</th>
+                        <th>contacto</th>
+                        <th class="text-right">Cantidad</th>
+                        <th class="text-right">Hora Check'in</th>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="rrpp in datosTotalesRRPP">
+                            <td>nombre invitado</td>
+                            <td>Vip mesa</td>
+                            <td>invitado@izinait.com</td>
+                            <td class="text-right">cobrada/enviadas</td>
+                            <td class="text-right">01:35am</td>
+                        </tr>
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+                <div class="tab-pane table-responsive" id="asignados">
+                    <table class="table table-striped">
+                        <thead class="text-primary">
+                        <th>Tipo</th>
+                        <th class="text-right">Valor</th>
+                        <th class="text-right">Vendidas</th>
+
+                        <th class="">Finaliza</th>
+                        <th class="text-right">Estado</th>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="servicioEvent in serviciosEvent">
+                            <td>
+                                <span>
+                                    <span style="font-size: 20px">
+                                        <i style="color: #4caf50" ng-show="servicioEvent.tipo == 'Mesa'"
+                                           class="fa fa-star"></i>
+                                        <i style="color: #f44336" ng-show="servicioEvent.tipo == 'Preventa'"
+                                           class="fa fa-ticket "></i>
+                                        <i style="color: #c8c8c8" ng-show="servicioEvent.tipo == 'Vip'"
+                                           class="fa fa-diamond"></i>
+                                        <i style="color: #ff9800" ng-show="servicioEvent.tipo == 'Especial'"
+                                           class="fa fa-certificate"></i>
+                                        <i style="color: #00bcd4" ng-show="servicioEvent.tipo == 'Botella'"
+                                           class="fa fa-glass"></i>
+                                    </span>
+                                    <span>{{servicioEvent.tipo}}
+                                        <p>
+                                            <small class="category">{{servicioEvent.desc}}
+
+                                            </small>
+
+                                        </p>
+                                        <p>
+                                              <button ng-click="ventaManual(servicioEvent) " class="btn btn-sm">Venta manual</button>
+                                        </p>
+                                    </span>
+                                </span>
+                            </td>
+                            <td class="text-right">$ {{servicioEvent.precio | number:0}}</td>
+                            <td class="text-right">{{servicioEvent.utilizados}}/{{servicioEvent.cantidad}}</td>
+                            <td class="">{{servicioEvent.fechaFin | date:"dd 'de' MMM', 'HH:mm" }}</td>
+                            <td class="text-right">
+                                <md-switch class="pull-right" ng-click="accionVisible(servicioEvent)"
+                                           ng-model="servicioEvent.visible" aria-label="Switch 1">
+
+                                </md-switch>
+
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="card col-xs-12 col-md-12 text-center">
+    <div class="card-header card-header-icon" style="float: none;padding-top: 0px;" tabindex="0">
+        <h2><i class="fa fa-bullhorn" sty aria-hidden="true"></i></h2>
+        <h4 class="card-title">Compartir evento:</h4>
+    </div>
+    <div>
+        <span id="copyContent" class="margin-15 inline-block" style="margin: 15px;display: inline-block;
+                    border: 1px solid #707a82;
+                    padding: 10px;
+                    border-radius: 3px;
+                    font-size: 12px;
+                    max-width: 100%;
+                    word-break: break-all;">
+                        link evento + id rrpp
+                    </span>
+        <div class="share-icons" style="margin: 20px;margin-top: 0px;">
+            <a id="copy" class="btn btn-just-icon btn-round " data-copy="{{event.evenUrl}}">
+                <i class="material-icons">content_copy</i>
+                <div class="ripple-container"></div>
+            </a>
+            <a class="btn btn-just-icon btn-round btn-facebook" target="_blank"
+               href="https://www.facebook.com/dialog/share?app_id=1138664439526562&amp;display=popup&amp;href={{event.evenUrl}}&amp;redirect_uri={{event.evenUrl}}&amp;mobile_iframe=true">
+                <i class="fa fa-facebook"> </i>
+                <div class="ripple-container"></div>
+            </a>
+            <a target="_blank" class="btn btn-just-icon btn-round btn-twitter">
+                <i class="fa fa-twitter"></i>
+                <div class="ripple-container"></div>
+            </a>
+            <a target="_blank" href="https://plus.google.com/share?url={{event.evenUrl}}"
+               class="btn btn-just-icon btn-round btn-google">
+                <i class="fa fa-google"> </i>
+                <div class="ripple-container"></div>
+            </a>
+            <a target="_blank" href="https://plus.google.com/share?url={{event.evenUrl}}"
+               class="btn btn-just-icon btn-round btn-success">
+                WSP
+                <div class="ripple-container"></div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("copy").addEventListener("click", function () {
+        copyToClipboardMsg(document.getElementById("copyContent"), "msg");
+    });
+
+    function copyToClipboardMsg(elem, msgElem) {
+        var succeed = copyToClipboard(elem);
+        var msg;
+        if (!succeed) {
+            msg = "Copy not supported or blocked.  Press Ctrl+c to copy."
+        } else {
+            msg = "Text copied to the clipboard."
+        }
+        if (typeof msgElem === "string") {
+            msgElem = document.getElementById(msgElem);
+        }
+    }
+
+    function copyToClipboard(elem) {
+        // create hidden text element, if it doesn't already exist
+        var targetId = "_hiddenCopyText_";
+        var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+        var origSelectionStart, origSelectionEnd;
+        if (isInput) {
+            // can just use the original source element for the selection and copy
+            target = elem;
+            origSelectionStart = elem.selectionStart;
+            origSelectionEnd = elem.selectionEnd;
+        } else {
+            // must use a temporary form element for the selection and copy
+            target = document.getElementById(targetId);
+            if (!target) {
+                var target = document.createElement("textarea");
+                target.style.position = "absolute";
+                target.style.left = "-9999px";
+                target.style.top = "0";
+                target.id = targetId;
+                document.body.appendChild(target);
+            }
+            target.textContent = elem.textContent;
+        }
+        // select the content
+        var currentFocus = document.activeElement;
+        target.focus();
+        target.setSelectionRange(0, target.value.length);
+
+        // copy the selection
+        var succeed;
+        try {
+            succeed = document.execCommand("copy");
+            swal({
+                title: "Copiado!",
+                text: "El enlace se ha copiado en el portapapeles.",
+                buttonsStyling: false,
+                confirmButtonClass: "btn btn-success",
+                type: "success"
+            });
+        } catch (e) {
+            succeed = false;
+        }
+        // restore original focus
+        if (currentFocus && typeof currentFocus.focus === "function") {
+            currentFocus.focus();
+        }
+
+        if (isInput) {
+            // restore prior selection
+            elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+        } else {
+            // clear temporary content
+            target.textContent = "";
+        }
+        return succeed;
+    }
+</script>
+
+
+<script type="text/ng-template" id="dialogVentaManual" class="col-xs-12">
+
+    <div class="col-md-12 col-xs-12">
+        <center><br>
+            <h5> Realizar venta manual </h5>
+
+
+            <div class="col-md-6 form-group  is-empty">
+                <label class="label-on-left label-floating">Nombre Completo</label>
+                <input id="nombreCompleto" ng-model="nombreCompleto" required="true" type="text"
+                       class="form-control ">
+
+                <span class="help-block">nombre completo por seguridad</span>
+
+            </div>
+            <div class="col-md-4  form-group  is-empty">
+                <button ng-click="menosEntradas()" class="btn btn-sm btn-primary">-</button>
+
+            </div>
+
+            <div class="col-md-4 form-group  is-empty">
+                <label class="label-on-left label-floating">Cantidad de entradas</label>
+                <input id="cantidad" ng-model="cantidad" required="true" type="number"
+                       class="form-control ">
+
+                <span class="help-block">cantidad del servicio</span>
+
+            </div>
+            <div class="col-md-4 form-group  is-empty">
+                <button ng-click="masEntradas()" class="btn btn-sm btn-primary">+</button>
+
+            </div>
+
+            <div class=" col-md-4 form-group  is-empty">
+                <label class="label-on-left label-floating">Rut</label>
+                <input id="rut" ng-model="rut" type="number"
+                       class="form-control ">
+
+                <span class="help-block">sin gion verificador,  (opcional)</span>
+
+            </div>
+            <div class=" col-md-4 form-group  is-empty">
+                <label class="label-on-left label-floating">Correo</label>
+                <input id="correo" ng-model="correo" type="email"
+                       class="form-control ">
+
+                <span class="help-block">correo electronico para mejorar tu base de datos</span>
+
+            </div>
+            <div class="col-md-4 form-group  is-empty">
+                <label class="label-on-left label-floating">Whatsapp</label>
+                <input id="wstp" ng-model="wstp" type="number"
+                       class="form-control ">
+
+                <span class="help-block">numero de whatsaapp para mejorar tu base de datos, (opcional)</span>
+
+            </div>
+
+
+            <div class="col-md-12" style="margin-top: 50px">
+
+                <button ng-click="cancel()" class="btn "> CANCELAR</button>
+                <button ng-click="guardarEntradas()" class="btn btn-success"> VENTA REALIZADA</button>
+            </div>
+
+            <!--  <div id="datosClienteQvo">
+              <input  type="text" placeholder="Nombre" class="form-control col-md-12"  ng-model="usuarioLogeado.displayName">
+              <input  type="text" placeholder="Correo" class="form-control col-md-12" ng-model="usuarioLogeado.email">
+              <button ng-click="crearUsuarioQvo()" scope="public_profile email user_birthday"
+                      class=" btn btn-info">
+
+                  <i class="material-icons"></i> Agregar Tarjeta
+              </button>
+              </div>-->
+            <br>
+
+
+        </center>
+    </div>
+
+
+</script>
 
 <script id="dialogCambiarNickName" type="text/ng-template">
     <div class="col-md-12">
 
         <h6> IDENTIFICATE CON UN NICK NAME UNICO PARA TÍ</h6>
 
-        <input type="text" style="text-transform:lowercase;"  ng-model="nickName" class="form-control" placeholder="nickName">
+        <input type="text" style="text-transform:lowercase;" ng-model="nickName" class="form-control"
+               placeholder="nickName">
         <input type="email" ng-model="email" class="form-control" placeholder="Correo Electronico">
         <div class="text-right">
             <button ng-click="confirmarDatos()" class="btn btn-info btn-sm "> Confirmar</button>
@@ -21,17 +780,26 @@ cantidad de cortecias vip Mesa : {{ corteciasUtilizadas.vipMesa }}/{{ corteciasH
 
 </script>
 <script id="dialogMandarCortecia" type="text/ng-template">
-    <div class="col-md-12">
+    <div class="col-md-12 text-center" style="margin: 20px">
 
-        <h5> Enviar Cortecia</h5>
+        <h2><i class="fa fa-envelope-open-o" aria-hidden="true"></i></h2>
+        <h4 class="card-title">Enviar cortesía</h4>
 
-        <input type="text" style="text-transform:lowercase;"  ng-model="nombreCompleto" class="form-control" placeholder="Nombre Completo">
+        <div class=" row">
+            <span class="text-primary pull-left">
+                Tipo:
+            </span>
+            <select class="pull-right select2-container" ng-change="cantidadDeEntradas(tipoSelecionado)"
+                    ng-model="tipoSelecionado">
+                <option ng-repeat="tipo in tipoCortecias">{{tipo.tipo}}</option>
+            </select>
+        </div>
+
+        <input type="text" style="text-transform:lowercase;" ng-model="nombreCompleto" class="form-control"
+               placeholder="Nombre Completo">
         <input type="email" ng-model="email" class="form-control" placeholder="Correo Electronico">
         <input type="number" ng-model="celular" class="form-control" placeholder="Whatsapp">
 
-        <select ng-change="cantidadDeEntradas(tipoSelecionado)"  ng-model="tipoSelecionado" >
-        <option  ng-repeat="tipo in tipoCortecias">{{tipo.tipo}} </option>
-        </select>
 
         <div class="col-md-4  form-group  is-empty">
             <button ng-click="menosEntradas()" class="btn btn-sm btn-primary">-</button>
@@ -39,7 +807,7 @@ cantidad de cortecias vip Mesa : {{ corteciasUtilizadas.vipMesa }}/{{ corteciasH
         </div>
 
         <div class="col-md-4 form-group  is-empty">
-            <label class="label-on-left label-floating">Cantidad de entradas</label>
+            <label class="label-on-left label-floating">Invitados Adicionales</label>
             <input id="cantidad" ng-model="cantidad" required="true" type="number"
                    class="form-control ">
 
@@ -50,9 +818,10 @@ cantidad de cortecias vip Mesa : {{ corteciasUtilizadas.vipMesa }}/{{ corteciasH
             <button ng-click="masEntradas()" class="btn btn-sm btn-primary">+</button>
 
         </div>
-        <div class="text-right">
-            <button ng-click="enviarCortecias()" class="btn btn-info btn-sm "> Confirmar</button>
-        </div>
+
+    </div>
+    <div class="text-center">
+        <button ng-click="enviarCortecias()" class="btn btn-info "> Confirmar</button>
     </div>
 
 

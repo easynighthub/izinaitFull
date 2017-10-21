@@ -11,6 +11,7 @@ angular.module('myApp', [
     'ngMap',
     'ngMaterial',
     'myApp.view1',
+    'myApp.link',
     'myApp.detalleEvento'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {

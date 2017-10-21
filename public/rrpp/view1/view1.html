@@ -1,15 +1,15 @@
- <!--<center>
-    <button id="BarraCargando" class="btn btn-primary btn-lg "><i class="fa fa-circle-o-notch fa-spin"></i> CARGANDO
-        EVENTOS
-    </button>
-    <div style="display: none" id="noHayEventos">
-        <p>Actualmente no hay eventos futuros.</p>
-    </div>
+<!--<center>
+   <button id="BarraCargando" class="btn btn-primary btn-lg "><i class="fa fa-circle-o-notch fa-spin"></i> CARGANDO
+       EVENTOS
+   </button>
+   <div style="display: none" id="noHayEventos">
+       <p>Actualmente no hay eventos futuros.</p>
+   </div>
 </center>
 <center>
 <button class="btn btn-primary"> PLATAFORMA DISPONIBLE PROXIMAMENTE  </button>
 </center>
- -->
+-->
 
 <div class="col-md-12">
     <div class="row">
@@ -18,41 +18,62 @@
         >
 
 
-            <div class="col-md-4"   ng-repeat="event in events | orderBy:'date'">
+            <div class="col-md-4" ng-repeat="event in events | orderBy:'date'">
 
-            <!--     ng-show="event.toHour > eventosFuturoFecha" -->
+                <!--     ng-show="event.toHour > eventosFuturoFecha" -->
 
 
                 <div class="card card-product">
                     <div class="card-image" data-header-animation="true">
 
-                        <img class="img" src="{{event.image}}">
+                        <img class="img" style="height: 150px; transform: perspective(1350px);" src="{{event.image}}">
+                        <p class="card-title"
+                           style=" text-overflow: ellipsis;white-space: nowrap;overflow: hidden; text-transform: capitalize!important;">
+                            {{event.name}}
+                        </p>
 
                     </div>
                     <div class="card-content">
                         <div class="card-actions">
-                            <button type="button" ng-click="goToEventDetails(event)" class="btn btn-default btn-simple" rel="tooltip"
+                            <button type="button" ng-click="goToEventDetails(event)" class="btn btn-default btn-simple hover"
+                                    rel="tooltip"
                                     data-placement="bottom" title="Informe">
                                 <i class="material-icons">timeline</i>
                             </button>
 
-                            <button type="button" ng-click="copiarLink(event)" class="btn btn-default btn-simple" rel="tooltip"
-                                    data-placement="bottom" title="Duplicar">
-                                <i class="material-icons">content_copy</i>
-                            </button>
-                            <button type="button" ng-click="verEvento(event)"  target="_blank" class="btn btn-default btn-simple" rel="tooltip"
+                            <button type="button" ng-click="verEvento(event)" target="_blank"
+                                    class="btn btn-default btn-simple hover" rel="tooltip"
                                     data-placement="bottom" title="Ver">
                                 <i class="fa fa-eye actionIcon"></i>
                             </button>
                         </div>
-                        <h4 class="card-title text-capitalize text-primary " style="font-weight: bolder;">
-                            {{event.name}}
-                        </h4>
+                        <div>
+                            <div style="margin:0px!important" class=" row stats ">
+                                    <span class="category text-capitalize">
+                                        Ventas :
+                                    </span>
+                                <span style="font-weight: 500" class="stats pull-right">
+                                    {{event.ticketTotalRRPP}}
+                                </span>
+                            </div>
+                            <div style="margin:0px!important" class=" row stats ">
+                                    <span class=" category text-capitalize">
+                                        Lista :
+                                    </span>
+                                <span style="font-weight: 500" class="stats pull-right">
+                                    {{event.listTotalRRPP}}
+                                </span>
+                            </div>
+                            <div style="margin:0px!important" class=" row stats ">
+                            <span class="category text-capitalize">
+                                        Check-in :
+                                    </span>
+                                <span style="font-weight: 500" class="stats pull-right">
+                                    (Cobrados)
+                                </span>
+                            </div>
+                        </div>
 
-
-
-                     ticket vendidos :{{event.ticketTotalRRPP}} <br>
-                        personas en lista : {{event.listTotalRRPP}}
                     </div>
                     <div class="card-footer">
                         <div class="stats">
@@ -83,7 +104,8 @@
 
         <h6> IDENTIFICATE CON UN NICK NAME UNICO PARA TÍ</h6>
 
-        <input type="text" style="text-transform:lowercase;"  ng-model="nickName" class="form-control" placeholder="nickName">
+        <input type="text" style="text-transform:lowercase;" ng-model="nickName" class="form-control"
+               placeholder="nickName">
         <input type="email" ng-model="email" class="form-control" placeholder="Correo Electronico">
         <div class="text-right">
             <button ng-click="confirmarDatos()" class="btn btn-info btn-sm "> Confirmar</button>
@@ -93,6 +115,12 @@
 
 </script>
 
+
+<style>
+    .hover:hover {
+        color: #fe0072!important;
+    }
+</style>
 
 
 

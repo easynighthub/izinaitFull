@@ -5,11 +5,11 @@
 
 'use strict';
 
-angular.module('myApp.view1', ['ngRoute'])
+angular.module('myApp.link', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/view1', {
-                templateUrl: 'view1/view1.html',
-                controller: 'View1Ctrl',
+        $routeProvider.when('/link', {
+                templateUrl: 'link/link.html',
+                controller: 'linkCtrl',
                 data: {
                     meta: {
                         'title': 'Home page',
@@ -24,7 +24,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
 
 
-    .controller('View1Ctrl', ['$scope','$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope','$mdDialog',
+    .controller('linkCtrl', ['$scope','$routeParams', '$firebaseObject', '$firebaseArray', '$filter', '$rootScope','$mdDialog',
         function ($scope, $routeParams,$firebaseObject, $firebaseArray, $filter, $rootScope,$mdDialog) {
 
 
@@ -39,8 +39,8 @@ angular.module('myApp.view1', ['ngRoute'])
 
 
 
-            $(sideEventos).addClass("active");
-            $(sideRrpp).removeClass("active");
+            $(sideEventos).removeClass("active");
+            $(sideRrpp).addClass("active");
 
             firebase.database().ref('rrpps/').child(rrpp.$id || rrpp.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
@@ -52,19 +52,20 @@ angular.module('myApp.view1', ['ngRoute'])
                         rrppLogeado = rrppLocal;
                         $('.photo').prepend($('<img>', {id: 'theImg', src: rrppLogeado.picture}));
                         $('.clubSelecionado').text(  rrppLogeado.name+ " ");
-                        //console.log(rrppLogeado);
-                                console.log(firebase.auth().currentUser);
+                        console.log('rrpp');
+                        console.log(rrppLogeado);
+                        //console.log(firebase.auth().currentUser);
                         if(rrppLogeado.confirm == false){
                             cambiarNickName(rrppLogeado);
                         };
-                            if(rrppLogeado.events  != undefined){
-                                angular.forEach(Object.keys(rrppLogeado.events), function(event){
-                                    var eventsRequest = $firebaseObject(firebase.database().ref('/events/' + event));
-                                    eventsRequest.$loaded().then(function(){
-                                        getFuturesEvents(eventsRequest);
-                                    });
+                        if(rrppLogeado.events  != undefined){
+                            angular.forEach(Object.keys(rrppLogeado.events), function(event){
+                                var eventsRequest = $firebaseObject(firebase.database().ref('/events/' + event));
+                                eventsRequest.$loaded().then(function(){
+                                    getFuturesEvents(eventsRequest);
                                 });
-                            };
+                            });
+                        };
 
 
                     });
@@ -88,16 +89,16 @@ angular.module('myApp.view1', ['ngRoute'])
                 //console.log(rrppLogeadoRecibido);
 
 
-                    var rrppLogeadoRecibido = rrppLogeadoRecibido;
-                    $mdDialog.show({
-                        controller: dialogControllerCambiarNickName,
-                        templateUrl: 'dialogCambiarNickName',
-                        parent: angular.element(document.body),
-                        clickOutsideToClose: true,
-                        locals: {
-                            rrppLogeadoRecibido: rrppLogeadoRecibido
-                        }
-                    });
+                var rrppLogeadoRecibido = rrppLogeadoRecibido;
+                $mdDialog.show({
+                    controller: dialogControllerCambiarNickName,
+                    templateUrl: 'dialogCambiarNickName',
+                    parent: angular.element(document.body),
+                    clickOutsideToClose: true,
+                    locals: {
+                        rrppLogeadoRecibido: rrppLogeadoRecibido
+                    }
+                });
 
             };
 
@@ -120,28 +121,28 @@ angular.module('myApp.view1', ['ngRoute'])
                     $scope.nickName = $scope.nickName.toLowerCase();
 
 
-                      var buscarNickname = firebase.database().ref('/nickName');
-                      var buscarmeRequest = $firebaseArray(buscarNickname);
-                      buscarmeRequest.$loaded().then(function () {
-                          $scope.nickNameSelect = buscarmeRequest;
-                          $scope.nickNameSelect.forEach(function (x) {
+                    var buscarNickname = firebase.database().ref('/nickName');
+                    var buscarmeRequest = $firebaseArray(buscarNickname);
+                    buscarmeRequest.$loaded().then(function () {
+                        $scope.nickNameSelect = buscarmeRequest;
+                        $scope.nickNameSelect.forEach(function (x) {
 
-                              //console.log("entre si mi nick estiste dentro de los rrpps");
-                              if(x.nickName == $scope.nickName){
-                                  nickNameYaExiste = true ;
-                              }
+                            //console.log("entre si mi nick estiste dentro de los rrpps");
+                            if(x.nickName == $scope.nickName){
+                                nickNameYaExiste = true ;
+                            }
 
-                              //console.log(nickNameYaExiste);
-                              cantidad++;
-                              //console.log(cantidad);
+                            //console.log(nickNameYaExiste);
+                            cantidad++;
+                            //console.log(cantidad);
 
-                              if(cantidad == $scope.nickNameSelect.length){
-                                  //console.log("entra esta wea")
-                                  $scope.function2();
-                              };
+                            if(cantidad == $scope.nickNameSelect.length){
+                                //console.log("entra esta wea")
+                                $scope.function2();
+                            };
 
-                          });
-                      });
+                        });
+                    });
 
                     $scope.function2 = function (){
                         if(nickNameYaExiste != true){
@@ -164,7 +165,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
 
 
-                    };
+                };
 
 
                 $scope.hide = function () {
@@ -226,13 +227,13 @@ angular.module('myApp.view1', ['ngRoute'])
                     });
 
                 });
-                    event.linkRRPP = "https://www.izinait.com/detalleEvento?id="+ event.id+"&friend="+rrppLogeado.$id;
-                        $scope.events.push(event);
-                        return true;
+                event.linkRRPP = "https://www.izinait.com/detalleEvento?id="+ event.id+"&friend="+rrppLogeado.$id;
+                $scope.events.push(event);
+                return true;
 
-              //  }
+                //  }
                 //else
-                  //  return false;
+                //  return false;
             };
 
 

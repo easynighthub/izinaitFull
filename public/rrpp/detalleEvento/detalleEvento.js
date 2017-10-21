@@ -39,6 +39,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             $scope.corteciasUtilizadas.vip = 0;
 
             $(sideEventos).addClass("active");
+            $(sideRrpp).removeClass("active");
 
             firebase.database().ref('rrpps/').child(rrpp.$id || rrpp.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
