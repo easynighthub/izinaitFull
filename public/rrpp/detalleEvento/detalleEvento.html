@@ -595,7 +595,8 @@
                 <i class="fa fa-google"> </i>
                 <div class="ripple-container"></div>
             </a>
-            <a target="_blank" href="https://plus.google.com/share?url={{event.evenUrl}}"
+            <a href="" ng-show="onCellphone == true" data-action="share/whatsapp/share" ng-click="shareWhatsappRRPPEvento()"
+               title="Comparte con WhatsApp"
                class="btn btn-just-icon btn-round btn-success">
                 <i class="fa fa-whatsapp" aria-hidden="true"></i>
                 <div class="ripple-container"></div>
