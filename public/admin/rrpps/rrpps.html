@@ -17,6 +17,11 @@
                     <p class="category">Añadir RR.PP</p>
                 </div>
 
+               <!-- <input type="file" id="my_file_input" />
+                <div id='my_file_output'></div> -->
+
+                <button class="btn btn-success"> PERMISOS GRUPALES</button>
+
 
                 <div class="card-content">
                     <h4 class="card-title">RR.PPS HABILITADOS
@@ -37,7 +42,8 @@
                             <tbody>
                             <tr ng-repeat="rrpp in rrpps">
                                 <td>{{rrpp.email}}</td>
-                                <td><button class="btn btn-sm btn-success"> PERMISOS</button></td>
+                                <td><button  ng-disabled="rrpp.bloqueado == true" ng-click="permisos(rrpp)" class="btn btn-sm btn-success">
+                                    permisos</button></td>
                                 <td><span class="text-primary">{{rrpp.nickName}}</span>
                                     <br>
                                     <input style="display: inline-block;
@@ -161,6 +167,50 @@
         }
         return succeed;
     }
+</script>
+
+<script id="dialogAgregarCortecias" type="text/ng-template">
+    <div class="col-md-12">
+
+        <h6> Define las cortecias para este RRPP</h6>
+
+        <style type="text/css">
+            .tg  {border-collapse:collapse;border-spacing:0;}
+            .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+            .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+            .tg .tg-yw4l{vertical-align:top}
+        </style>
+        <table class="tg">
+            <tr>
+                <th class="tg-yw4l">Cantidad de cortecias Generales</th>
+                <th class="tg-yw4l">
+                    <input ng-model="general" type="number">
+                </th>
+            </tr>
+            <tr>
+                <td class="tg-yw4l">Cantidad de cortecias Vip</td>
+                <td class="tg-yw4l">
+                    <input ng-model="vip" type="number">
+                </td>
+            </tr>
+            <tr>
+                <td class="tg-yw4l">Cantidad de cortecias Vip Mesa</td>
+                <td class="tg-yw4l">
+                    <input ng-model="vipMesa"  type="number">
+                </td>
+            </tr>
+        </table>
+        <br>
+        <div class="col-md-12 ">
+            <button ng-click="cancel()" class="btn "> Cancelar</button>
+            <button ng-click="guardarCortecias()" class="btn btn-primary"> Guardar</button>
+        </div>
+
+
+    </div>
+
+
+
 </script>
 
 

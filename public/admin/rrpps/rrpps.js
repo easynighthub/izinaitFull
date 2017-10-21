@@ -290,6 +290,117 @@ angular.module('myApp.rrpps', ['ngRoute'])
 
             }
 
+            $scope.permisos =function (rrpp) {
+
+                console.log(rrpp)
+
+                $mdDialog.show({
+                    controller: ControllerDialogAgregarCortecias,
+                    templateUrl: 'dialogAgregarCortecias',
+                    parent: angular.element(document.body),
+                    clickOutsideToClose: false,
+                    locals: {
+                        rrpp: rrpp
+                    }
+                });
+
+            };
+
+            function ControllerDialogAgregarCortecias($scope, $mdDialog, $timeout, $q, $log,rrpp) {
+
+                $scope.rrpp = rrpp;
+             console.log($scope.rrpp);
+             console.log(adminLogeado.idClubWork);
+
+             angular.forEach(rrpp.cortecias , function (x,key,value) {
+            if(key == adminLogeado.idClubWork){
+                $scope.general = x.general;
+                $scope.vip = x.vip;
+                $scope.vipMesa = x.vipMesa;
+                 }
+
+             });
+
+
+             $scope.guardarCortecias = function () {
+
+                 if( $scope.general >= 0){
+                     if( $scope.vip >= 0){
+                         if( $scope.vipMesa >=0){
+
+                             firebase.database().ref('admins/' +  adminLogeado.$id + '/rrpps/' + $scope.rrpp.$id+'/cortecias/'+adminLogeado.idClubWork)
+                                 .update(
+                                     {
+                                         general : $scope.general,
+                                         vip : $scope.vip,
+                                         vipMesa : $scope.vipMesa
+                                     }
+                                 );
+                             $mdDialog.hide();
+                         }
+                     }
+                 }
+
+
+
+             };
+
+
+
+
+
+
+
+                $scope.hide = function () {
+                    $mdDialog.hide();
+                };
+
+                $scope.cancel = function () {
+                    $mdDialog.cancel();
+
+                };
+
+
+            };
+
+
+            var oFileIn;
+
+            $(function() {
+                oFileIn = document.getElementById('my_file_input');
+                if(oFileIn.addEventListener) {
+                    oFileIn.addEventListener('change', filePicked, false);
+                }
+            });
+
+
+            function filePicked(oEvent) {
+                // Get The File From The Input
+                var oFile = oEvent.target.files[0];
+                var sFilename = oFile.name;
+                // Create A File Reader HTML5
+                var reader = new FileReader();
+
+                // Ready The Event For When A File Gets Selected
+                reader.onload = function(e) {
+                    var data = e.target.result;
+                    var cfb = XLS.CFB.read(data, {type: 'binary'});
+                    var wb = XLS.parse_xlscfb(cfb);
+                    // Loop Over Each Sheet
+                    wb.SheetNames.forEach(function(sheetName) {
+                        // Obtain The Current Row As CSV
+                        var sCSV = XLS.utils.make_csv(wb.Sheets[sheetName]);
+                        var oJS = XLS.utils.sheet_to_row_object_array(wb.Sheets[sheetName]);
+
+                        $("#my_file_output").html(sCSV);
+                        console.log(oJS)
+                    });
+                };
+
+                // Tell JS To Start Reading The File.. You could delay this if desired
+                reader.readAsBinaryString(oFile);
+            }
+
 
             /////////////////////////////////////////////////////////
         }]);
