@@ -1,4 +1,3 @@
-
 <div class="card col-xs-12 col-md-12 text-center">
     <div class="card-header card-header-icon" style="float: none;padding-top: 0px;" tabindex="0">
         <h1><i class="fa fa-bullhorn" sty aria-hidden="true"></i></h1>
@@ -33,9 +32,10 @@
                 <i class="fa fa-google"> </i>
                 <div class="ripple-container"></div>
             </a>
-            <a target="_blank" href="https://plus.google.com/share?url={{event.evenUrl}}"
+            <a href="" ng-show="onCellphone == true" data-action="share/whatsapp/share" ng-click="shareWhatsappRRPP()"
+               title="Comparte con WhatsApp"
                class="btn btn-just-icon btn-round btn-success">
-                WSP
+                <i class="fa fa-whatsapp" aria-hidden="true"></i>
                 <div class="ripple-container"></div>
             </a>
         </div>
@@ -126,10 +126,6 @@
             <h5> Realizar venta manual </h5>
 
 
-
-
-
-
             <div class="col-md-6 form-group  is-empty">
                 <label class="label-on-left label-floating">Nombre Completo</label>
                 <input id="nombreCompleto" ng-model="nombreCompleto" required="true" type="text"
@@ -182,7 +178,7 @@
             </div>
 
 
-            <div  class="col-md-12" style="margin-top: 50px">
+            <div class="col-md-12" style="margin-top: 50px">
 
                 <button ng-click="cancel()" class="btn "> CANCELAR</button>
                 <button ng-click="guardarEntradas()" class="btn btn-success"> VENTA REALIZADA</button>
