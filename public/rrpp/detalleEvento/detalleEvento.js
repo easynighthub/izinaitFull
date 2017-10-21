@@ -67,8 +67,6 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
                                   angular.forEach($scope.event.asist , function (x) {
                                   if(x.idRRPP == rrppLogeado.$id){
-
-
                                       if(x.tipo == 'vipMesa'){
                                           $scope.corteciasUtilizadas.vipMesa += x.totalList;
                                       }
