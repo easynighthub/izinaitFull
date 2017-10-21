@@ -581,6 +581,12 @@ exports.addMessagess2 = functions.https.onRequest((req, res) => {
 }); */
 
 
+exports.correoCortecia = functions.database.ref('/events/{eventId}/list/{usersId}').onWrite(event => {
+    // enviar correo de cortecia con link
+    // https://www.izinait.com/qrUsuario.html?id=IDUSUARIOCONLASCORTECIA
+
+});
+
 exports.correoCompraTicket = functions.database.ref('/tickets/{eventId}/{userId}').onWrite(event => {
 
     //console.log(event.data.val());

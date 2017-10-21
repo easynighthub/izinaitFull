@@ -610,6 +610,10 @@
             <div class="col-md-12 col-xs-12" style="margin-top: 20px;">
                 <p style="font-size: 18px;">{{userCapturado.totalAsist}}<span class="description">/</span>{{userCapturado.totalList}}
                 </p>
+                <p ng-show="userCapturado.tipo == vipMesa"> Cortecia Vip Mesa</p>
+                <p ng-show="userCapturado.tipo == general"> Cortecia General
+                </p>
+                <p ng-show="userCapturado.tipo == vip">Cortecia Vip</p>
             </div>
 
 

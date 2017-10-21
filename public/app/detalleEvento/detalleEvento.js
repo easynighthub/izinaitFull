@@ -323,9 +323,13 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 $scope.nuevaAsistencia.totalList = $scope.totalReserva;
                 $scope.nuevaAsistencia.totalAsist = 0;
                 $scope.nuevaAsistencia.displayName = usuarioLogeado.displayName;
+                $scope.nuevaAsistencia.email = usuarioLogeado.email;
                 $scope.nuevaAsistencia.idRRPP = Rrpp;
-                $scope.nuevaAsistencia.tipo = "General";
+                $scope.nuevaAsistencia.tipo = "general";
                 $scope.nuevaAsistencia.fechaCaducacion = $scope.event.freemiumHour;
+                $scope.nuevaAsistencia.userFacebook = true;
+                $scope.nuevaAsistencia.cortecia = false;
+                $scope.nuevaAsistencia.id = usuarioLogeado.$id;
 
                 var totalAsistenciaVisible = $scope.totalReserva;
 

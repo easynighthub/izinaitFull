@@ -703,10 +703,21 @@ angular.module('myApp.event', ['ngRoute'])
                     });
 
                     var idClub = Object.keys(eventoCompleto.clubs)[0];
-                    var GuardarCliente = 'admins/' + eventoCompleto.admin + '/clients/' + idClub + '/' + $scope.userCapturado.$id;
-                    firebase.database().ref(GuardarCliente).set(true);
 
-                    firebase.database().ref('users/' + $scope.userCapturado.$id + '/events/' + eventoCompleto.admin + '/' + idClub + '/' + eventId).set(new Date().getTime());
+                    var GuardarCliente = 'admins/' + eventoCompleto.admin + '/clients/' + idClub + '/' + $scope.userCapturado.$id;
+                    var GuardarClienteManual = 'admins/' + eventoCompleto.admin + '/clientsCortecia/' + idClub + '/' + $scope.userCapturado.$id;
+                    if($scope.userCapturado.userFacebook == true){
+                        firebase.database().ref(GuardarCliente).set(true);
+                        firebase.database().ref('users/' + $scope.userCapturado.$id + '/events/' + eventoCompleto.admin + '/' + idClub + '/' + eventId).set(new Date().getTime());
+
+                    }else{
+                        firebase.database().ref(GuardarClienteManual).set(true);
+                        firebase.database().ref('usersManual/' + $scope.userCapturado.$id + '/events/' + eventoCompleto.admin + '/' + idClub + '/' + eventId).set(new Date().getTime());
+
+                    }
+
+
+
 
 
                     $mdDialog.hide();

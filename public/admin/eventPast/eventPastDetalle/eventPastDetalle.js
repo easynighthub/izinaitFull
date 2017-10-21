@@ -137,6 +137,10 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
 
                                                             $scope.users.forEach(function (user) {
                                                                 if(gratis == user.$id){
+                                                                    console.log(gratis);
+                                                                    console.log(user.$id);
+
+
                                                                    var edadClient = ((fechaActual - (new Date(user.birthday).getTime())) / 31556926000);
                                                                     $scope.contadorEdades += edadClient;
                                                                     $scope.contadorPersonasEdades += 1;

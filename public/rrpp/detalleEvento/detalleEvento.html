@@ -1,0 +1,59 @@
+
+cantidad de cortecias generales : {{corteciasUtilizadas.general}}/{{corteciasHabilitadas.general}}<br>
+cantidad de cortecias vip : {{ corteciasUtilizadas.vip }}/{{corteciasHabilitadas.vip  }}<br>
+cantidad de cortecias vip Mesa : {{ corteciasUtilizadas.vipMesa }}/{{ corteciasHabilitadas.vipMesa  }}
+<br>
+<button CLASS="btn btn-primary" ng-click="mandarCortecia()"> ENVIAR CORTECIA</button>
+
+
+<script id="dialogCambiarNickName" type="text/ng-template">
+    <div class="col-md-12">
+
+        <h6> IDENTIFICATE CON UN NICK NAME UNICO PARA TÍ</h6>
+
+        <input type="text" style="text-transform:lowercase;"  ng-model="nickName" class="form-control" placeholder="nickName">
+        <input type="email" ng-model="email" class="form-control" placeholder="Correo Electronico">
+        <div class="text-right">
+            <button ng-click="confirmarDatos()" class="btn btn-info btn-sm "> Confirmar</button>
+        </div>
+    </div>
+
+
+</script>
+<script id="dialogMandarCortecia" type="text/ng-template">
+    <div class="col-md-12">
+
+        <h5> Enviar Cortecia</h5>
+
+        <input type="text" style="text-transform:lowercase;"  ng-model="nombreCompleto" class="form-control" placeholder="Nombre Completo">
+        <input type="email" ng-model="email" class="form-control" placeholder="Correo Electronico">
+        <input type="number" ng-model="celular" class="form-control" placeholder="Whatsapp">
+
+        <select ng-change="cantidadDeEntradas(tipoSelecionado)"  ng-model="tipoSelecionado" >
+        <option  ng-repeat="tipo in tipoCortecias">{{tipo.tipo}} </option>
+        </select>
+
+        <div class="col-md-4  form-group  is-empty">
+            <button ng-click="menosEntradas()" class="btn btn-sm btn-primary">-</button>
+
+        </div>
+
+        <div class="col-md-4 form-group  is-empty">
+            <label class="label-on-left label-floating">Cantidad de entradas</label>
+            <input id="cantidad" ng-model="cantidad" required="true" type="number"
+                   class="form-control ">
+
+            <span class="help-block">cantidad del servicio</span>
+
+        </div>
+        <div class="col-md-4 form-group  is-empty">
+            <button ng-click="masEntradas()" class="btn btn-sm btn-primary">+</button>
+
+        </div>
+        <div class="text-right">
+            <button ng-click="enviarCortecias()" class="btn btn-info btn-sm "> Confirmar</button>
+        </div>
+    </div>
+
+
+</script>
