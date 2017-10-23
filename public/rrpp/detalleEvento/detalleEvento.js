@@ -66,25 +66,30 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
                                     $scope.linkRRPP = "https://www.izinait.com/detalleEvento?id="+ $scope.event.id+"&friend="+rrppLogeado.$id;
 
+                                    var ticketsRequest = $firebaseObject(firebase.database().ref('/tickets/' + $routeParams.id));
+                                    ticketsRequest.$loaded().then(function(){
+
+                                       angular.forEach(ticketsRequest , function (x) {
+                                           if(x.rrppid == rrppLogeado.$id){
+                                               if(x.tipoEntrada == 'vipMesa'){
+                                                   $scope.corteciasUtilizadas.vipMesa += x.cantidadDeCompra;
+                                               }
+                                               if(x.tipoEntrada == 'general'){
+                                                   $scope.corteciasUtilizadas.general += x.cantidadDeCompra;
+                                               }
+                                               if(x.tipoEntrada == 'vip'){
+                                                   $scope.corteciasUtilizadas.vip += x.cantidadDeCompra;
+                                               }
+
+                                           }
+
+
+                                       });
+
+                                    });
 
 
 
-                                  angular.forEach($scope.event.asist , function (x) {
-                                  if(x.idRRPP == rrppLogeado.$id){
-                                      if(x.tipo == 'vipMesa'){
-                                          $scope.corteciasUtilizadas.vipMesa += x.totalList;
-                                      }
-                                      if(x.tipo == 'general'){
-                                          $scope.corteciasUtilizadas.general += x.totalList;
-                                      }
-                                      if(x.tipo == 'vip'){
-                                          $scope.corteciasUtilizadas.vip += x.totalList;
-                                      }
-
-                                  }
-
-
-                                  });
 
 
 
@@ -204,27 +209,65 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 $scope.limite  =  $scope.corteciasHabilitadas.general - $scope.corteciasUtilizadas.general;
                 console.log($scope.limite);
             };
-                    if($scope.tipo == 'vip'){
+
+            if($scope.tipo == 'vip'){
                         $scope.limite  =  $scope.corteciasHabilitadas.vip - $scope.corteciasUtilizadas.vip;
                         console.log($scope.limite);
                     };
-                    if($scope.tipo == 'vipMesa'){
+
+            if($scope.tipo == 'vipMesa'){
                         $scope.limite  =  $scope.corteciasHabilitadas.vipMesa - $scope.corteciasUtilizadas.vipMesa;
                         console.log($scope.limite);
                     };
 
-                    if($scope.limite == 0){
-                        $scope.cantidad = 0;
-
-                    }else {
-                        $scope.cantidad = 1;
-                    };
-
-                }
+            if($scope.limite == 0){
+                $scope.cantidad = 0;
+            }else {
+                $scope.cantidad = 1;
+            };
+                };
 
 
                 $scope.enviarCortecias = function () {
-                    $scope.nuevaAsistencia = {};
+                    var nuevoTicket = firebase.database().ref().child('ticketsCreate/').push().key;
+
+                    $scope.nuevoTickets = {};
+                    $scope.nuevoTickets.cantidadDeCompra = $scope.cantidad;
+                    $scope.nuevoTickets.cantidadUtilizada = 0;
+                    $scope.nuevoTickets.celular = $scope.celular || '999999999';
+                    $scope.nuevoTickets.date =  Date.now();
+                    $scope.nuevoTickets.displayName = $scope.nombreCompleto;
+                    $scope.nuevoTickets.email = $scope.email;
+                    $scope.nuevoTickets.eventId = $scope.event.$id;
+                    $scope.nuevoTickets.firstName = $scope.nombreCompleto;
+                    $scope.nuevoTickets.idTransaccion = 'none';
+                    $scope.nuevoTickets.ideventservices = 'cortesia';
+                    $scope.nuevoTickets.lastName = 'none';
+                    $scope.nuevoTickets.pagoPuerta = false;
+                    $scope.nuevoTickets.paidOut = true;
+                    $scope.nuevoTickets.redeemed = false;
+                    $scope.nuevoTickets.rrppid =rrppLogeado.$id;
+                    $scope.nuevoTickets.ticketId = nuevoTicket;
+                    $scope.nuevoTickets.tipoEventservices = 'cortesia';
+                    $scope.nuevoTickets.totalAPagar = 0;
+                    $scope.nuevoTickets.totalPagadoConComision = 0;
+                    $scope.nuevoTickets.tipoEntrada = $scope.tipoSelecionado.trim();
+
+                    if($scope.nuevoTickets.tipoEntrada == "general"){
+                        $scope.nuevoTickets.fechaCaducacion = $scope.event.hourCorteciaGeneral;
+                    };
+                    if($scope.nuevoTickets.tipoEntrada == "vip"){
+                        $scope.nuevoTickets.fechaCaducacion = $scope.event.hourCorteciaVip;
+                    };
+                    if($scope.nuevoTickets.tipoEntrada == "vipMesa"){
+                        $scope.nuevoTickets.fechaCaducacion = $scope.event.hourCorteciaVipMesa;
+                    };
+
+
+
+
+
+                  /*  $scope.nuevaAsistencia = {};
                     $scope.nuevaAsistencia.asistencia = false;
                     $scope.nuevaAsistencia.fechaClick = Date.now();
                     $scope.nuevaAsistencia.totalList = $scope.cantidad;
@@ -244,7 +287,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     };
 
                     $scope.nuevaAsistencia.email = $scope.email;
-                    $scope.nuevaAsistencia.cortecia = true;
+                    $scope.nuevaAsistencia.cortecia = true;*/
 
 
                        var contadorUsers = 0;
@@ -254,10 +297,20 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                             //noinspection JSAnnotator,JSAnnotator
                             if(x.email == $scope.email)
                             {
-                                $scope.nuevaAsistencia.id = x.$id;
-                                $scope.nuevaAsistencia.userFacebook = true;
+                                $scope.nuevoTickets.userId = x.$id;
+                                //$scope.nuevaAsistencia.id = x.$id;
+                                //$scope.nuevaAsistencia.userFacebook = true;
+                                $scope.nuevoTickets.userFacebook = true;
                                 console.log( $scope.nuevaAsistencia);
-                                firebase.database().ref('events/' +  $scope.event.$id + '/asist/' + $scope.nuevaAsistencia.id).update($scope.nuevaAsistencia);
+                               // firebase.database().ref('events/' +  $scope.event.$id + '/asist/' + $scope.nuevaAsistencia.id).update($scope.nuevaAsistencia);
+                                firebase.database().ref('tickets/' +  $scope.event.$id + '/'+ $scope.nuevoTickets.ticketId).update($scope.nuevoTickets);
+
+                                firebase.database().ref('users/' +  $scope.nuevoTickets.userId + "/tickets/"+ $scope.nuevoTickets.ticketId).update(
+                                    {
+                                        eventId: $scope.event.$id,
+                                        ticketId :$scope.nuevoTickets.ticketId
+                                    });
+                                $mdDialog.hide();
                                 throw x;
                             } else
                                 {
@@ -267,10 +320,21 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                         if(contadorUsers == users.length){
                             usersManual.forEach(function (j) {
                                 if(j.email == $scope.email){
-                                    $scope.nuevaAsistencia.id =j.$id;
-                                    $scope.nuevaAsistencia.userFacebook = false;
-                                    console.log( $scope.nuevaAsistencia);
-                                    firebase.database().ref('events/' +  $scope.event.$id + '/asist/' + $scope.nuevaAsistencia.id).update($scope.nuevaAsistencia);
+                                    $scope.nuevoTickets.userId = j.$id;
+                                    //$scope.nuevaAsistencia.id =j.$id;
+                                   // $scope.nuevaAsistencia.userFacebook = false;
+                                    $scope.nuevoTickets.userFacebook = false;
+                                    console.log( $scope.nuevoTickets);
+                                   // firebase.database().ref('events/' +  $scope.event.$id + '/asist/' + $scope.nuevaAsistencia.id).update($scope.nuevaAsistencia);
+                                    firebase.database().ref('tickets/' +  $scope.event.$id + '/'+ $scope.nuevoTickets.ticketId).update($scope.nuevoTickets);
+
+
+                                    firebase.database().ref('usersManual/' +  $scope.nuevoTickets.userId + "/tickets/"+ $scope.nuevoTickets.ticketId).update(
+                                        {
+                                            eventId: $scope.event.$id,
+                                            ticketId :$scope.nuevoTickets.ticketId
+                                        });
+                                    $mdDialog.hide();
                                     throw j;
                                 }else{
                                     contadorUsersManual +=1;
@@ -286,12 +350,21 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 email: $scope.email,
                                 nombreCompleto: $scope.nombreCompleto}).then(
                                     function (s) {
-                                        $scope.nuevaAsistencia.id = nuevoUsuario;
-                                        $scope.nuevaAsistencia.userFacebook = false;
-                                        console.log( $scope.nuevaAsistencia);
-                                        firebase.database().ref('events/' +  $scope.event.$id + '/asist/' + nuevoUsuario).update($scope.nuevaAsistencia);
+                                        $scope.nuevoTickets.userId = nuevoUsuario;
+                                        //$scope.nuevaAsistencia.id = nuevoUsuario;
+                                        //$scope.nuevaAsistencia.userFacebook = false;
+                                        $scope.nuevoTickets.userFacebook = false;
+                                        console.log( $scope.nuevoTickets);
+                                       // firebase.database().ref('events/' +  $scope.event.$id + '/asist/' + nuevoUsuario).update($scope.nuevaAsistencia);
+                                        firebase.database().ref('tickets/' +  $scope.event.$id + '/'+ $scope.nuevoTickets.ticketId).update($scope.nuevoTickets);
 
-                            });
+                                        firebase.database().ref('usersManual/' +  $scope.nuevoTickets.userId + "/tickets/"+ $scope.nuevoTickets.ticketId).update(
+                                            {
+                                                eventId: $scope.event.$id,
+                                                ticketId :$scope.nuevoTickets.ticketId
+                                            });
+                                        $mdDialog.hide();
+                                    });
 
 
 

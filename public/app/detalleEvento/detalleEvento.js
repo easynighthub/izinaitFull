@@ -328,7 +328,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 $scope.nuevaAsistencia.tipo = "general";
                 $scope.nuevaAsistencia.fechaCaducacion = $scope.event.freemiumHour;
                 $scope.nuevaAsistencia.userFacebook = true;
-                $scope.nuevaAsistencia.cortecia = false;
+                $scope.nuevaAsistencia.cortesia = false;
                 $scope.nuevaAsistencia.id = usuarioLogeado.$id;
 
                 var totalAsistenciaVisible = $scope.totalReserva;
@@ -815,6 +815,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                                 $scope.newTicket.firstName = $scope.usuarioLogeado.firstName; //$scope.datosTicket.firstName;
                                                 $scope.newTicket.celular = celular;
                                                 $scope.newTicket.date = new Date().getTime();
+                                                $scope.newTicket.userFacebook = true;
+                                                $scope.newTicket.tipoEntrada =  $scope.eventsService.tipo;
                                                 $scope.newTicket.paidOut = true; //devolver pago
                                                 $scope.newTicket.redeemed = false;
                                                 $scope.newTicket.pagoPuerta = pagoPuerta;
@@ -827,7 +829,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                                 $scope.newTicket.userId = $scope.usuarioLogeado.$id;
                                                 $scope.newTicket.ticketId = firebase.database().ref().child('ticketsCreate/').push().key;
                                                 $scope.newTicket.idTransaccion = response.data.id;
-                                                                //
+                                                $scope.newTicket.fechaCaducacion = getEvent.toHour;
+                                                //
                                                 firebase.database().ref('tickets/' + eventId + '/'  + $scope.newTicket.ticketId).set($scope.newTicket).then(
                                                     function (s) {
                                                         //console.log('se guardaron bien el tickets');
@@ -917,6 +920,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                         $scope.newTicket.lastName = $scope.usuarioLogeado.lastName; //$scope.datosTicket.lastName;
                                         $scope.newTicket.firstName = $scope.usuarioLogeado.firstName; //$scope.datosTicket.firstName;
                                         $scope.newTicket.celular = celular;
+                                        $scope.newTicket.userFacebook = true;
+                                        $scope.newTicket.tipoEntrada =  $scope.eventsService.tipo;
                                         $scope.newTicket.date = new Date().getTime();
                                         $scope.newTicket.paidOut = false; //devolver pago
                                         $scope.newTicket.pagoPuerta = pagoPuerta;
@@ -928,6 +933,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                         $scope.newTicket.totalPagadoConComision = $scope.eventsService.precio * cantidadDeCompra * 1.05 + 500;
                                         $scope.newTicket.eventId = eventId;
                                         $scope.newTicket.userId = $scope.usuarioLogeado.$id;
+                                        $scope.newTicket.fechaCaducacion = getEvent.toHour;
                                        // $scope.newTicket.idTransaccion = response.data.id;
 
                                         firebase.database().ref('tickets/' + eventId + '/'  + $scope.newTicket.ticketId).set($scope.newTicket).then(
