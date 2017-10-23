@@ -49,7 +49,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     var rrppLocal = $firebaseObject(ref);
                     rrppLocal.$loaded().then(function () {
                         rrppLogeado = rrppLocal;
-                        $('.photo').prepend($('<img>',{id:'theImg',src:firebase.auth().currentUser.photoURL}));
+                        $('.photo').prepend($('<img>', {id: 'theImg', src: rrppLogeado.picture}));
                         $('.clubSelecionado').text(  rrppLogeado.name+ " ");
                         //console.log(rrppLogeado);
                         console.log(firebase.auth().currentUser);
@@ -62,6 +62,9 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 eventsRequest.$loaded().then(function(){
                                   $scope.event =eventsRequest;
                                   console.log($scope.event);
+
+
+                                    $scope.linkRRPP = "https://www.izinait.com/detalleEvento?id="+ $scope.event.id+"&friend="+rrppLogeado.$id;
 
 
 
@@ -422,7 +425,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
 
             $scope.shareWhatsappRRPPEvento = function () {
-                var longUrl = 'izinait.com/detalleEvento?id=' + eventId + '&friend=' + Rrpp;
+                var longUrl = $scope.linkRRPP;
                 var request = gapi.client.urlshortener.url.insert({
                     'resource': {
                         'longUrl': longUrl
@@ -455,6 +458,30 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
 
 
+
+            $scope.shareButtonFacebookRRPP = function () {
+                var longUrl = $scope.linkRRPP;
+                var request = gapi.client.urlshortener.url.insert({
+                    'resource': {
+                        'longUrl': longUrl
+                    }
+                });
+                request.execute(function (response) {
+
+                    if (response.id != null) {
+                        // //console.log(response.id+"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                        var sharefacebook = 'https://www.facebook.com/sharer/sharer.php?app_id=1138664439526562&sdk=joey&u=';
+
+                        window.open(sharefacebook + response.id, '_blank');
+
+
+                    }
+                    else {
+                        alert("error: creating short url");
+                    }
+
+                });
+            }
 
 
 

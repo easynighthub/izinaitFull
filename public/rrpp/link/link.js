@@ -47,6 +47,7 @@ angular.module('myApp.link', ['ngRoute'])
                         $('.clubSelecionado').text(rrppLogeado.name + " ");
                         console.log('rrpp');
                         console.log(rrppLogeado);
+                        $scope.rrppLogeado = rrppLogeado;
                         //console.log(firebase.auth().currentUser);
                         if (rrppLogeado.confirm == false) {
                             cambiarNickName(rrppLogeado);

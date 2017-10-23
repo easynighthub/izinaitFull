@@ -567,22 +567,21 @@
         <h4 class="card-title">Compartir evento:</h4>
     </div>
     <div>
-        <span id="copyContent" class="margin-15 inline-block" style="margin: 15px;display: inline-block;
+        <span id="copyContent" disabled class="margin-15 inline-block" style="margin: 15px;display: inline-block;
                     border: 1px solid #707a82;
                     padding: 10px;
                     border-radius: 3px;
                     font-size: 12px;
                     max-width: 100%;
                     word-break: break-all;">
-                        link evento + id rrpp
+            {{linkRRPP}}
                     </span>
         <div class="share-icons" style="margin: 20px;margin-top: 0px;">
-            <a id="copy" class="btn btn-just-icon btn-round " data-copy="{{event.evenUrl}}">
+            <a id="copy" class="btn btn-just-icon btn-round ">
                 <i class="material-icons">content_copy</i>
                 <div class="ripple-container"></div>
             </a>
-            <a class="btn btn-just-icon btn-round btn-facebook" target="_blank"
-               href="https://www.facebook.com/dialog/share?app_id=1138664439526562&amp;display=popup&amp;href={{event.evenUrl}}&amp;redirect_uri={{event.evenUrl}}&amp;mobile_iframe=true">
+            <a class="btn btn-just-icon btn-round btn-facebook" target="_blank" href=""  ng-click="shareButtonFacebookRRPP()">
                 <i class="fa fa-facebook"> </i>
                 <div class="ripple-container"></div>
             </a>
@@ -590,7 +589,7 @@
                 <i class="fa fa-twitter"></i>
                 <div class="ripple-container"></div>
             </a>
-            <a target="_blank" href="https://plus.google.com/share?url={{event.evenUrl}}"
+            <a target="_blank" href="https://plus.google.com/share?url={{linkRRPP}}"
                class="btn btn-just-icon btn-round btn-google">
                 <i class="fa fa-google"> </i>
                 <div class="ripple-container"></div>

@@ -107,7 +107,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
 
             $scope.shareButtonFacebook = function () {
-                var longUrl = 'izinait.com/detalleEvento?id=' + eventId + '&friend=' + Rrpp;
+                var longUrl = 'https://izinait.com/detalleEvento?id=' + eventId + '&friend=' + Rrpp;
                 var request = gapi.client.urlshortener.url.insert({
                     'resource': {
                         'longUrl': longUrl
@@ -131,7 +131,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             }
 
             $scope.shareButtonTw = function () {
-                var longUrl = 'izinait.com/detalleEvento?id=' + eventId + '&friend=' + Rrpp;
+                var longUrl = 'https://izinait.com/detalleEvento?id=' + eventId + '&friend=' + Rrpp;
                 var request = gapi.client.urlshortener.url.insert({
                     'resource': {
                         'longUrl': longUrl
