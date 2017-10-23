@@ -37,14 +37,16 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             $scope.corteciasUtilizadas.general = 0;
             $scope.corteciasUtilizadas.vipMesa = 0;
             $scope.corteciasUtilizadas.vip = 0;
+            $scope.ticketsEvent = [];
+            $scope.listaGratis = [];
+            $scope.CortesiasEvent =[];
 
-            var ticketsRequest = $firebaseObject(firebase.database().ref('/tickets/' + $routeParams.id));
+            var ticketsRequest = $firebaseArray(firebase.database().ref('/tickets/' + $routeParams.id));
             var eventsRequest = $firebaseObject(firebase.database().ref('/events/' + $routeParams.id));
 
-            var cargarTodo = function () {
-                var ticketsRequest = $firebaseObject(firebase.database().ref('/tickets/' + $routeParams.id));
-                var eventsRequest = $firebaseObject(firebase.database().ref('/events/' + $routeParams.id));
-            }
+            console.log(ticketsRequest);
+            console.log(eventsRequest);
+
 
             $(sideEventos).addClass("active");
             $(sideRrpp).removeClass("active");
@@ -66,13 +68,27 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                         };
 
 
+                        var impresionesRequest = $firebaseObject(firebase.database().ref('/impresiones/' + $routeParams.id+'/'+rrppLogeado.$id));
+                        impresionesRequest.$loaded().then(function(){
+                            $scope.totalImpresiones = impresionesRequest.openLink;
+                        });
 
                                 eventsRequest.$loaded().then(function(){
                                   $scope.event =eventsRequest;
                                   console.log($scope.event);
 
+                                    $scope.totalList = 0;
+                                    $scope.totalTickets = 0;
 
                                     $scope.linkRRPP = "https://www.izinait.com/detalleEvento?id="+ $scope.event.id+"&friend="+rrppLogeado.$id;
+
+                                    angular.forEach($scope.event.asist , function (j) {
+                                        if(j.idRRPP == rrppLogeado.$id){
+                                                $scope.totalList += j.totalList;
+
+                                                $scope.listaGratis.push(j);
+                                        }
+                                    });
 
 
                                     ticketsRequest.$loaded().then(function(){
@@ -89,7 +105,16 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                                    $scope.corteciasUtilizadas.vip += x.cantidadDeCompra;
                                                }
 
+                                               if(x.tipoEventservices != 'cortesia'){
+                                                   $scope.totalTickets += 1;
+                                                   $scope.ticketsEvent.push(x);
+
+                                               }else {
+                                                   $scope.CortesiasEvent.push(x);
+                                               }
+
                                            }
+
 
 
                                        });
