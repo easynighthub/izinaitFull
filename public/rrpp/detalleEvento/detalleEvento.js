@@ -38,6 +38,14 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
             $scope.corteciasUtilizadas.vipMesa = 0;
             $scope.corteciasUtilizadas.vip = 0;
 
+            var ticketsRequest = $firebaseObject(firebase.database().ref('/tickets/' + $routeParams.id));
+            var eventsRequest = $firebaseObject(firebase.database().ref('/events/' + $routeParams.id));
+
+            var cargarTodo = function () {
+                var ticketsRequest = $firebaseObject(firebase.database().ref('/tickets/' + $routeParams.id));
+                var eventsRequest = $firebaseObject(firebase.database().ref('/events/' + $routeParams.id));
+            }
+
             $(sideEventos).addClass("active");
             $(sideRrpp).removeClass("active");
 
@@ -58,7 +66,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                         };
 
 
-                                var eventsRequest = $firebaseObject(firebase.database().ref('/events/' + $routeParams.id));
+
                                 eventsRequest.$loaded().then(function(){
                                   $scope.event =eventsRequest;
                                   console.log($scope.event);
@@ -66,7 +74,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
                                     $scope.linkRRPP = "https://www.izinait.com/detalleEvento?id="+ $scope.event.id+"&friend="+rrppLogeado.$id;
 
-                                    var ticketsRequest = $firebaseObject(firebase.database().ref('/tickets/' + $routeParams.id));
+
                                     ticketsRequest.$loaded().then(function(){
 
                                        angular.forEach(ticketsRequest , function (x) {
@@ -301,7 +309,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                 //$scope.nuevaAsistencia.id = x.$id;
                                 //$scope.nuevaAsistencia.userFacebook = true;
                                 $scope.nuevoTickets.userFacebook = true;
-                                console.log( $scope.nuevaAsistencia);
+
                                // firebase.database().ref('events/' +  $scope.event.$id + '/asist/' + $scope.nuevaAsistencia.id).update($scope.nuevaAsistencia);
                                 firebase.database().ref('tickets/' +  $scope.event.$id + '/'+ $scope.nuevoTickets.ticketId).update($scope.nuevoTickets);
 
@@ -311,6 +319,9 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                         ticketId :$scope.nuevoTickets.ticketId
                                     });
                                 $mdDialog.hide();
+                                cargarTodo();
+
+
                                 throw x;
                             } else
                                 {
