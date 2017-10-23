@@ -57,7 +57,7 @@ angular.module('myApp.detalleEventoPasado', ['ngRoute'])
                     var adminLocal = $firebaseObject(ref);
                     adminLocal.$loaded().then(function () {
                         adminLogeado = adminLocal;
-                        $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
+                        //$('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
 
                         var rrppsAdmin = firebase.database().ref('events/' +  eventId +'/rrpps');
                         var rrppsAdminRQ = $firebaseArray(rrppsAdmin);
