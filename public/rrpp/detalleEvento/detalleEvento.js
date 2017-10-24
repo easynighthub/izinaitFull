@@ -534,7 +534,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
 
             $scope.shareWhatsappRRPPEvento = function () {
-                var longUrl = $scope.linkRRPP;
+                var longUrl = "https://www.izinait.com/detalleEvento?id="+ $scope.event.id+"&friend="+rrppLogeado.$id;
                 var request = gapi.client.urlshortener.url.insert({
                     'resource': {
                         'longUrl': longUrl
@@ -568,8 +568,8 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
 
 
-            $scope.shareButtonFacebookRRPP = function () {
-                var longUrl = $scope.linkRRPP;
+            $scope.shareButtonFacebookRRPPEvento = function () {
+                var longUrl = "https://www.izinait.com/detalleEvento?id="+ $scope.event.id+"&friend="+rrppLogeado.$id;
                 var request = gapi.client.urlshortener.url.insert({
                     'resource': {
                         'longUrl': longUrl
@@ -582,6 +582,31 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                         var sharefacebook = 'https://www.facebook.com/sharer/sharer.php?app_id=1138664439526562&sdk=joey&u=';
 
                         window.open(sharefacebook + response.id, '_blank');
+
+
+                    }
+                    else {
+                        alert("error: creating short url");
+                    }
+
+                });
+            }
+
+            $scope.shareButtonTwrrpp = function () {
+                var longUrl = "https://www.izinait.com/detalleEvento?id="+ $scope.event.id+"&friend="+rrppLogeado.$id;
+                var request = gapi.client.urlshortener.url.insert({
+                    'resource': {
+                        'longUrl': longUrl
+                    }
+                });
+                request.execute(function (response) {
+
+                    if (response.id != null) {
+                        // //console.log(response.id+"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                        var sharetw = 'http://twitter.com/home?status=';
+
+
+                        window.open(sharetw + response.id, '_blank');
 
 
                     }
