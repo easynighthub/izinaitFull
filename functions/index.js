@@ -935,7 +935,7 @@ function sendWelcomeEmail(datos) {
                                             <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0px;" align="center" border="0">
                                               <tbody>
                                                 <tr>
-                                                  <td style="width:500px;"><img alt="" title="" height="auto" src="https://firebasestorage.googleapis.com/v0/b/project-8746388695669481444.appspot.com/o/eventImages%2F-KuutzdO0BnoF8J_HqPV?alt=media&token=d1fc104f-458f-4be0-9f8d-5cbd7095c3c3"
+                                                  <td style="width:500px;"><img alt="" title="" height="auto" src="${linkFoto}"
                                                       style="border:none;border-radius:0px;display:block;font-size:13px;outline:none;text-decoration:none;width:100%;height:auto;" width="500"></td>
                                                 </tr>
                                               </tbody>

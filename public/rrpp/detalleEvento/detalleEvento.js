@@ -295,8 +295,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     if($scope.nuevoTickets.tipoEntrada == "vipMesa"){
                         $scope.nuevoTickets.fechaCaducacion = $scope.event.hourCortesiaVipMesa;
                     };
-
-
+                  
 
 
 
