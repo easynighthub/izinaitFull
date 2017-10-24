@@ -42,5 +42,13 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
         //console.log(window.currentRRPP);
     }
 
+    function load() {
+        gapi.client.setApiKey('AIzaSyDBVb3ISIrzhcxTUHnZwKmOjOIqsJ2077M'); //get your ownn Browser API KEY
+        gapi.client.load('urlshortener', 'v1', function () {
+        });
+
+    }
+    window.onload = load;
+
 
 }]);
