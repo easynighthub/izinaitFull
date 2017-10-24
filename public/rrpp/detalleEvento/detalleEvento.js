@@ -592,7 +592,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 });
             }
 
-            $scope.shareButtonTwrrpp = function () {
+            $scope.shareButtonTwRRPPEvento = function () {
                 var longUrl = "https://www.izinait.com/detalleEvento?id="+ $scope.event.id+"&friend="+rrppLogeado.$id;
                 var request = gapi.client.urlshortener.url.insert({
                     'resource': {

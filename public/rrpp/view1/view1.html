@@ -18,7 +18,7 @@
         >
 
 
-            <div class="col-md-4" ng-repeat="event in events | orderBy:'date'">
+            <div class="col-md-4" ng-repeat="event in events | orderBy:'-date'">
 
                 <!--     ng-show="event.toHour > eventosFuturoFecha" -->
 
@@ -79,7 +79,7 @@
                         <div class="stats">
                             <p class="category">
                                 <i class="material-icons">event</i>
-                                {{event.date | date:"EEEE dd','MMMM" }}
+                                {{event.date | date:"EEEE dd', 'MMMM" }}
                             </p>
                         </div>
                         <div class="stats pull-right">

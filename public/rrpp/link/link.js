@@ -45,8 +45,8 @@ angular.module('myApp.link', ['ngRoute'])
                         rrppLogeado = rrppLocal;
                         $('.photo').prepend($('<img>', {id: 'theImg', src: rrppLogeado.picture}));
                         $('.clubSelecionado').text(rrppLogeado.name + " ");
-                        console.log('rrpp');
-                        console.log(rrppLogeado);
+                        //console.log('rrpp');
+                        //console.log(rrppLogeado);
                         $scope.rrppLogeado = rrppLogeado;
                         //console.log(firebase.auth().currentUser);
                         if (rrppLogeado.confirm == false) {
@@ -184,30 +184,28 @@ angular.module('myApp.link', ['ngRoute'])
             };
 
 
-
-
             var getFuturesEvents = function (event) {
                 event.listTotalRRPP = 0;
                 event.ticketTotalRRPP = 0;
                 var currentDay = new Date().getTime();
                 var visible = true;
                 //if (currentDay < event.toHour){
-                console.log(event);
+                //console.log(event);
 
                 angular.forEach(event.asist, function (x) {
 
                     if (x.idRRPP == rrppLogeado.$id) {
                         event.listTotalRRPP += x.totalList;
-                        console.log(event.listTotalRRPP);
+                        //console.log(event.listTotalRRPP);
                     }
                     var ticketEvent = firebase.database().ref().child('tickets/' + event.id);
                     var ticketEventArray = $firebaseArray(ticketEvent);
                     ticketEventArray.$loaded().then(function () {
                         ticketEventArray.forEach(function (j) {
-                            console.log(ticketEventArray);
+                           // console.log(ticketEventArray);
                             if (j.rrppid == rrppLogeado.$id) {
                                 event.ticketTotalRRPP += 1;
-                                console.log(event.ticketTotalRRPP);
+                                //console.log(event.ticketTotalRRPP);
                             }
                         })
 
@@ -224,8 +222,57 @@ angular.module('myApp.link', ['ngRoute'])
             };
 
 
+            $scope.shareFacebookRRPP = function () {
+                var longUrl = 'https://izinait.com/app/#!/rrpp#' + rrppLogeado.nickName;
+                var request = gapi.client.urlshortener.url.insert({
+                    'resource': {
+                        'longUrl': longUrl
+                    }
+                });
+                request.execute(function (response) {
+
+                    if (response.id != null) {
+                        // //console.log(response.id+"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                        var sharefacebook = 'https://www.facebook.com/sharer/sharer.php?app_id=1138664439526562&sdk=joey&u=';
+
+                        window.open(sharefacebook + response.id, '_blank');
+
+
+                    }
+                    else {
+                        alert("error: creating short url");
+                    }
+
+                });
+            }
+
+            $scope.shareButtonTwrrpp = function () {
+                var longUrl = 'https://izinait.com/app/#!/rrpp#' + rrppLogeado.nickName;
+                var request = gapi.client.urlshortener.url.insert({
+                    'resource': {
+                        'longUrl': longUrl
+                    }
+                });
+                request.execute(function (response) {
+
+                    if (response.id != null) {
+                        // //console.log(response.id+"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                        var sharetw = 'http://twitter.com/home?status=';
+
+
+                        window.open(sharetw + response.id, '_blank');
+
+
+                    }
+                    else {
+                        alert("error: creating short url");
+                    }
+
+                });
+            }
+
             $scope.shareWhatsappRRPP = function () {
-                var longUrl = 'izinait.com/detalleEvento?id=' + eventId + '&friend=' + Rrpp;
+                var longUrl = 'https://izinait.com/app/#!/rrpp#' + rrppLogeado.nickName;
                 var request = gapi.client.urlshortener.url.insert({
                     'resource': {
                         'longUrl': longUrl
@@ -245,7 +292,6 @@ angular.module('myApp.link', ['ngRoute'])
 
                 });
             }
-
 
 
             var isMobile = {
