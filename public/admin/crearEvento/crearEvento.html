@@ -419,7 +419,7 @@
                         <bold>Habilitar cortesias</bold>
                     </md-switch>
 
-                    <div class="col-md-12" ng-show="activarCoresia" class="dropdown form-group dropdown-end-parent1">
+                    <div class="col-md-12" ng-show="activarCortesia" class="dropdown form-group dropdown-end-parent1">
 
                             <div  class="col-md-12 col-xs-12">
 
@@ -434,7 +434,7 @@
                                     <div class="input-group date">
                                         <input type="text" class="form-control"
                                                placeholder="Límite cortesia General"
-                                               data-ng-model="newEvent.hourCorteciaGeneral">
+                                               data-ng-model="newEvent.hourCortesiaGeneral">
                                         <span class="input-group-addon"><i
                                                 class="glyphicon glyphicon-calendar"></i></span>
                                     </div>
@@ -460,7 +460,7 @@
                             <md-switch class="col-md-5 col-xs-12"
                                        ng-model="habilitarVip"
                                        aria-label="Checkbox 1">
-                                <spam>Vip</spam>
+                                <spam>Vip </spam>
                             </md-switch>
                             <div  style="margin-top: 10px" ng-show="habilitarVip" class="col-md-7 col-xs-12">
                         <a class="dropdown-toggle" id="dropdownEndCortesiasVip" role="button" data-toggle="dropdown"
@@ -468,7 +468,7 @@
                             <div class="input-group date">
                                 <input type="text" class="form-control"
                                        placeholder="Límite cortesia Vip"
-                                       data-ng-model="newEvent.hourCorteciaVip">
+                                       data-ng-model="newEvent.hourCortesiaVip">
                                 <span class="input-group-addon"><i
                                         class="glyphicon glyphicon-calendar"></i></span>
                             </div>
@@ -493,7 +493,7 @@
                             <md-switch class="col-md-5 col-xs-12"
                                        ng-model="habilitarVipMesa"
                                        aria-label="Checkbox 1">
-                                <spam>Vip</spam>
+                                <spam>Vip Mesa</spam>
                             </md-switch>
                             <div  style="margin-top: 10px" ng-show="habilitarVipMesa" class="col-md-7 col-xs-12">
                         <a class="dropdown-toggle" id="dropdownEndCortesiasVipMesa" role="button" data-toggle="dropdown"
@@ -507,7 +507,7 @@
                             </div>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <datetimepicker data-ng-model="newEvent.freemiumHour"
+                            <datetimepicker data-ng-model="newEvent.hourCortesiaVipMesa"
                                             data-datetimepicker-config="
                                             {
                                             dropdownSelector: '#dropdownEndCortesiasVipMesa'

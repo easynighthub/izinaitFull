@@ -662,10 +662,10 @@ if(errorList.length >0){
 
                         document.getElementById('BarraCargando').style.display = 'block';
                         document.getElementById('crearEvento').style.display = 'none';
-                      //  guardarServicios();
-                        //subirImagen();
+                       guardarServicios();
+                        subirImagen();
                     } else {
-                      //subirImagen();
+                      subirImagen();
                       demo.showSwal('success-message');
                   }
                     ;
