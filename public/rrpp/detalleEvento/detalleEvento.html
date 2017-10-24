@@ -489,20 +489,20 @@
                         <th class="text-right">Pagado</th>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="cortesias in CortesiasEvent">
-                            <td> {{cortesias.displayName}}</td>
-                            <td> {{cortesias.celular}}</td>
-                            <td>{{cortesias.tipoEventservices}}</td>
+                        <tr ng-repeat="cortesia in cortesiasEvent">
+                            <td> {{cortesia.displayName}}</td>
+                            <td> {{cortesia.celular}}</td>
+                            <td>{{cortesia.tipoEventservices}}</td>
 
                             <td class="text-right">
-                                {{cortesias.cantidadDeCompra}}
+                                {{cortesia.cantidadDeCompra}}
                             </td>
                             <td class="text-primary text-right">
-                                <div ng-show="!ticketEvent.paidOut">
-                                    ${{(cortesias.totalAPagar/cortesias.cantidadDeCompra)*cortesias.cantidadUtilizada
+                                <div ng-show="!cortesia.paidOut">
+                                    ${{(cortesia.totalAPagar/cortesia.cantidadDeCompra)*cortesia.cantidadUtilizada
                                     | number:0}}
                                 </div>
-                                <div ng-show="ticketEvent.paidOut">${{cortesias.totalAPagar | number:0}}</div>
+                                <div ng-show="cortesia.paidOut">${{cortesia.totalAPagar | number:0}}</div>
 
                             </td>
                         </tr>
