@@ -301,6 +301,8 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             }
 
             function endDateBeforeRender($view, $dates) {
+
+
                 if ($scope.dateRangeStart) {
                     var activeDate = moment($scope.dateRangeStart).subtract(1, $view).add(1, 'minute');
 
@@ -383,10 +385,10 @@ angular.module('myApp.crearEvento', ['ngRoute'])
             };
 
 
-            $scope.removeChoice = function () {
+            $scope.removeChoice = function (index) {
                 var lastItem = $scope.serviciosEvent.length - 1;
-                $scope.serviciosEvent.splice(lastItem);
-            };
+                $scope.serviciosEvent.splice(index,1);
+            }
 
 
 ////////////////////////////// controla el pick image ////////////////////////
@@ -521,10 +523,39 @@ angular.module('myApp.crearEvento', ['ngRoute'])
                     if ($scope.newEvent.musicGenresSelect.length > 3) {
                         subir = false;
                         errorList.push("SOLO PUEDES SELECIONAR UN MAXIMO DE 3 ESTILOS MUSICALES");
+                    };
+                };
+
+                if($scope.activarHoraGratis == true){
+                    if($scope.newEvent.freemiumHour == undefined){
+                        subir = false;
+                        errorList.push("FALTA HORARIO LISTA GRATIS");
                     }
-                    ;
                 }
-                ;
+                if($scope.activarCortesia == true){
+                    if($scope.habilitarGenerales == true){
+                        if($scope.newEvent.hourCortesiaGeneral== undefined){
+                            subir = false;
+                            errorList.push("FALTA HORARIO CORTESIA GENERAL");
+                        }
+
+                    }
+                    if($scope.habilitarVip == true){
+                        if($scope.newEvent.hourCortesiaVip== undefined){
+                            subir = false;
+                            errorList.push("FALTA HORARIO CORTESIA VIP");
+                        }
+
+                    }
+                    if($scope.habilitarVipMesa == true){
+                        if($scope.newEvent.hourCortesiaVipMesa == undefined){
+                            subir = false;
+                            errorList.push("FALTA HORARIO CORTESIA VIP MESA");
+                        }
+
+                    }
+
+                }
 
                 var NumeroDeServicio = 0;
 
@@ -580,8 +611,31 @@ if(errorList.length >0){
                         $scope.newEvent.freemiumHour = new Date($scope.newEvent.freemiumHour).getTime();
                     } else {
                         $scope.newEvent.freemiumHour = $scope.newEvent.fromHour;
+                    };
+
+                    if($scope.activarCoresia == false){
+                        $scope.newEvent.hourCortesiaGeneral = $scope.newEvent.fromHour;
+                        $scope.newEvent.hourCortesiaVip = $scope.newEvent.fromHour;
+                        $scope.newEvent.hourCortesiaVipMesa = $scope.newEvent.fromHour;
+                    }else{
+                        if($scope.habilitarGenerales == true){
+                            $scope.newEvent.hourCortesiaGeneral = new Date($scope.newEvent.hourCortesiaGeneral).getTime();
+                        }else{
+                            $scope.newEvent.hourCortesiaGeneral = $scope.newEvent.fromHour;
+                        }
+                        if($scope.habilitarVip == true){
+                            $scope.newEvent.hourCortesiaVip = new Date($scope.newEvent.hourCortesiaVip).getTime();
+                        }else {
+                            $scope.newEvent.hourCortesiaVip = $scope.newEvent.fromHour;
+                        }
+                        if($scope.habilitarVipMesa == true){
+                            $scope.newEvent.hourCortesiaVipMesa = new Date($scope.newEvent.hourCortesiaVipMesa).getTime();
+                        }else{
+                            $scope.newEvent.hourCortesiaVipMesa = $scope.newEvent.fromHour;
+                        }
                     }
-                    ;
+
+
 
                     $scope.newEvent.date = $scope.newEvent.fromHour;
 
@@ -602,16 +656,16 @@ if(errorList.length >0){
                     $scope.newEvent.eventEnvironment = $scope.newEvent.eventEnvironmentSelect ? $scope.newEvent.eventEnvironmentSelect.join(', ') : '';
                     $scope.newEvent.musicGenres = $scope.newEvent.musicGenresSelect ? $scope.newEvent.musicGenresSelect.join(', ') : '';
 
-                    //console.log($scope.newEvent);
+                    console.log($scope.newEvent);
 
                   if ($scope.serviciosEvent.length > 0) {
 
                         document.getElementById('BarraCargando').style.display = 'block';
                         document.getElementById('crearEvento').style.display = 'none';
-                        guardarServicios();
-                        subirImagen();
+                      //  guardarServicios();
+                        //subirImagen();
                     } else {
-                      subirImagen();
+                      //subirImagen();
                       demo.showSwal('success-message');
                   }
                     ;
@@ -639,6 +693,37 @@ if(errorList.length >0){
                 if ($scope.activarHoraGratis == false) {
                     $scope.newEvent.freemiumHour = undefined;
                 }
+            };
+
+            $scope.activarCortesias = function () {
+                //console.log($scope.newEvent.freemiumHour);
+                !$scope.activarCortesia;
+                if ($scope.activarCortesia == false) {
+                    $scope.newEvent.hourCortesiaGeneral = undefined;
+                    $scope.newEvent.hourCortesiaVip = undefined;
+                    $scope.newEvent.hourCortesiaVipMesa = undefined;
+                }
+            };
+            $scope.activarCortesiasGenerales =function () {
+                !$scope.habilitarGenerales;
+                if ($scope.habilitarGenerales == false) {
+                    $scope.newEvent.hourCortesiaGeneral = undefined;
+                }
+
+            };
+            $scope.activarCortesiasVip =function () {
+                !$scope.habilitarVip;
+                if ($scope.habilitarVip == false) {
+                    $scope.newEvent.hourCortesiaVip = undefined;
+                }
+
+            };
+            $scope.activarCortesiasVipMesa =function () {
+                !$scope.habilitarVipMesa;
+                if ($scope.habilitarVipMesa == false) {
+                    $scope.newEvent.hourCortesiaVipMesa = undefined;
+                }
+
             };
 
 

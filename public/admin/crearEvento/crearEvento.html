@@ -376,14 +376,14 @@
                 </div>
 
                 <!--  horario gratis -->
-                <div class="col-md-6 col-md-offset-3 col-xs-12">
+                <div class="col-md-12  col-xs-12">
 
-                    <md-switch
+                    <md-switch class="col-md-5 col-xs-12"
                             ng-model="activarHoraGratis" ng-click="activarHoraGratisF()"
                             aria-label="Checkbox 1">
                         <bold>Definir Horario Gratis</bold>
                     </md-switch>
-                    <div ng-show="activarHoraGratis"
+                    <div style="margin-top: 10px" ng-show="activarHoraGratis" class="col-md-7 col-xs-12"
                          class="dropdown form-group dropdown-end-parent1">
                         <a class="dropdown-toggle" id="dropdownEndFree" role="button" data-toggle="dropdown"
                            data-target=".dropdown-end-parent1">
@@ -411,7 +411,119 @@
                     </div>
 
                 </div>
+                <div class="col-md-12  col-xs-12">
 
+                    <md-switch class="col-md-12 col-xs-12"
+                            ng-model="activarCortesia" ng-click="activarCortesias()"
+                            aria-label="Checkbox 1">
+                        <bold>Habilitar cortesias</bold>
+                    </md-switch>
+
+                    <div class="col-md-12" ng-show="activarCoresia" class="dropdown form-group dropdown-end-parent1">
+
+                            <div  class="col-md-12 col-xs-12">
+
+                                <md-switch class="col-md-5 col-xs-12"
+                                        ng-model="habilitarGenerales"
+                                        aria-label="Checkbox 1">
+                                    <spam>General</spam>
+                                </md-switch>
+                                <div  style="margin-top: 10px" ng-show="habilitarGenerales" class="col-md-7 col-xs-12">
+                                <a class="dropdown-toggle" id="dropdownEndCortesiasGeneral" role="button" data-toggle="dropdown"
+                                   data-target=".dropdown-end-parent1">
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control"
+                                               placeholder="Límite cortesia General"
+                                               data-ng-model="newEvent.hourCorteciaGeneral">
+                                        <span class="input-group-addon"><i
+                                                class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker data-ng-model="newEvent.hourCortesiaGeneral"
+                                                    data-datetimepicker-config="
+                                            {
+                                            dropdownSelector: '#dropdownEndCortesiasGeneral'
+                                            ,renderOn: 'end-date-changed'
+                                            ,startView:'hour'
+                                            ,minuteStep: 15
+
+                                            }"
+                                                    data-on-set-time="endDateOnSetTime()"
+                                                    data-before-render="endDateBeforeRender($view, $dates, $leftDate, $upDate, $rightDate)"></datetimepicker>
+                                </ul>
+                                </div>
+                            </div>
+
+
+                        <div  class="col-md-12 col-xs-12">
+                            <md-switch class="col-md-5 col-xs-12"
+                                       ng-model="habilitarVip"
+                                       aria-label="Checkbox 1">
+                                <spam>Vip</spam>
+                            </md-switch>
+                            <div  style="margin-top: 10px" ng-show="habilitarVip" class="col-md-7 col-xs-12">
+                        <a class="dropdown-toggle" id="dropdownEndCortesiasVip" role="button" data-toggle="dropdown"
+                           data-target=".dropdown-end-parent1">
+                            <div class="input-group date">
+                                <input type="text" class="form-control"
+                                       placeholder="Límite cortesia Vip"
+                                       data-ng-model="newEvent.hourCorteciaVip">
+                                <span class="input-group-addon"><i
+                                        class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker data-ng-model="newEvent.hourCortesiaVip"
+                                            data-datetimepicker-config="
+                                            {
+                                            dropdownSelector: '#dropdownEndCortesiasVip'
+                                            ,renderOn: 'end-date-changed'
+                                            ,startView:'hour'
+                                            ,minuteStep: 15
+
+                                            }"
+                                            data-on-set-time="endDateOnSetTime()"
+                                            data-before-render="endDateBeforeRender($view, $dates, $leftDate, $upDate, $rightDate)"></datetimepicker>
+                        </ul>
+                            </div>
+                        </div>
+
+                        <div  class="col-md-12 col-xs-12">
+                            <md-switch class="col-md-5 col-xs-12"
+                                       ng-model="habilitarVipMesa"
+                                       aria-label="Checkbox 1">
+                                <spam>Vip</spam>
+                            </md-switch>
+                            <div  style="margin-top: 10px" ng-show="habilitarVipMesa" class="col-md-7 col-xs-12">
+                        <a class="dropdown-toggle" id="dropdownEndCortesiasVipMesa" role="button" data-toggle="dropdown"
+                           data-target=".dropdown-end-parent1">
+                            <div class="input-group date">
+                                <input type="text" class="form-control"
+                                       placeholder="Límite Cortesia Vip Mesa"
+                                       data-ng-model="newEvent.hourCortesiaVipMesa">
+                                <span class="input-group-addon"><i
+                                        class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker data-ng-model="newEvent.freemiumHour"
+                                            data-datetimepicker-config="
+                                            {
+                                            dropdownSelector: '#dropdownEndCortesiasVipMesa'
+                                            ,renderOn: 'end-date-changed'
+                                            ,startView:'hour'
+                                            ,minuteStep: 15
+
+                                            }"
+                                            data-on-set-time="endDateOnSetTime()"
+                                            data-before-render="endDateBeforeRender($view, $dates, $leftDate, $upDate, $rightDate)"></datetimepicker>
+                        </ul>
+                            </div>
+                        </div>
+
+
+                </div>
 
                 <!--  antecipada  botones-->
                 <div class="col-md-12 col-md-offset-1 text-center" title="Añadir Promoción">
@@ -518,7 +630,7 @@
                             </ul>
                         </div>
 
-                        <a ng-click="removeChoice()"
+                        <a ng-click="removeChoice($index)"
                            class="btn  btn-default btn-round pull-right  btn-fab-mini col-md-3 col-xs-12">
                             <i class="material-icons pointer btn_rsvp_trash">delete_forever</i>
                         </a>

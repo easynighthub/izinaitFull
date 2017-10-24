@@ -5,7 +5,7 @@
     min-height: 180px;
     transform: perspective(1350px);
 ">
-    <a class="btn btn-primary btn-info pull-right" ng-click="mandarCortecia()">
+    <a class="btn btn-primary btn-info pull-right" ng-click="mandarCortesia()">
         <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
         <span>ENVIAR cortesía</span>
     </a>
@@ -310,7 +310,7 @@
             <div class="card-content">
 
                 <h3 class="card-title" type="number">
-                    {{corteciasUtilizadas.general}}/{{corteciasHabilitadas.general}}</h3>
+                    {{cortesiasUtilizadas.general}}/{{cortesiasHabilitadas.general}}</h3>
             </div>
             <div class="card-footer">
                 <div class="stats">
@@ -320,7 +320,7 @@
                 </div>
                 <div class="stats pull-right">
                     <p class="category">
-                        {{  corteciasHabilitadas.general - corteciasUtilizadas.general }}
+                        {{  cortesiasHabilitadas.general - cortesiasUtilizadas.general }}
                     </p>
                 </div>
 
@@ -335,7 +335,7 @@
             </div>
             <div class="card-content">
 
-                <h3 class="card-title" type="number">{{ corteciasUtilizadas.vip }}/{{corteciasHabilitadas.vip }}</h3>
+                <h3 class="card-title" type="number">{{ cortesiasUtilizadas.vip }}/{{cortesiasHabilitadas.vip }}</h3>
             </div>
             <div class="card-footer">
                 <div class="stats">
@@ -345,7 +345,7 @@
                 </div>
                 <div class="stats pull-right">
                     <p class="category">
-                        {{  corteciasHabilitadas.vip - corteciasUtilizadas.vip }}
+                        {{  cortesiasHabilitadas.vip - cortesiasUtilizadas.vip }}
                     </p>
                 </div>
 
@@ -360,7 +360,7 @@
             <div class="card-content">
 
                 <h3 class="card-title" type="number">
-                    {{ corteciasUtilizadas.vipMesa }}/{{ corteciasHabilitadas.vipMesa}}
+                    {{ cortesiasUtilizadas.vipMesa }}/{{ cortesiasHabilitadas.vipMesa}}
                 </h3>
             </div>
             <div class="card-footer">
@@ -371,7 +371,7 @@
                 </div>
                 <div class="stats pull-right">
                     <p class="category">
-                        {{  corteciasHabilitadas.vipMesa - corteciasUtilizadas.vipMesa }}
+                        {{  cortesiasHabilitadas.vipMesa - cortesiasUtilizadas.vipMesa }}
                     </p>
                 </div>
 
@@ -711,88 +711,6 @@
 </script>
 
 
-<script type="text/ng-template" id="dialogVentaManual" class="col-xs-12">
-
-    <div class="col-md-12 col-xs-12">
-        <center><br>
-            <h5> Realizar venta manual </h5>
-
-
-            <div class="col-md-6 form-group  is-empty">
-                <label class="label-on-left label-floating">Nombre Completo</label>
-                <input id="nombreCompleto" ng-model="nombreCompleto" required="true" type="text"
-                       class="form-control ">
-
-                <span class="help-block">nombre completo por seguridad</span>
-
-            </div>
-            <div class="col-md-4  form-group  is-empty">
-                <button ng-click="menosEntradas()" class="btn btn-sm btn-primary">-</button>
-
-            </div>
-
-            <div class="col-md-4 form-group  is-empty">
-                <label class="label-on-left label-floating">Cantidad de entradas</label>
-                <input id="cantidad" ng-model="cantidad" required="true" type="number"
-                       class="form-control ">
-
-                <span class="help-block">cantidad del servicio</span>
-
-            </div>
-            <div class="col-md-4 form-group  is-empty">
-                <button ng-click="masEntradas()" class="btn btn-sm btn-primary">+</button>
-
-            </div>
-
-            <div class=" col-md-4 form-group  is-empty">
-                <label class="label-on-left label-floating">Rut</label>
-                <input id="rut" ng-model="rut" type="number"
-                       class="form-control ">
-
-                <span class="help-block">sin gion verificador,  (opcional)</span>
-
-            </div>
-            <div class=" col-md-4 form-group  is-empty">
-                <label class="label-on-left label-floating">Correo</label>
-                <input id="correo" ng-model="correo" type="email"
-                       class="form-control ">
-
-                <span class="help-block">correo electronico para mejorar tu base de datos</span>
-
-            </div>
-            <div class="col-md-4 form-group  is-empty">
-                <label class="label-on-left label-floating">Whatsapp</label>
-                <input id="wstp" ng-model="wstp" type="number"
-                       class="form-control ">
-
-                <span class="help-block">numero de whatsaapp para mejorar tu base de datos, (opcional)</span>
-
-            </div>
-
-
-            <div class="col-md-12" style="margin-top: 50px">
-
-                <button ng-click="cancel()" class="btn "> CANCELAR</button>
-                <button ng-click="guardarEntradas()" class="btn btn-success"> VENTA REALIZADA</button>
-            </div>
-
-            <!--  <div id="datosClienteQvo">
-              <input  type="text" placeholder="Nombre" class="form-control col-md-12"  ng-model="usuarioLogeado.displayName">
-              <input  type="text" placeholder="Correo" class="form-control col-md-12" ng-model="usuarioLogeado.email">
-              <button ng-click="crearUsuarioQvo()" scope="public_profile email user_birthday"
-                      class=" btn btn-info">
-
-                  <i class="material-icons"></i> Agregar Tarjeta
-              </button>
-              </div>-->
-            <br>
-
-
-        </center>
-    </div>
-
-
-</script>
 
 <script id="dialogCambiarNickName" type="text/ng-template">
     <div class="col-md-12">
@@ -809,7 +727,7 @@
 
 
 </script>
-<script id="dialogMandarCortecia" type="text/ng-template">
+<script id="dialogMandarCortesia" type="text/ng-template">
     <div class="col-md-12 text-center" style="margin: 20px">
 
         <h2><i class="fa fa-envelope-open-o" aria-hidden="true"></i></h2>
@@ -821,7 +739,7 @@
             </span>
             <select class="pull-right select2-container" ng-change="cantidadDeEntradas(tipoSelecionado)"
                     ng-model="tipoSelecionado">
-                <option ng-repeat="tipo in tipoCortecias">{{tipo.tipo}}</option>
+                <option ng-repeat="tipo in tipoCortesias">{{tipo.tipo}}</option>
             </select>
         </div>
 
@@ -851,7 +769,7 @@
 
     </div>
     <div class="text-center">
-        <button ng-click="enviarCortecias()" class="btn btn-info "> Confirmar</button>
+        <button ng-click="enviarCortesias()" class="btn btn-info "> Confirmar</button>
     </div>
 
 

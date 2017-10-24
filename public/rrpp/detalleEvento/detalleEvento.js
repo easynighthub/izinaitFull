@@ -33,13 +33,13 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
             var rrpp = window.currentRRPP;
             var rrppLogeado = "";
-            $scope.corteciasUtilizadas = {};
-            $scope.corteciasUtilizadas.general = 0;
-            $scope.corteciasUtilizadas.vipMesa = 0;
-            $scope.corteciasUtilizadas.vip = 0;
+            $scope.cortesiasUtilizadas = {};
+            $scope.cortesiasUtilizadas.general = 0;
+            $scope.cortesiasUtilizadas.vipMesa = 0;
+            $scope.cortesiasUtilizadas.vip = 0;
             $scope.ticketsEvent = [];
             $scope.listaGratis = [];
-            $scope.CortesiasEvent =[];
+            $scope.cortesiasEvent =[];
 
             var ticketsRequest = $firebaseArray(firebase.database().ref('/tickets/' + $routeParams.id));
             var eventsRequest = $firebaseObject(firebase.database().ref('/events/' + $routeParams.id));
@@ -96,13 +96,13 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                        angular.forEach(ticketsRequest , function (x) {
                                            if(x.rrppid == rrppLogeado.$id){
                                                if(x.tipoEntrada == 'vipMesa'){
-                                                   $scope.corteciasUtilizadas.vipMesa += x.cantidadDeCompra;
+                                                   $scope.cortesiasUtilizadas.vipMesa += x.cantidadDeCompra;
                                                }
                                                if(x.tipoEntrada == 'general'){
-                                                   $scope.corteciasUtilizadas.general += x.cantidadDeCompra;
+                                                   $scope.cortesiasUtilizadas.general += x.cantidadDeCompra;
                                                }
                                                if(x.tipoEntrada == 'vip'){
-                                                   $scope.corteciasUtilizadas.vip += x.cantidadDeCompra;
+                                                   $scope.cortesiasUtilizadas.vip += x.cantidadDeCompra;
                                                }
 
                                                if(x.tipoEventservices != 'cortesia'){
@@ -110,7 +110,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                                                    $scope.ticketsEvent.push(x);
 
                                                }else {
-                                                   $scope.CortesiasEvent.push(x);
+                                                   $scope.cortesiasEvent.push(x);
                                                }
 
                                            }
@@ -129,16 +129,16 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
                                     var idClub = Object.keys(eventsRequest.clubs)[0];
 
-                                    var corteciasHabilitadas = $firebaseObject(firebase.database().ref('/admins/' + eventsRequest.admin +'/rrpps/'+rrppLogeado.$id+'/cortecias/'+idClub));
-                                    corteciasHabilitadas.$loaded().then(function(){
-                                        console.log(corteciasHabilitadas);
-                                        $scope.corteciasHabilitadas = corteciasHabilitadas;
+                                    var cortesiasHabilitadas = $firebaseObject(firebase.database().ref('/admins/' + eventsRequest.admin +'/rrpps/'+rrppLogeado.$id+'/cortesias/'+idClub));
+                                    cortesiasHabilitadas.$loaded().then(function(){
+                                        console.log(cortesiasHabilitadas);
+                                        $scope.cortesiasHabilitadas = cortesiasHabilitadas;
 
-                                        if($scope.corteciasHabilitadas.$value != null){
+                                        if($scope.cortesiasHabilitadas.$value != null){
 
-                                           $scope.corteciasHabilitadas.vip;
-                                            $scope.corteciasHabilitadas.general;
-                                           $scope.corteciasHabilitadas.vipMesa;
+                                           $scope.cortesiasHabilitadas.vip;
+                                            $scope.cortesiasHabilitadas.general;
+                                           $scope.cortesiasHabilitadas.vipMesa;
 
                                         }
 
@@ -161,38 +161,38 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
 
 
-            $scope.mandarCortecia =function () {
+            $scope.mandarCortesia =function () {
 
 
 
 
                 $mdDialog.show({
-                    controller: dialogControllerMandarCortecia,
-                    templateUrl: 'dialogMandarCortecia',
+                    controller: dialogControllerMandarCortesia,
+                    templateUrl: 'dialogMandarCortesia',
                     parent: angular.element(document.body),
                     clickOutsideToClose: true,
                     locals: {
                         event: $scope.event,
-                        corteciasHabilitadas : $scope.corteciasHabilitadas,
-                        corteciasUtilizadas: $scope.corteciasUtilizadas
+                        cortesiasHabilitadas : $scope.cortesiasHabilitadas,
+                        cortesiasUtilizadas: $scope.cortesiasUtilizadas
                     }
                 });
 
             };
 
-            function dialogControllerMandarCortecia($scope, $mdDialog, $timeout, $q, $log,event,corteciasHabilitadas,corteciasUtilizadas) {
+            function dialogControllerMandarCortesia($scope, $mdDialog, $timeout, $q, $log,event,cortesiasHabilitadas,cortesiasUtilizadas) {
 
                 $scope.event = event;
                 console.log($scope.event);
 
-                $scope.corteciasHabilitadas = corteciasHabilitadas;
-                $scope.corteciasUtilizadas = corteciasUtilizadas;
+                $scope.cortesiasHabilitadas = cortesiasHabilitadas;
+                $scope.cortesiasUtilizadas = cortesiasUtilizadas;
 
-                console.log(corteciasHabilitadas);
-                console.log(corteciasUtilizadas);
+                console.log(cortesiasHabilitadas);
+                console.log(cortesiasUtilizadas);
 
 
-                $scope.tipoCortecias = [];
+                $scope.tipoCortesias = [];
                 $scope.cantidad = 1;
 
                 var users = $firebaseArray(firebase.database().ref().child('users'));
@@ -205,9 +205,9 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
                 });
 
-                angular.forEach($scope.corteciasHabilitadas ,function (x,key) {
+                angular.forEach($scope.cortesiasHabilitadas ,function (x,key) {
 
-                    $scope.tipoCortecias.push({
+                    $scope.tipoCortesias.push({
                         cantidad : x,
                         tipo :key
                     })
@@ -239,17 +239,17 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
 
 
             if($scope.tipo == 'general'){
-                $scope.limite  =  $scope.corteciasHabilitadas.general - $scope.corteciasUtilizadas.general;
+                $scope.limite  =  $scope.cortesiasHabilitadas.general - $scope.cortesiasUtilizadas.general;
                 console.log($scope.limite);
             };
 
             if($scope.tipo == 'vip'){
-                        $scope.limite  =  $scope.corteciasHabilitadas.vip - $scope.corteciasUtilizadas.vip;
+                        $scope.limite  =  $scope.cortesiasHabilitadas.vip - $scope.cortesiasUtilizadas.vip;
                         console.log($scope.limite);
                     };
 
             if($scope.tipo == 'vipMesa'){
-                        $scope.limite  =  $scope.corteciasHabilitadas.vipMesa - $scope.corteciasUtilizadas.vipMesa;
+                        $scope.limite  =  $scope.cortesiasHabilitadas.vipMesa - $scope.cortesiasUtilizadas.vipMesa;
                         console.log($scope.limite);
                     };
 
@@ -261,7 +261,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                 };
 
 
-                $scope.enviarCortecias = function () {
+                $scope.enviarCortesias = function () {
                     var nuevoTicket = firebase.database().ref().child('ticketsCreate/').push().key;
 
                     $scope.nuevoTickets = {};
@@ -287,13 +287,13 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     $scope.nuevoTickets.tipoEntrada = $scope.tipoSelecionado.trim();
 
                     if($scope.nuevoTickets.tipoEntrada == "general"){
-                        $scope.nuevoTickets.fechaCaducacion = $scope.event.hourCorteciaGeneral;
+                        $scope.nuevoTickets.fechaCaducacion = $scope.event.hourCortesiaGeneral;
                     };
                     if($scope.nuevoTickets.tipoEntrada == "vip"){
-                        $scope.nuevoTickets.fechaCaducacion = $scope.event.hourCorteciaVip;
+                        $scope.nuevoTickets.fechaCaducacion = $scope.event.hourCortesiaVip;
                     };
                     if($scope.nuevoTickets.tipoEntrada == "vipMesa"){
-                        $scope.nuevoTickets.fechaCaducacion = $scope.event.hourCorteciaVipMesa;
+                        $scope.nuevoTickets.fechaCaducacion = $scope.event.hourCortesiaVipMesa;
                     };
 
 
@@ -310,17 +310,17 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                     $scope.nuevaAsistencia.tipo = $scope.tipoSelecionado.trim();
 
                     if($scope.nuevaAsistencia.tipo == "general"){
-                        $scope.nuevaAsistencia.fechaCaducacion = $scope.event.hourCorteciaGeneral;
+                        $scope.nuevaAsistencia.fechaCaducacion = $scope.event.hourcortesiaGeneral;
                     };
                     if($scope.nuevaAsistencia.tipo == "vip"){
-                        $scope.nuevaAsistencia.fechaCaducacion = $scope.event.hourCorteciaVip;
+                        $scope.nuevaAsistencia.fechaCaducacion = $scope.event.hourcortesiaVip;
                     };
                     if($scope.nuevaAsistencia.tipo == "vipMesa"){
-                        $scope.nuevaAsistencia.fechaCaducacion = $scope.event.hourCorteciaVipMesa;
+                        $scope.nuevaAsistencia.fechaCaducacion = $scope.event.hourcortesiaVipMesa;
                     };
 
                     $scope.nuevaAsistencia.email = $scope.email;
-                    $scope.nuevaAsistencia.cortecia = true;*/
+                    $scope.nuevaAsistencia.cortesia = true;*/
 
 
                        var contadorUsers = 0;

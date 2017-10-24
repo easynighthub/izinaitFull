@@ -295,8 +295,8 @@ angular.module('myApp.rrpps', ['ngRoute'])
                 console.log(rrpp)
 
                 $mdDialog.show({
-                    controller: ControllerDialogAgregarCortecias,
-                    templateUrl: 'dialogAgregarCortecias',
+                    controller: ControllerDialogAgregarCortesias,
+                    templateUrl: 'dialogAgregarCortesias',
                     parent: angular.element(document.body),
                     clickOutsideToClose: false,
                     locals: {
@@ -306,13 +306,13 @@ angular.module('myApp.rrpps', ['ngRoute'])
 
             };
 
-            function ControllerDialogAgregarCortecias($scope, $mdDialog, $timeout, $q, $log,rrpp) {
+            function ControllerDialogAgregarCortesias($scope, $mdDialog, $timeout, $q, $log,rrpp) {
 
                 $scope.rrpp = rrpp;
              console.log($scope.rrpp);
              console.log(adminLogeado.idClubWork);
 
-             angular.forEach(rrpp.cortecias , function (x,key,value) {
+             angular.forEach(rrpp.cortesias , function (x,key,value) {
             if(key == adminLogeado.idClubWork){
                 $scope.general = x.general;
                 $scope.vip = x.vip;
@@ -322,13 +322,13 @@ angular.module('myApp.rrpps', ['ngRoute'])
              });
 
 
-             $scope.guardarCortecias = function () {
+             $scope.guardarCortesias = function () {
 
                  if( $scope.general >= 0){
                      if( $scope.vip >= 0){
                          if( $scope.vipMesa >=0){
 
-                             firebase.database().ref('admins/' +  adminLogeado.$id + '/rrpps/' + $scope.rrpp.$id+'/cortecias/'+adminLogeado.idClubWork)
+                             firebase.database().ref('admins/' +  adminLogeado.$id + '/rrpps/' + $scope.rrpp.$id+'/cortesias/'+adminLogeado.idClubWork)
                                  .update(
                                      {
                                          general : $scope.general,
@@ -366,7 +366,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
 
             var oFileIn;
 
-            $(function() {
+           /* $(function() {
                 oFileIn = document.getElementById('my_file_input');
                 if(oFileIn.addEventListener) {
                     oFileIn.addEventListener('change', filePicked, false);
@@ -400,7 +400,7 @@ angular.module('myApp.rrpps', ['ngRoute'])
                 // Tell JS To Start Reading The File.. You could delay this if desired
                 reader.readAsBinaryString(oFile);
             }
-
+ */
 
             /////////////////////////////////////////////////////////
         }]);
