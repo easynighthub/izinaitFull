@@ -29,6 +29,8 @@ angular.module('myApp.clientes', ['ngRoute'])
             var adminLogeado = "";
             var clientes;
             $scope.clientes = [];
+            $scope.porcentajeHombres
+            $scope.porcentajeMujeres =0;
 
             $('.tituloIziboss').text("Clientes");
             $('.no-js').removeClass('nav-open');
@@ -92,7 +94,9 @@ angular.module('myApp.clientes', ['ngRoute'])
                                 $scope.sumaEdadClientes = 0;
 
 
+                                $scope.contador = 0;
                                 angular.forEach(Object.keys(clientes), function (client) {
+
                                     var clientesRequest = $firebaseObject(firebase.database().ref('/users/' + client));
                                     clientesRequest.$loaded().then(function () {
                                         $scope.cantidadDeClientesPorClub += 1;
@@ -108,8 +112,10 @@ angular.module('myApp.clientes', ['ngRoute'])
                                             $scope.cantidadDeHombres += 1;
                                         }
                                         ;
-                                        $scope.porcentajeHombres = (($scope.cantidadDeHombres + $scope.cantidadDeMujeres) / $scope.cantidadDeHombres * 100);
-                                        $scope.porcentajeMujeres = (($scope.cantidadDeHombres + $scope.cantidadDeMujeres) / $scope.cantidadDeMujeres * 100);
+
+                                        $scope.porcentajeHombres = ( $scope.cantidadDeHombres /($scope.cantidadDeHombres + $scope.cantidadDeMujeres) * 100);
+                                        $scope.porcentajeMujeres = ( $scope.cantidadDeMujeres /($scope.cantidadDeHombres + $scope.cantidadDeMujeres) * 100);
+
                                         if ($scope.cantidadDeMujeres == 0) {
                                             $scope.porcentajeMujeres = 0;
                                         }
@@ -119,10 +125,17 @@ angular.module('myApp.clientes', ['ngRoute'])
                                         }
 
                                         getLastEvent(clientesRequest);
+                                        $scope.contador += 1;
+
 
 
                                     });
                                 });
+
+
+
+
+
 
                             }
 
