@@ -67,7 +67,7 @@ angular.module('myApp.detalleEvento', ['ngRoute'])
                             $scope.rrppsAdminRQ = rrppsAdminRQ;
                         });
 
-                        $('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
+                        //$('.photo').prepend($('<img>', {id: 'theImg', src: adminLogeado.picture}));
                         if (adminLogeado.idClubWork == false) {
                             ObtenerClub(adminLogeado);
                         } else {

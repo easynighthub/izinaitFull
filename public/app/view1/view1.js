@@ -21,6 +21,8 @@ angular.module('myApp.view1', ['ngRoute'])
             var user = window.currentApp ;
             var usuarioLogeado = "";
 
+
+
             firebase.database().ref('users/').child(user.$id || user.uid || 'offline').once('value', function(snapshot) {
                 var exists = (snapshot.val() !== null);
                 //console.log(exists);
@@ -140,6 +142,8 @@ angular.module('myApp.view1', ['ngRoute'])
             $scope.filterEventsByText = function () {
                 $scope.events = $filter('filter')($scope.Allvents, {name: $scope.filterNameInput});
             }
+
+
 
             var comparatorDate = function (value, index, array) {
                 var seletedDateInMs = $scope.filterDateInput.getTime().toString();

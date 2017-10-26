@@ -57,7 +57,7 @@
                                 </span>
                             </div>
                             <div style="margin:0px!important" class=" row stats ">
-                                    <span class=" category text-capitalize">
+                                    <span class=" category ">
                                         Lista :
                                     </span>
                                 <span style="font-weight: 500" class="stats pull-right">
@@ -77,13 +77,13 @@
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            <p class="category">
+                            <p class="category text-capitalize">
                                 <i class="material-icons">event</i>
                                 {{event.date | date:"EEEE dd', 'MMMM" }}
                             </p>
                         </div>
                         <div class="stats pull-right">
-                            <p class="category">
+                            <p class="category txt-capitalize">
                                 <i class="material-icons">alarm</i>
                                 {{event.date | date:"HH:mm" }} - {{event.toHour | date:"HH:mm" }}
                             </p>
