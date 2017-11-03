@@ -16,15 +16,15 @@
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="assets/css/demo.css" rel="stylesheet"/>
     <!--     Fonts and icons     -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css"
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
 
     <link rel="stylesheet" href="app/assentIndex/css/event.css">
     <link rel="stylesheet" href="assets/css/rangeslider.css">
-    <script src="assets/js/rangeslider.min.js"></script>
-    <script src="assets/js/jquery.tagsinput.js"></script>
     <script src="assets/js/jquery.min.js"></script>
+    <script src="price.js"></script>
+    <script src="assets/js/rangeslider.js"></script>
 </head>
 
 <body>
@@ -91,7 +91,7 @@
 
                                 <div class="card">
                                     <div class="card-content">
-                                        <h4>Ventas y Ticketing</h4>
+                                        <h4 STYLE="font-weight: 400">Ventas y Ticketing</h4>
                                     </div>
                                     <div class="card-footer">
                                         <div class="stats">
@@ -104,7 +104,7 @@
 
                                 <div class="card">
                                     <div class="card-content">
-                                        <h4>Gestion de Acceso</h4>
+                                        <h4 STYLE="font-weight: 400">Gestion de Acceso</h4>
                                     </div>
                                     <div class="card-footer">
                                         <div class="stats">
@@ -117,7 +117,7 @@
 
                                 <div class="card">
                                     <div class="card-content">
-                                        <h4>Gestor RR.PP</h4>
+                                        <h4 STYLE="font-weight: 400">Gestor RR.PP</h4>
                                     </div>
                                     <div class="card-footer">
                                         <div class="stats">
@@ -130,7 +130,7 @@
 
                                 <div class="card">
                                     <div class="card-content">
-                                        <h4>Soporte</h4>
+                                        <h4 STYLE="font-weight: 400">Soporte</h4>
                                     </div>
                                     <div class="card-footer">
                                         <div class="stats">
@@ -160,7 +160,7 @@
 
                                 <div class="card">
                                     <div class="card-content">
-                                        <h4>Ventas & Cortesias</h4>
+                                        <h4 STYLE="font-weight: 400">Ventas & Cortesias</h4>
                                     </div>
                                     <div class="card-footer">
                                         <div class="stats">
@@ -173,7 +173,7 @@
 
                                 <div class="card">
                                     <div class="card-content">
-                                        <h4>Gestion de Acceso</h4>
+                                        <h4 STYLE="font-weight: 400">Gestion de Acceso</h4>
                                     </div>
                                     <div class="card-footer">
                                         <div class="stats">
@@ -186,7 +186,7 @@
 
                                 <div class="card">
                                     <div class="card-content">
-                                        <h4>Gestor RR.PP</h4>
+                                        <h4 STYLE="font-weight: 400">Gestor RR.PP</h4>
                                     </div>
                                     <div class="card-footer">
                                         <div class="stats">
@@ -199,7 +199,7 @@
 
                                 <div class="card">
                                     <div class="card-content">
-                                        <h4>Soporte</h4>
+                                        <h4 STYLE="font-weight: 400">Soporte</h4>
                                     </div>
                                     <div class="card-footer">
                                         <div class="stats">
@@ -216,19 +216,76 @@
                 </div>
 
                 <div class="card">
-                    <div class="card-content">
-                        <h2 class="card-title text-center">Las comisiones más bajas del mercado</h2>
+                    <div class="card-header ">
+                        <h2 STYLE="font-weight: 400"  class="card-title text-center">Las comisiones más bajas del mercado</h2>
+                        <h3>Pasa los gastos de servicio a tus clientes cuando vendas online. ¿Tu coste? solo la
+                            trasferencia.</h3>
+                        <br>
+                        <br>
 
                     </div>
-                    <div class="card-footer">
-                        <input type="range" value="6500" step="25" min="1000" max="12600">
-
-                        <div class="range">
-                            <small class="min pull-left">Min</small>
-                            <small class="max pull-right">Max</small>
+                    <div class="card-content">
+                        <div class=" col-md-6 text-center">
+                            <div class="card-header " data-background-color="fe0072">
+                                <p STYLE="font-weight: 600" class="card-title">LISTAS DE INVITADOS Y CORTESIAS</p>
+                            </div>
+                            <div class="card-content text-center">
+                                <h2 STYLE="font-weight: 600" class="card-title">Gratis</h2>
+                                <h5 STYLE="font-weight: 400">Gestionar tus reservas gratis y de pago en puerta es completamente gratuito.</h5>
+                            </div>
+                        </div>
+                        <div class=" col-md-6 text-center">
+                            <div class="card-header " data-background-color="#fe0072">
+                                <p STYLE="font-weight: 600" class="card-title">RESERVAS Y VENTAS ANTICIPADAS</p>
+                            </div>
+                            <div class="card-content text-center">
+                                <h2 STYLE="font-weight: 600" class="card-title">CPL 500 + 5%</h2>
+                                <h5 STYLE="font-weight: 400">Con posibilidad de pago con tarjetas debito y crédito(oneClick) para tus consumidores.</h5>
+                            </div>
                         </div>
 
                     </div>
+
+                    <br>
+                    <br>
+                    <div class="col-md-12">
+                        <input type="range" value="10000"  id="range" step="500" min="5000" max="50000">
+
+
+                        <div class="range text-center">
+                            <small class="min pull-left">Min</small>
+                            <small class="max pull-right">Max</small>
+                            <br>
+                            <span style="margin: 20px"><h7 class="min ">Desplaza el cursor para cambiar el precio de la entrada deseado</h7></span>
+
+                            <div class="col-md-6 col-lg-offset-3">
+                                <div class="card-content">
+                                    <h3 STYLE="font-weight: 500;font-style: italic">Cargo por servicio</h3>
+                                    <h3 STYLE="font-weight: 500; color: #340034" class="cargoS">1000</h3>
+                                    <small class="min ">Mil Pesos</small>
+                                    <h3 STYLE="font-weight: 400;font-style: italic">Tu recibes</h3>
+                                    <h3 STYLE="font-weight: 400;color: #340034" class="recibe">9000</h3>
+                                    <small class="min ">Mil Pesos</small>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-12 text-center">
+                            <a href="logAdmin.html" style="color: white;background-color: #fe0072" class="btn col-md-12">
+                                LLeva tus eventos a otro nivel
+                            </a>
+                            <br>
+                            <br>
+                        </div>
+
+
+
+
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -295,46 +352,5 @@
 <script src="assets/js/material-dashboard.js"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="assets/js/demo.js"></script>
-<script type="text/javascript">
-    $().ready(function () {
-        demo.checkFullPageBackgroundImage();
-
-        setTimeout(function () {
-            // after 1000 ms we add the class animated to the login/register card
-            $('.card').removeClass('card-hidden');
-        }, 700)
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-        $('input[type="range"]').rangeslider({
-
-            // Feature detection the default is `true`.
-            // Set this to `false` if you want to use
-            // the polyfill also in Browsers which support
-            // the native <input type="range"> element.
-            polyfill: true,
-
-            // Default CSS classes
-            rangeClass: 'rangeslider',
-            disabledClass: 'rangeslider--disabled',
-            horizontalClass: 'rangeslider--horizontal',
-            verticalClass: 'rangeslider--vertical',
-            fillClass: 'rangeslider__fill',
-            handleClass: 'rangeslider__handle',
-
-            // Callback function
-            onInit: function() {},
-
-            // Callback function
-            onSlide: function(position, value) {},
-
-            // Callback function
-            onSlideEnd: function(position, value) {}
-        });
-    });
-
-</script>
 
 </html>
